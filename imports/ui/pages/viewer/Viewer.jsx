@@ -22,8 +22,14 @@ export default class Viewer extends Component {
 
         this.state = {
             map: null,
-            menuopen: false,
+            menuOpen: this.props.menuOpen
         };
+    }
+
+    componentWillReceiveProps(nextProps) {
+        this.setState({
+            menuOpen: nextProps.menuOpen
+        });
     }
 
     /**
@@ -133,22 +139,6 @@ export default class Viewer extends Component {
                     }),
                     visible: false
                 }),
-                new ol.layer.Vector({
-                    title: 'BAG Woonplaats',
-                    source: new ol.source.Vector({
-                        format: new ol.format.GeoJSON(),
-                        url: function(extent, resolution, projection) {
-                            return 'https://geodata.nationaalgeoregister.nl/bag/wfs?service=WFS&' +
-                                'version=1.1.0&request=GetFeature&typename=bag:woonplaats&' +
-                                'outputFormat=application/json&srsname=EPSG:3857&' +
-                                'bbox=' + extent.join(',') + ',EPSG:3857';
-                        },
-                        strategy: ol.loadingstrategy.tile(ol.tilegrid.createXYZ({
-                            maxZoom: 20
-                        }))
-                    }),
-                    visible: false
-                }),
             ],
             view: this.setView(), // EPSG: 3857
             controls: [
@@ -190,6 +180,10 @@ export default class Viewer extends Component {
         }
     }
 
+    toggleMenuState = (newState) => {
+        this.props.toggleMenuState(newState);
+    }
+
     /**
      * Renders the map from OpenLayers to the screen
      */
@@ -203,7 +197,8 @@ export default class Viewer extends Component {
             >
                 <LayerMenu
                     map={this.state.map}
-                    openMenu={this.props.openMenu}
+                    menuOpen={this.props.menuOpen}
+                    toggleMenuState={this.toggleMenuState}
                 />
             </div>
         );

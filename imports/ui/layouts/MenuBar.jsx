@@ -17,13 +17,18 @@ export default class MenuBar extends Component {
         super(props);
 
         this.state = {
-            menuopen: false
+            menuOpen: this.props.menuOpen
         }
     }
 
+    componentWillReceiveProps(nextProps) {
+        this.setState({
+            menuOpen: nextProps.menuOpen
+        });
+    }
+
     changeOpenState() {
-        this.state.menuopen = !this.state.menuopen;
-        this.props.setMenuState(this.state.menuopen);
+        this.props.toggleMenuState(!this.state.menuOpen);
     }
 
     
