@@ -3,11 +3,6 @@
 import React, { Component } from 'react';
 import * as ol from 'openlayers';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import {
-  interaction, layer, custom, control, //name spaces
-  Interactions, Overlays, Controls,     //group
-  Map, Layers, Overlay, Util    //objects
-} from "react-openlayers";
 
 import MainHeader from './MainHeader.jsx';
 import MenuBar from './MenuBar.jsx';
@@ -32,7 +27,7 @@ export default class MapLayout extends Component {
                 y: 0
             },
             map: null,
-            menuopen: false,
+            menuOpen: false,
             featurePopup: <div></div>
         };
     }
@@ -59,12 +54,21 @@ export default class MapLayout extends Component {
     addMapListener() {
         let map = this.state.map;
         let that = this;
-
+    
         map.on('click', function(e) {
-            //console.log(e.coordinate);
             that.setState({
                 featurePopup: <div></div>
             });
+
+            /*let pixel;
+            if(e.pixel === undefined) {
+                let size = map.getSize();
+                let pixelX = size[0] / 2;
+                let pixelY = size[1] / 2;
+                pixel = [pixelX, pixelY];
+            } else {
+                pixel = e.pixel;
+            }*/
             map.forEachFeatureAtPixel(e.pixel, function(feature, layer) {
                 if(layer.get('title') === 'Ibis Bedrijventerreinen') {
                     that.setState({featurePopup: <PopupIndustrie selectedFeature={feature} coords={that.state.coords} />})
@@ -85,11 +89,19 @@ export default class MapLayout extends Component {
         });
     }
 
+    setKvkPopup = (feature) => {
+        this.state.coords.x = window.innerWidth / 2 + 20;
+        this.state.coords.y = window.innerHeight / 2;
+        this.setState({featurePopup: <PopupKvk selectedFeature={feature} coords={this.state.coords} />});
+    }
+
     /**
      * Checks whether the menu is open or closed and passes its value to the state so the menu can be rendered
      */
-    setMenuState = (newState) => {
-        this.setState({menuopen: newState});
+    toggleMenuState = (newState) => {
+        this.setState({
+            menuOpen: newState
+        });
     }
 
     /**
@@ -101,10 +113,10 @@ export default class MapLayout extends Component {
                 <div>
                     <header>
                         <MainHeader />
-                        <MenuBar setMenuState={this.setMenuState} />
+                        <MenuBar toggleMenuState={this.toggleMenuState} menuOpen={this.state.menuOpen} />
                     </header>
                     <main onMouseMove={this.onMouseMove.bind(this)}>
-                        <Viewer mapToParent={this.setMap} openMenu={this.state.menuopen}/>
+                        <Viewer mapToParent={this.setMap} menuOpen={this.state.menuOpen} toggleMenuState={this.toggleMenuState} featurePopup={this.setKvkPopup} />
                         {this.state.featurePopup}
                     </main>
                 </div>

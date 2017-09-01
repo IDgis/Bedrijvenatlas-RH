@@ -26,6 +26,20 @@ Meteor.methods({
     },
 
     /**
+     * Sort all loaded Kvk data by name
+     */
+    sortKvkBedrijven() {
+        console.log('Sorting KVK data...');
+
+        let bedrijven = KvkBedrijven.find(
+            {KVK_HANDELSNAAM: {$exists: true}},
+            {sort: {KVK_HANDELSNAAM: 1}}
+        );
+
+        return bedrijven.fetch();
+    },
+
+    /**
      * Gets all KVK Bedrijven and returns their Handelsnaam
      */
     getKvkBedrijven() {

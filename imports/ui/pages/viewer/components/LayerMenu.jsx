@@ -1,15 +1,14 @@
 import React, { Component } from 'react';
 import * as ol from 'openlayers';
 
-import ArrowDropRight from 'material-ui/svg-icons/navigation-arrow-drop-right';
-import AutoComplete from 'material-ui/AutoComplete';
-import Checkbox from 'material-ui/Checkbox';
 import Drawer from 'material-ui/Drawer';
-import {List, ListItem} from 'material-ui/List';
 import Menu from 'material-ui/Menu';
-import MenuItem from 'material-ui/MenuItem';
-import Popover, {PopoverAnimationVertical} from 'material-ui/Popover';
-import Subheader from 'material-ui/Subheader';
+
+import BedrijvenBranche from './MenuItems/BedrijvenBranche.jsx';
+import BedrijvenSorted from './MenuItems/BedrijvenSorted.jsx';
+import OverigeLagen from './MenuItems/OverigeLagen.jsx';
+import SearchBar from './MenuItems/SearchBar.jsx';
+import Vastgoed from './MenuItems/Vastgoed.jsx';
 
 export default class LayerMenu extends Component {
 
@@ -17,18 +16,19 @@ export default class LayerMenu extends Component {
         super(props);
 
         this.state = {
-            achtergrondkaartenOpen: false,
+            bedrijvenIndexAZOpen: false,
             searchFields: [],
-            bagLigplaatsVisible: false,
-            bagPandVisible: false,
-            bagStandplaatsVisible: false,
-            bagVerblijfsobjectVisible: false,
-            bagWoonplaatsVisible: false,
-            ibisVisible: false,
-            kvkVisible: false
+            kvkVisible: false,
+            menuOpen: this.props.menuOpen
         }
 
         this.fillSearchFields();
+    }
+
+    componentWillReceiveProps(nextProps) {
+        this.setState({
+            menuOpen: nextProps.menuOpen
+        });
     }
 
     /**
@@ -37,11 +37,12 @@ export default class LayerMenu extends Component {
     fillSearchFields() {
         console.log('Filling search fields...');
         Meteor.call('getKvkBedrijven', (error, result) => {
+            let names = [];
             for(let i = 0; i < result.length; i++) {
                 let res = result[i];
-                this.state.searchFields.push(res['KVK_HANDELSNAAM']);
+                names.push(res['KVK_HANDELSNAAM']);
 
-                let straatnaam = res['KVK_STRAATNAAM'];
+                /*let straatnaam = res['KVK_STRAATNAAM'];
                 let nameInArr = false;
                 for(let j = 0; j < this.state.searchFields.length; j++) {
                     if(this.state.searchFields[j] === straatnaam) {
@@ -51,187 +52,79 @@ export default class LayerMenu extends Component {
                 }
                 if(!nameInArr) {
                     this.state.searchFields.push(straatnaam);
-                }
+                }*/
             }
+            this.setState({
+                searchFields: names
+            });
+            console.log('Search fields filled...');
         });
-        console.log('Search fields filled...');
     }
 
     /**
-     * Opens the Achtergrondkaarten menu item
+     * Sets the visibility of the KVK layer to the new value
      */
-    openAchtergrondKaarten = (evt) => {
+    setKvkVisible = (newVisible) => {
         this.setState({
-            achtergrondkaartenOpen: true,
-            anchorEl: evt.currentTarget
+            kvkVisible: newVisible
         });
     }
 
     /**
-     * Closes the Achtergrondkaarten menu item
+     * Finds the entered name in the features and zooms in to it if found
      */
-    closeAchtergrondKaarten = () => {
-        this.setState({
-            achtergrondkaartenOpen: false
-        })
-    }
-
-    /**
-     * Turns the BAG Ligplaats layer on and off
-     */
-    toggleBagLigplaatsLayer = () => {
-        let layers = this.props.map.getLayers();
-        layers.forEach((layer, index) => {
-            if(layer.get('title') === 'BAG Ligplaats') {
-                let newVisible = (!layer.getVisible());
-                this.setState({
-                    bagLigplaatsVisible: newVisible
-                });
-                layer.setVisible(newVisible);
-            }
-        });
-    }
-
-    /**
-     * Turns the BAG Pand layer on and off
-     */
-    toggleBagPandLayer = () => {
-        let layers = this.props.map.getLayers();
-        layers.forEach((layer, index) => {
-            if(layer.get('title') === 'BAG Pand') {
-                let newVisible = (!layer.getVisible());
-                this.setState({
-                    bagPandVisible: newVisible
-                });
-                layer.setVisible(newVisible);
-            }
-        });
-    }
-
-    /**
-     * Turn the BAG Standplaats layer on and off
-     */
-    toggleBagStandplaatsLayer = () => {
-        let layers = this.props.map.getLayers();
-        layers.forEach((layer, index) => {
-            if(layer.get('title') === 'BAG Standplaats') {
-                let newVisible = (!layer.getVisible());
-                this.setState({
-                    bagStandplaatsVisible: newVisible
-                });
-                layer.setVisible(newVisible);
-            }
-        });
-    }
-
-    /**
-     * Turns the BAG Verblijfsobject layer on and off
-     */
-    toggleBagVerblijfsobjectLayer = () => {
-        let layers = this.props.map.getLayers();
-        layers.forEach((layer, index) => {
-            if(layer.get('title') === 'BAG Verblijfsobject') {
-                let newVisible = (!layer.getVisible());
-                this.setState({
-                    bagVerblijfsobjectVisible: newVisible
-                });
-                layer.setVisible(newVisible);
-            }
-        });
-    }
-
-    /**
-     * Turns the BAG Woonplaats layer on and off
-     */
-    toggleBagWoonplaatsLayer = () => {
-        let layers = this.props.map.getLayers();
-        layers.forEach((layer, index) => {
-            if(layer.get('title') === 'BAG Woonplaats') {
-                let newVisible = (!layer.getVisible());
-                this.setState({
-                    bagWoonplaatsVisible: newVisible
-                });
-                layer.setVisible(newVisible);
-            }
-        });
-    }
-
-    /**
-     * Turns the IBIS Bedrijventerreinen layer on and off
-     */
-    toggleIbisLayer = () => {
-        let layers = this.props.map.getLayers();
-        layers.forEach((layer, index) => {
-            if(layer.get('title') === 'Ibis Bedrijventerreinen') {
-                let newVisible = (!layer.getVisible());
-                this.setState({
-                    ibisVisible: newVisible
-                });
-                layer.setVisible(newVisible);
-            }
-        });
-    }
-
-    /**
-     * Turns the KVK Bedrijven layer on and off
-     */
-    toggleKvkLayer = () => {
-        let layers = this.props.map.getLayers();
-        layers.forEach((layer, index) => {
-            if(layer.get('title') === 'Kvk Bedrijven') {
-                let newVisible = (!layer.getVisible());
-                this.setState({
-                    kvkVisible: newVisible
-                });
-                layer.setVisible(newVisible);
-            }
-        });
-    }
-
-    /**
-     * Turns all BAG layers on and off at once
-     */
-    selectAllBagLayers = () => {
-        let layersVisible = !(this.state.bagLigplaatsVisible && this.state.bagPandVisible && this.state.bagStandplaatsVisible
-                        && this.state.bagVerblijfsobjectVisible && this.state.bagWoonplaatsVisible);
-        
-        let layers = this.props.map.getLayers();
-        layers.forEach((layer, index) => {
-            if(layer.get('title') === 'BAG Ligplaats' || layer.get('title') === 'BAG Pand' || layer.get('title') === 'BAG Standplaats' ||
-            layer.get('title') === 'BAG Verblijfsobject' || layer.get('title') === 'BAG Woonplaats') {
-                this.setState({
-                    bagLigplaatsVisible: layersVisible,
-                    bagPandVisible: layersVisible,
-                    bagStandplaatsVisible: layersVisible,
-                    bagVerblijfsobjectVisible: layersVisible,
-                    bagWoonplaatsVisible: layersVisible
-                });
-                layer.setVisible(layersVisible);
-            }
-        });
-    }
-
-    /**
-     * Turns the searched item on and off on the map
-     */
-    toggleFeature = (searchfield) => {
+    selectFeature = (searchfield) => {
         console.log('Searching for: ' + searchfield);
-        // Zoom to the searched feature on the map
+        
+        // Center the map around the feature found
+        let layers = this.props.map.getLayers();
+        layers.forEach((layer, index, arr) => {
+            if(layer.get('title') === 'Kvk Bedrijven') {
+                console.log('Found layer Kvk Bedrijven...');
 
-        // Example of how to load data from the layers
-        /*let layers = this.state.map.getLayers();
-        layers.forEach((ele, index) => {
-            if(ele.get('title') === 'Kvk Bedrijven') {
-                let props = ele.getProperties();
-                ele.getSource().on('change', (e) => {
+                // Set the layer visible
+                layer.setVisible(true);
+                this.setState({
+                    kvkVisible: true
+                });
+                
+                layer.getSource().on('change', (e) => {
                     let source = e.target;
                     if(source.getState() === 'ready') {
-                        let feats = source.getFeatures();
-                        console.log((feats[3]).get('KVK_HANDELSNAAM'));
+                        let features = source.getFeatures();
+                        for(let i = 0; i < features.length; i++) {
+                            if(features[i].get('KVK_HANDELSNAAM') === searchfield) {
+                                console.log(searchfield + ' found...');
+
+                                // Center around the coordinates of the found feature
+                                let coords = features[i].getGeometry().getCoordinates();
+                                this.props.map.getView().setCenter(coords);
+
+                                // Zoom to the feature found
+                                this.props.map.getView().setZoom(17);
+
+                                let select = new ol.interaction.Select();
+                                this.props.map.addInteraction(select);
+                                let collection = select.getFeatures().push(features[i]);
+
+                                this.props.toggleMenuState(false);
+
+                                // add a popup to for the feature found
+                                this.props.map.getInteractions().forEach((val) => {
+                                    if(val instanceof ol.interaction.Select) {
+                                        let features = val.getFeatures();
+                                        if(features.getArray().length > 0) {
+                                            this.props.featurePopup(features.getArray()[0]);
+                                        }
+                                    }
+                                });
+                            }
+                        }
                     }
                 });
+                layer.getSource().dispatchEvent('change');
             }
-        });*/
+        });
     }
 
     /**
@@ -239,55 +132,13 @@ export default class LayerMenu extends Component {
      */
     render() {
         return (
-            <Drawer open={this.props.openMenu} openSecondary={true}>
+            <Drawer open={this.state.menuOpen} /*openSecondary={true}*/ docked={false} onRequestChange={(open) => this.props.toggleMenuState(!this.state.menuOpen)} >
                 <Menu>
-                    <ListItem>
-                        <AutoComplete
-                            floatingLabelText="Type hier om te zoeken"
-                            dataSource={this.state.searchFields}
-                            filter={AutoComplete.caseInsensitiveFilter}
-                            anchorOrigin={{horizontal: 'right', vertical: 'bottom'}}
-                            targetOrigin={{horizontal: 'right', vertical: 'top'}}
-                            onNewRequest={this.toggleFeature}
-                            maxSearchResults={10}
-                        />
-                    </ListItem>
-
-                    <ListItem primaryText="Bedrijvenindex (A t/m Z)" />
-                    <Popover></Popover>
-
-                    <ListItem primaryText="Bedrijvenindex (naar branche)" />
-                    <Popover></Popover>
-
-                    <ListItem primaryText="Overige Lagen" onClick={this.openAchtergrondKaarten} />
-                    <Popover
-                        open={this.state.achtergrondkaartenOpen}
-                        anchorEl={this.state.anchorEl}
-                        anchorOrigin={{horizontal: 'right', vertical: 'bottom'}}
-                        targetOrigin={{horizontal: 'right', vertical: 'top'}}
-                        onRequestClose={this.closeAchtergrondKaarten}
-                        animation={PopoverAnimationVertical}
-                    >
-                        <List>
-                            <MenuItem primaryText='BAG' 
-                                leftIcon={<Checkbox checked={this.state.bagLigplaatsVisible && this.state.bagPandVisible && this.state.bagStandplaatsVisible
-                                                            && this.state.bagVerblijfsobjectVisible && this.state.bagWoonplaatsVisible} onClick={this.selectAllBagLayers} />} 
-                                rightIcon={<ArrowDropRight />} 
-                                menuItems={[
-                                    <ListItem primaryText='BAG Ligplaats' leftCheckbox={<Checkbox checked={this.state.bagLigplaatsVisible} onClick={this.toggleBagLigplaatsLayer} />} />,
-                                    <ListItem primaryText='BAG Pand' leftCheckbox={<Checkbox checked={this.state.bagPandVisible} onClick={this.toggleBagPandLayer} />} />,
-                                    <ListItem primaryText='BAG Standplaats' leftCheckbox={<Checkbox checked={this.state.bagStandplaatsVisible} onClick={this.toggleBagStandplaatsLayer} />} />,
-                                    <ListItem primaryText='BAG Verblijfsobjecten' leftCheckbox={<Checkbox checked={this.state.bagVerblijfsobjectVisible} onClick={this.toggleBagVerblijfsobjectLayer} />} />,
-                                    <ListItem primaryText='BAG Woonplaats' leftCheckbox={<Checkbox checked={this.state.bagWoonplaatsVisible} onClick={this.toggleBagWoonplaatsLayer} />} />
-                                ]} 
-                            />
-                            <ListItem primaryText='Ibis Bedrijventerreinen' leftCheckbox={<Checkbox checked={this.state.ibisVisible} onClick={this.toggleIbisLayer} />} />
-                            <ListItem primaryText='KVK Bedrijven' leftCheckbox={<Checkbox checked={this.state.kvkVisible} onClick={this.toggleKvkLayer} />} />
-                        </List>
-                    </Popover>
-
-                    <ListItem primaryText="Vastgoedinformatie" />
-                    <Popover></Popover>
+                    <SearchBar dataSource={this.state.searchFields} onNewRequest={this.selectFeature} />
+                    <BedrijvenSorted selectFeature={this.selectFeature} />
+                    <BedrijvenBranche map={this.props.map} />
+                    <OverigeLagen map={this.props.map} setKvkVisible={this.setKvkVisible} kvkVisible={this.state.kvkVisible} />
+                    <Vastgoed map={this.props.map} />
                 </Menu>
             </Drawer>
         );
