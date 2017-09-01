@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import * as ol from 'openlayers';
+import proj4 from 'proj4';
 import './viewer.css';
 
 import Checkbox from 'material-ui/Checkbox';
@@ -24,6 +25,9 @@ export default class Viewer extends Component {
             map: null,
             menuOpen: this.props.menuOpen
         };
+
+        proj4.defs('EPSG:28992', '+proj=sterea +lat_0=52.15616055555555 +lon_0=5.38763888888889 +k=0.9999079 +x_0=155000 +y_0=463000 +ellps=bessel +towgs84=565.417,50.3319,465.552,-0.398957,0.343988,-1.8774,4.0725 +units=m +no_defs');
+        ol.proj.setProj4(proj4);
     }
 
     componentWillReceiveProps(nextProps) {
@@ -46,9 +50,7 @@ export default class Viewer extends Component {
                     title: 'Kvk Bedrijven',
                     source: new ol.source.Vector({
                         url: '/data/KVK_BEDRIJVEN.json',
-                        format: new ol.format.GeoJSON({
-                            defaultDataProjection: 'EPSG:28992'
-                        })
+                        format: new ol.format.GeoJSON()
                     }),
                     visible: false
                 }),
@@ -82,8 +84,8 @@ export default class Viewer extends Component {
                         url: function(extent, resolution, projection) {
                             return 'https://geodata.nationaalgeoregister.nl/bag/wfs?service=WFS&' +
                                 'version=1.1.0&request=GetFeature&typename=bag:ligplaats&' +
-                                'outputFormat=application/json&srsname=EPSG:3857&' +
-                                'bbox=' + extent.join(',') + ',EPSG:3857';
+                                'outputFormat=application/json&srsname=EPSG:28992&' +
+                                'bbox=' + extent.join(',') + ',EPSG:28992';
                         },
                         strategy: ol.loadingstrategy.tile(ol.tilegrid.createXYZ({
                             maxZoom: 20
@@ -98,8 +100,8 @@ export default class Viewer extends Component {
                         url: function(extent, resolution, projection) {
                             return 'https://geodata.nationaalgeoregister.nl/bag/wfs?service=WFS&' +
                                 'version=1.1.0&request=GetFeature&typename=bag:pand&' +
-                                'outputFormat=application/json&srsname=EPSG:3857&' +
-                                'bbox=' + extent.join(',') + ',EPSG:3857';
+                                'outputFormat=application/json&srsname=EPSG:28992&' +
+                                'bbox=' + extent.join(',') + ',EPSG:28992';
                         },
                         strategy: ol.loadingstrategy.tile(ol.tilegrid.createXYZ({
                             maxZoom: 20
@@ -114,8 +116,8 @@ export default class Viewer extends Component {
                         url: function(extent, resolution, projection) {
                             return 'https://geodata.nationaalgeoregister.nl/bag/wfs?service=WFS&' +
                                 'version=1.1.0&request=GetFeature&typename=bag:standplaats&' +
-                                'outputFormat=application/json&srsname=EPSG:3857&' +
-                                'bbox=' + extent.join(',') + ',EPSG:3857';
+                                'outputFormat=application/json&srsname=EPSG:28992&' +
+                                'bbox=' + extent.join(',') + ',EPSG:28992';
                         },
                         strategy: ol.loadingstrategy.tile(ol.tilegrid.createXYZ({
                             maxZoom: 20
@@ -130,8 +132,8 @@ export default class Viewer extends Component {
                         url: function(extent, resolution, projection) {
                             return 'https://geodata.nationaalgeoregister.nl/bag/wfs?service=WFS&' +
                                 'version=1.1.0&request=GetFeature&typename=bag:verblijfsobject&' +
-                                'outputFormat=application/json&srsname=EPSG:3857&' +
-                                'bbox=' + extent.join(',') + ',EPSG:3857';
+                                'outputFormat=application/json&srsname=EPSG:28992&' +
+                                'bbox=' + extent.join(',') + ',EPSG:28992';
                         },
                         strategy: ol.loadingstrategy.tile(ol.tilegrid.createXYZ({
                             maxZoom: 20
@@ -140,7 +142,7 @@ export default class Viewer extends Component {
                     visible: false
                 }),
             ],
-            view: this.setView(), // EPSG: 3857
+            view: this.setView(),
             controls: [
                 new ol.control.ScaleLine(),
                 new ol.control.Zoom(),
@@ -164,22 +166,28 @@ export default class Viewer extends Component {
 
         if(plaats === 'rijssen') {
             return new ol.View({
-                center: [727000, 6855500],
-                zoom: 14,
+                center: [232992, 480308],
+                projection: 'EPSG:28992',
+                zoom: 14.5,
             });
         } else if(plaats === 'holten') {
             return new ol.View({
-                center: [713900, 6850700],
-                zoom: 15
+                center: [225008, 477254],
+                projection: 'EPSG:28992',
+                zoom: 15.5,
             });
         } else {
             return new ol.View({
-                center: [720500, 6853875],
-                zoom: 13.5
+                center: [229025, 479254],
+                projection: 'EPSG:28992',
+                zoom: 14,
             })
         }
     }
 
+    /**
+     * Opens and closes the value whether the menu should be opened or closed
+     */
     toggleMenuState = (newState) => {
         this.props.toggleMenuState(newState);
     }
@@ -199,6 +207,7 @@ export default class Viewer extends Component {
                     map={this.state.map}
                     menuOpen={this.props.menuOpen}
                     toggleMenuState={this.toggleMenuState}
+                    featurePopup={this.props.featurePopup}
                 />
             </div>
         );

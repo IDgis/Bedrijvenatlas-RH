@@ -89,7 +89,6 @@ export default class LayerMenu extends Component {
                 });
                 
                 layer.getSource().on('change', (e) => {
-                    console.log(e);
                     let source = e.target;
                     if(source.getState() === 'ready') {
                         let features = source.getFeatures();
@@ -103,24 +102,26 @@ export default class LayerMenu extends Component {
 
                                 // Zoom to the feature found
                                 this.props.map.getView().setZoom(17);
-                                
-                                //TODO: select the found feature and remove the old ones
-                                /*this.props.map.getInteractions().forEach((interaction) => {
-                                    if(interaction instanceof ol.interaction.Select) {
-                                        console.log(interaction);
-                                    }
-                                });*/
 
                                 let select = new ol.interaction.Select();
                                 this.props.map.addInteraction(select);
                                 let collection = select.getFeatures().push(features[i]);
 
-                                this.props.map.dispatchEvent('click');
+                                this.props.toggleMenuState(false);
+
+                                // add a popup to for the feature found
+                                this.props.map.getInteractions().forEach((val) => {
+                                    if(val instanceof ol.interaction.Select) {
+                                        let features = val.getFeatures();
+                                        if(features.getArray().length > 0) {
+                                            this.props.featurePopup(features.getArray()[0]);
+                                        }
+                                    }
+                                });
                             }
                         }
                     }
                 });
-                //layer.getSource().refresh();
                 layer.getSource().dispatchEvent('change');
             }
         });
@@ -134,7 +135,7 @@ export default class LayerMenu extends Component {
             <Drawer open={this.state.menuOpen} /*openSecondary={true}*/ docked={false} onRequestChange={(open) => this.props.toggleMenuState(!this.state.menuOpen)} >
                 <Menu>
                     <SearchBar dataSource={this.state.searchFields} onNewRequest={this.selectFeature} />
-                    <BedrijvenSorted map={this.props.map} searchFields={this.state.searchFields} selectFeature={this.selectFeature} />
+                    <BedrijvenSorted selectFeature={this.selectFeature} />
                     <BedrijvenBranche map={this.props.map} />
                     <OverigeLagen map={this.props.map} setKvkVisible={this.setKvkVisible} kvkVisible={this.state.kvkVisible} />
                     <Vastgoed map={this.props.map} />

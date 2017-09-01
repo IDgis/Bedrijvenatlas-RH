@@ -60,7 +60,7 @@ export default class MapLayout extends Component {
                 featurePopup: <div></div>
             });
 
-            let pixel;
+            /*let pixel;
             if(e.pixel === undefined) {
                 let size = map.getSize();
                 let pixelX = size[0] / 2;
@@ -68,8 +68,8 @@ export default class MapLayout extends Component {
                 pixel = [pixelX, pixelY];
             } else {
                 pixel = e.pixel;
-            }
-            map.forEachFeatureAtPixel(pixel, function(feature, layer) {
+            }*/
+            map.forEachFeatureAtPixel(e.pixel, function(feature, layer) {
                 if(layer.get('title') === 'Ibis Bedrijventerreinen') {
                     that.setState({featurePopup: <PopupIndustrie selectedFeature={feature} coords={that.state.coords} />})
                 } else if(layer.get('title') === 'BAG Ligplaats') {
@@ -87,6 +87,12 @@ export default class MapLayout extends Component {
                 }
             });
         });
+    }
+
+    setKvkPopup = (feature) => {
+        this.state.coords.x = window.innerWidth / 2 + 20;
+        this.state.coords.y = window.innerHeight / 2;
+        this.setState({featurePopup: <PopupKvk selectedFeature={feature} coords={this.state.coords} />});
     }
 
     /**
@@ -110,7 +116,7 @@ export default class MapLayout extends Component {
                         <MenuBar toggleMenuState={this.toggleMenuState} menuOpen={this.state.menuOpen} />
                     </header>
                     <main onMouseMove={this.onMouseMove.bind(this)}>
-                        <Viewer mapToParent={this.setMap} menuOpen={this.state.menuOpen} toggleMenuState={this.toggleMenuState} />
+                        <Viewer mapToParent={this.setMap} menuOpen={this.state.menuOpen} toggleMenuState={this.toggleMenuState} featurePopup={this.setKvkPopup} />
                         {this.state.featurePopup}
                     </main>
                 </div>
