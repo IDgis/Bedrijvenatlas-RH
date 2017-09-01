@@ -1,5 +1,5 @@
 node_modules/
-public/data
+public/data/
 .settings
 .project
 .classpath
