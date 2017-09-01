@@ -49,8 +49,8 @@ export default class Viewer extends Component {
                         url: function(extent, resolution, projection) {
                             return 'https://geodata.nationaalgeoregister.nl/bag/wfs?service=WFS&' +
                                 'version=1.1.0&request=GetFeature&typename=bag:pand&' +
-                                'outputFormat=application/json&srsname=EPSG:3857&' +
-                                'bbox=' + extent.join(',') + ',EPSG:3857';
+                                'outputFormat=application/json&srsname=EPSG:28992&' +
+                                'bbox=' + extent.join(',') + ',EPSG:28992';
                         },
                         strategy: ol.loadingstrategy.tile(ol.tilegrid.createXYZ({
                             maxZoom: 20
