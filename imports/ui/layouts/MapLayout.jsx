@@ -6,13 +6,13 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 import MainHeader from './MainHeader.jsx';
 import MenuBar from './MenuBar.jsx';
-import PopupBagLigplaats from '../pages/viewer/components/PopupBagLigplaats.jsx';
-import PopupBagPand from '../pages/viewer/components/PopupBagPand.jsx';
-import PopupBagStandplaats from '../pages/viewer/components/PopupBagStandplaats.jsx';
-import PopupBagVerblijfsobject from '../pages/viewer/components/PopupBagVerblijfsobject.jsx';
-import PopupBagWoonplaats from '../pages/viewer/components/PopupBagWoonplaats.jsx';
-import PopupIndustrie from '../pages/viewer/components/PopupIndustrie.jsx';
-import PopupKvk from '../pages/viewer/components/PopupKvk.jsx';
+import PopupBagLigplaats from '../pages/viewer/components/popups/PopupBagLigplaats.jsx';
+import PopupBagPand from '../pages/viewer/components/popups/PopupBagPand.jsx';
+import PopupBagStandplaats from '../pages/viewer/components/popups/PopupBagStandplaats.jsx';
+import PopupBagVerblijfsobject from '../pages/viewer/components/popups/PopupBagVerblijfsobject.jsx';
+import PopupBagWoonplaats from '../pages/viewer/components/popups/PopupBagWoonplaats.jsx';
+import PopupIndustrie from '../pages/viewer/components/popups/PopupIndustrie.jsx';
+import PopupKvk from '../pages/viewer/components/popups/PopupKvk.jsx';
 import Viewer from '../pages/viewer/Viewer.jsx';
 
 

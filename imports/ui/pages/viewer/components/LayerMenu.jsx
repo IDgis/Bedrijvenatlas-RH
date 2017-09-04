@@ -101,7 +101,7 @@ export default class LayerMenu extends Component {
                                 this.props.map.getView().setCenter(coords);
 
                                 // Zoom to the feature found
-                                this.props.map.getView().setZoom(17);
+                                this.props.map.getView().setZoom(17.5);
 
                                 let select = new ol.interaction.Select();
                                 this.props.map.addInteraction(select);
