@@ -78,6 +78,14 @@ export default class Viewer extends Component {
                     visible: false
                 }),
                 new ol.layer.Vector({
+                    title: 'Funda Te Koop',
+                    source: new ol.source.Vector({
+                        url: '/data/funda.json',
+                        format: new ol.format.GeoJSON()
+                    }),
+                    visible: false
+                }),
+                new ol.layer.Vector({
                     title: 'BAG Ligplaats',
                     source: new ol.source.Vector({
                         format: new ol.format.GeoJSON(),
@@ -140,9 +148,13 @@ export default class Viewer extends Component {
                         }))
                     }),
                     visible: false
-                }),
+                })
             ],
-            view: this.setView(),
+            view: new ol.View({
+                center: [229025, 479254],
+                projection: 'EPSG:28992',
+                zoom: 14,
+            }),
             controls: [
                 new ol.control.ScaleLine(),
                 new ol.control.Zoom(),
@@ -153,35 +165,60 @@ export default class Viewer extends Component {
             ])
         });
 
+        this.setMapSettings();
         this.props.mapToParent(this.state.map);
-
-        console.log('Projection: ' + this.state.map.getView().getProjection().getCode());
     }
 
     /**
      * Sets the initial view based on the answers in the wizard screen
      */
-    setView() {
+    setMapSettings() {
         let plaats = Session.get('plaats');
+        let voorkeur = Session.get('pand');
+        let huurKoop = Session.get('huur-koop')
 
-        if(plaats === 'rijssen') {
-            return new ol.View({
+        if(voorkeur === 'nieuwbouw' && huurKoop === 'koop' && plaats === 'rijssen') {
+            this.state.map.setView(new ol.View({
+                center: [234927, 478849],
+                projection: 'EPSG:28992',
+                zoom: 17
+            }));
+        } else if(plaats === 'rijssen') {
+            this.state.map.setView(new ol.View({
                 center: [232992, 480308],
                 projection: 'EPSG:28992',
                 zoom: 14.5,
-            });
+            }));
         } else if(plaats === 'holten') {
-            return new ol.View({
+            this.state.map.setView(new ol.View({
                 center: [225008, 477254],
                 projection: 'EPSG:28992',
                 zoom: 15.5,
+            }));
+        }
+
+        let layers = this.state.map.getLayers();
+        if(huurKoop === 'koop') {
+            // show the te koop layer
+            layers.forEach((layer, index, arr) => {
+                if(layer.get('title') === 'Funda Te Koop') {
+                    layer.setVisible(true);
+                }
             });
-        } else {
-            return new ol.View({
-                center: [229025, 479254],
-                projection: 'EPSG:28992',
-                zoom: 14,
-            })
+        } else if(huurKoop === 'huur') {
+            // show the te huur layer
+            layers.forEach((layer, index, arr) => {
+                if(layer.get('title') === 'Funda Te Huur') {
+                    layer.setVisible(true);
+                }
+            });
+        } else if(huurKoop === 'beide'){
+            // turn both layers on
+            layers.forEach((layer, index, arr) => {
+                if(layer.get('title') === 'Funda Te Huur' || layer.get('title') === 'Funda Te Koop') {
+                    layer.setVisible(true);
+                }
+            });
         }
     }
 
@@ -200,7 +237,6 @@ export default class Viewer extends Component {
             <div 
                 id="map" 
                 className="map" 
-                ref="olmap" 
                 style={styles.map} 
             >
                 <LayerMenu

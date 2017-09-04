@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
 import { GeoCoder } from 'geo-coder';
 import * as ol from 'openlayers';
-import proj4 from 'proj4';
 
+import ArrowDropRight from 'material-ui/svg-icons/navigation-arrow-drop-right';
+import Checkbox from 'material-ui/Checkbox';
 import {List, ListItem} from 'material-ui/List';
+import Menu from 'material-ui/Menu';
+import MenuItem from 'material-ui/MenuItem';
 import Popover, {PopoverAnimationVertical} from 'material-ui/Popover';
 
 export default class Vastgoed extends Component {
@@ -12,7 +15,100 @@ export default class Vastgoed extends Component {
         super(props);
 
         this.state = {
-            
+            vastgoedMenuOpen: false,
+            teKoopOpen: false,
+            teKoopVisible: false,
+            teHuurOpen: false,
+            teHuurVisible: false,
+            anchorEl: null,
+            xhr: new XMLHttpRequest()
+        }
+    }
+
+    componentWillReceiveProps(nextProps) {
+        if(nextProps.map !== null) {
+            let layers = nextProps.map.getLayers();
+            layers.forEach((layer, index, arr) => {
+                if(layer.get('title') === 'Funda Te Koop') {
+                    this.setState({
+                        teKoopVisible: layer.getVisible()
+                    });
+                }
+                if(layer.get('title') === 'Funda Te Huur') {
+                    this.setState({
+                        teHuurVisible: layer.getVisible()
+                    });
+                }
+            });
+        }
+    }
+
+    openVastgoedMenu = (event) => {
+        this.setState({
+            vastgoedMenuOpen: true,
+            anchorEl: event.currentTarget
+        });
+    }
+
+    closeVastgoedMenu = () => {
+        this.setState({
+            vastgoedMenuOpen: false
+        });
+    }
+
+    selectAllTeKoop = (event) => {
+        let layers = this.props.map.getLayers();
+        layers.forEach((layer, index) => {
+            if(layer.get('title') === 'Funda Te Koop') {
+                let newVisible = (!this.state.teKoopVisible);
+                this.setState({
+                    teKoopVisible: newVisible
+                });
+                layer.setVisible(newVisible);
+            }
+        });
+    }
+
+    selectAllTeHuur = (event) => {
+        let layers = this.props.map.getLayers();
+        layers.forEach((layer, index) => {
+            if(layer.get('title') === 'Funda Te Huur') {
+                let newVisible = (!this.state.teHuurVisible);
+                this.setState({
+                    teHuurVisible: newVisible
+                });
+                layer.setVisible(newVisible);
+            }
+        });
+    }
+
+    openTeKoop = (event) => {
+        this.setState({
+            teKoopOpen: true
+        });
+    }
+
+    openTeHuur = (event) => {
+        this.setState({
+            teHuurOpen: true
+        });
+    }
+
+    closeTeKoop = () => {
+        this.setState({
+            teKoopOpen: false
+        });
+    }
+
+    closeTeHuur = () => {
+        this.setState({
+            teHuurOpen: false
+        });
+    }
+
+    processRequest = (evt) => {
+        if(this.state.xhr.readyState == 4 && this.state.xhr.status == 200) {
+            //console.log(this.state.xhr.responseXML.getElementsByTagName('gml:pos')[0].textContent);
         }
     }
 
@@ -22,8 +118,10 @@ export default class Vastgoed extends Component {
             //this.props.map.getView().setCenter([198557.0, 489289.0]);
         }*/
 
-        /*proj4.defs('EPSG:28992', '+proj=sterea +lat_0=52.15616055555555 +lon_0=5.38763888888889 +k=0.9999079 +x_0=155000 +y_0=463000 +ellps=bessel +towgs84=565.417,50.3319,465.552,-0.398957,0.343988,-1.8774,4.0725 +units=m +no_defs');
-        ol.proj.setProj4(proj4);*/
+        this.state.xhr.open('GET', 'http://geodata.nationaalgeoregister.nl/geocoder/Geocoder?zoekterm=boomkamp+16+rijssen', true);
+        this.state.xhr.send();
+        this.state.xhr.addEventListener('readystatechange', this.processRequest, false);
+
         /*let geoCoder = new GeoCoder({
             provider: 'osm',
             key: ''
@@ -38,8 +136,51 @@ export default class Vastgoed extends Component {
 
         return(
             <div>
-                <ListItem primaryText="Vastgoedinformatie" />
-                <Popover></Popover>
+                <MenuItem primaryText="Vastgoedinformatie" onClick={this.openVastgoedMenu} />
+                <Popover
+                    open={this.state.vastgoedMenuOpen}
+                    anchorEl={this.state.anchorEl}
+                    anchorOrigin={{horizontal: 'left', vertical: 'bottom'}}
+                    targetOrigin={{horizontal: 'left', vertical: 'top'}}
+                    onRequestClose={this.closeVastgoedMenu}
+                    animation={PopoverAnimationVertical}
+                >
+                    <Menu>
+                        <MenuItem 
+                            primaryText='Te koop' 
+                            onClick={this.selectAllTeKoop}
+                            leftIcon={<Checkbox checked={this.state.teKoopVisible} /*onClick={this.selectAllTeKoop}*/ />}
+                        />
+                        {/*<Popover
+                            open={this.state.teKoopOpen}
+                            anchorEl={this.state.anchorEl}
+                            anchorOrigin={{horizontal: 'left', vertical: 'bottom'}}
+                            targetOrigin={{horizontal: 'left', vertical: 'top'}}
+                            onRequestClose={this.closeTeKoop}
+                            animation={PopoverAnimationVertical}
+                        >
+                            <MenuItem primaryText='tekooptest_1' onClick={this.zoomToSelected} />
+                        </Popover>
+                        <MenuItem 
+                            primaryText='Te huur' 
+                            onClick={this.openTeHuur}
+                            leftIcon={<Checkbox checked={false} onClick={this.selectAllTeHuur} />}
+                            rightIcon={<ArrowDropRight />}
+                        />
+                        <Popover
+                            open={this.state.teHuurOpen}
+                            anchorEl={this.state.anchorEl}
+                            anchorOrigin={{horizontal: 'left', vertical: 'bottom'}}
+                            targetOrigin={{horizontal: 'left', vertical: 'top'}}
+                            onRequestClose={this.closeTeHuur}
+                            animation={PopoverAnimationVertical}
+                        >
+                            <MenuItem primaryText='tehuurtest_1' onClick={this.zoomToSelected} />
+                            <MenuItem primaryText='tehuurtest_2' onClick={this.zoomToSelected} />
+                            <MenuItem primaryText='tehuurtest_3' onClick={this.zoomToSelected} />
+                        </Popover>*/}
+                    </Menu>
+                </Popover>
             </div>
         );
     }
