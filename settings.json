@@ -15,7 +15,11 @@
 
         "homePageGemeente": "http://www.rijssen-holten.nl/home",
         "logoUrlGemeente": "/images/logo-rh.jpg",
+        "colorGemeente": "#730049",
         "homePageIdgis": "https://www.idgis.nl/nl/",
-        "logoUrlIdgis": "/images/logoidgisklein.jpg"
+        "logoUrlIdgis": "/images/logoidgisklein.jpg",
+
+        "logoWizardUrl": "/images/format_list.png",
+        "logoViewerUrl": "/images/gps_fixed.png"
     }
 }
