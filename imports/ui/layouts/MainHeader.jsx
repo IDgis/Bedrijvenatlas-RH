@@ -20,11 +20,11 @@ export default class MainHeader extends Component {
         return (
             <div style={styles}>
                 <div className="col-xs-12 col-sm-12">
-                    <a href="http://www.rijssen-holten.nl/home">
-                        <img src={'/images/logo-rh.jpg'} alt="startpagina Gemeente Rijssen-Holten" />
+                    <a href={Meteor.settings.public.homePageGemeente}>
+                        <img src={Meteor.settings.public.logoUrlGemeente} alt="startpagina Gemeente Rijssen-Holten" />
                     </a>
-                    <a href="https://www.idgis.nl/nl/">
-                        <img src="/images/logoidgisklein.jpg" alt="pagina Idgis" style={styles.image} />
+                    <a href={Meteor.settings.public.homePageIdgis}>
+                        <img src={Meteor.settings.public.logoUrlIdgis} alt="pagina Idgis" style={styles.image} />
                     </a>
                 </div>
             </div>

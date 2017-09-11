@@ -1,0 +1,21 @@
+{
+    "public": {
+
+        "laagNaam": {
+            "kvk": "KVK Bedrijven",
+            "ibis": "Ibis Bedrijventerreinen",
+            "bag": "BAG",
+            "bagLigplaats": "BAG Ligplaats",
+            "bagPand": "BAG Pand",
+            "bagStandplaats": "BAG Standplaats",
+            "bagVerblijfsobject": "BAG Verblijfsobject",
+            "kadastralePercelen": "Kadastrale percelen",
+            "luchtfoto": "Luchtfoto"
+        },
+
+        "homePageGemeente": "http://www.rijssen-holten.nl/home",
+        "logoUrlGemeente": "/images/logo-rh.jpg",
+        "homePageIdgis": "https://www.idgis.nl/nl/",
+        "logoUrlIdgis": "/images/logoidgisklein.jpg"
+    }
+}
