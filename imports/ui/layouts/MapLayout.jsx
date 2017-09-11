@@ -2,6 +2,7 @@
 
 import React, { Component } from 'react';
 import * as ol from 'openlayers';
+import proj4 from 'proj4';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 import MainHeader from './MainHeader.jsx';
@@ -10,9 +11,9 @@ import PopupBagLigplaats from '../pages/viewer/components/popups/PopupBagLigplaa
 import PopupBagPand from '../pages/viewer/components/popups/PopupBagPand.jsx';
 import PopupBagStandplaats from '../pages/viewer/components/popups/PopupBagStandplaats.jsx';
 import PopupBagVerblijfsobject from '../pages/viewer/components/popups/PopupBagVerblijfsobject.jsx';
-import PopupBagWoonplaats from '../pages/viewer/components/popups/PopupBagWoonplaats.jsx';
 import PopupIndustrie from '../pages/viewer/components/popups/PopupIndustrie.jsx';
 import PopupKvk from '../pages/viewer/components/popups/PopupKvk.jsx';
+import Streetview from '../pages/viewer/Streetview.jsx';
 import Viewer from '../pages/viewer/Viewer.jsx';
 
 
@@ -23,6 +24,10 @@ export default class MapLayout extends Component {
 
         this.state = {
             coords: {
+                x: 0,
+                y: 0
+            },
+            location: {
                 x: 0,
                 y: 0
             },
@@ -38,6 +43,9 @@ export default class MapLayout extends Component {
     onMouseMove(e) {
         this.state.coords.x = e.screenX;
         this.state.coords.y = e.screenY;
+
+        let map = this.state.map;
+        let that = this;
     }
 
     /**
@@ -57,32 +65,25 @@ export default class MapLayout extends Component {
     
         map.on('click', function(e) {
             that.setState({
-                featurePopup: <div></div>
+                featurePopup: <div></div>,
+                location: {
+                    x: e.coordinate[0],
+                    y: e.coordinate[1]
+                }
             });
-
-            /*let pixel;
-            if(e.pixel === undefined) {
-                let size = map.getSize();
-                let pixelX = size[0] / 2;
-                let pixelY = size[1] / 2;
-                pixel = [pixelX, pixelY];
-            } else {
-                pixel = e.pixel;
-            }*/
+            
             map.forEachFeatureAtPixel(e.pixel, function(feature, layer) {
-                if(layer.get('title') === 'Ibis Bedrijventerreinen') {
+                if(layer.get('title') === Meteor.settings.public.laagNaam.ibis) {
                     that.setState({featurePopup: <PopupIndustrie selectedFeature={feature} coords={that.state.coords} />})
-                } else if(layer.get('title') === 'BAG Ligplaats') {
+                } else if(layer.get('title') === Meteor.settings.public.laagNaam.bagLigplaats) {
                     that.setState({featurePopup: <PopupBagLigplaats selectedFeature={feature} coords={that.state.coords} />})
-                } else if(layer.get('title') === 'BAG Pand') {
+                } else if(layer.get('title') === Meteor.settings.public.laagNaam.bagPand) {
                     that.setState({featurePopup: <PopupBagPand selectedFeature={feature} coords={that.state.coords} />})
-                } else if(layer.get('title') === 'BAG Standplaats') {
+                } else if(layer.get('title') === Meteor.settings.public.laagNaam.bagStandplaats) {
                     that.setState({featurePopup: <PopupBagStandplaats selectedFeature={feature} coords={that.state.coords} />})
-                } else if(layer.get('title') === 'BAG Verblijfsobject') {
+                } else if(layer.get('title') === Meteor.settings.public.laagNaam.bagVerblijfsobject) {
                     that.setState({featurePopup: <PopupBagVerblijfsobject selectedFeature={feature} coords={that.state.coords} />})
-                } else if(layer.get('title') === 'BAG Woonplaats') {
-                    that.setState({featurePopup: <PopupBagWoonplaats selectedFeature={feature} coords={that.state.coords} />})
-                } else if(layer.get('title') === 'Kvk Bedrijven') {
+                } else if(layer.get('title') === Meteor.settings.public.laagNaam.kvk) {
                     that.setState({featurePopup: <PopupKvk selectedFeature={feature} coords={that.state.coords} />})
                 }
             });
@@ -108,6 +109,11 @@ export default class MapLayout extends Component {
      * Renders the Map Layout to the screen.
      */
     render() {
+        proj4.defs('EPSG:28992', '+proj=sterea +lat_0=52.15616055555555 +lon_0=5.38763888888889 +k=0.9999079 +x_0=155000 +y_0=463000 +ellps=bessel +towgs84=565.417,50.3319,465.552,-0.398957,0.343988,-1.8774,4.0725 +units=m +no_defs');
+        ol.proj.setProj4(proj4);
+        let oldCoord=[this.state.location.x,this.state.location.y];
+        let coord = ol.proj.transform([oldCoord[0],oldCoord[1]],'EPSG:28992','EPSG:4326');
+
         return (
             <MuiThemeProvider>
                 <div>
@@ -118,6 +124,7 @@ export default class MapLayout extends Component {
                     <main onMouseMove={this.onMouseMove.bind(this)}>
                         <Viewer mapToParent={this.setMap} menuOpen={this.state.menuOpen} toggleMenuState={this.toggleMenuState} featurePopup={this.setKvkPopup} />
                         {this.state.featurePopup}
+                        <Streetview coords={coord} />
                     </main>
                 </div>
             </MuiThemeProvider>
