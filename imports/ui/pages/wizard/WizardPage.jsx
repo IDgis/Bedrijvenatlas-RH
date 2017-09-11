@@ -69,6 +69,14 @@ export default class WizardPage extends Component {
                         </RadioButtonGroup>
                     </div>
                     <div>
+                        <h2 style={styles.h2}>Bent u op zoek naar een kantoor of bedrijfshal?</h2>
+                        <RadioButtonGroup name="pandtype" defaultSelected="beide" onChange={this.setHuurKoopValue.bind(this)}>
+                            <RadioButton value="kantoor" label="Kantoor" style={styles.radioButton} iconStyle={{fill: '#730049'}} labelStyle={{color:'#333'}} />
+                            <RadioButton value="hal" label="Bedrijfshal" style={styles.radioButton} iconStyle={{fill: '#730049'}} labelStyle={{color:'#333'}} />
+                            <RadioButton value="beide" label="Geen voorkeur" style={styles.radioButton} iconStyle={{fill: '#730049'}} labelStyle={{color:'#333'}} />
+                        </RadioButtonGroup>
+                    </div>
+                    <div>
                         <h2 style={styles.h2}>In welke plaats zoekt u de mogelijkheden?</h2>
                         <RadioButtonGroup name="plaats" defaultSelected="beide" onChange={this.setPlaatsValue.bind(this)}>
                             <RadioButton value="rijssen" label="Rijssen" style={styles.radioButton} iconStyle={{fill: '#730049'}} labelStyle={{color:'#333'}} />

@@ -17,9 +17,10 @@ export default class SearchBar extends Component {
         return(
             <ListItem>
                 <AutoComplete
-                    floatingLabelText="Type hier om te zoeken"
+                    floatingLabelText="Bedrijvenindex (A t/m Z)"
                     dataSource={this.props.dataSource}
                     filter={AutoComplete.caseInsensitiveFilter}
+                    //filter={(searchText, key) => (key.indexOf(searchText) === -1)}
                     anchorOrigin={{horizontal: 'right', vertical: 'bottom'}}
                     targetOrigin={{horizontal: 'right', vertical: 'top'}}
                     onNewRequest={this.props.onNewRequest}

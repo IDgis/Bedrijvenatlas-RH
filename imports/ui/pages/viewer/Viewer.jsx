@@ -40,14 +40,85 @@ export default class Viewer extends Component {
      * Sets up the initial OpenLayers map
      */
     componentDidMount() {
+        let extent = [-285401.92,22598.08,595401.9199999999,903401.9199999999];
+        let resolutions = [3440.640, 1720.320, 860.160, 430.080, 215.040, 107.520, 53.760, 26.880, 13.440, 6.720, 3.360, 1.680, 0.840, 0.420];
+        let projection = new ol.proj.Projection({code:'EPSG:28992', units:'m', extent: extent});
+
         this.state.map  = new ol.Map({
             target: 'map',
             layers: [
                 new ol.layer.Tile({
+                    title: 'osm',
                     source: new ol.source.OSM()
                 }),
+                /*new ol.layer.Tile({
+                    title: 'brt achtergrondkaart',
+                    source: new ol.source.TileImage({
+                        projection: projection,
+                        tileGrid: new ol.tilegrid.TileGrid({
+                            origin: [-285401.92,22598.08],
+                            resolutions: resolutions
+                        }),
+                        //tileUrlFunction: this.tileUrlFunction
+                        tileUrlFunction: function(coordinate) {
+                            if(coordinate === null) return undefined;
+
+                            let z = coordinate[0];
+                            let x = coordinate[1];
+                            let y = coordinate[2];
+                            if(x < 0 || y < 0) return '';
+
+                            let url = 'http://geodata.nationaalgeoregister.nl/tms/1.0.0/brtachtergrondkaart/'+z+'/'+x+'/'+y+'.png';
+                            return url;
+                        }
+                    }),
+                    visible: true,
+                    //opacity: 0.7
+                }),*/
+                new ol.layer.Tile({
+                    title: Meteor.settings.public.laagNaam.luchtfoto,
+                    preload: 1,
+                    source: new ol.source.TileImage({
+                        crossOrigin: null,
+                        extent: extent,
+                        projection: projection,
+                        tileGrid: new ol.tilegrid.TileGrid({
+                            extent: extent,
+                            origin: [-285401.92,22598.08],
+                            resolutions: resolutions
+                        }),
+                        tileUrlFunction: function(coordinate) {
+                            if(coordinate === null) return undefined;
+
+                            let z = coordinate[0];
+                            let x = coordinate[1];
+                            let y = coordinate[2];
+                            if(x < 0 || y < 0) return '';
+
+                            let url = 'https://geodata.nationaalgeoregister.nl/luchtfoto/rgb/tms/1.0.0/2016_ortho25/EPSG:28992/'+z+'/'+x+'/'+y+'.jpeg';
+                            return url;
+                        }
+                    }),
+                    visible: false,
+                }),
                 new ol.layer.Vector({
-                    title: 'Kvk Bedrijven',
+                    title: Meteor.settings.public.laagNaam.kadastralePercelen,
+                    source: new ol.source.Vector({
+                        format: new ol.format.GeoJSON(),
+                        url: function(extent, resolution, projection) {
+                            return 'https://geodata.nationaalgeoregister.nl/kadastralekaartv3/wfs?service=WFS&' +
+                                'version=1.1.0&request=GetFeature&resultType=results&typename=kadastralekaartv3:perceel&' +
+                                'outputFormat=application/json&srsname=EPSG:28992&' +
+                                'bbox=' + extent.join(',') + ',EPSG:28992';
+                        },
+                        strategy: ol.loadingstrategy.tile(ol.tilegrid.createXYZ({
+                            maxZoom: 20
+                        }))
+                    }),
+                    visible: false
+                }),
+                new ol.layer.Vector({
+                    title: Meteor.settings.public.laagNaam.kvk,
                     source: new ol.source.Vector({
                         url: '/data/KVK_BEDRIJVEN.json',
                         format: new ol.format.GeoJSON()
@@ -55,7 +126,7 @@ export default class Viewer extends Component {
                     visible: false
                 }),
                 new ol.layer.Vector({
-                    title: 'Ibis Bedrijventerreinen',
+                    title: Meteor.settings.public.laagNaam.ibis,
                     source: new ol.source.Vector({
                         url: '/data/IBIS_BEDRIJVENTERREINEN.json',
                         format: new ol.format.GeoJSON()
@@ -86,7 +157,7 @@ export default class Viewer extends Component {
                     visible: false
                 }),
                 new ol.layer.Vector({
-                    title: 'BAG Ligplaats',
+                    title: Meteor.settings.public.laagNaam.bagLigplaats,
                     source: new ol.source.Vector({
                         format: new ol.format.GeoJSON(),
                         url: function(extent, resolution, projection) {
@@ -102,7 +173,7 @@ export default class Viewer extends Component {
                     visible: false
                 }),
                 new ol.layer.Vector({
-                    title: 'BAG Pand',
+                    title: Meteor.settings.public.laagNaam.bagPand,
                     source: new ol.source.Vector({
                         format: new ol.format.GeoJSON(),
                         url: function(extent, resolution, projection) {
@@ -118,7 +189,7 @@ export default class Viewer extends Component {
                     visible: false
                 }),
                 new ol.layer.Vector({
-                    title: 'BAG Standplaats',
+                    title: Meteor.settings.public.laagNaam.bagStandplaats,
                     source: new ol.source.Vector({
                         format: new ol.format.GeoJSON(),
                         url: function(extent, resolution, projection) {
@@ -134,7 +205,7 @@ export default class Viewer extends Component {
                     visible: false
                 }),
                 new ol.layer.Vector({
-                    title: 'BAG Verblijfsobject',
+                    title: Meteor.settings.public.laagNaam.bagVerblijfsobject,
                     source: new ol.source.Vector({
                         format: new ol.format.GeoJSON(),
                         url: function(extent, resolution, projection) {

@@ -1,4 +1,7 @@
 import React, { Component } from 'react';
+import { Meteor } from 'meteor/meteor';
+
+import Kaartlaag from './Kaartlaag.jsx';
 
 import ArrowDropRight from 'material-ui/svg-icons/navigation-arrow-drop-right';
 import Checkbox from 'material-ui/Checkbox';
@@ -12,20 +15,20 @@ export default class OverigeLagen extends Component {
         super(props);
 
         this.state = {
-            achtergrondkaartenOpen: false,
-            bagLigplaatsVisible: false,
-            bagPandVisible: false,
-            bagStandplaatsVisible: false,
-            bagVerblijfsobjectVisible: false,
-            ibisVisible: false,
-            kvkVisible: false
+            map: this.props.map,
+            allBagChecked: false,
+            achtergrondkaartenOpen: false
         }
+
+        this.setAllBagChecked();
     }
 
     componentWillReceiveProps(nextProps) {
         this.setState({
-            kvkVisible: nextProps.kvkVisible
+            map: nextProps.map,
         });
+
+        this.setAllBagChecked();
     }
 
     /**
@@ -48,122 +51,64 @@ export default class OverigeLagen extends Component {
     }
 
     /**
-     * Turns the BAG Ligplaats layer on and off
-     */
-    toggleBagLigplaatsLayer = (event, l) => {
-        let layers = this.props.map.getLayers();
-        layers.forEach((layer, index) => {
-            if(layer.get('title') === 'BAG Ligplaats') {
-                let newVisible = (!layer.getVisible());
-                this.setState({
-                    bagLigplaatsVisible: newVisible
-                });
-                layer.setVisible(newVisible);
-            }
-        });
-    }
-
-    /**
-     * Turns the BAG Pand layer on and off
-     */
-    toggleBagPandLayer = (event, l) => {
-        let layers = this.props.map.getLayers();
-        layers.forEach((layer, index) => {
-            if(layer.get('title') === 'BAG Pand') {
-                let newVisible = (!layer.getVisible());
-                this.setState({
-                    bagPandVisible: newVisible
-                });
-                layer.setVisible(newVisible);
-            }
-        });
-    }
-
-    /**
-     * Turn the BAG Standplaats layer on and off
-     */
-    toggleBagStandplaatsLayer = (event, l) => {
-        let layers = this.props.map.getLayers();
-        layers.forEach((layer, index) => {
-            if(layer.get('title') === 'BAG Standplaats') {
-                let newVisible = (!layer.getVisible());
-                this.setState({
-                    bagStandplaatsVisible: newVisible
-                });
-                layer.setVisible(newVisible);
-            }
-        });
-    }
-
-    /**
-     * Turns the BAG Verblijfsobject layer on and off
-     */
-    toggleBagVerblijfsobjectLayer = (event, l) => {
-        let layers = this.props.map.getLayers();
-        layers.forEach((layer, index) => {
-            if(layer.get('title') === 'BAG Verblijfsobject') {
-                let newVisible = (!layer.getVisible());
-                this.setState({
-                    bagVerblijfsobjectVisible: newVisible
-                });
-                layer.setVisible(newVisible);
-            }
-        });
-    }
-
-    /**
      * Turns all BAG layers on and off at once
      */
     selectAllBagLayers = (event, l) => {
-        let layersVisible = !(this.state.bagLigplaatsVisible && this.state.bagPandVisible && this.state.bagStandplaatsVisible
-                        && this.state.bagVerblijfsobjectVisible);
-        
-        let layers = this.props.map.getLayers();
-        layers.forEach((layer, index) => {
-            if(layer.get('title') === 'BAG Ligplaats' || layer.get('title') === 'BAG Pand' || layer.get('title') === 'BAG Standplaats' ||
-            layer.get('title') === 'BAG Verblijfsobject') {
-                this.setState({
-                    bagLigplaatsVisible: layersVisible,
-                    bagPandVisible: layersVisible,
-                    bagStandplaatsVisible: layersVisible,
-                    bagVerblijfsobjectVisible: layersVisible
-                });
-                layer.setVisible(layersVisible);
-            }
+        let newVisible = !this.state.allBagChecked;
+
+        let bagligplaats = Meteor.settings.public.laagNaam.bagLigplaats;
+        let bagpand = Meteor.settings.public.laagNaam.bagPand;
+        let bagstandplaats = Meteor.settings.public.laagNaam.bagStandplaats;
+        let bagverblijf = Meteor.settings.public.laagNaam.bagVerblijfsobject;
+
+        let map = this.props.map;
+        if(map != null) {
+            let layers = map.getLayers();
+            layers.forEach((layer, index) => {
+                if(layer.get('title') === bagligplaats || layer.get('title') === bagpand || layer.get('title') === bagstandplaats ||
+                layer.get('title') === bagverblijf) {
+                    layer.setVisible(newVisible);
+                }
+            });
+        }
+
+        this.setState({
+            allBagChecked: newVisible
         });
     }
 
-    /**
-     * Turns the IBIS Bedrijventerreinen layer on and off
-     */
-    toggleIbisLayer = (event, l) => {
-        let layers = this.props.map.getLayers();
-        layers.forEach((layer, index) => {
-            if(layer.get('title') === 'Ibis Bedrijventerreinen') {
-                let newVisible = (!layer.getVisible());
-                this.setState({
-                    ibisVisible: newVisible
-                });
-                layer.setVisible(newVisible);
-            }
-        });
-    }
+    setAllBagChecked = () => {
+        let bagligplaats = Meteor.settings.public.laagNaam.bagLigplaats;
+        let bagpand = Meteor.settings.public.laagNaam.bagPand;
+        let bagstandplaats = Meteor.settings.public.laagNaam.bagStandplaats;
+        let bagverblijf = Meteor.settings.public.laagNaam.bagVerblijfsobject;
 
-    toggleKvkLayer = (event, l) => {
-        let layers = this.props.map.getLayers();
-        layers.forEach((layer, index) => {
-            if(layer.get('title') === 'Kvk Bedrijven') {
-                let newVisible = (!this.props.kvkVisible);
-                this.props.setKvkVisible(newVisible);
-                layer.setVisible(newVisible);
-            }
-        });
+        let map = this.props.map;
+        if(map !== null) {
+            let allVisible = true;
+            let layers = map.getLayers();
+            layers.forEach((layer, index) => {
+                if(layer.get('title') === bagligplaats) {
+                    if(!layer.getVisible()) allVisible = false;
+                } else if(layer.get('title') === bagpand) {
+                    if(!layer.getVisible()) allVisible = false;
+                } else if(layer.get('title') === bagstandplaats) {
+                    if(!layer.getVisible()) allVisible = false;
+                } else if(layer.get('title') === bagverblijf) {
+                    if(!layer.getVisible()) allVisible = false;
+                }
+
+                this.setState({
+                    allBagChecked: allVisible
+                });
+            });
+        }
     }
 
     render() {
         return (
             <div>
-                <ListItem primaryText="Overige Lagen" onClick={this.openAchtergrondKaarten} />
+                <MenuItem primaryText="Overige Lagen" onClick={this.openAchtergrondKaarten} />
                 <Popover
                     open={this.state.achtergrondkaartenOpen}
                     anchorEl={this.state.anchorEl}
@@ -173,19 +118,20 @@ export default class OverigeLagen extends Component {
                     animation={PopoverAnimationVertical}
                 >
                     <List>
-                        <MenuItem primaryText='BAG' 
-                            leftIcon={<Checkbox checked={this.state.bagLigplaatsVisible && this.state.bagPandVisible && this.state.bagStandplaatsVisible
-                                                        && this.state.bagVerblijfsobjectVisible} onClick={this.selectAllBagLayers} />} 
+                        <MenuItem primaryText={Meteor.settings.public.laagNaam.bag}
+                            leftIcon={<Checkbox checked={this.state.allBagChecked} onClick={this.selectAllBagLayers} />} 
                             rightIcon={<ArrowDropRight />} 
                             menuItems={[
-                                <ListItem primaryText='BAG Ligplaats' leftCheckbox={<Checkbox checked={this.state.bagLigplaatsVisible} onClick={this.toggleBagLigplaatsLayer} />} />,
-                                <ListItem primaryText='BAG Pand' leftCheckbox={<Checkbox checked={this.state.bagPandVisible} onClick={this.toggleBagPandLayer} />} />,
-                                <ListItem primaryText='BAG Standplaats' leftCheckbox={<Checkbox checked={this.state.bagStandplaatsVisible} onClick={this.toggleBagStandplaatsLayer} />} />,
-                                <ListItem primaryText='BAG Verblijfsobjecten' leftCheckbox={<Checkbox checked={this.state.bagVerblijfsobjectVisible} onClick={this.toggleBagVerblijfsobjectLayer} />} />
+                                <Kaartlaag primaryText={Meteor.settings.public.laagNaam.bagLigplaats} map={this.props.map} updateParent={this.setAllBagChecked} />,
+                                <Kaartlaag primaryText={Meteor.settings.public.laagNaam.bagPand} map={this.props.map} updateParent={this.setAllBagChecked} />,
+                                <Kaartlaag primaryText={Meteor.settings.public.laagNaam.bagStandplaats} map={this.props.map} updateParent={this.setAllBagChecked} />,
+                                <Kaartlaag primaryText={Meteor.settings.public.laagNaam.bagVerblijfsobject} map={this.props.map} updateParent={this.setAllBagChecked} />
                             ]} 
                         />
-                        <ListItem primaryText='Ibis Bedrijventerreinen' leftCheckbox={<Checkbox checked={this.state.ibisVisible} onClick={this.toggleIbisLayer} />} />
-                        <ListItem primaryText='KVK Bedrijven' leftCheckbox={<Checkbox checked={this.state.kvkVisible} onClick={this.toggleKvkLayer} />} />
+                        <Kaartlaag primaryText={Meteor.settings.public.laagNaam.ibis} map={this.props.map} />
+                        <Kaartlaag primaryText={Meteor.settings.public.laagNaam.kvk} map={this.props.map} />
+                        <Kaartlaag primaryText={Meteor.settings.public.laagNaam.kadastralePercelen} map={this.props.map} />
+                        <Kaartlaag primaryText={Meteor.settings.public.laagNaam.luchtfoto} map={this.props.map} />
                     </List>
                 </Popover>
             </div>

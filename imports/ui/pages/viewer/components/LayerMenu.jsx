@@ -79,7 +79,7 @@ export default class LayerMenu extends Component {
         // Center the map around the feature found
         let layers = this.props.map.getLayers();
         layers.forEach((layer, index, arr) => {
-            if(layer.get('title') === 'Kvk Bedrijven') {
+            if(layer.get('title') === Meteor.settings.public.laagNaam.kvk) {
                 console.log('Found layer Kvk Bedrijven...');
 
                 // Set the layer visible
@@ -135,9 +135,9 @@ export default class LayerMenu extends Component {
             <Drawer open={this.state.menuOpen} /*openSecondary={true}*/ docked={false} onRequestChange={(open) => this.props.toggleMenuState(!this.state.menuOpen)} >
                 <Menu>
                     <SearchBar dataSource={this.state.searchFields} onNewRequest={this.selectFeature} />
-                    <BedrijvenSorted selectFeature={this.selectFeature} />
+                    {/*<BedrijvenSorted selectFeature={this.selectFeature} />*/}
                     <BedrijvenBranche map={this.props.map} />
-                    <OverigeLagen map={this.props.map} setKvkVisible={this.setKvkVisible} kvkVisible={this.state.kvkVisible} />
+                    <OverigeLagen map={this.props.map} />
                     <Vastgoed map={this.props.map} />
                 </Menu>
             </Drawer>
