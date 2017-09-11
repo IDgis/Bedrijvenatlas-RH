@@ -107,6 +107,7 @@ export default class Vastgoed extends Component {
     }
 
     processRequest = (evt) => {
+        //console.log(this.state.xhr.status);
         if(this.state.xhr.readyState == 4 && this.state.xhr.status == 200) {
             //console.log(this.state.xhr.responseXML.getElementsByTagName('gml:pos')[0].textContent);
         }
@@ -118,9 +119,11 @@ export default class Vastgoed extends Component {
             //this.props.map.getView().setCenter([198557.0, 489289.0]);
         }*/
 
-        this.state.xhr.open('GET', 'http://geodata.nationaalgeoregister.nl/geocoder/Geocoder?zoekterm=boomkamp+16+rijssen', true);
-        this.state.xhr.send();
-        this.state.xhr.addEventListener('readystatechange', this.processRequest, false);
+        //this.state.xhr.open('GET', 'http://geodata.nationaalgeoregister.nl/geocoder/Geocoder?zoekterm=boomkamp 16 rijssen', true);
+        //this.state.xhr.open('GET', 'https://www.fundainbusiness.nl/', true);
+        //this.state.xhr.setRequestHeader('Acces-Control-Allow-Origin', '/**');
+        //this.state.xhr.send();
+        //this.state.xhr.addEventListener('readystatechange', this.processRequest, false);
 
         /*let geoCoder = new GeoCoder({
             provider: 'osm',
