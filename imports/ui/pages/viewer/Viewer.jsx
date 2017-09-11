@@ -43,6 +43,11 @@ export default class Viewer extends Component {
         let extent = [-285401.92,22598.08,595401.9199999999,903401.9199999999];
         let resolutions = [3440.640, 1720.320, 860.160, 430.080, 215.040, 107.520, 53.760, 26.880, 13.440, 6.720, 3.360, 1.680, 0.840, 0.420];
         let projection = new ol.proj.Projection({code:'EPSG:28992', units:'m', extent: extent});
+        let matrixIds = [];
+
+        for(let i = 0; i < 16; i++) {
+            matrixIds[i] = 'EPSG:28992:' + i.toString();
+        }
 
         this.state.map  = new ol.Map({
             target: 'map',
@@ -68,18 +73,20 @@ export default class Viewer extends Component {
                 }),*/
                 new ol.layer.Tile({
                     title: Meteor.settings.public.laagNaam.luchtfoto,
-                    preload: 1,
-                    source: new ol.source.TileImage({
-                        crossOrigin: null,
-                        extent: extent,
+                    source: new ol.source.WMTS({
+                        url: 'http://rijssen-holten.ecw-hosting.nl/lufo/services/wmts_rijssen_holten',
+                        layer: 'Rijssen_Holten',
+                        matrixSet: 'NLDEPSG28992Scale',
+                        format: 'image/jpg',
                         projection: projection,
-                        tileGrid: new ol.tilegrid.TileGrid({
-                            extent: extent,
-                            resolutions: resolutions
-                        }),
-                        url: 'https://geodata.nationaalgeoregister.nl/luchtfoto/rgb/tms/1.0.0/2016_ortho25/EPSG:28992/{z}/{x}/{-y}.jpeg'
+                        style: 'default',
+                        tileGrid: new ol.tilegrid.WMTS({
+                            origin: [-285401.92,903401.92],
+                            resolutions: resolutions,
+                            matrixIds: matrixIds
+                        })
                     }),
-                    visible: false,
+                    visible: false
                 }),
                 new ol.layer.Vector({
                     title: Meteor.settings.public.laagNaam.kadastralePercelen,
