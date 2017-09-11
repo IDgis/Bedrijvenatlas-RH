@@ -53,27 +53,18 @@ export default class Viewer extends Component {
                 }),
                 /*new ol.layer.Tile({
                     title: 'brt achtergrondkaart',
+                    preload: 1,
                     source: new ol.source.TileImage({
+                        crossOrigin: null,
+                        extent: extent,
                         projection: projection,
                         tileGrid: new ol.tilegrid.TileGrid({
-                            origin: [-285401.92,22598.08],
+                            extent: extent,
                             resolutions: resolutions
                         }),
-                        //tileUrlFunction: this.tileUrlFunction
-                        tileUrlFunction: function(coordinate) {
-                            if(coordinate === null) return undefined;
-
-                            let z = coordinate[0];
-                            let x = coordinate[1];
-                            let y = coordinate[2];
-                            if(x < 0 || y < 0) return '';
-
-                            let url = 'http://geodata.nationaalgeoregister.nl/tms/1.0.0/brtachtergrondkaart/'+z+'/'+x+'/'+y+'.png';
-                            return url;
-                        }
+                        url: 'http://geodata.nationaalgeoregister.nl/tms/1.0.0/brtachtergrondkaart/{z}/{x}/{-y}.png'
                     }),
                     visible: true,
-                    //opacity: 0.7
                 }),*/
                 new ol.layer.Tile({
                     title: Meteor.settings.public.laagNaam.luchtfoto,
@@ -84,20 +75,9 @@ export default class Viewer extends Component {
                         projection: projection,
                         tileGrid: new ol.tilegrid.TileGrid({
                             extent: extent,
-                            origin: [-285401.92,22598.08],
                             resolutions: resolutions
                         }),
-                        tileUrlFunction: function(coordinate) {
-                            if(coordinate === null) return undefined;
-
-                            let z = coordinate[0];
-                            let x = coordinate[1];
-                            let y = coordinate[2];
-                            if(x < 0 || y < 0) return '';
-
-                            let url = 'https://geodata.nationaalgeoregister.nl/luchtfoto/rgb/tms/1.0.0/2016_ortho25/EPSG:28992/'+z+'/'+x+'/'+y+'.jpeg';
-                            return url;
-                        }
+                        url: 'https://geodata.nationaalgeoregister.nl/luchtfoto/rgb/tms/1.0.0/2016_ortho25/EPSG:28992/{z}/{x}/{-y}.jpeg'
                     }),
                     visible: false,
                 }),
