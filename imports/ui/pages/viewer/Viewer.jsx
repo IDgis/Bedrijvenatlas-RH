@@ -135,6 +135,34 @@ export default class Viewer extends Component {
                     },
                     visible: false
                 }),
+                /*new ol.layer.Tile({
+                    title: Meteor.settings.public.laagNaam.ibis,
+                    source: new ol.source.TileWMS({
+                        url: 'https://rijssenholten.geopublisher.nl/staging/geoserver/Bedrijventerreinen_Rijssen-Holten_service/ows?SERVICE=WMS&',
+                        params: {
+                            'FORMAT': 'image/png',
+                            'LAYERS': 'Bedrijventerreinen_Rijssen-Holten',
+                            'CRS': 'EPSG:28992'
+                        }
+                    }),
+                    visible: false
+                }),*/
+                /*new ol.layer.Vector({
+                    title: Meteor.settings.public.laagNaam.ibis,
+                    source: new ol.source.Vector({
+                        format: new ol.format.GeoJSON(),
+                        url: function(extent, resolution, projection) {
+                            return 'https://rijssenholten.geopublisher.nl/staging/geoserver/Bedrijventerreinen_Rijssen-Holten_service/wfs?' +
+                                'service=wfs&version=1.1.0&request=GetFeature&outputFormat=application/json&resultType=results' +
+                                '&typeName=Bedrijventerreinen_Rijssen-Holten_service:Bedrijventerreinen_Rijssen-Holten&srs=EPSG:28992' +
+                                '&bbox=' + extent.join(',') + ',EPSG:28992';
+                        },
+                        strategy: ol.loadingstrategy.tile(ol.tilegrid.createXYZ({
+                            maxZoom: 20
+                        })),
+                    }),
+                    visible: false
+                }),*/
                 new ol.layer.Vector({
                     title: 'Funda Te Koop',
                     source: new ol.source.Vector({

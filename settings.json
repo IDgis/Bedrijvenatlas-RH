@@ -13,6 +13,15 @@
             "luchtfoto": "Luchtfoto"
         },
 
+        "searchFields": {
+            "Ibis Bedrijventerreinen": ["BEDRIJVENT","JAAR","KERN","OPPBRUTO","OPPNETTO","RINNUMMER"],
+            "KVK Bedrijven": ["KVK_NUMMER","KVK_HANDELSNAAM","KVK_STRAATNAAM","KVK_HUISNUMMER","KVK_HUISTOEVOEGING","KVK_POSTCODE","KVK_WOONPLAATS","IMG_BUURTNAAM","KVK_TELEFOONNUMMER","KVK_SBI_OMSCHRIJVING"],
+            "BAG Ligplaats": ["actualiteitsdatum","huisletter","huisnummer","identificatie","openbare_ruimte","postcode","status","toevoeging","woonplaats"],
+            "BAG Pand": ["aantal_verblijfsobjecten","actualiteitsdatum","bouwjaar","identificatie","oppervlakte_max","oppervlakte_min","status"],
+            "BAG Standplaats": ["actualiteitsdatum","huisletter","huisnummer","identificatie","openbare_ruimte","postcode","status","toevoeging","woonplaats"],
+            "BAG Verblijfsobject": ["actualiteitsdatum","bouwjaar","gebruiksdoel","huisletter","huisnummer","identificatie","openbare_ruimte","oppervlakte","pandidentificatie","pandstatus","postcode","status","toevoeging","woonplaats"]
+        },
+
         "homePageGemeente": "http://www.rijssen-holten.nl/home",
         "logoUrlGemeente": "/images/logo-rh.jpg",
         "colorGemeente": "#730049",

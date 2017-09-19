@@ -7,12 +7,7 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 import MainHeader from './MainHeader.jsx';
 import MenuBar from './MenuBar.jsx';
-import PopupBagLigplaats from '../pages/viewer/components/popups/PopupBagLigplaats.jsx';
-import PopupBagPand from '../pages/viewer/components/popups/PopupBagPand.jsx';
-import PopupBagStandplaats from '../pages/viewer/components/popups/PopupBagStandplaats.jsx';
-import PopupBagVerblijfsobject from '../pages/viewer/components/popups/PopupBagVerblijfsobject.jsx';
-import PopupIndustrie from '../pages/viewer/components/popups/PopupIndustrie.jsx';
-import PopupKvk from '../pages/viewer/components/popups/PopupKvk.jsx';
+import Popup from '../pages/viewer/components/popups/Popup.jsx';
 import Streetview from '../pages/viewer/Streetview.jsx';
 import Viewer from '../pages/viewer/Viewer.jsx';
 
@@ -71,21 +66,11 @@ export default class MapLayout extends Component {
                     y: e.coordinate[1]
                 }
             });
-            
+
             map.forEachFeatureAtPixel(e.pixel, function(feature, layer) {
-                if(layer.get('title') === Meteor.settings.public.laagNaam.ibis) {
-                    that.setState({featurePopup: <PopupIndustrie selectedFeature={feature} coords={that.state.coords} />})
-                } else if(layer.get('title') === Meteor.settings.public.laagNaam.bagLigplaats) {
-                    that.setState({featurePopup: <PopupBagLigplaats selectedFeature={feature} coords={that.state.coords} />})
-                } else if(layer.get('title') === Meteor.settings.public.laagNaam.bagPand) {
-                    that.setState({featurePopup: <PopupBagPand selectedFeature={feature} coords={that.state.coords} />})
-                } else if(layer.get('title') === Meteor.settings.public.laagNaam.bagStandplaats) {
-                    that.setState({featurePopup: <PopupBagStandplaats selectedFeature={feature} coords={that.state.coords} />})
-                } else if(layer.get('title') === Meteor.settings.public.laagNaam.bagVerblijfsobject) {
-                    that.setState({featurePopup: <PopupBagVerblijfsobject selectedFeature={feature} coords={that.state.coords} />})
-                } else if(layer.get('title') === Meteor.settings.public.laagNaam.kvk) {
-                    that.setState({featurePopup: <PopupKvk selectedFeature={feature} coords={that.state.coords} />})
-                }
+                let title = layer.get('title');
+                let searchFields = Meteor.settings.public.searchFields[title];
+                that.setState({featurePopup: <Popup title={title} selectedFeature={feature} coords={that.state.coords} searchFields={searchFields} />})
             });
         });
     }
