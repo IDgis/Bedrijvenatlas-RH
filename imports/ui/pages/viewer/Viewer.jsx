@@ -172,6 +172,14 @@ export default class Viewer extends Component {
                     visible: false
                 }),
                 new ol.layer.Vector({
+                    title: Meteor.settings.public.laagNaam.teHuur,
+                    source: new ol.source.Vector({
+                        url: Meteor.settings.public.teHuurJsonUrl,
+                        format: new ol.format.GeoJSON()
+                    }),
+                    visible: false
+                }),
+                new ol.layer.Vector({
                     title: Meteor.settings.public.laagNaam.bagLigplaats,
                     source: new ol.source.Vector({
                         format: new ol.format.GeoJSON(),

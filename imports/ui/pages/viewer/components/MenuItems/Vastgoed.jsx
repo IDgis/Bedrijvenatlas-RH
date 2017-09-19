@@ -154,6 +154,11 @@ export default class Vastgoed extends Component {
                             onClick={this.selectAllTeKoop}
                             leftIcon={<Checkbox checked={this.state.teKoopVisible} /*onClick={this.selectAllTeKoop}*/ />}
                         />
+                        <MenuItem
+                            primaryText={Meteor.settings.public.laagNaam.teHuur}
+                            onClick={this.selectAllTeHuur}
+                            leftIcon={<Checkbox checked={this.state.teHuurVisible} />}
+                        />
                         {/*<Popover
                             open={this.state.teKoopOpen}
                             anchorEl={this.state.anchorEl}

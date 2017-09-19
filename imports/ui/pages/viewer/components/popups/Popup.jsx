@@ -16,6 +16,9 @@ export default class Popup extends Component {
         let link = (this.props.title === Meteor.settings.public.laagNaam.ibis && this.props.selectedFeature.get('BEDRIJVENT').startsWith('Vletgaarsmaten'))
             ? <div><br /><a href='https://ondernemersloket.rijssen-holten.nl/home/publicatie/vletgaarsmaten-holten' target='_blank'><b>Gemeente Rijssen-Holten</b></a><br /></div>
             : <div></div>;
+        let fundalink = (this.props.title === Meteor.settings.public.laagNaam.teKoop || this.props.title === Meteor.settings.public.laagNaam.teHuur)
+            ? <div><br /><a href={this.props.selectedFeature.get('URL')} target='_blank'><b>Naar Funda</b></a><br /></div>
+            : <div></div>
         let streetviewbutton = (this.props.title === Meteor.settings.public.laagNaam.teKoop || this.props.title === Meteor.settings.public.laagNaam.teHuur)
             ? <div><br /><RaisedButton label='Streetview' onClick={this.props.openStreetView} /><br /></div>
             : <div></div>;
@@ -36,6 +39,7 @@ export default class Popup extends Component {
                         {returnField} <br />
                         <a href={ruimtelijkePlannenUrl} target='_blank'><b>Bekijk bestemmingsplan</b></a>
                         {link}
+                        {fundalink}
                         {streetviewbutton}
                         <br />
                     </div>
