@@ -10,7 +10,9 @@
             "bagStandplaats": "BAG Standplaats",
             "bagVerblijfsobject": "BAG Verblijfsobject",
             "kadastralePercelen": "Kadastrale percelen",
-            "luchtfoto": "Luchtfoto"
+            "luchtfoto": "Luchtfoto",
+            "teKoop": "Te Koop",
+            "teHuur": "Te Huur"
         },
 
         "searchFields": {
@@ -29,6 +31,9 @@
         "logoUrlIdgis": "/images/logoidgisklein.jpg",
 
         "logoWizardUrl": "/images/format_list.png",
-        "logoViewerUrl": "/images/gps_fixed.png"
+        "logoViewerUrl": "/images/gps_fixed.png",
+
+        "teKoopJsonUrl": "/data/funda.json",
+        "teHuurJsonUrl": "/data/funda.json"
     }
 }

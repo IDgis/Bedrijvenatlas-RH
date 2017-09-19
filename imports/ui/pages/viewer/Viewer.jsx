@@ -52,11 +52,11 @@ export default class Viewer extends Component {
         this.state.map  = new ol.Map({
             target: 'map',
             layers: [
-                new ol.layer.Tile({
+                /*new ol.layer.Tile({
                     title: 'osm',
                     source: new ol.source.OSM()
-                }),
-                /*new ol.layer.Tile({
+                }),*/
+                new ol.layer.Tile({
                     title: 'brt achtergrondkaart',
                     preload: 1,
                     source: new ol.source.TileImage({
@@ -70,7 +70,7 @@ export default class Viewer extends Component {
                         url: 'http://geodata.nationaalgeoregister.nl/tms/1.0.0/brtachtergrondkaart/{z}/{x}/{-y}.png'
                     }),
                     visible: true,
-                }),*/
+                }),
                 new ol.layer.Tile({
                     title: Meteor.settings.public.laagNaam.luchtfoto,
                     source: new ol.source.WMTS({
@@ -164,9 +164,9 @@ export default class Viewer extends Component {
                     visible: false
                 }),*/
                 new ol.layer.Vector({
-                    title: 'Funda Te Koop',
+                    title: Meteor.settings.public.laagNaam.teKoop,
                     source: new ol.source.Vector({
-                        url: '/data/funda.json',
+                        url: Meteor.settings.public.teKoopJsonUrl,
                         format: new ol.format.GeoJSON()
                     }),
                     visible: false

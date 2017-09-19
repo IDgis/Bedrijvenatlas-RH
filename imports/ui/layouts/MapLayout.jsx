@@ -28,7 +28,8 @@ export default class MapLayout extends Component {
             },
             map: null,
             menuOpen: false,
-            featurePopup: <div></div>
+            featurePopup: <div></div>,
+            streetView: <div></div>
         };
     }
 
@@ -70,16 +71,16 @@ export default class MapLayout extends Component {
             map.forEachFeatureAtPixel(e.pixel, function(feature, layer) {
                 let title = layer.get('title');
                 let searchFields = Meteor.settings.public.searchFields[title];
-                that.setState({featurePopup: <Popup title={title} selectedFeature={feature} coords={that.state.coords} searchFields={searchFields} map={that.state.map} />})
+                that.setState({featurePopup: <Popup title={title} selectedFeature={feature} coords={that.state.coords} searchFields={searchFields} map={that.state.map} openStreetView={that.openStreetView} />})
             });
         });
     }
 
-    setKvkPopup = (feature) => {
+    /*setKvkPopup = (feature) => {
         this.state.coords.x = window.innerWidth / 2 + 20;
         this.state.coords.y = window.innerHeight / 2;
-        this.setState({featurePopup: <PopupKvk selectedFeature={feature} coords={this.state.coords} />});
-    }
+        this.setState({featurePopup: <Popup title={Meteor.settings.public.laagNaam.ibis} selectedFeature={feature} coords={this.state.coords} />});
+    }*/
 
     /**
      * Checks whether the menu is open or closed and passes its value to the state so the menu can be rendered
@@ -87,6 +88,25 @@ export default class MapLayout extends Component {
     toggleMenuState = (newState) => {
         this.setState({
             menuOpen: newState
+        });
+    }
+
+    openStreetView = (event) => {
+        proj4.defs('EPSG:28992', '+proj=sterea +lat_0=52.15616055555555 +lon_0=5.38763888888889 +k=0.9999079 +x_0=155000 +y_0=463000 +ellps=bessel +towgs84=565.417,50.3319,465.552,-0.398957,0.343988,-1.8774,4.0725 +units=m +no_defs');
+        ol.proj.setProj4(proj4);
+        let oldCoord=[this.state.location.x,this.state.location.y];
+        let coord = ol.proj.transform([oldCoord[0],oldCoord[1]],'EPSG:28992','EPSG:4326');
+
+        this.setState({
+            streetView: <Streetview coords={coord} close={this.closeStreetView} />,
+            featurePopup: <div></div>
+        })
+    }
+
+    closeStreetView = (event) => {
+        this.setState({
+            streetView: <div></div>,
+            featurePopup: <div></div>
         });
     }
 
@@ -109,7 +129,8 @@ export default class MapLayout extends Component {
                     <main onMouseMove={this.onMouseMove.bind(this)}>
                         <Viewer mapToParent={this.setMap} menuOpen={this.state.menuOpen} toggleMenuState={this.toggleMenuState} featurePopup={this.setKvkPopup} />
                         {this.state.featurePopup}
-                        <Streetview coords={coord} />
+                        {/*<Streetview coords={coord} />*/}
+                        {this.state.streetView}
                     </main>
                 </div>
             </MuiThemeProvider>

@@ -110,14 +110,14 @@ export default class LayerMenu extends Component {
                                 this.props.toggleMenuState(false);
 
                                 // add a popup to for the feature found
-                                this.props.map.getInteractions().forEach((val) => {
+                                /*this.props.map.getInteractions().forEach((val) => {
                                     if(val instanceof ol.interaction.Select) {
                                         let features = val.getFeatures();
                                         if(features.getArray().length > 0) {
                                             this.props.featurePopup(features.getArray()[0]);
                                         }
                                     }
-                                });
+                                });*/
                             }
                         }
                     }
