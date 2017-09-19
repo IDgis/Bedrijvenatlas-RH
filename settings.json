@@ -21,7 +21,41 @@
             "BAG Ligplaats": ["actualiteitsdatum","huisletter","huisnummer","identificatie","openbare_ruimte","postcode","status","toevoeging","woonplaats"],
             "BAG Pand": ["aantal_verblijfsobjecten","actualiteitsdatum","bouwjaar","identificatie","oppervlakte_max","oppervlakte_min","status"],
             "BAG Standplaats": ["actualiteitsdatum","huisletter","huisnummer","identificatie","openbare_ruimte","postcode","status","toevoeging","woonplaats"],
-            "BAG Verblijfsobject": ["actualiteitsdatum","bouwjaar","gebruiksdoel","huisletter","huisnummer","identificatie","openbare_ruimte","oppervlakte","pandidentificatie","pandstatus","postcode","status","toevoeging","woonplaats"]
+            "BAG Verblijfsobject": ["actualiteitsdatum","bouwjaar","gebruiksdoel","huisletter","huisnummer","identificatie","openbare_ruimte","oppervlakte","pandidentificatie","pandstatus","postcode","status","toevoeging","woonplaats"],
+            "Te Koop": ["Straat","Huisnummer","Toevoeging","Postcode","Plaats","Oppervlakte","Prijs"],
+            "Te Huur": ["Straat","Huisnummer","Toevoeging","Postcode","Plaats","Oppervlakte","Prijs"]
+        },
+
+        "categorieUrl": {
+            "C": "/icons/SBI_RUBRIEK_CODE_C_INDUSTRIE.svg",
+            "E": "/icons/SBI_RUBRIEK_CODE_E_DISTRIBUTIE_WATER_AFVAL.svg",
+            "F": "/icons/SBI_RUBRIEK_CODE_F_BOUWNIJVERHEID.svg",
+            "G": "/icons/SBI_RUBRIEK_CODE_G_DETAILHANDEL.svg",
+            "H": "/icons/SBI_RUBRIEK_CODE_H_VERVOER_OPSLAG.svg",
+            "I": "/icons/SBI_RUBRIEK_CODE_I_LOGIES_MAALTIJD_DRANK.svg",
+            "J": "/icons/SBI_RUBRIEK_CODE_J_INFO_COMMUNICATIE.svg",
+            "K": "/icons/SBI_RUBRIEK_CODE_K_FINANCIEEL.svg",
+            "L": "/icons/SBI_RUBRIEK_CODE_L_ONROEREND_GOED.svg",
+            "N": "/icons/SBI_RUBRIEK_CODE_N_VERHUR_OVR_DIENSTV",
+            "P": "/icons/SBI_RUBRIEK_CODE_P_ONDERWIJS.svg",
+            "Q": "/icons/SBI_RUBRIEK_CODE_Q_GEZONDHEIDSZORG.svg",
+            "S": "/icons/SBI_RUBRIEK_CODE_S_OVERIGE_DIENSTVERL.svg"
+        },
+
+        "categorieNaam": {
+            "C": "Industrie",
+            "E": "Distributie water/afval",
+            "F": "Bouwnijverheid",
+            "G": "Detailhandel",
+            "H": "Vervoer/opslag",
+            "I": "Logies/maaltijd/drank",
+            "J": "Informatica/communicatie",
+            "K": "Financiëel",
+            "L": "Onroerend goed",
+            "N": "Verhuur/overige dienstverlening",
+            "P": "Onderwijs",
+            "Q": "Gezondheidszorg",
+            "S": "OVerige dienstverlening"
         },
 
         "homePageGemeente": "http://www.rijssen-holten.nl/home",
@@ -33,7 +67,7 @@
         "logoWizardUrl": "/images/format_list.png",
         "logoViewerUrl": "/images/gps_fixed.png",
 
-        "teKoopJsonUrl": "/data/funda.json",
-        "teHuurJsonUrl": "/data/funda.json"
+        "teKoopJsonUrl": "/data/vastgoedTeKoop.json",
+        "teHuurJsonUrl": "/data/vastgoedTeHuur.json"
     }
 }
