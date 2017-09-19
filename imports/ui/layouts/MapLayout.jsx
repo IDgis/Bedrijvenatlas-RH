@@ -70,7 +70,7 @@ export default class MapLayout extends Component {
             map.forEachFeatureAtPixel(e.pixel, function(feature, layer) {
                 let title = layer.get('title');
                 let searchFields = Meteor.settings.public.searchFields[title];
-                that.setState({featurePopup: <Popup title={title} selectedFeature={feature} coords={that.state.coords} searchFields={searchFields} />})
+                that.setState({featurePopup: <Popup title={title} selectedFeature={feature} coords={that.state.coords} searchFields={searchFields} map={that.state.map} />})
             });
         });
     }
