@@ -3,6 +3,7 @@
 
         "laagNaam": {
             "kvk": "KVK Bedrijven",
+            "kavels": "Uitgifte Kavels",
             "ibis": "Ibis Bedrijventerreinen",
             "bag": "BAG",
             "bagLigplaats": "BAG Ligplaats",
@@ -16,8 +17,9 @@
         },
 
         "searchFields": {
-            "Ibis Bedrijventerreinen": ["BEDRIJVENT","JAAR","KERN","OPPBRUTO","OPPNETTO","RINNUMMER"],
-            "KVK Bedrijven": ["KVK_NUMMER","KVK_HANDELSNAAM","KVK_STRAATNAAM","KVK_HUISNUMMER","KVK_HUISTOEVOEGING","KVK_POSTCODE","KVK_WOONPLAATS","IMG_BUURTNAAM","KVK_TELEFOONNUMMER","KVK_SBI_OMSCHRIJVING"],
+            "Ibis Bedrijventerreinen": ["OGR_FID","BEDR_TERR","RINNUMMER","KERN","JAAR","OPPBRUTO","OPPNETTO"],
+            "KVK Bedrijven": ["OGR_FID","SBI_RUBR_C","SBI_OMSCHR","BEDR_NAAM","ADR_LABEL","ADR_ID_BAG"],
+            "Uitgifte Kavels": ["OGR_FID","KAVELINFO","OPP","TEKEN","KAVELNR","STATUS","TELEFOON","EMAIL"],
             "BAG Ligplaats": ["actualiteitsdatum","huisletter","huisnummer","identificatie","openbare_ruimte","postcode","status","toevoeging","woonplaats"],
             "BAG Pand": ["aantal_verblijfsobjecten","actualiteitsdatum","bouwjaar","identificatie","oppervlakte_max","oppervlakte_min","status"],
             "BAG Standplaats": ["actualiteitsdatum","huisletter","huisnummer","identificatie","openbare_ruimte","postcode","status","toevoeging","woonplaats"],
@@ -55,7 +57,7 @@
             "N": "Verhuur/overige dienstverlening",
             "P": "Onderwijs",
             "Q": "Gezondheidszorg",
-            "S": "OVerige dienstverlening"
+            "S": "Overige dienstverlening"
         },
 
         "homePageGemeente": "http://www.rijssen-holten.nl/home",

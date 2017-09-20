@@ -130,6 +130,7 @@ export default class OverigeLagen extends Component {
                         />
                         <Kaartlaag primaryText={Meteor.settings.public.laagNaam.ibis} map={this.props.map} />
                         <Kaartlaag primaryText={Meteor.settings.public.laagNaam.kvk} map={this.props.map} />
+                        <Kaartlaag primaryText={Meteor.settings.public.laagNaam.kavels} map={this.props.map} />
                         <Kaartlaag primaryText={Meteor.settings.public.laagNaam.kadastralePercelen} map={this.props.map} />
                         <Kaartlaag primaryText={Meteor.settings.public.laagNaam.luchtfoto} map={this.props.map} />
                     </List>

@@ -104,37 +104,22 @@ export default class Viewer extends Component {
                     }),
                     visible: false
                 }),
-                new ol.layer.Vector({
+                /*new ol.layer.Vector({
                     title: Meteor.settings.public.laagNaam.kvk,
                     source: new ol.source.Vector({
-                        url: '/data/KVK_BEDRIJVEN.json',
-                        format: new ol.format.GeoJSON()
+                        format: new ol.format.GeoJSON(),
+                        url: function(extent, resolution, projection) {
+                            return 'https://rijssenholten.geopublisher.nl/staging/geoserver/Bedrijventerreinen_KVK_hoofdactiviteiten_per_adres_service/wfs?' +
+                                'service=wfs&version=1.1.0&request=GetFeature&outputFormat=application/json&resultType=results' +
+                                '&typeName=Bedrijventerreinen_KVK_hoofdactiviteiten_per_adres_service:Bedrijventerreinen_KVK_hoofdactiviteiten_per_adres&srs=EPSG:28992' +
+                                '&bbox=' + extent.join(',') + ',EPSG:28992';
+                        },
+                        strategy: ol.loadingstrategy.tile(ol.tilegrid.createXYZ({
+                            maxZoom: 20
+                        })),
                     }),
                     visible: false
-                }),
-                new ol.layer.Vector({
-                    title: Meteor.settings.public.laagNaam.ibis,
-                    source: new ol.source.Vector({
-                        url: '/data/IBIS_BEDRIJVENTERREINEN.json',
-                        format: new ol.format.GeoJSON()
-                    }),
-                    style: function(feature) {
-                        return new ol.style.Style({
-                            stroke: new ol.style.Stroke({
-                                width: 2,
-                                color: 'rgba(71, 180, 234, 1)'
-                            }),
-                            fill: new ol.style.Fill({
-                                color: 'rgba(71, 180, 234, 0.4)'
-                            }),
-                            text: new ol.style.Text({
-                                text: feature.get('BEDRIJVENT'),
-                                font: 'bold 16px Arial'
-                            })
-                        });
-                    },
-                    visible: false
-                }),
+                }),*/
                 /*new ol.layer.Tile({
                     title: Meteor.settings.public.laagNaam.ibis,
                     source: new ol.source.TileWMS({
@@ -147,7 +132,7 @@ export default class Viewer extends Component {
                     }),
                     visible: false
                 }),*/
-                /*new ol.layer.Vector({
+                new ol.layer.Vector({
                     title: Meteor.settings.public.laagNaam.ibis,
                     source: new ol.source.Vector({
                         format: new ol.format.GeoJSON(),
@@ -161,8 +146,23 @@ export default class Viewer extends Component {
                             maxZoom: 20
                         })),
                     }),
+                    style: function(feature) {
+                        return new ol.style.Style({
+                            stroke: new ol.style.Stroke({
+                                width: 2,
+                                color: 'rgba(71, 180, 234, 1)'
+                            }),
+                            fill: new ol.style.Fill({
+                                color: 'rgba(71, 180, 234, 0.4)'
+                            }),
+                            text: new ol.style.Text({
+                                text: feature.get('BEDR_TERR'),
+                                font: 'bold 16px Arial'
+                            })
+                        });
+                    },
                     visible: false
-                }),*/
+                }),
                 new ol.layer.Vector({
                     title: Meteor.settings.public.laagNaam.teKoop,
                     source: new ol.source.Vector({
@@ -242,6 +242,22 @@ export default class Viewer extends Component {
                         }))
                     }),
                     visible: false
+                }),
+                new ol.layer.Vector({
+                    title: Meteor.settings.public.laagNaam.kavels,
+                    source: new ol.source.Vector({
+                        format: new ol.format.GeoJSON(),
+                        url: function(extent, resolution, projection) {
+                            return 'https://rijssenholten.geopublisher.nl/staging/geoserver/Bedrijventerreinen_uitgifte_kavels_service/wfs?' +
+                            'service=wfs&version=1.1.0&request=GetFeature&outputFormat=application/json&resultType=results' +
+                            '&typeName=Bedrijventerreinen_uitgifte_kavels_service:Bedrijventerreinen_uitgifte_kavels&srs=EPSG:28992' +
+                            '&bbox=' + extent.join(',') + ',EPSG:28992';
+                        },
+                        strategy: ol.loadingstrategy.tile(ol.tilegrid.createXYZ({
+                            maxZoom: 20
+                        }))
+                    }),
+                    visible: false
                 })
             ],
             view: new ol.View({
@@ -260,6 +276,7 @@ export default class Viewer extends Component {
         });
 
         this.setMapSettings();
+        this.addKvkLayers();
         this.props.mapToParent(this.state.map);
     }
 
@@ -295,24 +312,64 @@ export default class Viewer extends Component {
         if(huurKoop === 'koop') {
             // show the te koop layer
             layers.forEach((layer, index, arr) => {
-                if(layer.get('title') === 'Funda Te Koop') {
+                if(layer.get('title') === Meteor.settings.public.laagNaam.teKoop) {
                     layer.setVisible(true);
                 }
             });
         } else if(huurKoop === 'huur') {
             // show the te huur layer
             layers.forEach((layer, index, arr) => {
-                if(layer.get('title') === 'Funda Te Huur') {
+                if(layer.get('title') === Meteor.settings.public.laagNaam.teHuur) {
                     layer.setVisible(true);
                 }
             });
         } else if(huurKoop === 'beide'){
             // turn both layers on
             layers.forEach((layer, index, arr) => {
-                if(layer.get('title') === 'Funda Te Huur' || layer.get('title') === 'Funda Te Koop') {
+                if(layer.get('title') === Meteor.settings.public.laagNaam.teHuur || layer.get('title') === Meteor.settings.public.laagNaam.teKoop) {
                     layer.setVisible(true);
                 }
             });
+        }
+    }
+
+    addKvkLayers() {
+        let categorien = Meteor.settings.public.categorieUrl;
+        let that = this;
+
+        for(c in categorien) {
+            let categorieNaam = c[0];
+
+            let featureRequest = new ol.format.WFS().writeGetFeature({
+                srsName: 'EPSG:28992',
+                outputFormat: 'application/json',
+                featurePrefix: 'Bedrijventerreinen_KVK_hoofdactiviteiten_per_adres_service',
+                featureTypes: ['Bedrijventerreinen_KVK_hoofdactiviteiten_per_adres'],
+                filter: ol.format.filter.equalTo('SBI_RUBR_C', categorieNaam)
+            });
+            
+            fetch('https://rijssenholten.geopublisher.nl/staging/geoserver/Bedrijventerreinen_KVK_hoofdactiviteiten_per_adres_service/wfs', {
+                method: 'POST',
+                body: new XMLSerializer().serializeToString(featureRequest)
+            }).then(function(response) {
+                return response.json();
+            }).then(function(json) {
+                let features = new ol.format.GeoJSON().readFeatures(json);
+                let source = new ol.source.Vector();
+                let layer = new ol.layer.Vector({
+                    title: Meteor.settings.public.laagNaam.kvk,
+                    source: source,
+                    style: new ol.style.Style({
+                        image: new ol.style.Icon({
+                            src: Meteor.settings.public.categorieUrl[categorieNaam],
+                            scale: 0.5
+                        })
+                    }),
+                    visible: false
+                });
+                source.addFeatures(features);
+                that.state.map.addLayer(layer);
+            })
         }
     }
 

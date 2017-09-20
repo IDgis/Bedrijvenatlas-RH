@@ -13,7 +13,7 @@ export default class Popup extends Component {
 
         let searchFields = this.props.searchFields;
         let returnField = [];
-        let link = (this.props.title === Meteor.settings.public.laagNaam.ibis && this.props.selectedFeature.get('BEDRIJVENT').startsWith('Vletgaarsmaten'))
+        let link = (this.props.title === Meteor.settings.public.laagNaam.ibis && this.props.selectedFeature.get('BEDR_TERR').startsWith('Vletgaarsmaten'))
             ? <div><br /><a href='https://ondernemersloket.rijssen-holten.nl/home/publicatie/vletgaarsmaten-holten' target='_blank'><b>Gemeente Rijssen-Holten</b></a><br /></div>
             : <div></div>;
         let fundalink = (this.props.title === Meteor.settings.public.laagNaam.teKoop || this.props.title === Meteor.settings.public.laagNaam.teHuur)

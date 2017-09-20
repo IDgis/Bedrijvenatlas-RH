@@ -23,6 +23,7 @@ export default class LayerMenu extends Component {
         }
 
         this.fillSearchFields();
+        //this.fillSearchField();
     }
 
     componentWillReceiveProps(nextProps) {
@@ -36,28 +37,24 @@ export default class LayerMenu extends Component {
      */
     fillSearchFields() {
         console.log('Filling search fields...');
-        Meteor.call('getKvkBedrijven', (error, result) => {
-            let names = [];
-            for(let i = 0; i < result.length; i++) {
-                let res = result[i];
-                names.push(res['KVK_HANDELSNAAM']);
+        let request = require('request');
+        let url = 'https://rijssenholten.geopublisher.nl/staging/geoserver/Bedrijventerreinen_KVK_hoofdactiviteiten_per_adres_service/wfs?' +
+        'service=wfs&version=1.1.0&request=GetFeature&outputFormat=application/json&resultType=results' +
+        '&typeName=Bedrijventerreinen_KVK_hoofdactiviteiten_per_adres_service:Bedrijventerreinen_KVK_hoofdactiviteiten_per_adres&srs=EPSG:28992';
 
-                /*let straatnaam = res['KVK_STRAATNAAM'];
-                let nameInArr = false;
-                for(let j = 0; j < this.state.searchFields.length; j++) {
-                    if(this.state.searchFields[j] === straatnaam) {
-                        nameInArr = true;
-                        break;
-                    }
-                }
-                if(!nameInArr) {
-                    this.state.searchFields.push(straatnaam);
-                }*/
+        request(url, (error, response, body) => {
+            if(error) {
+                console.log(error);
             }
-            this.setState({
-                searchFields: names
-            });
-            console.log('Search fields filled...');
+            if(response.statusCode === 200) {
+                let json = JSON.parse(body);
+                let features = json['features'];
+                for(let feature in features) {
+                    let naam = features[feature]['properties']['BEDR_NAAM'];
+                    this.state.searchFields.push(naam);
+                }
+                console.log('Search fields filled...');
+            }
         });
     }
 
@@ -87,18 +84,20 @@ export default class LayerMenu extends Component {
                 this.setState({
                     kvkVisible: true
                 });
+                let newSearchField = true;
                 
                 layer.getSource().on('change', (e) => {
                     let source = e.target;
                     if(source.getState() === 'ready') {
                         let features = source.getFeatures();
                         for(let i = 0; i < features.length; i++) {
-                            if(features[i].get('KVK_HANDELSNAAM') === searchfield) {
+                            if(features[i].get('BEDR_NAAM') === searchfield && newSearchField) {
                                 console.log(searchfield + ' found...');
+                                newSearchField = false;
 
                                 // Center around the coordinates of the found feature
                                 let coords = features[i].getGeometry().getCoordinates();
-                                this.props.map.getView().setCenter(coords);
+                                this.props.map.getView().setCenter(coords[0]);
 
                                 // Zoom to the feature found
                                 this.props.map.getView().setZoom(17.5);

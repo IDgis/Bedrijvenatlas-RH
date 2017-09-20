@@ -48,6 +48,9 @@ export default class MapLayout extends Component {
      * Sets the map variable to the state so it can be passed to other components
      */
     setMap = (mapVar) => {
+        this.setState({
+            map: mapVar
+        });
         this.state.map = mapVar;
         this.addMapListener();
     };
@@ -76,11 +79,13 @@ export default class MapLayout extends Component {
         });
     }
 
-    /*setKvkPopup = (feature) => {
+    setKvkPopup = (feature) => {
         this.state.coords.x = window.innerWidth / 2 + 20;
         this.state.coords.y = window.innerHeight / 2;
-        this.setState({featurePopup: <Popup title={Meteor.settings.public.laagNaam.ibis} selectedFeature={feature} coords={this.state.coords} />});
-    }*/
+        //feature = feature.values_;
+        //console.log(feature['BEDR_NAAM']);
+        this.setState({featurePopup: <Popup title={Meteor.settings.public.laagNaam.kvk} selectedFeature={feature} coords={this.state.coords} />});
+    }
 
     /**
      * Checks whether the menu is open or closed and passes its value to the state so the menu can be rendered
