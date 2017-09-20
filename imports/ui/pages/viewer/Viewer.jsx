@@ -132,6 +132,18 @@ export default class Viewer extends Component {
                     }),
                     visible: false
                 }),*/
+                new ol.layer.Tile({
+                    title: Meteor.settings.public.laagNaam.milieu,
+                    source: new ol.source.TileWMS({
+                        url: 'https://rijssenholten.geopublisher.nl/staging/geoserver/Bedrijventerreinen_RO_categorie_indeling_service/ows?SERVICE=WMS&',
+                        params: {
+                            'FORMAT': 'image/png',
+                            'LAYERS': 'Bedrijventerreinen_RO_categorie_indeling',
+                            'CRS': 'EPSG:28992'
+                        }
+                    }),
+                    visible: false
+                }),
                 new ol.layer.Vector({
                     title: Meteor.settings.public.laagNaam.ibis,
                     source: new ol.source.Vector({

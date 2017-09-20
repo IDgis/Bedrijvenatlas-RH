@@ -13,7 +13,8 @@
             "kadastralePercelen": "Kadastrale percelen",
             "luchtfoto": "Luchtfoto",
             "teKoop": "Te Koop",
-            "teHuur": "Te Huur"
+            "teHuur": "Te Huur",
+            "milieu": "Milieucategoriën"
         },
 
         "searchFields": {
@@ -25,7 +26,8 @@
             "BAG Standplaats": ["actualiteitsdatum","huisletter","huisnummer","identificatie","openbare_ruimte","postcode","status","toevoeging","woonplaats"],
             "BAG Verblijfsobject": ["actualiteitsdatum","bouwjaar","gebruiksdoel","huisletter","huisnummer","identificatie","openbare_ruimte","oppervlakte","pandidentificatie","pandstatus","postcode","status","toevoeging","woonplaats"],
             "Te Koop": ["Straat","Huisnummer","Toevoeging","Postcode","Plaats","Oppervlakte","Prijs"],
-            "Te Huur": ["Straat","Huisnummer","Toevoeging","Postcode","Plaats","Oppervlakte","Prijs"]
+            "Te Huur": ["Straat","Huisnummer","Toevoeging","Postcode","Plaats","Oppervlakte","Prijs"],
+            "Milieucategoriën": ["OGR_FID","CATEGORIE"]
         },
 
         "categorieUrl": {
