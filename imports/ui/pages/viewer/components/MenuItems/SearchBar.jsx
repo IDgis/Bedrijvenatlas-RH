@@ -24,7 +24,7 @@ export default class SearchBar extends Component {
                     anchorOrigin={{horizontal: 'right', vertical: 'bottom'}}
                     targetOrigin={{horizontal: 'right', vertical: 'top'}}
                     onNewRequest={this.props.onNewRequest}
-                    maxSearchResults={10}
+                    maxSearchResults={20}
                 />
             </ListItem>
         );
