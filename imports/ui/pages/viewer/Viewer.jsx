@@ -37,7 +37,7 @@ export default class Viewer extends Component {
     }
 
     /**
-     * Sets up the initial OpenLayers map
+     * Sets up the initial OpenLayers map and layers
      */
     componentDidMount() {
         let extent = [-285401.92,22598.08,595401.9199999999,903401.9199999999];
@@ -333,6 +333,9 @@ export default class Viewer extends Component {
         }
     }
 
+    /**
+     * Add all kvk layers by SBI code
+     */
     addKvkLayers() {
         let categorien = Meteor.settings.public.categorieUrl;
         let that = this;
@@ -381,7 +384,7 @@ export default class Viewer extends Component {
     }
 
     /**
-     * Renders the map from OpenLayers to the screen
+     * The main render method that will render the component to the screen
      */
     render() {
         return (

@@ -87,6 +87,9 @@ export default class BedrijvenSorted extends Component {
         this.setBedrijvenSorted(event.target.textContent);
     }
 
+    /**
+     * The main render method that will render the component to the screen
+     */
     render() {
         const lettersMenu = this.state.letters.map((val, i) =>
             <MenuItem primaryText={val} key={i} onClick={this.setClickedLetter} />

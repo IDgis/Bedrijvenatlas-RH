@@ -9,6 +9,9 @@ export default class Popup extends Component {
         super(props);
     }
 
+    /**
+     * The main render method that will render the component to the screen
+     */
     render() {
 
         let searchFields = this.props.searchFields;

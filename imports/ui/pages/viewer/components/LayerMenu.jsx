@@ -127,7 +127,7 @@ export default class LayerMenu extends Component {
     }
 
     /**
-     * Renders the object to the screen
+     * The main render method that will render the component to the screen
      */
     render() {
         return (

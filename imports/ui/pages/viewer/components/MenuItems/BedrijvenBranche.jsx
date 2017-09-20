@@ -49,6 +49,9 @@ export default class BedrijvenBranche extends Component {
         });
     }
 
+    /**
+     * Show the icons of the selected branche on the map
+     */
     selectBranche = (e) => {
         let categorie = e.target.value;
         let map = this.state.map;
@@ -68,6 +71,9 @@ export default class BedrijvenBranche extends Component {
         });
     }
 
+    /**
+     * Set the visibility, so the checkbox shows the right value
+     */
     setVisibility = (cat, newVisible) => {
         switch (cat) {
             case 'C': this.setState({C:newVisible}); break;
@@ -87,6 +93,9 @@ export default class BedrijvenBranche extends Component {
         }
     }
 
+    /**
+     * Get all menu items per branche and show them in a list
+     */
     getMenuItems = (val) => {
         if(this.state.map !== null) {
             let retArr = [];
@@ -101,7 +110,6 @@ export default class BedrijvenBranche extends Component {
                             let id = features[i].get('SBI_RUBR_C');
                             if(id === val) {
                                 let name = features[i].get('BEDR_NAAM');
-                                //retArr.push(<div>{name}</div>);
                                 retArr.push(<ListItem primaryText={name} key={i} onClick={this.triggerClick} />);
                             }
                         }
@@ -112,6 +120,9 @@ export default class BedrijvenBranche extends Component {
         }
     }
 
+    /**
+     * If clicked on a menu item, select the clicked name and zoom in to it
+     */
     triggerClick = (event) => {
         let clickedName = event.target.textContent;
         let map = this.state.map;
@@ -149,6 +160,9 @@ export default class BedrijvenBranche extends Component {
         });
     }
 
+    /**
+     * The render method to render the component
+     */
     render() {
         const categorien = [];
         for(c in Meteor.settings.public.categorieUrl) {
