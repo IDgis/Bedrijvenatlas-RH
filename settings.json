@@ -3,6 +3,7 @@
 
         "laagNaam": {
             "kvk": "KVK Bedrijven",
+            "kavels": "Uitgifte Kavels",
             "ibis": "Ibis Bedrijventerreinen",
             "bag": "BAG",
             "bagLigplaats": "BAG Ligplaats",
@@ -10,12 +11,67 @@
             "bagStandplaats": "BAG Standplaats",
             "bagVerblijfsobject": "BAG Verblijfsobject",
             "kadastralePercelen": "Kadastrale percelen",
-            "luchtfoto": "Luchtfoto"
+            "luchtfoto": "Luchtfoto",
+            "teKoop": "Te Koop",
+            "teHuur": "Te Huur",
+            "milieu": "Milieucategoriën"
+        },
+
+        "searchFields": {
+            "Ibis Bedrijventerreinen": ["OGR_FID","BEDR_TERR","RINNUMMER","KERN","JAAR","OPPBRUTO","OPPNETTO"],
+            "KVK Bedrijven": ["OGR_FID","SBI_RUBR_C","SBI_OMSCHR","BEDR_NAAM","ADR_LABEL","ADR_ID_BAG"],
+            "Uitgifte Kavels": ["OGR_FID","KAVELINFO","OPP","TEKEN","KAVELNR","STATUS","TELEFOON","EMAIL"],
+            "BAG Ligplaats": ["actualiteitsdatum","huisletter","huisnummer","identificatie","openbare_ruimte","postcode","status","toevoeging","woonplaats"],
+            "BAG Pand": ["aantal_verblijfsobjecten","actualiteitsdatum","bouwjaar","identificatie","oppervlakte_max","oppervlakte_min","status"],
+            "BAG Standplaats": ["actualiteitsdatum","huisletter","huisnummer","identificatie","openbare_ruimte","postcode","status","toevoeging","woonplaats"],
+            "BAG Verblijfsobject": ["actualiteitsdatum","bouwjaar","gebruiksdoel","huisletter","huisnummer","identificatie","openbare_ruimte","oppervlakte","pandidentificatie","pandstatus","postcode","status","toevoeging","woonplaats"],
+            "Te Koop": ["Straat","Huisnummer","Toevoeging","Postcode","Plaats","Oppervlakte","Prijs"],
+            "Te Huur": ["Straat","Huisnummer","Toevoeging","Postcode","Plaats","Oppervlakte","Prijs"],
+            "Milieucategoriën": ["OGR_FID","CATEGORIE"]
+        },
+
+        "categorieUrl": {
+            "C": "/icons/SBI_RUBRIEK_CODE_C_INDUSTRIE.svg",
+            "E": "/icons/SBI_RUBRIEK_CODE_E_DISTRIBUTIE_WATER_AFVAL.svg",
+            "F": "/icons/SBI_RUBRIEK_CODE_F_BOUWNIJVERHEID.svg",
+            "G": "/icons/SBI_RUBRIEK_CODE_G_DETAILHANDEL.svg",
+            "H": "/icons/SBI_RUBRIEK_CODE_H_VERVOER_OPSLAG.svg",
+            "I": "/icons/SBI_RUBRIEK_CODE_I_LOGIES_MAALTIJD_DRANK.svg",
+            "J": "/icons/SBI_RUBRIEK_CODE_J_INFO_COMMUNICATIE.svg",
+            "K": "/icons/SBI_RUBRIEK_CODE_K_FINANCIEEL.svg",
+            "L": "/icons/SBI_RUBRIEK_CODE_L_ONROEREND_GOED.svg",
+            "N": "/icons/SBI_RUBRIEK_CODE_N_VERHUR_OVR_DIENSTV",
+            "P": "/icons/SBI_RUBRIEK_CODE_P_ONDERWIJS.svg",
+            "Q": "/icons/SBI_RUBRIEK_CODE_Q_GEZONDHEIDSZORG.svg",
+            "S": "/icons/SBI_RUBRIEK_CODE_S_OVERIGE_DIENSTVERL.svg"
+        },
+
+        "categorieNaam": {
+            "C": "Industrie",
+            "E": "Distributie water/afval",
+            "F": "Bouwnijverheid",
+            "G": "Detailhandel",
+            "H": "Vervoer/opslag",
+            "I": "Logies/maaltijd/drank",
+            "J": "Informatica/communicatie",
+            "K": "Financiëel",
+            "L": "Onroerend goed",
+            "N": "Verhuur/overige dienstverlening",
+            "P": "Onderwijs",
+            "Q": "Gezondheidszorg",
+            "S": "Overige dienstverlening"
         },
 
         "homePageGemeente": "http://www.rijssen-holten.nl/home",
         "logoUrlGemeente": "/images/logo-rh.jpg",
+        "colorGemeente": "#730049",
         "homePageIdgis": "https://www.idgis.nl/nl/",
-        "logoUrlIdgis": "/images/logoidgisklein.jpg"
+        "logoUrlIdgis": "/images/logoidgisklein.jpg",
+
+        "logoWizardUrl": "/images/format_list.png",
+        "logoViewerUrl": "/images/gps_fixed.png",
+
+        "teKoopJsonUrl": "/data/vastgoedTeKoop.json",
+        "teHuurJsonUrl": "/data/vastgoedTeHuur.json"
     }
 }

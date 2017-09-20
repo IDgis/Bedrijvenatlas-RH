@@ -77,6 +77,9 @@ export default class OverigeLagen extends Component {
         });
     }
 
+    /**
+     * Checks whether all BAG layers are cheched or not and sets its internal state
+     */
     setAllBagChecked = () => {
         let bagligplaats = Meteor.settings.public.laagNaam.bagLigplaats;
         let bagpand = Meteor.settings.public.laagNaam.bagPand;
@@ -105,6 +108,9 @@ export default class OverigeLagen extends Component {
         }
     }
 
+    /**
+     * The main render method that will render the component to the screen
+     */
     render() {
         return (
             <div>
@@ -130,6 +136,8 @@ export default class OverigeLagen extends Component {
                         />
                         <Kaartlaag primaryText={Meteor.settings.public.laagNaam.ibis} map={this.props.map} />
                         <Kaartlaag primaryText={Meteor.settings.public.laagNaam.kvk} map={this.props.map} />
+                        <Kaartlaag primaryText={Meteor.settings.public.laagNaam.kavels} map={this.props.map} />
+                        <Kaartlaag primaryText={Meteor.settings.public.laagNaam.milieu} map={this.props.map} />
                         <Kaartlaag primaryText={Meteor.settings.public.laagNaam.kadastralePercelen} map={this.props.map} />
                         <Kaartlaag primaryText={Meteor.settings.public.laagNaam.luchtfoto} map={this.props.map} />
                     </List>

@@ -29,12 +29,12 @@ export default class Vastgoed extends Component {
         if(nextProps.map !== null) {
             let layers = nextProps.map.getLayers();
             layers.forEach((layer, index, arr) => {
-                if(layer.get('title') === 'Funda Te Koop') {
+                if(layer.get('title') === Meteor.settings.public.laagNaam.teKoop) {
                     this.setState({
                         teKoopVisible: layer.getVisible()
                     });
                 }
-                if(layer.get('title') === 'Funda Te Huur') {
+                if(layer.get('title') === Meteor.settings.public.laagNaam.teHuur) {
                     this.setState({
                         teHuurVisible: layer.getVisible()
                     });
@@ -59,7 +59,7 @@ export default class Vastgoed extends Component {
     selectAllTeKoop = (event) => {
         let layers = this.props.map.getLayers();
         layers.forEach((layer, index) => {
-            if(layer.get('title') === 'Funda Te Koop') {
+            if(layer.get('title') === Meteor.settings.public.laagNaam.teKoop) {
                 let newVisible = (!this.state.teKoopVisible);
                 this.setState({
                     teKoopVisible: newVisible
@@ -72,7 +72,7 @@ export default class Vastgoed extends Component {
     selectAllTeHuur = (event) => {
         let layers = this.props.map.getLayers();
         layers.forEach((layer, index) => {
-            if(layer.get('title') === 'Funda Te Huur') {
+            if(layer.get('title') === Meteor.settings.public.laagNaam.teHuur) {
                 let newVisible = (!this.state.teHuurVisible);
                 this.setState({
                     teHuurVisible: newVisible
@@ -150,9 +150,14 @@ export default class Vastgoed extends Component {
                 >
                     <Menu>
                         <MenuItem 
-                            primaryText='Te koop' 
+                            primaryText={Meteor.settings.public.laagNaam.teKoop}
                             onClick={this.selectAllTeKoop}
                             leftIcon={<Checkbox checked={this.state.teKoopVisible} /*onClick={this.selectAllTeKoop}*/ />}
+                        />
+                        <MenuItem
+                            primaryText={Meteor.settings.public.laagNaam.teHuur}
+                            onClick={this.selectAllTeHuur}
+                            leftIcon={<Checkbox checked={this.state.teHuurVisible} />}
                         />
                         {/*<Popover
                             open={this.state.teKoopOpen}
