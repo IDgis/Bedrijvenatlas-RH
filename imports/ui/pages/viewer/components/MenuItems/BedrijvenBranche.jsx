@@ -101,7 +101,8 @@ export default class BedrijvenBranche extends Component {
                             let id = features[i].get('SBI_RUBR_C');
                             if(id === val) {
                                 let name = features[i].get('BEDR_NAAM');
-                                retArr.push(<div>{name}</div>);
+                                //retArr.push(<div>{name}</div>);
+                                retArr.push(<ListItem primaryText={name} key={i} onClick={this.triggerClick} />);
                             }
                         }
                     }
@@ -109,6 +110,43 @@ export default class BedrijvenBranche extends Component {
             });
             return retArr;
         }
+    }
+
+    triggerClick = (event) => {
+        let clickedName = event.target.textContent;
+        let map = this.state.map;
+        let layers = map.getLayers();
+        layers.forEach((layer, index, arr) => {
+            if(layer.get('title') === Meteor.settings.public.laagNaam.kvk) {
+                let newSearch = true;
+                let source = layer.getSource();
+                if(source.state_ === 'ready') {
+                    let features = source.getFeatures();
+                    for(let i = 0; i < features.length; i++) {
+                        if(features[i].get('BEDR_NAAM') === clickedName && newSearch) {
+                            newSearch = false;
+                            let cat = features[i].get('SBI_RUBR_C');
+                            layer.setVisible(true);
+                            this.setVisibility(cat, layer.getVisible());
+
+                            // Center around the coordinates of the found feature
+                            let coords = features[i].getGeometry().getCoordinates();
+                            map.getView().setCenter(coords[0]);
+
+                            // Zoom to the feature found
+                            map.getView().setZoom(17);
+
+                            let select = new ol.interaction.Select();
+                            map.addInteraction(select);
+                            let collection = select.getFeatures().push(features[i]);
+
+                            this.closeMenu();
+                            this.props.toggleMenuState(false);
+                        }
+                    }
+                }
+            }
+        });
     }
 
     render() {

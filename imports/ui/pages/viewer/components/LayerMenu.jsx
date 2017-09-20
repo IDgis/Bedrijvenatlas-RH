@@ -135,7 +135,7 @@ export default class LayerMenu extends Component {
                 <Menu>
                     <SearchBar dataSource={this.state.searchFields} onNewRequest={this.selectFeature} />
                     {/*<BedrijvenSorted selectFeature={this.selectFeature} />*/}
-                    <BedrijvenBranche map={this.props.map} />
+                    <BedrijvenBranche map={this.props.map} toggleMenuState={this.props.toggleMenuState} />
                     <OverigeLagen map={this.props.map} />
                     <Vastgoed map={this.props.map} />
                 </Menu>
