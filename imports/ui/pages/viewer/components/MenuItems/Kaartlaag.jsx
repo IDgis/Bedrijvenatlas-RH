@@ -26,9 +26,15 @@ export default class Kaartlaag extends Component {
     setVisibility() {
         let map = this.props.map;
         let layers = map.getLayers();
+        let allSameNameVisible = true;
         layers.forEach((layer, index) => {
             if(layer.get('title') === this.props.primaryText) {
-                this.state.visible = layer.getVisible();
+                allSameNameVisible = allSameNameVisible && layer.getVisible();
+            }
+        });
+        layers.forEach((layer, index) => {
+            if(layer.get('title') === this.props.primaryText) {
+                this.state.visible = allSameNameVisible;
             }
         });
     }
@@ -40,6 +46,10 @@ export default class Kaartlaag extends Component {
         layers.forEach((layer, index) => {
             if(layer.get('title') === this.props.primaryText) {
                 allSameNameVisible = allSameNameVisible && layer.getVisible();
+            }
+        });
+        layers.forEach((layer, index) => {
+            if(layer.get('title') === this.props.primaryText) {
                 let newVisible = !allSameNameVisible;
                 this.setState({
                     visible: newVisible

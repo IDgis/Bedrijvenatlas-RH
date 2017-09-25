@@ -34,6 +34,7 @@ export default class BedrijvenBranche extends Component {
         this.setState({
             map: nextProps.map
         });
+        this.updateVisibility();
     }
 
     openMenu= (event) => {
@@ -69,6 +70,23 @@ export default class BedrijvenBranche extends Component {
                 }
             }
         });
+    }
+
+    updateVisibility = () => {
+        let map = this.state.map;
+        if(map !== null) {
+            let layers = map.getLayers();
+            layers.forEach((layer, index) => {
+                if(layer.get('title') === Meteor.settings.public.laagNaam.kvk) {
+                    let source = layer.getSource();
+                    if(source.state_ === 'ready') {
+                        let features = source.getFeatures();
+                        let id = features[0].get('SBI_RUBR_C');
+                        this.setVisibility(id, layer.getVisible());
+                    }
+                }
+            });
+        }
     }
 
     /**

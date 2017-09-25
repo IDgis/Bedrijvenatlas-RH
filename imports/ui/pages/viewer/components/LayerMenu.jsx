@@ -19,6 +19,7 @@ export default class LayerMenu extends Component {
             bedrijvenIndexAZOpen: false,
             searchFields: [],
             kvkVisible: false,
+            updateKvk: false,
             menuOpen: this.props.menuOpen
         }
 
@@ -64,6 +65,12 @@ export default class LayerMenu extends Component {
     setKvkVisible = (newVisible) => {
         this.setState({
             kvkVisible: newVisible
+        });
+    }
+
+    updateKvkChecked = () => {
+        this.setState({
+            updateKvk: true
         });
     }
 
@@ -135,8 +142,8 @@ export default class LayerMenu extends Component {
                 <Menu>
                     <SearchBar dataSource={this.state.searchFields} onNewRequest={this.selectFeature} />
                     {/*<BedrijvenSorted selectFeature={this.selectFeature} />*/}
-                    <BedrijvenBranche map={this.props.map} toggleMenuState={this.props.toggleMenuState} />
-                    <OverigeLagen map={this.props.map} />
+                    <BedrijvenBranche map={this.props.map} toggleMenuState={this.props.toggleMenuState} updateKvkChecked={this.state.updateKvk} />
+                    <OverigeLagen map={this.props.map} updateKvkChecked={this.updateKvkChecked} />
                     <Vastgoed map={this.props.map} />
                 </Menu>
             </Drawer>
