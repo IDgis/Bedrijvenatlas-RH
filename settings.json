@@ -31,6 +31,10 @@
             "Milieucategoriën": ["OGR_FID","CATEGORIE"]
         },
 
+        "iconShadow": "/icons/SCHADUW.svg",
+        "iconKoop": "/icons/TE_KOOP.svg",
+        "iconHuur": "/icons/TE_HUUR.svg",
+
         "categorieUrl": {
             "C": "/icons/SBI_RUBRIEK_CODE_C_INDUSTRIE.svg",
             "E": "/icons/SBI_RUBRIEK_CODE_E_DISTRIBUTIE_WATER_AFVAL.svg",

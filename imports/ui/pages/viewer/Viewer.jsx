@@ -179,8 +179,25 @@ export default class Viewer extends Component {
                     title: Meteor.settings.public.laagNaam.teKoop,
                     source: new ol.source.Vector({
                         url: Meteor.settings.public.teKoopJsonUrl,
-                        format: new ol.format.GeoJSON()
+                        format: new ol.format.GeoJSON(),
                     }),
+                    style: [
+                        new ol.style.Style({
+                            image: new ol.style.Icon({
+                                src: Meteor.settings.public.iconKoop,
+                                scale: 0.5
+                            }),
+                            zIndex: 1
+                        }),
+                        new ol.style.Style({
+                            image: new ol.style.Icon({
+                                src: Meteor.settings.public.iconShadow,
+                                scale: 0.5,
+                                opacity: 0.7
+                            }),
+                            zIndex: 0
+                        })
+                    ],
                     visible: false
                 }),
                 new ol.layer.Vector({
@@ -189,6 +206,23 @@ export default class Viewer extends Component {
                         url: Meteor.settings.public.teHuurJsonUrl,
                         format: new ol.format.GeoJSON()
                     }),
+                    style: [
+                        new ol.style.Style({
+                            image: new ol.style.Icon({
+                                src: Meteor.settings.public.iconHuur,
+                                scale: 0.5
+                            }),
+                            zIndex: 1
+                        }),
+                        new ol.style.Style({
+                            image: new ol.style.Icon({
+                                src: Meteor.settings.public.iconShadow,
+                                scale: 0.5,
+                                opacity: 0.7
+                            }),
+                            zIndex: 0
+                        })
+                    ],
                     visible: false
                 }),
                 new ol.layer.Vector({
@@ -385,24 +419,19 @@ export default class Viewer extends Component {
                         new ol.style.Style({
                             image: new ol.style.Icon({
                                 src: Meteor.settings.public.categorieUrl[categorieNaam],
-                                scale: 0.5,
+                                scale: 0.5
                             }),
                             zIndex: 1
                         }),
                         new ol.style.Style({
-                            stroke: new ol.style.Stroke({
-                                color: 'rgba(0,0,0,1)',
-                                width: 20
+                            image: new ol.style.Icon({
+                                src: Meteor.settings.public.iconShadow,
+                                scale: 0.5,
+                                opacity: 0.7
                             }),
-                            zIndex: 2
+                            zIndex: 0
                         })
-                    ]
-                    /*new ol.style.Style({
-                        image: new ol.style.Icon({
-                            src: Meteor.settings.public.categorieUrl[categorieNaam],
-                            scale: 0.5
-                        })
-                    })*/,
+                    ],
                     visible: false
                 });
                 source.addFeatures(features);
