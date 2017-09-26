@@ -38,25 +38,21 @@ export default class LayerMenu extends Component {
      */
     fillSearchFields() {
         console.log('Filling search fields...');
-        let request = require('request');
+        
         let url = 'https://rijssenholten.geopublisher.nl/staging/geoserver/Bedrijventerreinen_KVK_hoofdactiviteiten_per_adres_service/wfs?' +
         'service=wfs&version=1.1.0&request=GetFeature&outputFormat=application/json&resultType=results' +
         '&typeName=Bedrijventerreinen_KVK_hoofdactiviteiten_per_adres_service:Bedrijventerreinen_KVK_hoofdactiviteiten_per_adres&srs=EPSG:28992';
 
-        request(url, (error, response, body) => {
-            if(error) {
-                console.log(error);
+        Meteor.call('getSearchFields', url, (err, result) => {
+            if(err) {
+                console.log(err);
             }
-            if(response.statusCode === 200) {
-                let json = JSON.parse(body);
-                let features = json['features'];
-                for(let feature in features) {
-                    let naam = features[feature]['properties']['BEDR_NAAM'];
-                    this.state.searchFields.push(naam);
-                }
+            if(result !== null && result !== undefined) {
+                this.state.searchFields = result;
                 console.log('Search fields filled...');
             }
         });
+
     }
 
     /**

@@ -128,7 +128,7 @@ export default class BedrijvenBranche extends Component {
                             let id = features[i].get('SBI_RUBR_C');
                             if(id === val) {
                                 let name = features[i].get('BEDR_NAAM');
-                                retArr.push(<ListItem primaryText={name} key={i} onClick={this.triggerClick} />);
+                                retArr.push(<ListItem primaryText={name} key={i} onTouchTap={this.triggerClick} />);
                             }
                         }
                     }

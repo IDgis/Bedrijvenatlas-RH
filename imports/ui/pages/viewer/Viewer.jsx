@@ -296,6 +296,9 @@ export default class Viewer extends Component {
      * Sets the initial view based on the answers in the wizard screen
      */
     setMapSettings() {
+        let layers = this.state.map.getLayers();
+        let laagNaam = Meteor.settings.public.laagNaam;
+
         let plaats = Session.get('plaats');
         let voorkeur = Session.get('pand');
         let huurKoop = Session.get('huur-koop')
@@ -306,6 +309,11 @@ export default class Viewer extends Component {
                 projection: 'EPSG:28992',
                 zoom: 17
             }));
+            layers.forEach((layer, index, arr) => {
+                if(layer.get('title') === laagNaam.teKoop || layer.get('title') === laagNaam.teHuur || layer.get('title') === laagNaam.kavels) {
+                    layer.setVisible(true);
+                }
+            })
         } else if(plaats === 'rijssen') {
             this.state.map.setView(new ol.View({
                 center: [232992, 480308],
@@ -320,7 +328,6 @@ export default class Viewer extends Component {
             }));
         }
 
-        let layers = this.state.map.getLayers();
         if(huurKoop === 'koop') {
             // show the te koop layer
             layers.forEach((layer, index, arr) => {

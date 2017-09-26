@@ -25,6 +25,7 @@
             "BAG Pand": ["aantal_verblijfsobjecten","actualiteitsdatum","bouwjaar","identificatie","oppervlakte_max","oppervlakte_min","status"],
             "BAG Standplaats": ["actualiteitsdatum","huisletter","huisnummer","identificatie","openbare_ruimte","postcode","status","toevoeging","woonplaats"],
             "BAG Verblijfsobject": ["actualiteitsdatum","bouwjaar","gebruiksdoel","huisletter","huisnummer","identificatie","openbare_ruimte","oppervlakte","pandidentificatie","pandstatus","postcode","status","toevoeging","woonplaats"],
+            "Kadastrale percelen": ["lokaalID","kadastraleGemeenteCode","sectie","kadastralegrootte","perceelnummer"],
             "Te Koop": ["Straat","Huisnummer","Toevoeging","Postcode","Plaats","Oppervlakte","Prijs"],
             "Te Huur": ["Straat","Huisnummer","Toevoeging","Postcode","Plaats","Oppervlakte","Prijs"],
             "Milieucategoriën": ["OGR_FID","CATEGORIE"]

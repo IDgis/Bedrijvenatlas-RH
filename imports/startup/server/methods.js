@@ -1,69 +1,29 @@
 import { Meteor } from 'meteor/meteor';
-import { Mongo } from 'meteor/mongo';
-
-export const KvkBedrijven = new Mongo.Collection('kvkBedrijven');
 
 Meteor.methods({
 
-    /**
-     * Load all data from the Json file and put them in the Mongo database
-     */
-    loadKvkData() {
-        console.log('Loading KVK data...');
-
-        const data = require('../../../public/data/KVK_BEDRIJVEN.json');
-        const features = data['features'];
-
-        // Get all features found in the json file and put them in the database
-        for(let i = 0; i < features.length; i++) {
-            let properties = features[i];
-            let property = properties['properties'];
-
-            KvkBedrijven.insert(property);
-        }
-
-        console.log('KVK data loaded...');
-    },
-
-    /**
-     * Sort all loaded Kvk data by name
-     */
-    sortKvkBedrijven() {
-        console.log('Sorting KVK data...');
-
-        let bedrijven = KvkBedrijven.find(
-            {KVK_HANDELSNAAM: {$exists: true}},
-            {sort: {KVK_HANDELSNAAM: 1}}
-        );
-
-        return bedrijven.fetch();
-    },
-
-    /**
-     * Gets all KVK Bedrijven and returns their Handelsnaam
-     */
-    getKvkBedrijven() {
-        console.log('Getting KVK bedrijven...');
-        let bedrijven = KvkBedrijven.find(
-            {KVK_HANDELSNAAM: {$exists: true}, KVK_STRAATNAAM: {$exists: true}}, 
-            {KVK_HANDELSNAAM: 1, KVK_STRAATNAAM: 1}
-        );
+    getFeatureInfo: function(url) {
+        let res = HTTP.get(url);
         
-        return bedrijven.fetch();
+        let content = res.content;
+        let json = JSON.parse(content);
+        let feature = json['features'][0];
+        let categorie = feature['properties']['CATEGORIE'];
+
+        return categorie;
+    },
+
+    getSearchFields: function(url) {
+        let searchFields = [];
+        let res = HTTP.get(url);
+        let content = res.content;
+        let json = JSON.parse(content);
+        let features = json['features'];
+        for(let feature in features) {
+            let naam = features[feature]['properties']['BEDR_NAAM'];
+            searchFields.push(naam);
+        }
+        
+        return searchFields;
     },
 });
-
-/**
- * Initial setup of the database and fill it with the data if empty
- */
-if(Meteor.isServer) {
-    Meteor.startup(() => {
-        if(KvkBedrijven.find().count() === 0) {
-            Meteor.call('loadKvkData', (error, result) => {
-                if(error !== undefined) {
-                    console.log('An error occurred: ' + error);
-                }
-            });
-        }
-    });
-}

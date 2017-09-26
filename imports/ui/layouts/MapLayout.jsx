@@ -132,12 +132,12 @@ export default class MapLayout extends Component {
 
         return (
             <MuiThemeProvider>
-                <div>
-                    <header>
+                <div style={{height:'100%'}} >
+                    <header style={{position:'fixed', width:'100%', zIndex:1 }} >
                         <MainHeader />
                         <MenuBar toggleMenuState={this.toggleMenuState} menuOpen={this.state.menuOpen} />
                     </header>
-                    <main onMouseMove={this.onMouseMove.bind(this)}>
+                    <main onMouseMove={this.onMouseMove.bind(this)} style={{position:'absolute', top:'125px', width:'100%'}} >
                         <Viewer mapToParent={this.setMap} menuOpen={this.state.menuOpen} toggleMenuState={this.toggleMenuState} featurePopup={this.setKvkPopup} />
                         {this.state.featurePopup}
                         {/*<Streetview coords={coord} />*/}

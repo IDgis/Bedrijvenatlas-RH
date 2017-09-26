@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
 
 const styles = {
-    position: 'relative',
     backgroundColor: '#fff',
     height: '56px',
     width: '100%',
     left: 5,
     image: {
-        position: 'absolute',
+        position: 'fixed',
         height: '56px',
         width: 'auto',
         right: 10

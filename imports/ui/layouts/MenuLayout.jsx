@@ -6,31 +6,21 @@ import MainHeader from './MainHeader.jsx';
 import MenuBar from './MenuBar.jsx';
 
 const style = {
-    main: {
-        position: 'relative',
-        backgroundColor: '#76e29a',
-        height: '840px'
-    },
     paper: {
-        position: 'absolute',
         backgroundColor: '#ccc',
         textAlign: 'center',
-        top: '130px',
-        bottom: '10px',
-        left: '10px',
-        right: '10px',
+        height: '840px',
     }
 };
 
 const MenuLayout = ({content}) => (
     <MuiThemeProvider>
         <div>
-            <header>
+            <header  style={{position:'fixed', width:'100%'}} >
                 <MainHeader />
                 <MenuBar />
             </header>
-            <main>
-                <div style={style.main}></div>
+            <main style={{position:'absolute', top:'120px', height:'840px', width:'100%'}}>
                 <Paper style={style.paper} zDepth={3} rounded={true} transitionEnabled={false}>
                     { content }
                 </Paper>

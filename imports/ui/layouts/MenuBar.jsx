@@ -4,6 +4,8 @@ import AppBar from 'material-ui/AppBar';
 import FlatButton from 'material-ui/FlatButton';
 
 const styles = {
+    postition: 'fixed',
+    width: '100%',
     backgroundColor: Meteor.settings.public.colorGemeente,
     title: {
         color: '#fff'
