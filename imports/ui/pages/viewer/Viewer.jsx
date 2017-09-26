@@ -381,12 +381,28 @@ export default class Viewer extends Component {
                 let layer = new ol.layer.Vector({
                     title: Meteor.settings.public.laagNaam.kvk,
                     source: source,
-                    style: new ol.style.Style({
+                    style: [
+                        new ol.style.Style({
+                            image: new ol.style.Icon({
+                                src: Meteor.settings.public.categorieUrl[categorieNaam],
+                                scale: 0.5,
+                            }),
+                            zIndex: 1
+                        }),
+                        new ol.style.Style({
+                            stroke: new ol.style.Stroke({
+                                color: 'rgba(0,0,0,1)',
+                                width: 20
+                            }),
+                            zIndex: 2
+                        })
+                    ]
+                    /*new ol.style.Style({
                         image: new ol.style.Icon({
                             src: Meteor.settings.public.categorieUrl[categorieNaam],
                             scale: 0.5
                         })
-                    }),
+                    })*/,
                     visible: false
                 });
                 source.addFeatures(features);

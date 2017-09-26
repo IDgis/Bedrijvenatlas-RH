@@ -125,7 +125,7 @@ export default class OverigeLagen extends Component {
                 >
                     <List>
                         <MenuItem primaryText={Meteor.settings.public.laagNaam.bag}
-                            leftIcon={<Checkbox checked={this.state.allBagChecked} onClick={this.selectAllBagLayers} />} 
+                            leftIcon={<Checkbox checked={this.state.allBagChecked} onTouchTap={this.selectAllBagLayers} />} 
                             rightIcon={<ArrowDropRight />} 
                             menuItems={[
                                 <Kaartlaag primaryText={Meteor.settings.public.laagNaam.bagLigplaats} map={this.props.map} updateParent={this.setAllBagChecked} />,
