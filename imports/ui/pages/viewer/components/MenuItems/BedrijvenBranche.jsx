@@ -28,6 +28,7 @@ export default class BedrijvenBranche extends Component {
             Q: false,
             S: false
         }
+        this.updateVisibility();
     }
 
     componentWillReceiveProps(nextProps) {
@@ -69,6 +70,9 @@ export default class BedrijvenBranche extends Component {
                     }
                 }
             }
+            if(this.props.updateParent !== undefined) {
+                this.props.updateParent();
+            }
         });
     }
 
@@ -94,19 +98,19 @@ export default class BedrijvenBranche extends Component {
      */
     setVisibility = (cat, newVisible) => {
         switch (cat) {
-            case 'C': this.setState({C:newVisible}); break;
-            case 'E': this.setState({E:newVisible}); break;
-            case 'F': this.setState({F:newVisible}); break;
-            case 'G': this.setState({G:newVisible}); break;
-            case 'H': this.setState({H:newVisible}); break;
-            case 'I': this.setState({I:newVisible}); break;
-            case 'J': this.setState({J:newVisible}); break;
-            case 'K': this.setState({K:newVisible}); break;
-            case 'L': this.setState({L:newVisible}); break;
-            case 'N': this.setState({N:newVisible}); break;
-            case 'P': this.setState({P:newVisible}); break;
-            case 'Q': this.setState({Q:newVisible}); break;
-            case 'S': this.setState({S:newVisible}); break;
+            case 'C': this.state.C = newVisible; break;// this.setState({C:newVisible}); break;
+            case 'E': this.state.E = newVisible; break;// this.setState({E:newVisible}); break;
+            case 'F': this.state.F = newVisible; break;// this.setState({F:newVisible}); break;
+            case 'G': this.state.G = newVisible; break;// this.setState({G:newVisible}); break;
+            case 'H': this.state.H = newVisible; break;// this.setState({H:newVisible}); break;
+            case 'I': this.state.I = newVisible; break;// this.setState({I:newVisible}); break;
+            case 'J': this.state.J = newVisible; break;// this.setState({J:newVisible}); break;
+            case 'K': this.state.K = newVisible; break;// this.setState({K:newVisible}); break;
+            case 'L': this.state.L = newVisible; break;// this.setState({L:newVisible}); break;
+            case 'N': this.state.N = newVisible; break;// this.setState({N:newVisible}); break;
+            case 'P': this.state.P = newVisible; break;// this.setState({P:newVisible}); break;
+            case 'Q': this.state.Q = newVisible; break;// this.setState({Q:newVisible}); break;
+            case 'S': this.state.S = newVisible; break;// this.setState({S:newVisible}); break;
             default: break;
         }
     }
@@ -128,7 +132,7 @@ export default class BedrijvenBranche extends Component {
                             let id = features[i].get('SBI_RUBR_C');
                             if(id === val) {
                                 let name = features[i].get('BEDR_NAAM');
-                                retArr.push(<ListItem primaryText={name} key={i} onTouchTap={this.triggerClick} />);
+                                retArr.push(<ListItem primaryText={name} key={i} onClick={this.triggerClick} />);
                             }
                         }
                     }
@@ -187,7 +191,7 @@ export default class BedrijvenBranche extends Component {
                             let collection = select.getFeatures().push(features[i]);
 
                             this.closeMenu();
-                            this.props.toggleMenuState(false);
+                            //this.props.toggleMenuState(false);
                         }
                     }
                 }
@@ -204,16 +208,29 @@ export default class BedrijvenBranche extends Component {
             categorien.push(c);
         }
 
-        const menuItems = categorien.map((val, i) =>
+        /*const menuItems = categorien.map((val, i) =>
             <MenuItem primaryText={Meteor.settings.public.categorieNaam[val]} 
-                leftIcon={<Checkbox checked={this.state[val]} onTouchTap={this.selectBranche} value={val} />}
+                leftIcon={<Checkbox checked={this.state[val]} onClick={this.selectBranche} value={val} />}
                 rightIcon={<Avatar src={Meteor.settings.public.categorieUrl[val]} />}
                 key={i}
                 menuItems={this.getMenuItems(val)}
             />
+        );*/
+        const menuItems = categorien.map((val, i) => 
+            <ListItem primaryText={Meteor.settings.public.categorieNaam[val]}
+                leftIcon={<Checkbox checked={this.state[val]} onClick={this.selectBranche} value={val} />}
+                rightIcon={<Avatar src={Meteor.settings.public.categorieUrl[val]} />}
+                key={i}
+            />
         );
 
         return(
+            <List>
+                {menuItems}
+            </List>
+        );
+
+        /*return(
             <div>
                 <MenuItem primaryText="Bedrijvenindex (naar branche)" onClick={this.openMenu} />
                 <Popover
@@ -229,6 +246,6 @@ export default class BedrijvenBranche extends Component {
                     </List>
                 </Popover>
             </div>
-        );
+        );*/
     }
 }
