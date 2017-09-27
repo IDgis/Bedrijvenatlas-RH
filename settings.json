@@ -2,9 +2,9 @@
     "public": {
 
         "laagNaam": {
-            "kvk": "KVK Bedrijven",
+            "kvk": "Bedrijven",
             "kavels": "Uitgifte Kavels",
-            "ibis": "Ibis Bedrijventerreinen",
+            "ibis": "Bedrijventerreinen",
             "bag": "BAG",
             "bagLigplaats": "BAG Ligplaats",
             "bagPand": "BAG Pand",
@@ -14,12 +14,13 @@
             "luchtfoto": "Luchtfoto",
             "teKoop": "Te Koop",
             "teHuur": "Te Huur",
+            "vastgoed": "Te Koop\/Huur",
             "milieu": "Milieucategoriën"
         },
 
         "searchFields": {
-            "Ibis Bedrijventerreinen": ["OGR_FID","BEDR_TERR","RINNUMMER","KERN","JAAR","OPPBRUTO","OPPNETTO"],
-            "KVK Bedrijven": ["OGR_FID","SBI_RUBR_C","SBI_OMSCHR","BEDR_NAAM","ADR_LABEL","ADR_ID_BAG"],
+            "Bedrijventerreinen": ["OGR_FID","BEDR_TERR","RINNUMMER","KERN","JAAR","OPPBRUTO","OPPNETTO"],
+            "Bedrijven": ["OGR_FID","SBI_RUBR_C","SBI_OMSCHR","BEDR_NAAM","ADR_LABEL","ADR_ID_BAG"],
             "Uitgifte Kavels": ["OGR_FID","KAVELINFO","OPP","TEKEN","KAVELNR","STATUS","TELEFOON","EMAIL"],
             "BAG Ligplaats": ["actualiteitsdatum","huisletter","huisnummer","identificatie","openbare_ruimte","postcode","status","toevoeging","woonplaats"],
             "BAG Pand": ["aantal_verblijfsobjecten","actualiteitsdatum","bouwjaar","identificatie","oppervlakte_max","oppervlakte_min","status"],

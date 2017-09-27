@@ -8,13 +8,9 @@ const styles = {
     radioButton: {
         position: 'relative',
         fontSize: '150%',
-        marginBottom: 16
+        marginBottom: 10
     },
     questions: {
-        /*position: 'absolute',
-        textAlign: 'left',
-        left: '35%',
-        top: '2%',*/
         position: 'fixed',
         color: '#333',
         textAlign: 'left',
@@ -22,13 +18,13 @@ const styles = {
     },
     h2: {
         position: 'relative',
-        marginBottom: 20
+        marginBottom: 5
     },
     button: {
         position: 'fixed',
         right: '60px',
         bottom: '30px'
-}
+    }
 };
 
 export default class WizardPage extends Component {
@@ -56,7 +52,7 @@ export default class WizardPage extends Component {
     render() {
         return (
             <div>
-                <div style={styles.questions}>
+                <div style={styles.questions} >
                     <div>
                         <h2 style={styles.h2}>Naar wat voor pand bent u op zoek?</h2>
                         <RadioButtonGroup name="pand" defaultSelected="beide" onChange={this.setPandValue.bind(this)}>
@@ -90,7 +86,6 @@ export default class WizardPage extends Component {
                     buttonStyle={{backgroundColor:Meteor.settings.public.colorGemeente}} 
                     style={styles.button} 
                     icon={ <img style={{height:'100%'}} src="/images/navigate_next_w.png" /> }
-                    /*onTouchTap={}*/
                 />
             </div>
         );
