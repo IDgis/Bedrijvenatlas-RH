@@ -134,7 +134,7 @@ export default class MapLayout extends Component {
                         <MenuBar />
                     </header>
                     <main onMouseMove={this.onMouseMove.bind(this)} style={{position:'fixed', top:'56px', left:'0px', width:'100%', height:(window.innerHeight-56)}} >
-                        <Viewer mapToParent={this.setMap} menuOpen={this.state.menuOpen} toggleMenuState={this.toggleMenuState} featurePopup={this.setKvkPopup} />
+                        <Viewer mapToParent={this.setMap} featurePopup={this.setKvkPopup} />
                         {this.state.featurePopup}
                         {this.state.streetView}
                     </main>
