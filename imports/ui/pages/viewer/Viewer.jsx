@@ -470,10 +470,10 @@ export default class Viewer extends Component {
     render() {
         return (
             <div id="map" className="map" >
-                <IconButton style={{position:'fixed', backgroundColor:Meteor.settings.public.colorGemeente, top:'66px', left:'10px', zIndex:1}} onTouchTap={this.toggleMenu} >
+                <IconButton style={{position:'fixed', backgroundColor:Meteor.settings.public.colorGemeente, top:'66px', left:'10px', zIndex:1, opacity:0.9}} onTouchTap={this.toggleMenu} >
                     <img src={Meteor.settings.public.iconMenu} />
                 </IconButton>
-                <IconButton href='/' style={{position:'fixed', backgroundColor:Meteor.settings.public.colorGemeente, top:'66px', right:'10px', zIndex:1}} >
+                <IconButton href='/' style={{position:'fixed', backgroundColor:Meteor.settings.public.colorGemeente, top:'66px', right:'10px', zIndex:1, opacity:0.9}} >
                     <img src={Meteor.settings.public.iconHome} />
                 </IconButton>
                 <LayerMenu
