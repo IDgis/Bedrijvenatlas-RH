@@ -3,10 +3,8 @@ import * as ol from 'openlayers';
 import proj4 from 'proj4';
 import './viewer.css';
 
-import Checkbox from 'material-ui/Checkbox';
 import Drawer from 'material-ui/Drawer';
-import {List, ListItem} from 'material-ui/List';
-import Subheader from 'material-ui/Subheader';
+import IconButton from 'material-ui/IconButton';
 
 import LayerMenu from './components/LayerMenu.jsx';
 
@@ -317,7 +315,24 @@ export default class Viewer extends Component {
                 new ol.control.ZoomSlider()
             ],
             interactions: new ol.interaction.defaults().extend([
-                new ol.interaction.Select()
+                new ol.interaction.Select({
+                    style: [
+                        new ol.style.Style({
+                            image: new ol.style.Icon({
+                                src: Meteor.settings.public.iconSelected,
+                                scale: 0.5
+                            }),
+                            zIndex: 1
+                        }),
+                        new ol.style.Style({
+                            image: new ol.style.Icon({
+                                src: Meteor.settings.public.iconShadow,
+                                scale: 0.5
+                            }),
+                            zIndex: 0
+                        })
+                    ]
+                })
             ])
         });
 
@@ -441,10 +456,12 @@ export default class Viewer extends Component {
     }
 
     /**
-     * Opens and closes the value whether the menu should be opened or closed
+     * Toggles the state of the menu between open and closed
      */
-    toggleMenuState = (newState) => {
-        this.props.toggleMenuState(newState);
+    toggleMenu = () => {
+        this.setState({
+            menuOpen: !this.state.menuOpen
+        });
     }
 
     /**
@@ -455,12 +472,18 @@ export default class Viewer extends Component {
             <div 
                 id="map" 
                 className="map" 
-                style={styles.map} 
+                /*style={{height:'840px'}} */
             >
+                <IconButton style={{position:'fixed', backgroundColor:Meteor.settings.public.colorGemeente, top:'66px', left:'10px', zIndex:1}} onTouchTap={this.toggleMenu} >
+                    <img src={Meteor.settings.public.iconMenu} />
+                </IconButton>
+                <IconButton href='/' style={{position:'fixed', backgroundColor:Meteor.settings.public.colorGemeente, top:'66px', right:'10px', zIndex:1}} >
+                    <img src={Meteor.settings.public.iconHome} />
+                </IconButton>
                 <LayerMenu
                     map={this.state.map}
-                    menuOpen={this.props.menuOpen}
-                    toggleMenuState={this.toggleMenuState}
+                    menuOpen={this.state.menuOpen}
+                    toggleMenuState={this.toggleMenu}
                     featurePopup={this.props.featurePopup}
                 />
             </div>

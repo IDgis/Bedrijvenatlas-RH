@@ -34,6 +34,9 @@
         "iconShadow": "/icons/SCHADUW.svg",
         "iconKoop": "/icons/TE_KOOP.svg",
         "iconHuur": "/icons/TE_HUUR.svg",
+        "iconSelected": "/icons/SELECTED.svg",
+        "iconHome": "/icons/HOME.svg",
+        "iconMenu": "/icons/MENU.svg",
 
         "categorieUrl": {
             "C": "/icons/SBI_RUBRIEK_CODE_C_INDUSTRIE.svg",
