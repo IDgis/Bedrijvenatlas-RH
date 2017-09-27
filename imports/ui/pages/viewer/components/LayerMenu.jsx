@@ -3,12 +3,11 @@ import * as ol from 'openlayers';
 
 import Drawer from 'material-ui/Drawer';
 import Menu from 'material-ui/Menu';
+import Popover, {PopoverAnimationVertical} from 'material-ui/Popover';
 
 import BedrijvenBranche from './MenuItems/BedrijvenBranche.jsx';
-import BedrijvenSorted from './MenuItems/BedrijvenSorted.jsx';
 import OverigeLagen from './MenuItems/OverigeLagen.jsx';
 import SearchBar from './MenuItems/SearchBar.jsx';
-import Vastgoed from './MenuItems/Vastgoed.jsx';
 
 export default class LayerMenu extends Component {
 
@@ -19,16 +18,17 @@ export default class LayerMenu extends Component {
             bedrijvenIndexAZOpen: false,
             searchFields: [],
             kvkVisible: false,
+            updateKvk: false,
             menuOpen: this.props.menuOpen
         }
 
         this.fillSearchFields();
-        //this.fillSearchField();
     }
 
     componentWillReceiveProps(nextProps) {
         this.setState({
-            menuOpen: nextProps.menuOpen
+            menuOpen: nextProps.menuOpen,
+            anchorEl: nextProps.anchorEl
         });
     }
 
@@ -37,25 +37,21 @@ export default class LayerMenu extends Component {
      */
     fillSearchFields() {
         console.log('Filling search fields...');
-        let request = require('request');
+
         let url = 'https://rijssenholten.geopublisher.nl/staging/geoserver/Bedrijventerreinen_KVK_hoofdactiviteiten_per_adres_service/wfs?' +
         'service=wfs&version=1.1.0&request=GetFeature&outputFormat=application/json&resultType=results' +
         '&typeName=Bedrijventerreinen_KVK_hoofdactiviteiten_per_adres_service:Bedrijventerreinen_KVK_hoofdactiviteiten_per_adres&srs=EPSG:28992';
 
-        request(url, (error, response, body) => {
-            if(error) {
-                console.log(error);
+        Meteor.call('getSearchFields', url, (err, result) => {
+            if(err) {
+                console.log(err);
             }
-            if(response.statusCode === 200) {
-                let json = JSON.parse(body);
-                let features = json['features'];
-                for(let feature in features) {
-                    let naam = features[feature]['properties']['BEDR_NAAM'];
-                    this.state.searchFields.push(naam);
-                }
+            if(result !== null && result !== undefined) {
+                this.state.searchFields = result;
                 console.log('Search fields filled...');
             }
         });
+
     }
 
     /**
@@ -64,6 +60,12 @@ export default class LayerMenu extends Component {
     setKvkVisible = (newVisible) => {
         this.setState({
             kvkVisible: newVisible
+        });
+    }
+
+    updateKvkChecked = () => {
+        this.setState({
+            updateKvk: true
         });
     }
 
@@ -102,7 +104,24 @@ export default class LayerMenu extends Component {
                                 // Zoom to the feature found
                                 this.props.map.getView().setZoom(17.5);
 
-                                let select = new ol.interaction.Select();
+                                let select = new ol.interaction.Select({
+                                    style: [
+                                        new ol.style.Style({
+                                            image: new ol.style.Icon({
+                                                src: Meteor.settings.public.iconSelected,
+                                                scale: 0.5
+                                            }),
+                                            zIndex: 1
+                                        }),
+                                        new ol.style.Style({
+                                            image: new ol.style.Icon({
+                                                src: Meteor.settings.public.iconShadow,
+                                                scale: 0.5
+                                            }),
+                                            zIndex: 0
+                                        })
+                                    ]
+                                });
                                 this.props.map.addInteraction(select);
                                 let collection = select.getFeatures().push(features[i]);
 
@@ -131,15 +150,35 @@ export default class LayerMenu extends Component {
      */
     render() {
         return (
-            <Drawer open={this.state.menuOpen} /*openSecondary={true}*/ docked={false} onRequestChange={(open) => this.props.toggleMenuState(!this.state.menuOpen)} >
+            <Popover
+            open={this.props.menuOpen}
+            anchorEl={this.props.anchorEl}
+            anchorOrigin={{horizontal: 'left', vertical: 'top'}}
+            targetOrigin={{horizontal: 'left', vertical: 'top'}}
+            onRequestClose={this.props.closeMenu}
+            animation={PopoverAnimationVertical}
+            >
                 <Menu>
                     <SearchBar dataSource={this.state.searchFields} onNewRequest={this.selectFeature} />
-                    {/*<BedrijvenSorted selectFeature={this.selectFeature} />*/}
-                    <BedrijvenBranche map={this.props.map} toggleMenuState={this.props.toggleMenuState} />
-                    <OverigeLagen map={this.props.map} />
+                    {/*<BedrijvenBranche map={this.props.map} toggleMenuState={this.props.toggleMenuState} updateKvkChecked={this.state.updateKvk} />*/}
+                    <OverigeLagen map={this.props.map} /*updateKvkChecked={this.updateKvkChecked}*/ />
+                </Menu>
+            </Popover>
+        );
+    }
+
+    /*render() {
+        return (
+            <Drawer open={this.state.menuOpen} 
+            //openSecondary={true}
+            docked={false} onRequestChange={(open) => this.props.toggleMenuState(!this.state.menuOpen)} >
+                <Menu>
+                    <SearchBar dataSource={this.state.searchFields} onNewRequest={this.selectFeature} />
+                    <BedrijvenBranche map={this.props.map} toggleMenuState={this.props.toggleMenuState} updateKvkChecked={this.state.updateKvk} />
+                    <OverigeLagen map={this.props.map} updateKvkChecked={this.updateKvkChecked} />
                     <Vastgoed map={this.props.map} />
                 </Menu>
             </Drawer>
         );
-    }
+    }*/
 }

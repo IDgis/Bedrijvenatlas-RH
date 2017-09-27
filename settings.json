@@ -2,9 +2,9 @@
     "public": {
 
         "laagNaam": {
-            "kvk": "KVK Bedrijven",
+            "kvk": "Bedrijven",
             "kavels": "Uitgifte Kavels",
-            "ibis": "Ibis Bedrijventerreinen",
+            "ibis": "Bedrijventerreinen",
             "bag": "BAG",
             "bagLigplaats": "BAG Ligplaats",
             "bagPand": "BAG Pand",
@@ -14,21 +14,30 @@
             "luchtfoto": "Luchtfoto",
             "teKoop": "Te Koop",
             "teHuur": "Te Huur",
+            "vastgoed": "Te Koop\/Huur",
             "milieu": "Milieucategoriën"
         },
 
         "searchFields": {
-            "Ibis Bedrijventerreinen": ["OGR_FID","BEDR_TERR","RINNUMMER","KERN","JAAR","OPPBRUTO","OPPNETTO"],
-            "KVK Bedrijven": ["OGR_FID","SBI_RUBR_C","SBI_OMSCHR","BEDR_NAAM","ADR_LABEL","ADR_ID_BAG"],
+            "Bedrijventerreinen": ["OGR_FID","BEDR_TERR","RINNUMMER","KERN","JAAR","OPPBRUTO","OPPNETTO"],
+            "Bedrijven": ["OGR_FID","SBI_RUBR_C","SBI_OMSCHR","BEDR_NAAM","ADR_LABEL","ADR_ID_BAG"],
             "Uitgifte Kavels": ["OGR_FID","KAVELINFO","OPP","TEKEN","KAVELNR","STATUS","TELEFOON","EMAIL"],
             "BAG Ligplaats": ["actualiteitsdatum","huisletter","huisnummer","identificatie","openbare_ruimte","postcode","status","toevoeging","woonplaats"],
             "BAG Pand": ["aantal_verblijfsobjecten","actualiteitsdatum","bouwjaar","identificatie","oppervlakte_max","oppervlakte_min","status"],
             "BAG Standplaats": ["actualiteitsdatum","huisletter","huisnummer","identificatie","openbare_ruimte","postcode","status","toevoeging","woonplaats"],
             "BAG Verblijfsobject": ["actualiteitsdatum","bouwjaar","gebruiksdoel","huisletter","huisnummer","identificatie","openbare_ruimte","oppervlakte","pandidentificatie","pandstatus","postcode","status","toevoeging","woonplaats"],
+            "Kadastrale percelen": ["lokaalID","kadastraleGemeenteCode","sectie","kadastralegrootte","perceelnummer"],
             "Te Koop": ["Straat","Huisnummer","Toevoeging","Postcode","Plaats","Oppervlakte","Prijs"],
             "Te Huur": ["Straat","Huisnummer","Toevoeging","Postcode","Plaats","Oppervlakte","Prijs"],
             "Milieucategoriën": ["OGR_FID","CATEGORIE"]
         },
+
+        "iconShadow": "/icons/SCHADUW.svg",
+        "iconKoop": "/icons/TE_KOOP.svg",
+        "iconHuur": "/icons/TE_HUUR.svg",
+        "iconSelected": "/icons/SELECTED.svg",
+        "iconHome": "/icons/HOME.svg",
+        "iconMenu": "/icons/MENU.svg",
 
         "categorieUrl": {
             "C": "/icons/SBI_RUBRIEK_CODE_C_INDUSTRIE.svg",

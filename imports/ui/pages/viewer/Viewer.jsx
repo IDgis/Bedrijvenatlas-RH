@@ -3,10 +3,8 @@ import * as ol from 'openlayers';
 import proj4 from 'proj4';
 import './viewer.css';
 
-import Checkbox from 'material-ui/Checkbox';
 import Drawer from 'material-ui/Drawer';
-import {List, ListItem} from 'material-ui/List';
-import Subheader from 'material-ui/Subheader';
+import IconButton from 'material-ui/IconButton';
 
 import LayerMenu from './components/LayerMenu.jsx';
 
@@ -23,17 +21,11 @@ export default class Viewer extends Component {
 
         this.state = {
             map: null,
-            menuOpen: this.props.menuOpen
+            menuOpen: false
         };
 
         proj4.defs('EPSG:28992', '+proj=sterea +lat_0=52.15616055555555 +lon_0=5.38763888888889 +k=0.9999079 +x_0=155000 +y_0=463000 +ellps=bessel +towgs84=565.417,50.3319,465.552,-0.398957,0.343988,-1.8774,4.0725 +units=m +no_defs');
         ol.proj.setProj4(proj4);
-    }
-
-    componentWillReceiveProps(nextProps) {
-        this.setState({
-            menuOpen: nextProps.menuOpen
-        });
     }
 
     /**
@@ -52,10 +44,6 @@ export default class Viewer extends Component {
         this.state.map  = new ol.Map({
             target: 'map',
             layers: [
-                /*new ol.layer.Tile({
-                    title: 'osm',
-                    source: new ol.source.OSM()
-                }),*/
                 new ol.layer.Tile({
                     title: 'brt achtergrondkaart',
                     preload: 1,
@@ -179,8 +167,25 @@ export default class Viewer extends Component {
                     title: Meteor.settings.public.laagNaam.teKoop,
                     source: new ol.source.Vector({
                         url: Meteor.settings.public.teKoopJsonUrl,
-                        format: new ol.format.GeoJSON()
+                        format: new ol.format.GeoJSON(),
                     }),
+                    style: [
+                        new ol.style.Style({
+                            image: new ol.style.Icon({
+                                src: Meteor.settings.public.iconKoop,
+                                scale: 0.5
+                            }),
+                            zIndex: 1
+                        }),
+                        new ol.style.Style({
+                            image: new ol.style.Icon({
+                                src: Meteor.settings.public.iconShadow,
+                                scale: 0.5,
+                                opacity: 0.7
+                            }),
+                            zIndex: 0
+                        })
+                    ],
                     visible: false
                 }),
                 new ol.layer.Vector({
@@ -189,6 +194,23 @@ export default class Viewer extends Component {
                         url: Meteor.settings.public.teHuurJsonUrl,
                         format: new ol.format.GeoJSON()
                     }),
+                    style: [
+                        new ol.style.Style({
+                            image: new ol.style.Icon({
+                                src: Meteor.settings.public.iconHuur,
+                                scale: 0.5
+                            }),
+                            zIndex: 1
+                        }),
+                        new ol.style.Style({
+                            image: new ol.style.Icon({
+                                src: Meteor.settings.public.iconShadow,
+                                scale: 0.5,
+                                opacity: 0.7
+                            }),
+                            zIndex: 0
+                        })
+                    ],
                     visible: false
                 }),
                 new ol.layer.Vector({
@@ -283,7 +305,24 @@ export default class Viewer extends Component {
                 new ol.control.ZoomSlider()
             ],
             interactions: new ol.interaction.defaults().extend([
-                new ol.interaction.Select()
+                new ol.interaction.Select({
+                    style: [
+                        new ol.style.Style({
+                            image: new ol.style.Icon({
+                                src: Meteor.settings.public.iconSelected,
+                                scale: 0.5
+                            }),
+                            zIndex: 1
+                        }),
+                        new ol.style.Style({
+                            image: new ol.style.Icon({
+                                src: Meteor.settings.public.iconShadow,
+                                scale: 0.5
+                            }),
+                            zIndex: 0
+                        })
+                    ]
+                })
             ])
         });
 
@@ -296,6 +335,9 @@ export default class Viewer extends Component {
      * Sets the initial view based on the answers in the wizard screen
      */
     setMapSettings() {
+        let layers = this.state.map.getLayers();
+        let laagNaam = Meteor.settings.public.laagNaam;
+
         let plaats = Session.get('plaats');
         let voorkeur = Session.get('pand');
         let huurKoop = Session.get('huur-koop')
@@ -306,6 +348,11 @@ export default class Viewer extends Component {
                 projection: 'EPSG:28992',
                 zoom: 17
             }));
+            layers.forEach((layer, index, arr) => {
+                if(layer.get('title') === laagNaam.teKoop || layer.get('title') === laagNaam.teHuur || layer.get('title') === laagNaam.kavels) {
+                    layer.setVisible(true);
+                }
+            })
         } else if(plaats === 'rijssen') {
             this.state.map.setView(new ol.View({
                 center: [232992, 480308],
@@ -320,7 +367,6 @@ export default class Viewer extends Component {
             }));
         }
 
-        let layers = this.state.map.getLayers();
         if(huurKoop === 'koop') {
             // show the te koop layer
             layers.forEach((layer, index, arr) => {
@@ -374,12 +420,23 @@ export default class Viewer extends Component {
                 let layer = new ol.layer.Vector({
                     title: Meteor.settings.public.laagNaam.kvk,
                     source: source,
-                    style: new ol.style.Style({
-                        image: new ol.style.Icon({
-                            src: Meteor.settings.public.categorieUrl[categorieNaam],
-                            scale: 0.5
+                    style: [
+                        new ol.style.Style({
+                            image: new ol.style.Icon({
+                                src: Meteor.settings.public.categorieUrl[categorieNaam],
+                                scale: 0.5
+                            }),
+                            zIndex: 1
+                        }),
+                        new ol.style.Style({
+                            image: new ol.style.Icon({
+                                src: Meteor.settings.public.iconShadow,
+                                scale: 0.5,
+                                opacity: 0.7
+                            }),
+                            zIndex: 0
                         })
-                    }),
+                    ],
                     visible: false
                 });
                 source.addFeatures(features);
@@ -389,10 +446,19 @@ export default class Viewer extends Component {
     }
 
     /**
-     * Opens and closes the value whether the menu should be opened or closed
+     * Toggles the state of the menu between open and closed
      */
-    toggleMenuState = (newState) => {
-        this.props.toggleMenuState(newState);
+    openMenu = (evt) => {
+        this.setState({
+            menuOpen: true,
+            anchorEl: evt.currentTarget
+        });
+    }
+
+    closeMenu = () => {
+        this.setState({
+            menuOpen: false
+        });
     }
 
     /**
@@ -400,16 +466,19 @@ export default class Viewer extends Component {
      */
     render() {
         return (
-            <div 
-                id="map" 
-                className="map" 
-                style={styles.map} 
-            >
+            <div id="map" className="map" >
+                <IconButton style={{position:'fixed', backgroundColor:Meteor.settings.public.colorGemeente, top:'66px', left:'10px', zIndex:1, opacity:0.8}} onClick={this.openMenu} >
+                    <img src={Meteor.settings.public.iconMenu} />
+                </IconButton>
+                <IconButton href='/' style={{position:'fixed', backgroundColor:Meteor.settings.public.colorGemeente, top:'66px', right:'10px', zIndex:1, opacity:0.8}} >
+                    <img src={Meteor.settings.public.iconHome} />
+                </IconButton>
                 <LayerMenu
                     map={this.state.map}
-                    menuOpen={this.props.menuOpen}
-                    toggleMenuState={this.toggleMenuState}
+                    menuOpen={this.state.menuOpen}
+                    closeMenu={this.closeMenu}
                     featurePopup={this.props.featurePopup}
+                    anchorEl={this.state.anchorEl}
                 />
             </div>
         );

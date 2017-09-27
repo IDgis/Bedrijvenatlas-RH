@@ -34,7 +34,7 @@ export default class ViewerLink extends Component {
                         <img style={style.image} src={Meteor.settings.public.logoViewerUrl} />
                     </div>
                     <div style={style.text}>
-                        <h2>Direct naar de viewer</h2>
+                        <h2>Zoeken op de kaart</h2>
                     </div>
                 </div>
             </a>

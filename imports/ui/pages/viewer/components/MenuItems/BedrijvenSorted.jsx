@@ -1,11 +1,11 @@
-import React, { Component } from 'react';
+/*import React, { Component } from 'react';
 
 import {List, ListItem} from 'material-ui/List';
 import Menu from 'material-ui/Menu';
 import MenuItem from 'material-ui/MenuItem';
-import Popover, {PopoverAnimationVertical} from 'material-ui/Popover';
+import Popover, {PopoverAnimationVertical} from 'material-ui/Popover';*/
 
-export default class BedrijvenSorted extends Component {
+/*export default class BedrijvenSorted extends Component {
 
     constructor(props) {
         super(props);
@@ -16,12 +16,12 @@ export default class BedrijvenSorted extends Component {
             letters: ['#', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'],
             showLetters: true
         }
-    }
+    }*/
 
     /**
      * Sort all bedrijven with the given letter by name 
      */
-    setBedrijvenSorted(letter) {
+    /*setBedrijvenSorted(letter) {
         console.log('Filling index sorted...');
 
         Meteor.call('sortKvkBedrijven', (error, result) => {
@@ -42,55 +42,55 @@ export default class BedrijvenSorted extends Component {
 
             console.log('Sorted Bedrijvenindex by name...');
         });
-    }
+    }*/
 
     /**
      * Opens the Bedrijvenindex (A t/m Z) menu
      */
-    openBedrijvenIndexAZ = (evt) => {
+    /*openBedrijvenIndexAZ = (evt) => {
         this.setState({
             bedrijvenIndexAZOpen: true,
             anchorEl: evt.currentTarget
         });
-    }
+    }*/
 
     /**
      * Closes the Bedrijvenindex (A t/m Z) menu
      */
-    closeBedrijvenIndexAZ = () => {
+    /*closeBedrijvenIndexAZ = () => {
         this.setState({
             bedrijvenIndexAZOpen: false,
             showLetters: true,
             alleBedrijvenSorted: []
         });
-    }
+    }*/
     
     /**
      * Get the Bedrijf that was clicked from the list and zoom in and center to it.
      */
-    getClickedBedrijf = (event) => {
+    /*getClickedBedrijf = (event) => {
         this.props.selectFeature(event.target.textContent);
         this.setState({
             bedrijvenIndexAZOpen: false,
             showLetters: true,
             alleBedrijvenSorted: []
         });
-    }
+    }*/
 
     /**
      * Set the letter that was clicked in the menu so the sorted submenu can be opened
      */
-    setClickedLetter = (event) => {
+    /*setClickedLetter = (event) => {
         this.setState({
             showLetters: false,
         });
         this.setBedrijvenSorted(event.target.textContent);
-    }
+    }*/
 
     /**
      * The main render method that will render the component to the screen
      */
-    render() {
+    /*render() {
         const lettersMenu = this.state.letters.map((val, i) =>
             <MenuItem primaryText={val} key={i} onClick={this.setClickedLetter} />
         );
@@ -117,4 +117,4 @@ export default class BedrijvenSorted extends Component {
             </div>
         );
     }
-}
+}*/
