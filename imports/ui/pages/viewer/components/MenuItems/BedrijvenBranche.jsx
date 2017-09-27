@@ -165,7 +165,24 @@ export default class BedrijvenBranche extends Component {
                             // Zoom to the feature found
                             map.getView().setZoom(17);
 
-                            let select = new ol.interaction.Select();
+                            let select = new ol.interaction.Select({
+                                style: [
+                                    new ol.style.Style({
+                                        image: new ol.style.Icon({
+                                            src: Meteor.settings.public.iconSelected,
+                                            scale: 0.5
+                                        }),
+                                        zIndex: 1
+                                    }),
+                                    new ol.style.Style({
+                                        image: new ol.style.Icon({
+                                            src: Meteor.settings.public.iconShadow,
+                                            scale: 0.5
+                                        }),
+                                        zIndex: 0
+                                    })
+                                ]
+                            });
                             map.addInteraction(select);
                             let collection = select.getFeatures().push(features[i]);
 
