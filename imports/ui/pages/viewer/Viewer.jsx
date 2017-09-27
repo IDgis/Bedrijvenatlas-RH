@@ -21,17 +21,11 @@ export default class Viewer extends Component {
 
         this.state = {
             map: null,
-            menuOpen: this.props.menuOpen
+            menuOpen: false
         };
 
         proj4.defs('EPSG:28992', '+proj=sterea +lat_0=52.15616055555555 +lon_0=5.38763888888889 +k=0.9999079 +x_0=155000 +y_0=463000 +ellps=bessel +towgs84=565.417,50.3319,465.552,-0.398957,0.343988,-1.8774,4.0725 +units=m +no_defs');
         ol.proj.setProj4(proj4);
-    }
-
-    componentWillReceiveProps(nextProps) {
-        this.setState({
-            menuOpen: nextProps.menuOpen
-        });
     }
 
     /**
@@ -50,10 +44,6 @@ export default class Viewer extends Component {
         this.state.map  = new ol.Map({
             target: 'map',
             layers: [
-                /*new ol.layer.Tile({
-                    title: 'osm',
-                    source: new ol.source.OSM()
-                }),*/
                 new ol.layer.Tile({
                     title: 'brt achtergrondkaart',
                     preload: 1,
@@ -458,9 +448,16 @@ export default class Viewer extends Component {
     /**
      * Toggles the state of the menu between open and closed
      */
-    toggleMenu = () => {
+    openMenu = (evt) => {
         this.setState({
-            menuOpen: !this.state.menuOpen
+            menuOpen: true,
+            anchorEl: evt.currentTarget
+        });
+    }
+
+    closeMenu = () => {
+        this.setState({
+            menuOpen: false
         });
     }
 
@@ -470,17 +467,18 @@ export default class Viewer extends Component {
     render() {
         return (
             <div id="map" className="map" >
-                <IconButton style={{position:'fixed', backgroundColor:Meteor.settings.public.colorGemeente, top:'66px', left:'10px', zIndex:1, opacity:0.9}} onTouchTap={this.toggleMenu} >
+                <IconButton style={{position:'fixed', backgroundColor:Meteor.settings.public.colorGemeente, top:'66px', left:'10px', zIndex:1, opacity:0.8}} onClick={this.openMenu} >
                     <img src={Meteor.settings.public.iconMenu} />
                 </IconButton>
-                <IconButton href='/' style={{position:'fixed', backgroundColor:Meteor.settings.public.colorGemeente, top:'66px', right:'10px', zIndex:1, opacity:0.9}} >
+                <IconButton href='/' style={{position:'fixed', backgroundColor:Meteor.settings.public.colorGemeente, top:'66px', right:'10px', zIndex:1, opacity:0.8}} >
                     <img src={Meteor.settings.public.iconHome} />
                 </IconButton>
                 <LayerMenu
                     map={this.state.map}
                     menuOpen={this.state.menuOpen}
-                    toggleMenuState={this.toggleMenu}
+                    closeMenu={this.closeMenu}
                     featurePopup={this.props.featurePopup}
+                    anchorEl={this.state.anchorEl}
                 />
             </div>
         );
