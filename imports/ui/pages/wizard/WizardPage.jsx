@@ -11,18 +11,21 @@ const styles = {
         marginBottom: 16
     },
     questions: {
-        position: 'absolute',
+        /*position: 'absolute',
         textAlign: 'left',
         left: '35%',
-        top: '5%',
-        color: '#333'
+        top: '2%',*/
+        position: 'fixed',
+        color: '#333',
+        textAlign: 'left',
+        left: (window.innerWidth/2 - 200)
     },
     h2: {
         position: 'relative',
         marginBottom: 20
     },
     button: {
-        position: 'absolute',
+        position: 'fixed',
         right: '60px',
         bottom: '30px'
 }
@@ -81,7 +84,7 @@ export default class WizardPage extends Component {
                 </div>
                 <RaisedButton 
                     href="/viewer" 
-                    label="Naar de viewer" 
+                    label="Zoek op de kaart" 
                     labelPosition="before"
                     primary={true} 
                     buttonStyle={{backgroundColor:Meteor.settings.public.colorGemeente}} 

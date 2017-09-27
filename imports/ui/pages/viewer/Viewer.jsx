@@ -469,11 +469,7 @@ export default class Viewer extends Component {
      */
     render() {
         return (
-            <div 
-                id="map" 
-                className="map" 
-                /*style={{height:'840px'}} */
-            >
+            <div id="map" className="map" >
                 <IconButton style={{position:'fixed', backgroundColor:Meteor.settings.public.colorGemeente, top:'66px', left:'10px', zIndex:1}} onTouchTap={this.toggleMenu} >
                     <img src={Meteor.settings.public.iconMenu} />
                 </IconButton>

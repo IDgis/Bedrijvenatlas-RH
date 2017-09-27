@@ -1,11 +1,8 @@
-// https://medium.com/@ruthmpardee/passing-data-between-react-components-103ad82ebd17
-
 import React, { Component } from 'react';
 import * as ol from 'openlayers';
 import proj4 from 'proj4';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
-import MainHeader from './MainHeader.jsx';
 import MenuBar from './MenuBar.jsx';
 import Popup from '../pages/viewer/components/popups/Popup.jsx';
 import Streetview from '../pages/viewer/Streetview.jsx';
@@ -132,15 +129,13 @@ export default class MapLayout extends Component {
 
         return (
             <MuiThemeProvider>
-                <div style={{height:'100%'}} >
-                    <header style={{position:'fixed', width:'100%', zIndex:1 }} >
-                        <MainHeader />
-                        <MenuBar toggleMenuState={this.toggleMenuState} menuOpen={this.state.menuOpen} />
+                <div style={{/*height:'100%'*/}} >
+                    <header style={{position:'fixed', width:'100%', zIndex:1, top:'0px'}} >
+                        <MenuBar />
                     </header>
-                    <main onMouseMove={this.onMouseMove.bind(this)} style={{position:'absolute', top:'125px', width:'100%'}} >
+                    <main onMouseMove={this.onMouseMove.bind(this)} style={{position:'fixed', top:'56px', left:'0px', width:'100%', height:(window.innerHeight-56)}} >
                         <Viewer mapToParent={this.setMap} menuOpen={this.state.menuOpen} toggleMenuState={this.toggleMenuState} featurePopup={this.setKvkPopup} />
                         {this.state.featurePopup}
-                        {/*<Streetview coords={coord} />*/}
                         {this.state.streetView}
                     </main>
                 </div>
