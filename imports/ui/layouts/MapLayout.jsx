@@ -36,9 +36,6 @@ export default class MapLayout extends Component {
     onMouseMove(e) {
         this.state.coords.x = e.screenX;
         this.state.coords.y = e.screenY;
-
-        let map = this.state.map;
-        let that = this;
     }
 
     /**
@@ -71,17 +68,9 @@ export default class MapLayout extends Component {
             map.forEachFeatureAtPixel(e.pixel, function(feature, layer) {
                 let title = layer.get('title');
                 let searchFields = Meteor.settings.public.searchFields[title];
-                that.setState({featurePopup: <Popup title={title} selectedFeature={feature} coords={that.state.coords} searchFields={searchFields} map={that.state.map} openStreetView={that.openStreetView} />})
+                that.setState({featurePopup: <Popup title={title} selectedFeature={feature} screenCoords={e.pixel} searchFields={searchFields} map={that.state.map} openStreetView={that.openStreetView} />})
             });
         });
-    }
-
-    setKvkPopup = (feature) => {
-        this.state.coords.x = window.innerWidth / 2 + 20;
-        this.state.coords.y = window.innerHeight / 2;
-        //feature = feature.values_;
-        //console.log(feature['BEDR_NAAM']);
-        this.setState({featurePopup: <Popup title={Meteor.settings.public.laagNaam.kvk} selectedFeature={feature} coords={this.state.coords} />});
     }
 
     /**

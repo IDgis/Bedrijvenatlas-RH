@@ -291,6 +291,15 @@ export default class Viewer extends Component {
                             maxZoom: 20
                         }))
                     }),
+                    style: new ol.style.Style({
+                        stroke: new ol.style.Stroke({
+                            width: 2,
+                            color: 'rgba(71, 180, 234, 1)'
+                        }),
+                        fill: new ol.style.Fill({
+                            color: 'rgba(71, 180, 234, 0.4)'
+                        })
+                    }),
                     visible: false
                 })
             ],
@@ -477,7 +486,6 @@ export default class Viewer extends Component {
                     map={this.state.map}
                     menuOpen={this.state.menuOpen}
                     closeMenu={this.closeMenu}
-                    featurePopup={this.props.featurePopup}
                     anchorEl={this.state.anchorEl}
                 />
             </div>

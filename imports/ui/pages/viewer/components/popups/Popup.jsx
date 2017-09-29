@@ -8,6 +8,56 @@ export default class Popup extends Component {
 
     constructor(props) {
         super(props);
+
+        this.state = {
+            screenCoords: [],
+            categorie: '',
+            gemeenteLink: this.getGemeenteLink(props),
+            fundaLink: this.getFundaLink(props),
+            streetviewButton: this.getStreetviewButton(props),
+            bestemmingsplanButton: this.getBestemmingsplanButton(props)
+        }
+    }
+
+    componentWillReceiveProps(nextProps) {
+        this.setState({
+            screenCoords: nextProps.screenCoords
+        });
+    }
+
+    getGemeenteLink = (props) =>{
+        const laagNaam = Meteor.settings.public.laagNaam;
+        if(props.title === laagNaam.kavels) {
+            return <div><br /><RaisedButton href={'https://ondernemersloket.rijssen-holten.nl/home/publicatie/vletgaarsmaten-holten'} target='_blank' label='Gemeente Rijssen-Holten' /><br /></div>;
+        } else {
+            return <div></div>;
+        }
+    }
+
+    getFundaLink = (props) => {
+        const laagNaam = Meteor.settings.public.laagNaam;
+        if(props.title === laagNaam.teKoop || props.title === laagNaam.teHuur) {
+            return <div><br /><RaisedButton href={props.selectedFeature.get('URL')} target='_blank' label='Funda' /><br /></div>
+        } else {
+            return <div></div>;
+        }
+    }
+
+    getStreetviewButton = (props) => {
+        const laagNaam = Meteor.settings.public.laagNaam;
+        if(props.title === laagNaam.teKoop || props.title === laagNaam.teHuur || props.title === laagNaam.kvk) {
+            return <div><br /><RaisedButton label='Streetview' onClick={props.openStreetView} /><br /></div>;
+        } else {
+            return <div></div>;
+        }
+    }
+
+    getBestemmingsplanButton = (props) => {
+        const location = props.map.getView().calculateExtent(props.map.getSize());
+        const ruimtelijkePlannenUrl = 'http://www.ruimtelijkeplannen.nl/web-roo/roo/bestemmingsplannen?' +
+            'bbx1=' + location[0] + '&bby1=' + location[1] + '&bbx2=' + location[2] + '&bby2=' + location[3];
+
+        return <div><RaisedButton href={ruimtelijkePlannenUrl} target='_blank' label='Bestemmingsplan' /><br /></div>;
     }
 
     getCategorieInfo = () => {
@@ -32,25 +82,76 @@ export default class Popup extends Component {
             Meteor.call('getFeatureInfo', url, (err, result) => {
                 if(err) {
                     console.log(err);
-                    return '';
+                    //return '';
                 }
                 if(result !== null || result !== undefined) {
-                    console.log(result);
-                    return result;
+                    //return result;
+                    that.setState({categorie: result});
                 }
             });
         }
     }
 
-    /**
-     * The main render method that will render the component to the screen
-     */
+    getPopupFields = (searchFields, selectedFeature) => {
+        let returnFields = [];
+        for(let i in searchFields) {
+            let searchField = searchFields[i];
+            let alias = Meteor.settings.public.alias[searchField];
+            let oms = (alias !== undefined) ? alias : searchField;
+            let res = <div key={i} style={{}} ><span><b>{oms}:</b></span><span>{selectedFeature.get(searchField)}</span></div>;
+
+            returnFields.push(res);
+        }
+
+        return returnFields;
+    }
+
+    getHorizontalPosition = (width) => {
+        const offset = 20;
+        const half = window.innerWidth/2;
+        const x = this.props.screenCoords[0];
+        if(x < half) {
+            return (x + offset);
+        } else {
+            return (x - (width + offset));
+        }
+
+        return (window.innerWidth/2-100);
+    }
+
     render() {
+        const laagNaam = Meteor.settings.public.laagNaam;
+        const title = this.props.title;
+        const searchFields = this.props.searchFields;
+
+        const returnField = this.getPopupFields(searchFields, this.props.selectedFeature);
+
+        const categorieInfo = <div><span><b>Categorie:</b></span><span>{this.state.categorie}</span></div>;
+        const width = 500;
+        const left = this.getHorizontalPosition(width);
+        
+        return(
+            <Paper style={{position:'absolute', width:width, top:'20px', left:left, borderRadius:5, backgroundColor:Meteor.settings.public.colorGemeente, opacity:0.8, color:'white'}} zDepth={5} >
+                <div style={{position:'relative', left:'20px'}}><br />
+                    <h3><u>{this.props.title}</u></h3>
+                    {returnField} <br />
+                    {categorieInfo} <br />
+                    {this.state.bestemmingsplanButton}
+                    {this.state.gemeenteLink}
+                    {this.state.fundaLink}
+                    {this.state.streetviewButton}
+                    <br />
+                </div>
+            </Paper>
+        );
+    }
+
+    /*render() {
         let laagNaam = Meteor.settings.public.laagNaam;
         let title = this.props.title;
         let searchFields = this.props.searchFields;
 
-        let link = (title === laagNaam.ibis && this.props.selectedFeature.get('BEDR_TERR').startsWith('Vletgaarsmaten'))
+        let link = (title === laagNaam.kavels)
             ? <div><br /><RaisedButton href={'https://ondernemersloket.rijssen-holten.nl/home/publicatie/vletgaarsmaten-holten'} target='_blank' label='Gemeente Rijssen-Holten' /><br /></div>
             : <div></div>;
         let fundalink = (title === laagNaam.teKoop || title === laagNaam.teHuur)
@@ -63,20 +164,17 @@ export default class Popup extends Component {
         let ruimtelijkePlannenUrl = 'http://www.ruimtelijkeplannen.nl/web-roo/roo/bestemmingsplannen?' +
             'bbx1=' + location[0] + '&bby1=' + location[1] + '&bbx2=' + location[2] + '&bby2=' + location[3];
 
-        let returnField = [];
-        for(let i in searchFields) {
-            let result = <div key={i}><b>{searchFields[i]}:</b> {this.props.selectedFeature.get(searchFields[i])}<br /></div>;
-            returnField.push(result);
-        }
+        let returnField = this.getPopupFields(searchFields, this.props.selectedFeature);
 
-        //let categorieInfo = <div><b>CATEGORIE:</b> {this.getCategorieInfo()}</div>;
-
+        let categorieInfo = <div><span><b>Categorie:</b></span><span>{this.state.categorie}</span></div>;
+        
         return(
-            <div style={{position: 'absolute', top: (this.props.coords.y - 100), left: this.props.coords.x}}>
+            <div style={{position: 'absolute', top: (window.innerHeight/2 - 100), left: window.innerWidth/2 - 100}}>
                 <Paper style={{width:350, borderRadius:5}} zDepth={5} >
                     <div style={{position:'relative', left:'20px'}}><br />
                         <h3><u>{this.props.title}</u></h3>
                         {returnField} <br />
+                        {categorieInfo} <br />
                         <RaisedButton href={ruimtelijkePlannenUrl} target='_blank' label='Bestemmingsplan' /><br />
                         {link}
                         {fundalink}
@@ -86,5 +184,5 @@ export default class Popup extends Component {
                 </Paper>
             </div>
         );
-    }
+    }*/
 }
