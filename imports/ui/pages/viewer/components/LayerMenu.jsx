@@ -125,7 +125,7 @@ export default class LayerMenu extends Component {
                                 this.props.map.addInteraction(select);
                                 let collection = select.getFeatures().push(features[i]);
 
-                                this.props.toggleMenuState(false);
+                                //this.props.toggleMenuState(false);
                             }
                         }
                     }
