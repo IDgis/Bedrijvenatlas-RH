@@ -10,7 +10,7 @@ const styles = {
         width: '100%',
         overflow: 'hidden',
         marginTop: '80px',
-    }
+    },
 };
 
 const WelcomePage = () => (
