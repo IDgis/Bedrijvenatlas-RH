@@ -14,7 +14,8 @@ export default class Popup extends Component {
             gemeenteLink: this.getGemeenteLink(props),
             fundaLink: this.getFundaLink(props),
             streetviewButton: this.getStreetviewButton(props),
-            bestemmingsplanButton: this.getBestemmingsplanButton(props)
+            bestemmingsplanButton: this.getBestemmingsplanButton(props),
+            milieuCategorie: ''
         }
     }
 
@@ -22,6 +23,37 @@ export default class Popup extends Component {
         this.setState({
             screenCoords: nextProps.screenCoords
         });
+    }
+
+    componentDidMount = () => {
+        let title = this.props.title;
+        let that = this;
+        let laagNaam = Meteor.settings.public.laagNaam;
+        if(title === laagNaam.kvk || title === laagNaam.teKoop || title === laagNaam.teHuur) {
+            let map = this.props.map;
+            let view = map.getView();
+            let viewResolution = view.getResolution();
+            let coords = this.props.selectedFeature.getGeometry().getCoordinates()[0];
+            let wmsSource = new ol.source.TileWMS({
+                url: 'https://rijssenholten.geopublisher.nl/staging/geoserver/Bedrijventerreinen_RO_categorie_indeling_service/ows?SERVICE=WMS&',
+                params: {
+                    'FORMAT': 'image/png',
+                    'LAYERS': 'Bedrijventerreinen_RO_categorie_indeling',
+                    'CRS': 'EPSG:28992'
+                }
+            });
+            let url = wmsSource.getGetFeatureInfoUrl(coords, viewResolution, 'EPSG:28992',{'INFO_FORMAT':'application/json'});
+
+            Meteor.call('getFeatureInfo', url, (err, result) => {
+                if(err) {
+                    console.log(err);
+                    this.setState({milieuCategorie: ''});
+                }
+                if(result !== null || result !== undefined) {
+                    this.setState({milieuCategorie: result});
+                }
+            });
+        }
     }
 
     getGemeenteLink = (props) =>{
@@ -59,38 +91,6 @@ export default class Popup extends Component {
         return <div><RaisedButton href={ruimtelijkePlannenUrl} target='_blank' label='Bestemmingsplan' /><br /></div>;
     }
 
-    /*getCategorieInfo = (props) => {
-        let title = props.title;
-        let that = this;
-        let laagNaam = Meteor.settings.public.laagNaam;
-        if(title === laagNaam.kvk || title === laagNaam.teKoop || title === laagNaam.teHuur) {
-            let map = props.map;
-            let view = map.getView();
-            let viewResolution = view.getResolution();
-            let coords = props.selectedFeature.getGeometry().getCoordinates()[0];
-            let wmsSource = new ol.source.TileWMS({
-                url: 'https://rijssenholten.geopublisher.nl/staging/geoserver/Bedrijventerreinen_RO_categorie_indeling_service/ows?SERVICE=WMS&',
-                params: {
-                    'FORMAT': 'image/png',
-                    'LAYERS': 'Bedrijventerreinen_RO_categorie_indeling',
-                    'CRS': 'EPSG:28992'
-                }
-            });
-            let url = wmsSource.getGetFeatureInfoUrl(coords, viewResolution, 'EPSG:28992',{'INFO_FORMAT':'application/json'});
-
-            Meteor.call('getFeatureInfo', url, (err, result) => {
-                if(err) {
-                    console.log(err);
-                    //return '';
-                }
-                if(result !== null || result !== undefined) {
-                    //return result;
-                    //that.setState({categorie: result});
-                }
-            });
-        }
-    }*/
-
     getPopupFields = (searchFields, selectedFeature) => {
         let returnFields = [];
         let res = [];
@@ -106,11 +106,10 @@ export default class Popup extends Component {
                     <td style={{width:'350px'}} >{selectedFeature.get(searchField)}</td>
                 </tr>
             );
-            console.log(selectedFeature.get(searchField));
 
         }
 
-        return (<table><tbody>{res}</tbody></table>);
+        return res;
     }
 
     getHorizontalPosition = (width) => {
@@ -132,16 +131,38 @@ export default class Popup extends Component {
         const searchFields = this.props.searchFields;
 
         const returnField = this.getPopupFields(searchFields, this.props.selectedFeature);
-
-        //const categorieInfo = <div><span><b>Categorie:</b></span><span>{this.state.categorie}</span></div>;
+        
         const width = 500;
         const left = this.getHorizontalPosition(width);
+
+        if(this.state.milieuCategorie !== '' && (title === laagNaam.kvk || title === laagNaam.teKoop || title === laagNaam.teHuur)) {
+            returnField.push(
+                <tr key={returnField.length}>
+                    <td style={{width:'100px'}} ><b>Categorie:</b></td>
+                    <td style={{width:'350px'}} >{this.state.milieuCategorie}</td>
+                </tr>
+            );
+
+            return(
+                <Paper style={{position:'absolute', width:width, top:'20px', left:left, borderRadius:5, backgroundColor:Meteor.settings.public.colorGemeente, opacity:0.8, color:'white'}} zDepth={5} >
+                    <div style={{position:'relative', left:'20px'}}><br />
+                        <h3><u>{this.props.title}</u></h3>
+                        <table><tbody>{returnField}</tbody></table> <br />
+                        {this.state.bestemmingsplanButton}
+                        {this.state.gemeenteLink}
+                        {this.state.fundaLink}
+                        {this.state.streetviewButton}
+                        <br />
+                    </div>
+                </Paper>
+            );
+        }
         
         return(
             <Paper style={{position:'absolute', width:width, top:'20px', left:left, borderRadius:5, backgroundColor:Meteor.settings.public.colorGemeente, opacity:0.8, color:'white'}} zDepth={5} >
                 <div style={{position:'relative', left:'20px'}}><br />
                     <h3><u>{this.props.title}</u></h3>
-                    {returnField} <br />
+                    <table><tbody>{returnField}</tbody></table> <br />
                     {this.state.bestemmingsplanButton}
                     {this.state.gemeenteLink}
                     {this.state.fundaLink}
