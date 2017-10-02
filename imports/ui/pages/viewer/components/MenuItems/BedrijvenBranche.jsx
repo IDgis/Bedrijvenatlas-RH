@@ -23,6 +23,7 @@ export default class BedrijvenBranche extends Component {
             J: false,
             K: false,
             L: false,
+            M: false,
             N: false,
             P: false,
             Q: false,
@@ -107,6 +108,7 @@ export default class BedrijvenBranche extends Component {
             case 'J': this.state.J = newVisible; break;// this.setState({J:newVisible}); break;
             case 'K': this.state.K = newVisible; break;// this.setState({K:newVisible}); break;
             case 'L': this.state.L = newVisible; break;// this.setState({L:newVisible}); break;
+            case 'M': this.state.M = newVisible; break;// this.setSTate({M:newVisible}); break;
             case 'N': this.state.N = newVisible; break;// this.setState({N:newVisible}); break;
             case 'P': this.state.P = newVisible; break;// this.setState({P:newVisible}); break;
             case 'Q': this.state.Q = newVisible; break;// this.setState({Q:newVisible}); break;
@@ -191,7 +193,6 @@ export default class BedrijvenBranche extends Component {
                             let collection = select.getFeatures().push(features[i]);
 
                             this.closeMenu();
-                            //this.props.toggleMenuState(false);
                         }
                     }
                 }
@@ -208,14 +209,6 @@ export default class BedrijvenBranche extends Component {
             categorien.push(c);
         }
 
-        /*const menuItems = categorien.map((val, i) =>
-            <MenuItem primaryText={Meteor.settings.public.categorieNaam[val]} 
-                leftIcon={<Checkbox checked={this.state[val]} onClick={this.selectBranche} value={val} />}
-                rightIcon={<Avatar src={Meteor.settings.public.categorieUrl[val]} />}
-                key={i}
-                menuItems={this.getMenuItems(val)}
-            />
-        );*/
         const menuItems = categorien.map((val, i) => 
             <ListItem primaryText={Meteor.settings.public.categorieNaam[val]}
                 leftIcon={<Checkbox checked={this.state[val]} onClick={this.selectBranche} value={val} />}
@@ -229,23 +222,5 @@ export default class BedrijvenBranche extends Component {
                 {menuItems}
             </List>
         );
-
-        /*return(
-            <div>
-                <MenuItem primaryText="Bedrijvenindex (naar branche)" onClick={this.openMenu} />
-                <Popover
-                    open={this.state.menuOpen}
-                    anchorEl={this.state.anchorEl}
-                    anchorOrigin={{horizontal: 'left', vertical: 'bottom'}}
-                    targetOrigin={{horizontal: 'left', vertical: 'top'}}
-                    onRequestClose={this.closeMenu}
-                    animation={PopoverAnimationVertical}
-                >
-                    <List>
-                        {menuItems}
-                    </List>
-                </Popover>
-            </div>
-        );*/
     }
 }

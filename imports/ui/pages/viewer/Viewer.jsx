@@ -92,34 +92,54 @@ export default class Viewer extends Component {
                     }),
                     visible: false
                 }),
-                /*new ol.layer.Vector({
-                    title: Meteor.settings.public.laagNaam.kvk,
+                new ol.layer.Vector({
+                    title: Meteor.settings.public.laagNaam.bagLigplaats,
                     source: new ol.source.Vector({
                         format: new ol.format.GeoJSON(),
                         url: function(extent, resolution, projection) {
-                            return 'https://rijssenholten.geopublisher.nl/staging/geoserver/Bedrijventerreinen_KVK_hoofdactiviteiten_per_adres_service/wfs?' +
-                                'service=wfs&version=1.1.0&request=GetFeature&outputFormat=application/json&resultType=results' +
-                                '&typeName=Bedrijventerreinen_KVK_hoofdactiviteiten_per_adres_service:Bedrijventerreinen_KVK_hoofdactiviteiten_per_adres&srs=EPSG:28992' +
-                                '&bbox=' + extent.join(',') + ',EPSG:28992';
+                            return 'https://geodata.nationaalgeoregister.nl/bag/wfs?service=WFS&' +
+                                'version=1.1.0&request=GetFeature&typename=bag:ligplaats&' +
+                                'outputFormat=application/json&srsname=EPSG:28992&' +
+                                'bbox=' + extent.join(',') + ',EPSG:28992';
                         },
                         strategy: ol.loadingstrategy.tile(ol.tilegrid.createXYZ({
                             maxZoom: 20
-                        })),
+                        }))
                     }),
                     visible: false
-                }),*/
-                /*new ol.layer.Tile({
-                    title: Meteor.settings.public.laagNaam.ibis,
-                    source: new ol.source.TileWMS({
-                        url: 'https://rijssenholten.geopublisher.nl/staging/geoserver/Bedrijventerreinen_Rijssen-Holten_service/ows?SERVICE=WMS&',
-                        params: {
-                            'FORMAT': 'image/png',
-                            'LAYERS': 'Bedrijventerreinen_Rijssen-Holten',
-                            'CRS': 'EPSG:28992'
-                        }
+                }),
+                new ol.layer.Vector({
+                    title: Meteor.settings.public.laagNaam.bagPand,
+                    source: new ol.source.Vector({
+                        format: new ol.format.GeoJSON(),
+                        url: function(extent, resolution, projection) {
+                            return 'https://geodata.nationaalgeoregister.nl/bag/wfs?service=WFS&' +
+                                'version=1.1.0&request=GetFeature&typename=bag:pand&' +
+                                'outputFormat=application/json&srsname=EPSG:28992&' +
+                                'bbox=' + extent.join(',') + ',EPSG:28992';
+                        },
+                        strategy: ol.loadingstrategy.tile(ol.tilegrid.createXYZ({
+                            maxZoom: 20
+                        }))
                     }),
                     visible: false
-                }),*/
+                }),
+                new ol.layer.Vector({
+                    title: Meteor.settings.public.laagNaam.bagStandplaats,
+                    source: new ol.source.Vector({
+                        format: new ol.format.GeoJSON(),
+                        url: function(extent, resolution, projection) {
+                            return 'https://geodata.nationaalgeoregister.nl/bag/wfs?service=WFS&' +
+                                'version=1.1.0&request=GetFeature&typename=bag:standplaats&' +
+                                'outputFormat=application/json&srsname=EPSG:28992&' +
+                                'bbox=' + extent.join(',') + ',EPSG:28992';
+                        },
+                        strategy: ol.loadingstrategy.tile(ol.tilegrid.createXYZ({
+                            maxZoom: 20
+                        }))
+                    }),
+                    visible: false
+                }),
                 new ol.layer.Tile({
                     title: Meteor.settings.public.laagNaam.milieu,
                     source: new ol.source.TileWMS({
@@ -132,7 +152,19 @@ export default class Viewer extends Component {
                     }),
                     visible: false
                 }),
-                new ol.layer.Vector({
+                new ol.layer.Tile({
+                    title: Meteor.settings.public.laagNaam.ibis,
+                    source: new ol.source.TileWMS({
+                        url: 'https://rijssenholten.geopublisher.nl/staging/geoserver/Bedrijventerreinen_Rijssen-Holten_service/ows?SERVICE=WMS&',
+                        params: {
+                            'FORMAT': 'image/png',
+                            'LAYERS': 'Bedrijventerreinen_Rijssen-Holten',
+                            'CRS': 'EPSG:28992'
+                        },
+                    }),
+                    visible: false
+                }),
+                /*new ol.layer.Vector({
                     title: Meteor.settings.public.laagNaam.ibis,
                     source: new ol.source.Vector({
                         format: new ol.format.GeoJSON(),
@@ -161,6 +193,47 @@ export default class Viewer extends Component {
                             })
                         });
                     },
+                    visible: false
+                }),*/
+                new ol.layer.Vector({
+                    title: Meteor.settings.public.laagNaam.kavels,
+                    source: new ol.source.Vector({
+                        format: new ol.format.GeoJSON(),
+                        url: function(extent, resolution, projection) {
+                            return 'https://rijssenholten.geopublisher.nl/staging/geoserver/Bedrijventerreinen_uitgifte_kavels_service/wfs?' +
+                            'service=wfs&version=1.1.0&request=GetFeature&outputFormat=application/json&resultType=results' +
+                            '&typeName=Bedrijventerreinen_uitgifte_kavels_service:Bedrijventerreinen_uitgifte_kavels&srs=EPSG:28992' +
+                            '&bbox=' + extent.join(',') + ',EPSG:28992';
+                        },
+                        strategy: ol.loadingstrategy.tile(ol.tilegrid.createXYZ({
+                            maxZoom: 20
+                        }))
+                    }),
+                    style: new ol.style.Style({
+                        stroke: new ol.style.Stroke({
+                            width: 2,
+                            color: 'rgba(71, 180, 234, 1)'
+                        }),
+                        fill: new ol.style.Fill({
+                            color: 'rgba(71, 180, 234, 0.4)'
+                        })
+                    }),
+                    visible: false
+                }),
+                new ol.layer.Vector({
+                    title: Meteor.settings.public.laagNaam.bagVerblijfsobject,
+                    source: new ol.source.Vector({
+                        format: new ol.format.GeoJSON(),
+                        url: function(extent, resolution, projection) {
+                            return 'https://geodata.nationaalgeoregister.nl/bag/wfs?service=WFS&' +
+                                'version=1.1.0&request=GetFeature&typename=bag:verblijfsobject&' +
+                                'outputFormat=application/json&srsname=EPSG:28992&' +
+                                'bbox=' + extent.join(',') + ',EPSG:28992';
+                        },
+                        strategy: ol.loadingstrategy.tile(ol.tilegrid.createXYZ({
+                            maxZoom: 20
+                        }))
+                    }),
                     visible: false
                 }),
                 new ol.layer.Vector({
@@ -211,86 +284,6 @@ export default class Viewer extends Component {
                             zIndex: 0
                         })
                     ],
-                    visible: false
-                }),
-                new ol.layer.Vector({
-                    title: Meteor.settings.public.laagNaam.bagLigplaats,
-                    source: new ol.source.Vector({
-                        format: new ol.format.GeoJSON(),
-                        url: function(extent, resolution, projection) {
-                            return 'https://geodata.nationaalgeoregister.nl/bag/wfs?service=WFS&' +
-                                'version=1.1.0&request=GetFeature&typename=bag:ligplaats&' +
-                                'outputFormat=application/json&srsname=EPSG:28992&' +
-                                'bbox=' + extent.join(',') + ',EPSG:28992';
-                        },
-                        strategy: ol.loadingstrategy.tile(ol.tilegrid.createXYZ({
-                            maxZoom: 20
-                        }))
-                    }),
-                    visible: false
-                }),
-                new ol.layer.Vector({
-                    title: Meteor.settings.public.laagNaam.bagPand,
-                    source: new ol.source.Vector({
-                        format: new ol.format.GeoJSON(),
-                        url: function(extent, resolution, projection) {
-                            return 'https://geodata.nationaalgeoregister.nl/bag/wfs?service=WFS&' +
-                                'version=1.1.0&request=GetFeature&typename=bag:pand&' +
-                                'outputFormat=application/json&srsname=EPSG:28992&' +
-                                'bbox=' + extent.join(',') + ',EPSG:28992';
-                        },
-                        strategy: ol.loadingstrategy.tile(ol.tilegrid.createXYZ({
-                            maxZoom: 20
-                        }))
-                    }),
-                    visible: false
-                }),
-                new ol.layer.Vector({
-                    title: Meteor.settings.public.laagNaam.bagStandplaats,
-                    source: new ol.source.Vector({
-                        format: new ol.format.GeoJSON(),
-                        url: function(extent, resolution, projection) {
-                            return 'https://geodata.nationaalgeoregister.nl/bag/wfs?service=WFS&' +
-                                'version=1.1.0&request=GetFeature&typename=bag:standplaats&' +
-                                'outputFormat=application/json&srsname=EPSG:28992&' +
-                                'bbox=' + extent.join(',') + ',EPSG:28992';
-                        },
-                        strategy: ol.loadingstrategy.tile(ol.tilegrid.createXYZ({
-                            maxZoom: 20
-                        }))
-                    }),
-                    visible: false
-                }),
-                new ol.layer.Vector({
-                    title: Meteor.settings.public.laagNaam.bagVerblijfsobject,
-                    source: new ol.source.Vector({
-                        format: new ol.format.GeoJSON(),
-                        url: function(extent, resolution, projection) {
-                            return 'https://geodata.nationaalgeoregister.nl/bag/wfs?service=WFS&' +
-                                'version=1.1.0&request=GetFeature&typename=bag:verblijfsobject&' +
-                                'outputFormat=application/json&srsname=EPSG:28992&' +
-                                'bbox=' + extent.join(',') + ',EPSG:28992';
-                        },
-                        strategy: ol.loadingstrategy.tile(ol.tilegrid.createXYZ({
-                            maxZoom: 20
-                        }))
-                    }),
-                    visible: false
-                }),
-                new ol.layer.Vector({
-                    title: Meteor.settings.public.laagNaam.kavels,
-                    source: new ol.source.Vector({
-                        format: new ol.format.GeoJSON(),
-                        url: function(extent, resolution, projection) {
-                            return 'https://rijssenholten.geopublisher.nl/staging/geoserver/Bedrijventerreinen_uitgifte_kavels_service/wfs?' +
-                            'service=wfs&version=1.1.0&request=GetFeature&outputFormat=application/json&resultType=results' +
-                            '&typeName=Bedrijventerreinen_uitgifte_kavels_service:Bedrijventerreinen_uitgifte_kavels&srs=EPSG:28992' +
-                            '&bbox=' + extent.join(',') + ',EPSG:28992';
-                        },
-                        strategy: ol.loadingstrategy.tile(ol.tilegrid.createXYZ({
-                            maxZoom: 20
-                        }))
-                    }),
                     visible: false
                 })
             ],
@@ -465,6 +458,7 @@ export default class Viewer extends Component {
      * The main render method that will render the component to the screen
      */
     render() {
+
         return (
             <div id="map" className="map" >
                 <IconButton style={{position:'fixed', backgroundColor:Meteor.settings.public.colorGemeente, top:'66px', left:'10px', zIndex:1, opacity:0.8}} onClick={this.openMenu} >
@@ -477,7 +471,6 @@ export default class Viewer extends Component {
                     map={this.state.map}
                     menuOpen={this.state.menuOpen}
                     closeMenu={this.closeMenu}
-                    featurePopup={this.props.featurePopup}
                     anchorEl={this.state.anchorEl}
                 />
             </div>

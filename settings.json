@@ -19,9 +19,9 @@
         },
 
         "searchFields": {
-            "Bedrijventerreinen": ["OGR_FID","BEDR_TERR","RINNUMMER","KERN","JAAR","OPPBRUTO","OPPNETTO"],
-            "Bedrijven": ["OGR_FID","SBI_RUBR_C","SBI_OMSCHR","BEDR_NAAM","ADR_LABEL","ADR_ID_BAG"],
-            "Uitgifte Kavels": ["OGR_FID","KAVELINFO","OPP","TEKEN","KAVELNR","STATUS","TELEFOON","EMAIL"],
+            "Bedrijventerreinen": ["BEDR_TERR","RINNUMMER","KERN","JAAR","OPPBRUTO","OPPNETTO"],
+            "Bedrijven": ["BEDR_NAAM","ADR_LABEL","SBI_OMSCHR"],
+            "Uitgifte Kavels": ["KAVELINFO","OPP","KAVELNR","STATUS","TELEFOON","EMAIL"],
             "BAG Ligplaats": ["actualiteitsdatum","huisletter","huisnummer","identificatie","openbare_ruimte","postcode","status","toevoeging","woonplaats"],
             "BAG Pand": ["aantal_verblijfsobjecten","actualiteitsdatum","bouwjaar","identificatie","oppervlakte_max","oppervlakte_min","status"],
             "BAG Standplaats": ["actualiteitsdatum","huisletter","huisnummer","identificatie","openbare_ruimte","postcode","status","toevoeging","woonplaats"],
@@ -29,7 +29,19 @@
             "Kadastrale percelen": ["lokaalID","kadastraleGemeenteCode","sectie","kadastralegrootte","perceelnummer"],
             "Te Koop": ["Straat","Huisnummer","Toevoeging","Postcode","Plaats","Oppervlakte","Prijs"],
             "Te Huur": ["Straat","Huisnummer","Toevoeging","Postcode","Plaats","Oppervlakte","Prijs"],
-            "Milieucategoriën": ["OGR_FID","CATEGORIE"]
+            "Milieucategoriën": ["CATEGORIE"]
+        },
+
+        "alias": {
+            "SBI_OMSCHR": "Omschrijving",
+            "BEDR_NAAM": "Bedrijfsnaam",
+            "ADR_LABEL": "Adres",
+            "KAVELINFO": "Kavel info",
+            "OPP": "Oppervlakte",
+            "KAVELNR": "Kavel nr",
+            "STATUS": "Status",
+            "TELEFOON": "Telefoon",
+            "EMAIL": "Email"
         },
 
         "iconShadow": "/icons/SCHADUW.svg",
@@ -49,7 +61,8 @@
             "J": "/icons/SBI_RUBRIEK_CODE_J_INFO_COMMUNICATIE.svg",
             "K": "/icons/SBI_RUBRIEK_CODE_K_FINANCIEEL.svg",
             "L": "/icons/SBI_RUBRIEK_CODE_L_ONROEREND_GOED.svg",
-            "N": "/icons/SBI_RUBRIEK_CODE_N_VERHUR_OVR_DIENSTV",
+            "M": "/icons/SBI_RUBRIEK_CODE_M_ADVISERING.svg",
+            "N": "/icons/SBI_RUBRIEK_CODE_N_VERHUR_OVR_DIENSTV.svg",
             "P": "/icons/SBI_RUBRIEK_CODE_P_ONDERWIJS.svg",
             "Q": "/icons/SBI_RUBRIEK_CODE_Q_GEZONDHEIDSZORG.svg",
             "S": "/icons/SBI_RUBRIEK_CODE_S_OVERIGE_DIENSTVERL.svg"
@@ -65,6 +78,7 @@
             "J": "Informatica/communicatie",
             "K": "Financiëel",
             "L": "Onroerend goed",
+            "M": "Advisering",
             "N": "Verhuur/overige dienstverlening",
             "P": "Onderwijs",
             "Q": "Gezondheidszorg",
@@ -77,8 +91,8 @@
         "homePageIdgis": "https://www.idgis.nl/nl/",
         "logoUrlIdgis": "/images/logoidgisklein.jpg",
 
-        "logoWizardUrl": "/images/format_list.png",
-        "logoViewerUrl": "/images/gps_fixed.png",
+        "logoWizardUrl": "/icons/KNOP_VESTIGEN_NIEUW_BEDRIJF.svg",
+        "logoViewerUrl": "/icons/KNOP_NAAR_DE_KAART.svg",
 
         "teKoopJsonUrl": "/data/vastgoedTeKoop.json",
         "teHuurJsonUrl": "/data/vastgoedTeHuur.json"
