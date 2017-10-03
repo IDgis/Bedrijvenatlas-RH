@@ -1,0 +1,16 @@
+version: '2'
+
+volumes:
+  vastgoedfiles:
+
+services:
+  bedrijvenatlas:
+    restart: always
+    image: idgis/bedrijvenatlas-rh:${VERSION}
+    ports:
+      - "80:80"
+    environment:
+      - METEOR_SETTINGS=${METEOR_SETTINGS}
+      - ROOT_URL=${ROOT_URL}
+    volumes:
+      - vastgoedfiles:/home/meteorapp/meteorapp/app/public/data
