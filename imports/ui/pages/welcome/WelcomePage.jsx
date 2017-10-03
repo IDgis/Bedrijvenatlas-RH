@@ -1,4 +1,5 @@
 import React from 'react';
+import { Meteor } from 'meteor/meteor';
 import Paper from 'material-ui/Paper';
 
 import ViewerLink from './ViewerLink';
