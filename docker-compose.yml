@@ -7,8 +7,6 @@ services:
   bedrijvenatlas:
     restart: always
     image: idgis/bedrijvenatlas-rh:${VERSION}
-    ports:
-      - "80:80"
     environment:
       - METEOR_SETTINGS=${METEOR_SETTINGS}
       - ROOT_URL=${ROOT_URL}
