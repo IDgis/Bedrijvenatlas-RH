@@ -295,7 +295,7 @@ export default class Viewer extends Component {
             controls: [
                 new ol.control.ScaleLine(),
                 new ol.control.Zoom(),
-                new ol.control.ZoomSlider()
+                //new ol.control.ZoomSlider()
             ],
             interactions: new ol.interaction.defaults().extend([
                 new ol.interaction.Select({
@@ -328,56 +328,63 @@ export default class Viewer extends Component {
      * Sets the initial view based on the answers in the wizard screen
      */
     setMapSettings() {
-        let layers = this.state.map.getLayers();
         let laagNaam = Meteor.settings.public.laagNaam;
+        let map = this.state.map;
+        let layers = map.getLayers();
 
         let plaats = Session.get('plaats');
         let voorkeur = Session.get('pand');
         let huurKoop = Session.get('huur-koop')
 
-        if(voorkeur === 'nieuwbouw' && huurKoop === 'koop' && plaats === 'rijssen') {
-            this.state.map.setView(new ol.View({
+        // Zoom to the right place
+        if(plaats === 'rijssen' && voorkeur === 'nieuwbouw') {
+            map.setView(new ol.View({
                 center: [234927, 478849],
                 projection: 'EPSG:28992',
                 zoom: 17
             }));
-            layers.forEach((layer, index, arr) => {
-                if(layer.get('title') === laagNaam.teKoop || layer.get('title') === laagNaam.teHuur || layer.get('title') === laagNaam.kavels) {
-                    layer.setVisible(true);
-                }
-            })
         } else if(plaats === 'rijssen') {
-            this.state.map.setView(new ol.View({
-                center: [232992, 480308],
+            map.setView(new ol.View({
+                center: [231657, 480800],
                 projection: 'EPSG:28992',
-                zoom: 14.5,
+                zoom: 14.5
             }));
         } else if(plaats === 'holten') {
-            this.state.map.setView(new ol.View({
+            map.setView(new ol.View({
                 center: [225008, 477254],
                 projection: 'EPSG:28992',
-                zoom: 15.5,
+                zoom: 15
             }));
         }
 
-        if(huurKoop === 'koop') {
-            // show the te koop layer
-            layers.forEach((layer, index, arr) => {
-                if(layer.get('title') === Meteor.settings.public.laagNaam.teKoop) {
-                    layer.setVisible(true);
-                }
-            });
-        } else if(huurKoop === 'huur') {
-            // show the te huur layer
-            layers.forEach((layer, index, arr) => {
-                if(layer.get('title') === Meteor.settings.public.laagNaam.teHuur) {
-                    layer.setVisible(true);
-                }
-            });
-        } else if(huurKoop === 'beide'){
-            // turn both layers on
-            layers.forEach((layer, index, arr) => {
-                if(layer.get('title') === Meteor.settings.public.laagNaam.teHuur || layer.get('title') === Meteor.settings.public.laagNaam.teKoop) {
+        // Set the visibility of the layers
+        if(voorkeur === 'bestaand' || voorkeur === 'beide') {
+            if(huurKoop === 'koop') {
+                layers.forEach((layer, index) => {
+                    if(layer.get('title') === laagNaam.teKoop) {
+                        layer.setVisible(true);
+                    }
+                });
+            } else if(huurKoop === 'huur') {
+                layers.forEach((layer, index) => {
+                    if(layer.get('title') === laagNaam.teHuur) {
+                        layer.setVisible(true);
+                    }
+                });
+            } else if(huurKoop === 'beide') {
+                layers.forEach((layer, index) => {
+                    let title = layer.get('title');
+                    if(title === laagNaam.teKoop || title === laagNaam.teHuur) {
+                        layer.setVisible(true);
+                    }
+                });
+            }
+        }
+
+        // Set the kavels layer visible
+        if(voorkeur === 'nieuwbouw' || voorkeur === 'beide') {
+            layers.forEach((layer, index) => {
+                if(layer.get('title') === laagNaam.kavels) {
                     layer.setVisible(true);
                 }
             });
@@ -461,10 +468,10 @@ export default class Viewer extends Component {
 
         return (
             <div id="map" className="map" >
-                <IconButton style={{position:'fixed', backgroundColor:Meteor.settings.public.colorGemeente, top:'66px', left:'10px', zIndex:1, opacity:0.8}} onClick={this.openMenu} >
+                <IconButton className='menu-button' style={{backgroundColor:Meteor.settings.public.colorGemeente}} onClick={this.openMenu} >
                     <img src={Meteor.settings.public.iconMenu} />
                 </IconButton>
-                <IconButton href='/' style={{position:'fixed', backgroundColor:Meteor.settings.public.colorGemeente, top:'66px', right:'10px', zIndex:1, opacity:0.8}} >
+                <IconButton className='home-button' href='/' style={{backgroundColor:Meteor.settings.public.colorGemeente}} >
                     <img src={Meteor.settings.public.iconHome} />
                 </IconButton>
                 <LayerMenu

@@ -8,9 +8,11 @@ Meteor.methods({
         let content = res.content;
         let json = JSON.parse(content);
         let feature = json['features'][0];
-        let categorie = feature['properties']['CATEGORIE'];
-
-        return categorie;
+        if(feature !== undefined) {
+            let categorie = feature['properties']['CATEGORIE'];
+            return categorie;
+        }
+        return null;
     },
 
     getSearchFields: function(url) {

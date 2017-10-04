@@ -33,7 +33,14 @@ export default class Popup extends Component {
             let map = this.props.map;
             let view = map.getView();
             let viewResolution = view.getResolution();
-            let coords = this.props.selectedFeature.getGeometry().getCoordinates()[0];
+            let coords = [];
+
+            if(title === laagNaam.kvk) {
+                coords = this.props.selectedFeature.getGeometry().getCoordinates()[0];
+            } else {
+                coords = this.props.selectedFeature.getGeometry().getCoordinates();
+            }
+            
             let wmsSource = new ol.source.TileWMS({
                 url: 'https://rijssenholten.geopublisher.nl/staging/geoserver/Bedrijventerreinen_RO_categorie_indeling_service/ows?SERVICE=WMS&',
                 params: {
@@ -135,7 +142,7 @@ export default class Popup extends Component {
         const width = 500;
         const left = this.getHorizontalPosition(width);
 
-        if(this.state.milieuCategorie !== '' && (title === laagNaam.kvk || title === laagNaam.teKoop || title === laagNaam.teHuur)) {
+        if(this.state.milieuCategorie !== '' && this.state.milieuCategorie !== null && (title === laagNaam.kvk || title === laagNaam.teKoop || title === laagNaam.teHuur)) {
             returnField.push(
                 <tr key={returnField.length}>
                     <td style={{width:'100px'}} ><b>Categorie:</b></td>
