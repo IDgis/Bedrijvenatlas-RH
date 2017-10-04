@@ -1,0 +1,127 @@
+html {
+    height: 100%;
+    overflow: hidden;
+}
+
+body {
+    height: 100%;
+    margin: 0;
+}
+
+#react-root {
+    height: 100%;
+}
+
+#react-root > div {
+    height: 100%;
+}
+
+.main-header {
+    position: fixed;
+    height: 56px;
+    width: 100%;
+    top: 0px;
+    z-index: 1;
+    margin: 0;
+}
+
+.main-layout {
+    position: relative;
+    top: 56px;
+    height: 100%;
+    margin: 0;
+}
+
+.welcome-layout {
+    position: fixed;
+    background-color: #ccc;
+    text-align: center;
+    top: 56px;
+    width: 100%;
+    height: 100%;
+}
+
+.a-link {
+    text-decoration: none;
+    color: #000;
+}
+
+.wizard-link {
+    position: relative;
+    background-color: inherit;
+    width: 40%;
+    height: 500px;
+    margin-left: 70px;
+    float: left;
+}
+
+.viewer-link {
+    position: relative;
+    background-color: inherit;
+    width: 40%;
+    height: 500px;
+    margin-right: 70px;
+    float: right;
+}
+
+.image-link {
+    position: relative;
+    top: 10px;
+    width: 80%;
+    max-width: 60%;
+}
+
+.text-link {
+    position: relative;
+    bottom: 10px;
+    color: #333;
+}
+
+.wizard-questions {
+    position: fixed;
+    color: #333;
+    text-align: left;
+    left: 36%;
+}
+
+.wizard-header {
+    position: relative;
+    margin-bottom: 5px;
+}
+
+.custom-radiobutton {
+    position: relative;
+    font-size: 150%;
+    margin-bottom: 10px;
+}
+
+.wizard-button {
+    position: fixed;
+    right: 60px;
+    bottom: 30px;
+}
+
+#map, #map div {
+    width: 100%;
+    height: 100%;
+}
+
+canvas.ol-unselectable {
+    position: fixed;
+}
+
+.menu-button {
+    position: fixed !important;
+    top: 66px;
+    left: 10px;
+    z-index: 1 !important;
+    opacity: 0.8;
+}
+
+.home-button {
+    position: fixed !important;
+    top: 66px;
+    right: 10px;
+    z-index: 1 !important;
+    opacity: 0.8;
+}

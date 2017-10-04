@@ -295,7 +295,7 @@ export default class Viewer extends Component {
             controls: [
                 new ol.control.ScaleLine(),
                 new ol.control.Zoom(),
-                new ol.control.ZoomSlider()
+                //new ol.control.ZoomSlider()
             ],
             interactions: new ol.interaction.defaults().extend([
                 new ol.interaction.Select({
@@ -461,10 +461,10 @@ export default class Viewer extends Component {
 
         return (
             <div id="map" className="map" >
-                <IconButton style={{position:'fixed', backgroundColor:Meteor.settings.public.colorGemeente, top:'66px', left:'10px', zIndex:1, opacity:0.8}} onClick={this.openMenu} >
+                <IconButton className='menu-button' style={{backgroundColor:Meteor.settings.public.colorGemeente}} onClick={this.openMenu} >
                     <img src={Meteor.settings.public.iconMenu} />
                 </IconButton>
-                <IconButton href='/' style={{position:'fixed', backgroundColor:Meteor.settings.public.colorGemeente, top:'66px', right:'10px', zIndex:1, opacity:0.8}} >
+                <IconButton className='home-button' href='/' style={{backgroundColor:Meteor.settings.public.colorGemeente}} >
                     <img src={Meteor.settings.public.iconHome} />
                 </IconButton>
                 <LayerMenu

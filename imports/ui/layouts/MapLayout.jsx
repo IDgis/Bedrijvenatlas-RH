@@ -118,11 +118,11 @@ export default class MapLayout extends Component {
 
         return (
             <MuiThemeProvider>
-                <div style={{/*height:'100%'*/}} >
-                    <header style={{position:'fixed', width:'100%', zIndex:1, top:'0px'}} >
+                <div>
+                    <header className='main-header'>
                         <MenuBar />
                     </header>
-                    <main onMouseMove={this.onMouseMove.bind(this)} style={{position:'fixed', top:'56px', left:'0px', width:'100%', height:(window.innerHeight-56)}} >
+                    <main onMouseMove={this.onMouseMove.bind(this)} className='main-layout' >
                         <Viewer mapToParent={this.setMap} featurePopup={this.setKvkPopup} />
                         {this.state.featurePopup}
                         {this.state.streetView}
