@@ -19,7 +19,6 @@ export default class SearchBar extends Component {
                     floatingLabelText="Zoek bedrijf"
                     dataSource={this.props.dataSource}
                     filter={AutoComplete.caseInsensitiveFilter}
-                    //filter={(searchText, key) => (key.indexOf(searchText) === -1)}
                     anchorOrigin={{horizontal: 'right', vertical: 'bottom'}}
                     targetOrigin={{horizontal: 'right', vertical: 'top'}}
                     onNewRequest={this.props.onNewRequest}
@@ -28,21 +27,4 @@ export default class SearchBar extends Component {
                 />
         );
     }
-
-    /*render() {
-        return(
-            <ListItem>
-                <AutoComplete
-                    floatingLabelText="Bedrijvenindex (A t/m Z)"
-                    dataSource={this.props.dataSource}
-                    filter={AutoComplete.caseInsensitiveFilter}
-                    //filter={(searchText, key) => (key.indexOf(searchText) === -1)}
-                    anchorOrigin={{horizontal: 'right', vertical: 'bottom'}}
-                    targetOrigin={{horizontal: 'right', vertical: 'top'}}
-                    onNewRequest={this.props.onNewRequest}
-                    maxSearchResults={20}
-                />
-            </ListItem>
-        );
-    }*/
 }

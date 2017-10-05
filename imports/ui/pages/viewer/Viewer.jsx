@@ -8,11 +8,6 @@ import IconButton from 'material-ui/IconButton';
 
 import LayerMenu from './components/LayerMenu.jsx';
 
-let styles = {
-    map: {
-        height: '840px'
-    }
-}
 
 export default class Viewer extends Component {
 
