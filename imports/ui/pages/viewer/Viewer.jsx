@@ -55,7 +55,7 @@ export default class Viewer extends Component {
                             extent: extent,
                             resolutions: resolutions
                         }),
-                        url: 'http://geodata.nationaalgeoregister.nl/tms/1.0.0/brtachtergrondkaart/{z}/{x}/{-y}.png'
+                        url: 'https://geodata.nationaalgeoregister.nl/tms/1.0.0/brtachtergrondkaart/{z}/{x}/{-y}.png'
                     }),
                     visible: true,
                 }),

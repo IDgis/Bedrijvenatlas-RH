@@ -23,5 +23,5 @@ autopublish
 insecure
 
 http@1.2.10
-tomwasd:history-polyfill
+#tomwasd:history-polyfill
 kadira:flow-router

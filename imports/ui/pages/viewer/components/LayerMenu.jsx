@@ -124,8 +124,6 @@ export default class LayerMenu extends Component {
                                 });
                                 this.props.map.addInteraction(select);
                                 let collection = select.getFeatures().push(features[i]);
-
-                                //this.props.toggleMenuState(false);
                             }
                         }
                     }
@@ -150,25 +148,9 @@ export default class LayerMenu extends Component {
             >
                 <Menu>
                     <SearchBar dataSource={this.state.searchFields} onNewRequest={this.selectFeature} />
-                    {/*<BedrijvenBranche map={this.props.map} toggleMenuState={this.props.toggleMenuState} updateKvkChecked={this.state.updateKvk} />*/}
                     <OverigeLagen map={this.props.map} /*updateKvkChecked={this.updateKvkChecked}*/ />
                 </Menu>
             </Popover>
         );
     }
-
-    /*render() {
-        return (
-            <Drawer open={this.state.menuOpen} 
-            //openSecondary={true}
-            docked={false} onRequestChange={(open) => this.props.toggleMenuState(!this.state.menuOpen)} >
-                <Menu>
-                    <SearchBar dataSource={this.state.searchFields} onNewRequest={this.selectFeature} />
-                    <BedrijvenBranche map={this.props.map} toggleMenuState={this.props.toggleMenuState} updateKvkChecked={this.state.updateKvk} />
-                    <OverigeLagen map={this.props.map} updateKvkChecked={this.updateKvkChecked} />
-                    <Vastgoed map={this.props.map} />
-                </Menu>
-            </Drawer>
-        );
-    }*/
 }

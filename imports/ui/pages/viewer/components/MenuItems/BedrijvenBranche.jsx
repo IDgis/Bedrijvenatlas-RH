@@ -62,7 +62,7 @@ export default class BedrijvenBranche extends Component {
         layers.forEach((layer, index, arr) => {
             if(layer.get('title') === Meteor.settings.public.laagNaam.kvk) {
                 let source = layer.getSource();
-                if(source.state_ === 'ready') {
+                if(source.getState() === 'ready') {
                     let features = source.getFeatures();
                     let id = features[0].get('SBI_RUBR_C');
                     if(id === categorie) {
@@ -84,7 +84,7 @@ export default class BedrijvenBranche extends Component {
             layers.forEach((layer, index) => {
                 if(layer.get('title') === Meteor.settings.public.laagNaam.kvk) {
                     let source = layer.getSource();
-                    if(source.state_ === 'ready') {
+                    if(source.getState() === 'ready') {
                         let features = source.getFeatures();
                         let id = features[0].get('SBI_RUBR_C');
                         this.setVisibility(id, layer.getVisible());
@@ -128,7 +128,7 @@ export default class BedrijvenBranche extends Component {
             layers.forEach((layer, index, arr) => {
                 if(layer.get('title') === Meteor.settings.public.laagNaam.kvk) {
                     let source = layer.getSource();
-                    if(source.state_ === 'ready') {
+                    if(source.getState() === 'ready') {
                         let features = source.getFeatures();
                         for(let i = 0; i < features.length; i++) {
                             let id = features[i].get('SBI_RUBR_C');
@@ -155,7 +155,7 @@ export default class BedrijvenBranche extends Component {
             if(layer.get('title') === Meteor.settings.public.laagNaam.kvk) {
                 let newSearch = true;
                 let source = layer.getSource();
-                if(source.state_ === 'ready') {
+                if(source.getState() === 'ready') {
                     let features = source.getFeatures();
                     for(let i = 0; i < features.length; i++) {
                         if(features[i].get('BEDR_NAAM') === clickedName && newSearch) {
