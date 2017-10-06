@@ -58,7 +58,7 @@ export default class MapLayout extends Component {
     
         map.on('click', function(e) {
             that.setState({
-                featurePopup: <div></div>,
+                //featurePopup: <div></div>,
                 location: {
                     x: e.coordinate[0],
                     y: e.coordinate[1]
@@ -68,7 +68,7 @@ export default class MapLayout extends Component {
             map.forEachFeatureAtPixel(e.pixel, function(feature, layer) {
                 let title = layer.get('title');
                 let searchFields = Meteor.settings.public.searchFields[title];
-                that.setState({featurePopup: <Popup title={title} selectedFeature={feature} screenCoords={e.pixel} searchFields={searchFields} map={that.state.map} openStreetView={that.openStreetView} />})
+                that.setState({featurePopup: <Popup title={title} selectedFeature={feature} screenCoords={e.pixel} searchFields={searchFields} map={that.state.map} openStreetView={that.openStreetView} onRequestClose={that.closePopup} ></Popup>});
             });
         });
     }
@@ -102,6 +102,15 @@ export default class MapLayout extends Component {
     closeStreetView = (event) => {
         this.setState({
             streetView: <div></div>
+        });
+    }
+
+    /**
+     * Closes the popup component
+     */
+    closePopup = (event) => {
+        this.setState({
+            featurePopup: <div></div>
         });
     }
 

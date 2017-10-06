@@ -171,6 +171,7 @@ canvas.ol-unselectable {
     z-index: 1 !important;
     opacity: 0.8;
     border-radius: 5px;
+    border: none;
 }
 
 .ol-zoom-out {
@@ -185,4 +186,13 @@ canvas.ol-unselectable {
     z-index: 1 !important;
     opacity: 0.8;
     border-radius: 5px;
+    border: none;
+}
+
+.popup-close-button {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 40px;
+    min-width: 0px !important;
 }

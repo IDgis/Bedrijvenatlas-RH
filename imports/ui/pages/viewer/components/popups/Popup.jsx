@@ -152,6 +152,7 @@ export default class Popup extends Component {
 
             return(
                 <Paper style={{position:'absolute', width:width, top:'20px', left:left, borderRadius:5, backgroundColor:Meteor.settings.public.colorGemeente, opacity:0.8, color:'white'}} zDepth={5} >
+                    <RaisedButton className='popup-close-button' label='X' onTouchTap={this.props.onRequestClose} />
                     <div style={{position:'relative', left:'20px'}}><br />
                         <h3><u>{this.props.title}</u></h3>
                         <table><tbody>{returnField}</tbody></table> <br />
@@ -167,6 +168,7 @@ export default class Popup extends Component {
         
         return(
             <Paper style={{position:'absolute', width:width, top:'20px', left:left, borderRadius:5, backgroundColor:Meteor.settings.public.colorGemeente, opacity:0.8, color:'white'}} zDepth={5} >
+                <RaisedButton className='popup-close-button' label='X' onTouchTap={this.props.onRequestClose} />
                 <div style={{position:'relative', left:'20px'}}><br />
                     <h3><u>{this.props.title}</u></h3>
                     <table><tbody>{returnField}</tbody></table> <br />
