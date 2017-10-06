@@ -137,6 +137,10 @@ export default class LayerMenu extends Component {
      * The main render method that will render the component to the screen
      */
     render() {
+        if(this.props.map !== null) {
+            document.getElementById('map').focus();
+        }
+
         return (
             <Popover
             open={this.props.menuOpen}
@@ -148,7 +152,7 @@ export default class LayerMenu extends Component {
             >
                 <Menu>
                     <SearchBar dataSource={this.state.searchFields} onNewRequest={this.selectFeature} />
-                    <OverigeLagen map={this.props.map} /*updateKvkChecked={this.updateKvkChecked}*/ />
+                    <OverigeLagen map={this.props.map} />
                 </Menu>
             </Popover>
         );

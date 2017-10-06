@@ -466,17 +466,17 @@ export default class Viewer extends Component {
      * The main render method that will render the component to the screen
      */
     render() {
-        /*if(this.state.map) {
+        if(this.state.map) {
             let viewport = document.getElementsByClassName('ol-viewport').item(0);
             viewport.setAttribute('style','position: relative; overflow: hidden; width: 100%; height: 100% !important; touch-action: none;');
-        }*/
+        }
 
         return (
             <div id="map" className="map" >
-                <IconButton className='menu-button' style={{backgroundColor:Meteor.settings.public.colorGemeente}} onClick={this.openMenu} >
+                <IconButton className='menu-button' style={{backgroundColor:Meteor.settings.public.colorGemeente}} onClick={this.openMenu} title='Menu' >
                     <img src={Meteor.settings.public.iconMenu} />
                 </IconButton>
-                <IconButton className='home-button' href='/' style={{backgroundColor:Meteor.settings.public.colorGemeente}} >
+                <IconButton className='home-button' href='/' style={{backgroundColor:Meteor.settings.public.colorGemeente}} title='Home' >
                     <img src={Meteor.settings.public.iconHome} />
                 </IconButton>
                 <LayerMenu
