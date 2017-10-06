@@ -25,12 +25,12 @@ export default class Streetview extends Component {
             };
 
             return(
-                <div style={{width: '400px', height: '400px', position: 'absolute', bottom: 0, right: 0}}>
+                <div style={{width: '400px', height: '400px', position: 'absolute', top: (window.innerHeight-56-400), right: 0}}>
                     <ReactStreetView 
                         apiKey='AIzaSyDSK_RTj2gR5YKl_TxgQidR9NkuHCpHi0I'
                         streetViewPanoramaOptions={streetViewPanoramaOptions}
                     />
-                    <RaisedButton label='close' style={{position: 'absolute', bottom: 0, left: 0,}} onClick={this.props.close} />
+                    <RaisedButton label='Sluiten' style={{position: 'absolute', bottom: 0, left: 0, zIndex:3}} onClick={this.props.close} />
                 </div>
             );
         }

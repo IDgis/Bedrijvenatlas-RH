@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import * as ol from 'openlayers';
 import proj4 from 'proj4';
 import './viewer.css';
+import 'whatwg-fetch';
 
 import Drawer from 'material-ui/Drawer';
 import IconButton from 'material-ui/IconButton';
@@ -466,10 +467,10 @@ export default class Viewer extends Component {
      * The main render method that will render the component to the screen
      */
     render() {
-        if(this.state.map) {
+        /*if(this.state.map) {
             let viewport = document.getElementsByClassName('ol-viewport').item(0);
             viewport.setAttribute('style','position: relative; overflow: hidden; width: 100%; height: 100% !important; touch-action: none;');
-        }
+        }*/
 
         return (
             <div id="map" className="map" >
