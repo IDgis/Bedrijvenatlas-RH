@@ -92,8 +92,7 @@ export default class MapLayout extends Component {
         let coord = ol.proj.transform([oldCoord[0],oldCoord[1]],'EPSG:28992','EPSG:4326');
 
         this.setState({
-            streetView: <Streetview coords={coord} close={this.closeStreetView} />,
-            featurePopup: <div></div>
+            streetView: <Streetview coords={coord} close={this.closeStreetView} />
         })
     }
 
@@ -102,8 +101,7 @@ export default class MapLayout extends Component {
      */
     closeStreetView = (event) => {
         this.setState({
-            streetView: <div></div>,
-            featurePopup: <div></div>
+            streetView: <div></div>
         });
     }
 
