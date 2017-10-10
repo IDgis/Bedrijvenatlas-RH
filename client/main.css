@@ -25,11 +25,33 @@ body {
     margin: 0;
 }
 
+.menu-bar {
+    position: inherit;
+    width: 100%;
+    height: 56px;
+    font-size: 40px;
+    color: white;
+    text-align: center;
+}
+
+.logo-rh {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    height: 56px;
+}
+
+.logo-idgis {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    height: 56px;
+}
+
 .main-layout {
     position: relative;
     top: 56px;
     height: 100%;
-    margin: 0;
 }
 
 .welcome-layout {
@@ -102,7 +124,10 @@ body {
 }
 
 #map, #map div {
-    width: 100%;
+    height: 100%;
+}
+
+.ol-viewport {
     height: 100%;
 }
 
@@ -116,6 +141,8 @@ canvas.ol-unselectable {
     left: 10px;
     z-index: 1 !important;
     opacity: 0.8;
+    border-radius: 5px;
+    border: none;
 }
 
 .home-button {
@@ -124,4 +151,48 @@ canvas.ol-unselectable {
     right: 10px;
     z-index: 1 !important;
     opacity: 0.8;
+    border-radius: 5px;
+    border: none;
+}
+
+.ol-scale-line {
+    display: none;
+}
+
+.ol-zoom-in {
+    position: fixed !important;
+    top: 124px;
+    left: 10px;
+    height: 48px;
+    width: 48px;
+    background-color: rgb(115,0,73);
+    color: white;
+    font-size: 18px;
+    z-index: 1 !important;
+    opacity: 0.8;
+    border-radius: 5px;
+    border: none;
+}
+
+.ol-zoom-out {
+    position: fixed !important;
+    top: 182px;
+    left: 10px;
+    height: 48px;
+    width: 48px;
+    background-color: rgb(115,0,73);
+    color: white;
+    font-size: 18px;
+    z-index: 1 !important;
+    opacity: 0.8;
+    border-radius: 5px;
+    border: none;
+}
+
+.popup-close-button {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 40px;
+    min-width: 0px !important;
 }

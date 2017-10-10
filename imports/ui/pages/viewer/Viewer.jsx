@@ -2,17 +2,13 @@ import React, { Component } from 'react';
 import * as ol from 'openlayers';
 import proj4 from 'proj4';
 import './viewer.css';
+import 'whatwg-fetch';
 
 import Drawer from 'material-ui/Drawer';
 import IconButton from 'material-ui/IconButton';
 
 import LayerMenu from './components/LayerMenu.jsx';
 
-let styles = {
-    map: {
-        height: '840px'
-    }
-}
 
 export default class Viewer extends Component {
 
@@ -44,6 +40,7 @@ export default class Viewer extends Component {
         this.state.map  = new ol.Map({
             target: 'map',
             layers: [
+                // BRT Achtergrondkaart TMS
                 new ol.layer.Tile({
                     title: 'brt achtergrondkaart',
                     preload: 1,
@@ -55,10 +52,11 @@ export default class Viewer extends Component {
                             extent: extent,
                             resolutions: resolutions
                         }),
-                        url: 'http://geodata.nationaalgeoregister.nl/tms/1.0.0/brtachtergrondkaart/{z}/{x}/{-y}.png'
+                        url: 'https://geodata.nationaalgeoregister.nl/tms/1.0.0/brtachtergrondkaart/{z}/{x}/{-y}.png'
                     }),
                     visible: true,
                 }),
+                // Luchtfoto WMTS
                 new ol.layer.Tile({
                     title: Meteor.settings.public.laagNaam.luchtfoto,
                     source: new ol.source.WMTS({
@@ -76,70 +74,72 @@ export default class Viewer extends Component {
                     }),
                     visible: false
                 }),
-                new ol.layer.Vector({
+                // Kadastrale percelen WMS
+                new ol.layer.Tile({
                     title: Meteor.settings.public.laagNaam.kadastralePercelen,
-                    source: new ol.source.Vector({
-                        format: new ol.format.GeoJSON(),
-                        url: function(extent, resolution, projection) {
-                            return 'https://geodata.nationaalgeoregister.nl/kadastralekaartv3/wfs?service=WFS&' +
-                                'version=1.1.0&request=GetFeature&resultType=results&typename=kadastralekaartv3:perceel&' +
-                                'outputFormat=application/json&srsname=EPSG:28992&' +
-                                'bbox=' + extent.join(',') + ',EPSG:28992';
+                    source: new ol.source.TileWMS({
+                        url: 'https://geodata.nationaalgeoregister.nl/kadastralekaartv3/ows?SERVICE=WMS&',
+                        params: {
+                            'FORMAT': 'image/png',
+                            'LAYERS': 'kadastralekaart',
+                            'CRS': 'EPSG:28992'
                         },
-                        strategy: ol.loadingstrategy.tile(ol.tilegrid.createXYZ({
-                            maxZoom: 20
-                        }))
                     }),
                     visible: false
                 }),
-                new ol.layer.Vector({
-                    title: Meteor.settings.public.laagNaam.bagLigplaats,
-                    source: new ol.source.Vector({
-                        format: new ol.format.GeoJSON(),
-                        url: function(extent, resolution, projection) {
-                            return 'https://geodata.nationaalgeoregister.nl/bag/wfs?service=WFS&' +
-                                'version=1.1.0&request=GetFeature&typename=bag:ligplaats&' +
-                                'outputFormat=application/json&srsname=EPSG:28992&' +
-                                'bbox=' + extent.join(',') + ',EPSG:28992';
-                        },
-                        strategy: ol.loadingstrategy.tile(ol.tilegrid.createXYZ({
-                            maxZoom: 20
-                        }))
-                    }),
-                    visible: false
-                }),
-                new ol.layer.Vector({
+                // BAG Woonplaats/Pand/Ligplaats/Standplaats
+                /*new ol.layer.Tile({
                     title: Meteor.settings.public.laagNaam.bagPand,
-                    source: new ol.source.Vector({
-                        format: new ol.format.GeoJSON(),
-                        url: function(extent, resolution, projection) {
-                            return 'https://geodata.nationaalgeoregister.nl/bag/wfs?service=WFS&' +
-                                'version=1.1.0&request=GetFeature&typename=bag:pand&' +
-                                'outputFormat=application/json&srsname=EPSG:28992&' +
-                                'bbox=' + extent.join(',') + ',EPSG:28992';
-                        },
-                        strategy: ol.loadingstrategy.tile(ol.tilegrid.createXYZ({
-                            maxZoom: 20
-                        }))
+                    source: new ol.source.TileWMS({
+                        url: 'https://geodata.nationaalgeoregister.nl/bag/ows?SERVICE=WMS&',
+                        params: {
+                            'FORMAT': 'image/png',
+                            'LAYERS': 'bag',
+                            'CRS': 'EPSG:28992'
+                        }
+                    }),
+                    visible: false
+                }),*/
+                // BAG Pand WMS
+                new ol.layer.Tile({
+                    title: Meteor.settings.public.laagNaam.bagPand,
+                    source: new ol.source.TileWMS({
+                        url: 'https://geodata.nationaalgeoregister.nl/bag/ows?SERVICE=WMS&',
+                        params: {
+                            'FORMAT': 'image/png',
+                            'LAYERS': 'pand',
+                            'CRS': 'EPSG:28992'
+                        }
                     }),
                     visible: false
                 }),
-                new ol.layer.Vector({
+                // BAG Ligplaats WMS
+                new ol.layer.Tile({
+                    title: Meteor.settings.public.laagNaam.bagLigplaats,
+                    source: new ol.source.TileWMS({
+                        url: 'https://geodata.nationaalgeoregister.nl/bag/ows?SERVICE=WMS&',
+                        params: {
+                            'FORMAT': 'image/png',
+                            'LAYERS': 'ligplaats',
+                            'CRS': 'EPSG:28992'
+                        }
+                    }),
+                    visible: false
+                }),
+                // Bag Standplaats WMS
+                new ol.layer.Tile({
                     title: Meteor.settings.public.laagNaam.bagStandplaats,
-                    source: new ol.source.Vector({
-                        format: new ol.format.GeoJSON(),
-                        url: function(extent, resolution, projection) {
-                            return 'https://geodata.nationaalgeoregister.nl/bag/wfs?service=WFS&' +
-                                'version=1.1.0&request=GetFeature&typename=bag:standplaats&' +
-                                'outputFormat=application/json&srsname=EPSG:28992&' +
-                                'bbox=' + extent.join(',') + ',EPSG:28992';
-                        },
-                        strategy: ol.loadingstrategy.tile(ol.tilegrid.createXYZ({
-                            maxZoom: 20
-                        }))
+                    source: new ol.source.TileWMS({
+                        url: 'https://geodata.nationaalgeoregister.nl/bag/ows?SERVICE=WMS&',
+                        params: {
+                            'FORMAT': 'image/png',
+                            'LAYERS': 'standplaats',
+                            'CRS': 'EPSG:28992'
+                        }
                     }),
                     visible: false
                 }),
+                // Milieu categoriën WMS
                 new ol.layer.Tile({
                     title: Meteor.settings.public.laagNaam.milieu,
                     source: new ol.source.TileWMS({
@@ -152,6 +152,7 @@ export default class Viewer extends Component {
                     }),
                     visible: false
                 }),
+                // Bedrijventerreinen WMS
                 new ol.layer.Tile({
                     title: Meteor.settings.public.laagNaam.ibis,
                     source: new ol.source.TileWMS({
@@ -164,78 +165,33 @@ export default class Viewer extends Component {
                     }),
                     visible: false
                 }),
-                /*new ol.layer.Vector({
-                    title: Meteor.settings.public.laagNaam.ibis,
-                    source: new ol.source.Vector({
-                        format: new ol.format.GeoJSON(),
-                        url: function(extent, resolution, projection) {
-                            return 'https://rijssenholten.geopublisher.nl/staging/geoserver/Bedrijventerreinen_Rijssen-Holten_service/wfs?' +
-                                'service=wfs&version=1.1.0&request=GetFeature&outputFormat=application/json&resultType=results' +
-                                '&typeName=Bedrijventerreinen_Rijssen-Holten_service:Bedrijventerreinen_Rijssen-Holten&srs=EPSG:28992' +
-                                '&bbox=' + extent.join(',') + ',EPSG:28992';
-                        },
-                        strategy: ol.loadingstrategy.tile(ol.tilegrid.createXYZ({
-                            maxZoom: 20
-                        })),
-                    }),
-                    style: function(feature) {
-                        return new ol.style.Style({
-                            stroke: new ol.style.Stroke({
-                                width: 2,
-                                color: 'rgba(71, 180, 234, 1)'
-                            }),
-                            fill: new ol.style.Fill({
-                                color: 'rgba(71, 180, 234, 0.4)'
-                            }),
-                            text: new ol.style.Text({
-                                text: feature.get('BEDR_TERR'),
-                                font: 'bold 16px Arial'
-                            })
-                        });
-                    },
-                    visible: false
-                }),*/
-                new ol.layer.Vector({
+                // Uitgifte kavels WMS
+                new ol.layer.Tile({
                     title: Meteor.settings.public.laagNaam.kavels,
-                    source: new ol.source.Vector({
-                        format: new ol.format.GeoJSON(),
-                        url: function(extent, resolution, projection) {
-                            return 'https://rijssenholten.geopublisher.nl/staging/geoserver/Bedrijventerreinen_uitgifte_kavels_service/wfs?' +
-                            'service=wfs&version=1.1.0&request=GetFeature&outputFormat=application/json&resultType=results' +
-                            '&typeName=Bedrijventerreinen_uitgifte_kavels_service:Bedrijventerreinen_uitgifte_kavels&srs=EPSG:28992' +
-                            '&bbox=' + extent.join(',') + ',EPSG:28992';
+                    source: new ol.source.TileWMS({
+                        url: 'https://rijssenholten.geopublisher.nl/staging/geoserver/Bedrijventerreinen_uitgifte_kavels_service/ows?SERVICE=WMS&',
+                        params: {
+                            'FORMAT': 'image/png',
+                            'LAYERS': 'Bedrijventerreinen_uitgifte_kavels',
+                            'CRS': 'EPSG:28992'
                         },
-                        strategy: ol.loadingstrategy.tile(ol.tilegrid.createXYZ({
-                            maxZoom: 20
-                        }))
-                    }),
-                    style: new ol.style.Style({
-                        stroke: new ol.style.Stroke({
-                            width: 2,
-                            color: 'rgba(71, 180, 234, 1)'
-                        }),
-                        fill: new ol.style.Fill({
-                            color: 'rgba(71, 180, 234, 0.4)'
-                        })
                     }),
                     visible: false
                 }),
-                new ol.layer.Vector({
+                // BAG Verblijfsobjecten WMS
+                new ol.layer.Tile({
                     title: Meteor.settings.public.laagNaam.bagVerblijfsobject,
-                    source: new ol.source.Vector({
-                        format: new ol.format.GeoJSON(),
-                        url: function(extent, resolution, projection) {
-                            return 'https://geodata.nationaalgeoregister.nl/bag/wfs?service=WFS&' +
-                                'version=1.1.0&request=GetFeature&typename=bag:verblijfsobject&' +
-                                'outputFormat=application/json&srsname=EPSG:28992&' +
-                                'bbox=' + extent.join(',') + ',EPSG:28992';
-                        },
-                        strategy: ol.loadingstrategy.tile(ol.tilegrid.createXYZ({
-                            maxZoom: 20
-                        }))
+                    source: new ol.source.TileWMS({
+                        url: 'https://geodata.nationaalgeoregister.nl/bag/ows?SERVICE=WMS&',
+                        params: {
+                            'FORMAT': 'image/png',
+                            'LAYERS': 'verblijfsobject',
+                            'CRS': 'EPSG:28992'
+                        }
                     }),
                     visible: false
                 }),
+                // Te koop GeoJSON
                 new ol.layer.Vector({
                     title: Meteor.settings.public.laagNaam.teKoop,
                     source: new ol.source.Vector({
@@ -246,6 +202,7 @@ export default class Viewer extends Component {
                         new ol.style.Style({
                             image: new ol.style.Icon({
                                 src: Meteor.settings.public.iconKoop,
+                                imgSize: [48,48], // for IE11
                                 scale: 0.5
                             }),
                             zIndex: 1
@@ -261,6 +218,7 @@ export default class Viewer extends Component {
                     ],
                     visible: false
                 }),
+                // Te huur GeoJSON
                 new ol.layer.Vector({
                     title: Meteor.settings.public.laagNaam.teHuur,
                     source: new ol.source.Vector({
@@ -271,9 +229,10 @@ export default class Viewer extends Component {
                         new ol.style.Style({
                             image: new ol.style.Icon({
                                 src: Meteor.settings.public.iconHuur,
+                                imgSize: [48, 48], // for IE11
                                 scale: 0.5
                             }),
-                            zIndex: 1
+                            zIndex: 1,
                         }),
                         new ol.style.Style({
                             image: new ol.style.Icon({
@@ -424,6 +383,7 @@ export default class Viewer extends Component {
                         new ol.style.Style({
                             image: new ol.style.Icon({
                                 src: Meteor.settings.public.categorieUrl[categorieNaam],
+                                imgSize: [48,48], // for IE11
                                 scale: 0.5
                             }),
                             zIndex: 1
@@ -453,6 +413,7 @@ export default class Viewer extends Component {
             menuOpen: true,
             anchorEl: evt.currentTarget
         });
+        document.getElementById('map').focus();
     }
 
     closeMenu = () => {
@@ -465,13 +426,17 @@ export default class Viewer extends Component {
      * The main render method that will render the component to the screen
      */
     render() {
+        /*if(this.state.map) {
+            let viewport = document.getElementsByClassName('ol-viewport').item(0);
+            viewport.setAttribute('style','position: relative; overflow: hidden; width: 100%; height: 100% !important; touch-action: none;');
+        }*/
 
         return (
             <div id="map" className="map" >
-                <IconButton className='menu-button' style={{backgroundColor:Meteor.settings.public.colorGemeente}} onClick={this.openMenu} >
+                <IconButton className='menu-button' style={{backgroundColor:Meteor.settings.public.colorGemeente}} onClick={this.openMenu} title='Menu' >
                     <img src={Meteor.settings.public.iconMenu} />
                 </IconButton>
-                <IconButton className='home-button' href='/' style={{backgroundColor:Meteor.settings.public.colorGemeente}} >
+                <IconButton className='home-button' href='/' style={{backgroundColor:Meteor.settings.public.colorGemeente}} title='Home' >
                     <img src={Meteor.settings.public.iconHome} />
                 </IconButton>
                 <LayerMenu

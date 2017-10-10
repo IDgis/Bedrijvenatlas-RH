@@ -58,7 +58,7 @@ export default class MapLayout extends Component {
     
         map.on('click', function(e) {
             that.setState({
-                featurePopup: <div></div>,
+                //featurePopup: <div></div>,
                 location: {
                     x: e.coordinate[0],
                     y: e.coordinate[1]
@@ -66,9 +66,12 @@ export default class MapLayout extends Component {
             });
 
             map.forEachFeatureAtPixel(e.pixel, function(feature, layer) {
-                let title = layer.get('title');
-                let searchFields = Meteor.settings.public.searchFields[title];
-                that.setState({featurePopup: <Popup title={title} selectedFeature={feature} screenCoords={e.pixel} searchFields={searchFields} map={that.state.map} openStreetView={that.openStreetView} />})
+                const title = layer.get('title');
+                const laagNaam = Meteor.settings.public.laagNaam;
+                const searchFields = Meteor.settings.public.searchFields[title];
+                if(title === laagNaam.teKoop || title === laagNaam.teHuur || title === laagNaam.kvk || title === laagNaam.kavels) {
+                    that.setState({featurePopup: <Popup title={title} selectedFeature={feature} screenCoords={e.pixel} searchFields={searchFields} map={that.state.map} openStreetView={that.openStreetView} onRequestClose={that.closePopup} ></Popup>});
+                }
             });
         });
     }
@@ -92,8 +95,7 @@ export default class MapLayout extends Component {
         let coord = ol.proj.transform([oldCoord[0],oldCoord[1]],'EPSG:28992','EPSG:4326');
 
         this.setState({
-            streetView: <Streetview coords={coord} close={this.closeStreetView} />,
-            featurePopup: <div></div>
+            streetView: <Streetview coords={coord} close={this.closeStreetView} />
         })
     }
 
@@ -102,7 +104,15 @@ export default class MapLayout extends Component {
      */
     closeStreetView = (event) => {
         this.setState({
-            streetView: <div></div>,
+            streetView: <div></div>
+        });
+    }
+
+    /**
+     * Closes the popup component
+     */
+    closePopup = (event) => {
+        this.setState({
             featurePopup: <div></div>
         });
     }

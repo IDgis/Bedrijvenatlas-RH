@@ -62,7 +62,7 @@ export default class BedrijvenBranche extends Component {
         layers.forEach((layer, index, arr) => {
             if(layer.get('title') === Meteor.settings.public.laagNaam.kvk) {
                 let source = layer.getSource();
-                if(source.state_ === 'ready') {
+                if(source.getState() === 'ready') {
                     let features = source.getFeatures();
                     let id = features[0].get('SBI_RUBR_C');
                     if(id === categorie) {
@@ -84,7 +84,7 @@ export default class BedrijvenBranche extends Component {
             layers.forEach((layer, index) => {
                 if(layer.get('title') === Meteor.settings.public.laagNaam.kvk) {
                     let source = layer.getSource();
-                    if(source.state_ === 'ready') {
+                    if(source.getState() === 'ready') {
                         let features = source.getFeatures();
                         let id = features[0].get('SBI_RUBR_C');
                         this.setVisibility(id, layer.getVisible());
@@ -99,20 +99,20 @@ export default class BedrijvenBranche extends Component {
      */
     setVisibility = (cat, newVisible) => {
         switch (cat) {
-            case 'C': this.state.C = newVisible; break;// this.setState({C:newVisible}); break;
-            case 'E': this.state.E = newVisible; break;// this.setState({E:newVisible}); break;
-            case 'F': this.state.F = newVisible; break;// this.setState({F:newVisible}); break;
-            case 'G': this.state.G = newVisible; break;// this.setState({G:newVisible}); break;
-            case 'H': this.state.H = newVisible; break;// this.setState({H:newVisible}); break;
-            case 'I': this.state.I = newVisible; break;// this.setState({I:newVisible}); break;
-            case 'J': this.state.J = newVisible; break;// this.setState({J:newVisible}); break;
-            case 'K': this.state.K = newVisible; break;// this.setState({K:newVisible}); break;
-            case 'L': this.state.L = newVisible; break;// this.setState({L:newVisible}); break;
-            case 'M': this.state.M = newVisible; break;// this.setSTate({M:newVisible}); break;
-            case 'N': this.state.N = newVisible; break;// this.setState({N:newVisible}); break;
-            case 'P': this.state.P = newVisible; break;// this.setState({P:newVisible}); break;
-            case 'Q': this.state.Q = newVisible; break;// this.setState({Q:newVisible}); break;
-            case 'S': this.state.S = newVisible; break;// this.setState({S:newVisible}); break;
+            case 'C': this.state.C = newVisible; break;
+            case 'E': this.state.E = newVisible; break;
+            case 'F': this.state.F = newVisible; break;
+            case 'G': this.state.G = newVisible; break;
+            case 'H': this.state.H = newVisible; break;
+            case 'I': this.state.I = newVisible; break;
+            case 'J': this.state.J = newVisible; break;
+            case 'K': this.state.K = newVisible; break;
+            case 'L': this.state.L = newVisible; break;
+            case 'M': this.state.M = newVisible; break;
+            case 'N': this.state.N = newVisible; break;
+            case 'P': this.state.P = newVisible; break;
+            case 'Q': this.state.Q = newVisible; break;
+            case 'S': this.state.S = newVisible; break;
             default: break;
         }
     }
@@ -128,7 +128,7 @@ export default class BedrijvenBranche extends Component {
             layers.forEach((layer, index, arr) => {
                 if(layer.get('title') === Meteor.settings.public.laagNaam.kvk) {
                     let source = layer.getSource();
-                    if(source.state_ === 'ready') {
+                    if(source.getState() === 'ready') {
                         let features = source.getFeatures();
                         for(let i = 0; i < features.length; i++) {
                             let id = features[i].get('SBI_RUBR_C');
@@ -155,7 +155,7 @@ export default class BedrijvenBranche extends Component {
             if(layer.get('title') === Meteor.settings.public.laagNaam.kvk) {
                 let newSearch = true;
                 let source = layer.getSource();
-                if(source.state_ === 'ready') {
+                if(source.getState() === 'ready') {
                     let features = source.getFeatures();
                     for(let i = 0; i < features.length; i++) {
                         if(features[i].get('BEDR_NAAM') === clickedName && newSearch) {
