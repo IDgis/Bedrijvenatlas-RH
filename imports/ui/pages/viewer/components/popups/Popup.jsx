@@ -91,10 +91,12 @@ export default class Popup extends Component {
     }
 
     getBestemmingsplanButton = (props) => {
-        const location = props.map.getView().calculateExtent(props.map.getSize());
+        const x = props.coords[0];
+        const y = props.coords[1];
+        const x_offset = 300;
+        const y_offset = 150;
         const ruimtelijkePlannenUrl = 'http://www.ruimtelijkeplannen.nl/web-roo/roo/bestemmingsplannen?' +
-            'bbx1=' + location[0] + '&bby1=' + location[1] + '&bbx2=' + location[2] + '&bby2=' + location[3];
-
+            'bbx1=' + (x-x_offset) + '&bby1=' + (y-y_offset) + '&bbx2=' + (x+x_offset) + '&bby2=' + (y+y_offset);
         return <div><RaisedButton href={ruimtelijkePlannenUrl} target='_blank' label='Bestemmingsplan' /><br /></div>;
     }
 
