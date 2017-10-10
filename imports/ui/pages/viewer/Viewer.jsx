@@ -165,60 +165,16 @@ export default class Viewer extends Component {
                     }),
                     visible: false
                 }),
-                /*new ol.layer.Vector({
-                    title: Meteor.settings.public.laagNaam.ibis,
-                    source: new ol.source.Vector({
-                        format: new ol.format.GeoJSON(),
-                        url: function(extent, resolution, projection) {
-                            return 'https://rijssenholten.geopublisher.nl/staging/geoserver/Bedrijventerreinen_Rijssen-Holten_service/wfs?' +
-                                'service=wfs&version=1.1.0&request=GetFeature&outputFormat=application/json&resultType=results' +
-                                '&typeName=Bedrijventerreinen_Rijssen-Holten_service:Bedrijventerreinen_Rijssen-Holten&srs=EPSG:28992' +
-                                '&bbox=' + extent.join(',') + ',EPSG:28992';
-                        },
-                        strategy: ol.loadingstrategy.tile(ol.tilegrid.createXYZ({
-                            maxZoom: 20
-                        })),
-                    }),
-                    style: function(feature) {
-                        return new ol.style.Style({
-                            stroke: new ol.style.Stroke({
-                                width: 2,
-                                color: 'rgba(71, 180, 234, 1)'
-                            }),
-                            fill: new ol.style.Fill({
-                                color: 'rgba(71, 180, 234, 0.4)'
-                            }),
-                            text: new ol.style.Text({
-                                text: feature.get('BEDR_TERR'),
-                                font: 'bold 16px Arial'
-                            })
-                        });
-                    },
-                    visible: false
-                }),*/
-                // Uitgifte kavels WFS
-                new ol.layer.Vector({
+                // Uitgifte kavels WMS
+                new ol.layer.Tile({
                     title: Meteor.settings.public.laagNaam.kavels,
-                    source: new ol.source.Vector({
-                        format: new ol.format.GeoJSON(),
-                        url: function(extent, resolution, projection) {
-                            return 'https://rijssenholten.geopublisher.nl/staging/geoserver/Bedrijventerreinen_uitgifte_kavels_service/wfs?' +
-                            'service=wfs&version=1.1.0&request=GetFeature&outputFormat=application/json&resultType=results' +
-                            '&typeName=Bedrijventerreinen_uitgifte_kavels_service:Bedrijventerreinen_uitgifte_kavels&srs=EPSG:28992' +
-                            '&bbox=' + extent.join(',') + ',EPSG:28992';
+                    source: new ol.source.TileWMS({
+                        url: 'https://rijssenholten.geopublisher.nl/staging/geoserver/Bedrijventerreinen_uitgifte_kavels_service/ows?SERVICE=WMS&',
+                        params: {
+                            'FORMAT': 'image/png',
+                            'LAYERS': 'Bedrijventerreinen_uitgifte_kavels',
+                            'CRS': 'EPSG:28992'
                         },
-                        strategy: ol.loadingstrategy.tile(ol.tilegrid.createXYZ({
-                            maxZoom: 20
-                        }))
-                    }),
-                    style: new ol.style.Style({
-                        stroke: new ol.style.Stroke({
-                            width: 2,
-                            color: 'rgba(71, 180, 234, 1)'
-                        }),
-                        fill: new ol.style.Fill({
-                            color: 'rgba(71, 180, 234, 0.4)'
-                        })
                     }),
                     visible: false
                 }),
@@ -246,6 +202,7 @@ export default class Viewer extends Component {
                         new ol.style.Style({
                             image: new ol.style.Icon({
                                 src: Meteor.settings.public.iconKoop,
+                                imgSize: [48,48], // for IE11
                                 scale: 0.5
                             }),
                             zIndex: 1
@@ -272,9 +229,10 @@ export default class Viewer extends Component {
                         new ol.style.Style({
                             image: new ol.style.Icon({
                                 src: Meteor.settings.public.iconHuur,
+                                imgSize: [48, 48], // for IE11
                                 scale: 0.5
                             }),
-                            zIndex: 1
+                            zIndex: 1,
                         }),
                         new ol.style.Style({
                             image: new ol.style.Icon({
@@ -425,6 +383,7 @@ export default class Viewer extends Component {
                         new ol.style.Style({
                             image: new ol.style.Icon({
                                 src: Meteor.settings.public.categorieUrl[categorieNaam],
+                                imgSize: [48,48], // for IE11
                                 scale: 0.5
                             }),
                             zIndex: 1
