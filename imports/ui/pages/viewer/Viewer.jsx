@@ -4,6 +4,7 @@ import proj4 from 'proj4';
 import './viewer.css';
 import 'whatwg-fetch';
 
+import AutoComplete from 'material-ui/AutoComplete';
 import Drawer from 'material-ui/Drawer';
 import IconButton from 'material-ui/IconButton';
 
@@ -28,7 +29,7 @@ export default class Viewer extends Component {
      * Sets up the initial OpenLayers map and layers
      */
     componentDidMount() {
-        let extent = [-285401.92,22598.08,595401.9199999999,903401.9199999999];
+        let extent = [-285401.92,22598.08,595401.92,903401.92];
         let resolutions = [3440.64, 1720.32, 860.16, 430.08, 215.04, 107.52, 53.76, 26.88, 13.44, 6.72, 3.36, 1.68, 0.84, 0.42, 0.21, 0.105, 0.0525];
         let projection = new ol.proj.Projection({code:'EPSG:28992', units:'m', extent: extent});
         let matrixIds = [];
@@ -72,7 +73,7 @@ export default class Viewer extends Component {
                             matrixIds: matrixIds,
                         }),
                     }),
-                    visible: true
+                    visible: false
                 }),
                 // Luchtfoto WMTS
                 new ol.layer.Tile({
@@ -231,6 +232,7 @@ export default class Viewer extends Component {
         });
 
         this.setMapSettings();
+        this.setBackgroundLayer();
         this.addKvkLayers();
         this.props.mapToParent(this.state.map);
     }
@@ -300,6 +302,22 @@ export default class Viewer extends Component {
                 }
             });
         }
+    }
+
+    setBackgroundLayer() {
+        let map = this.state.map;
+        let maxZoom = 16;
+        let layers = map.getLayers();
+        layers.forEach((layer, index) => {
+            if(layer.get('title') === 'BGT') {
+                if(maxZoom <= map.getView().getZoom()) layer.setVisible(true);
+                else layer.setVisible(false);
+            }
+            if(layer.get('title') === 'BRT') {
+                if(maxZoom+1 >= map.getView().getZoom()) layer.setVisible(true);
+                else layer.setVisible(false);
+            } 
+        });
     }
 
     /**

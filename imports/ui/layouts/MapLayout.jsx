@@ -55,10 +55,24 @@ export default class MapLayout extends Component {
     addMapListener() {
         let map = this.state.map;
         let that = this;
+
+        map.getView().on('change:resolution', function() {
+            let maxZoom = 16
+            let layers = map.getLayers();
+            layers.forEach((layer, index) => {
+                if(layer.get('title') === 'BGT') {
+                    if(maxZoom <= map.getView().getZoom()) layer.setVisible(true);
+                    else layer.setVisible(false);
+                }
+                if(layer.get('title') === 'BRT') {
+                    if(maxZoom+1 >= map.getView().getZoom()) layer.setVisible(true);
+                    else layer.setVisible(false);
+                } 
+            });
+        });
     
         map.on('click', function(e) {
             that.setState({
-                //featurePopup: <div></div>,
                 location: {
                     x: e.coordinate[0],
                     y: e.coordinate[1]
@@ -74,6 +88,8 @@ export default class MapLayout extends Component {
                 }
             });
         });
+
+        
     }
 
     /**
