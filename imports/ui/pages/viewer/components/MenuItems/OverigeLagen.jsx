@@ -127,16 +127,16 @@ export default class OverigeLagen extends Component {
     getAllKvkChecked = () => {
         let kvk = Meteor.settings.public.laagNaam.kvk;
         let map = this.props.map;
+        let visible = false
 
         if(map !== null) {
-            let allVisible = true;
             let layers = map.getLayers();
             layers.forEach((layer, index) => {
                 if(layer.get('title') === kvk) {
-                    allVisible = allVisible && layer.getVisible();
+                    if(layer.getVisible()) visible = true;
                 }
             });
-            return allVisible;
+            return visible;
         }
         return false;
     }
@@ -148,18 +148,18 @@ export default class OverigeLagen extends Component {
         let teKoop = Meteor.settings.public.laagNaam.teKoop;
         let teHuur = Meteor.settings.public.laagNaam.teHuur;
         let map = this.props.map;
+        let visible = false;
 
         if(map !== null) {
-            let allVisible = true;
             let layers = map.getLayers();
             layers.forEach((layer, index) => {
                 if(layer.get('title') === teKoop || layer.get('title') === teHuur) {
-                    allVisible = allVisible && layer.getVisible();
+                    if(layer.getVisible()) visible = true;
                 }
             });
-            return allVisible;
+            return visible;
         }
-        return false;
+        return visible;
     }
 
     /**
@@ -168,7 +168,6 @@ export default class OverigeLagen extends Component {
     render() {
         let allVastgoedChecked = this.getAllVastgoedChecked();
         let allKvkChecked = this.getAllKvkChecked();
-        //let allBagChecked = this.getAllBagChecked();
 
         return (
             <List>
