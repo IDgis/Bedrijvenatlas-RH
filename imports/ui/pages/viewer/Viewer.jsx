@@ -29,7 +29,7 @@ export default class Viewer extends Component {
      */
     componentDidMount() {
         let extent = [-285401.92,22598.08,595401.9199999999,903401.9199999999];
-        let resolutions = [3440.640, 1720.320, 860.160, 430.080, 215.040, 107.520, 53.760, 26.880, 13.440, 6.720, 3.360, 1.680, 0.840, 0.420];
+        let resolutions = [3440.64, 1720.32, 860.16, 430.08, 215.04, 107.52, 53.76, 26.88, 13.44, 6.72, 3.36, 1.68, 0.84, 0.42, 0.21, 0.105, 0.0525];
         let projection = new ol.proj.Projection({code:'EPSG:28992', units:'m', extent: extent});
         let matrixIds = [];
 
@@ -42,7 +42,7 @@ export default class Viewer extends Component {
             layers: [
                 // BRT Achtergrondkaart TMS
                 new ol.layer.Tile({
-                    title: 'brt achtergrondkaart',
+                    title: 'BRT',
                     preload: 1,
                     source: new ol.source.TileImage({
                         crossOrigin: null,
@@ -55,6 +55,24 @@ export default class Viewer extends Component {
                         url: 'https://geodata.nationaalgeoregister.nl/tms/1.0.0/brtachtergrondkaart/{z}/{x}/{-y}.png'
                     }),
                     visible: true,
+                }),
+                // BGT Achtergrondkaart WMTS
+                new ol.layer.Tile({
+                    title: 'BGT',
+                    source: new ol.source.WMTS({
+                        url: 'https://geodata.nationaalgeoregister.nl/tiles/service/wmts',
+                        layer: 'bgtachtergrond',
+                        matrixSet: 'EPSG:28992:16',
+                        format: 'image/png8',
+                        projection: projection,
+                        style: 'default',
+                        tileGrid: new ol.tilegrid.WMTS({
+                            origin: [-285401.92,903401.92],
+                            resolutions: resolutions,
+                            matrixIds: matrixIds,
+                        }),
+                    }),
+                    visible: true
                 }),
                 // Luchtfoto WMTS
                 new ol.layer.Tile({
@@ -84,58 +102,6 @@ export default class Viewer extends Component {
                             'LAYERS': 'kadastralekaart',
                             'CRS': 'EPSG:28992'
                         },
-                    }),
-                    visible: false
-                }),
-                // BAG Woonplaats/Pand/Ligplaats/Standplaats
-                /*new ol.layer.Tile({
-                    title: Meteor.settings.public.laagNaam.bagPand,
-                    source: new ol.source.TileWMS({
-                        url: 'https://geodata.nationaalgeoregister.nl/bag/ows?SERVICE=WMS&',
-                        params: {
-                            'FORMAT': 'image/png',
-                            'LAYERS': 'bag',
-                            'CRS': 'EPSG:28992'
-                        }
-                    }),
-                    visible: false
-                }),*/
-                // BAG Pand WMS
-                new ol.layer.Tile({
-                    title: Meteor.settings.public.laagNaam.bagPand,
-                    source: new ol.source.TileWMS({
-                        url: 'https://geodata.nationaalgeoregister.nl/bag/ows?SERVICE=WMS&',
-                        params: {
-                            'FORMAT': 'image/png',
-                            'LAYERS': 'pand',
-                            'CRS': 'EPSG:28992'
-                        }
-                    }),
-                    visible: false
-                }),
-                // BAG Ligplaats WMS
-                new ol.layer.Tile({
-                    title: Meteor.settings.public.laagNaam.bagLigplaats,
-                    source: new ol.source.TileWMS({
-                        url: 'https://geodata.nationaalgeoregister.nl/bag/ows?SERVICE=WMS&',
-                        params: {
-                            'FORMAT': 'image/png',
-                            'LAYERS': 'ligplaats',
-                            'CRS': 'EPSG:28992'
-                        }
-                    }),
-                    visible: false
-                }),
-                // Bag Standplaats WMS
-                new ol.layer.Tile({
-                    title: Meteor.settings.public.laagNaam.bagStandplaats,
-                    source: new ol.source.TileWMS({
-                        url: 'https://geodata.nationaalgeoregister.nl/bag/ows?SERVICE=WMS&',
-                        params: {
-                            'FORMAT': 'image/png',
-                            'LAYERS': 'standplaats',
-                            'CRS': 'EPSG:28992'
-                        }
                     }),
                     visible: false
                 }),
@@ -175,19 +141,6 @@ export default class Viewer extends Component {
                             'LAYERS': 'Bedrijventerreinen_uitgifte_kavels',
                             'CRS': 'EPSG:28992'
                         },
-                    }),
-                    visible: false
-                }),
-                // BAG Verblijfsobjecten WMS
-                new ol.layer.Tile({
-                    title: Meteor.settings.public.laagNaam.bagVerblijfsobject,
-                    source: new ol.source.TileWMS({
-                        url: 'https://geodata.nationaalgeoregister.nl/bag/ows?SERVICE=WMS&',
-                        params: {
-                            'FORMAT': 'image/png',
-                            'LAYERS': 'verblijfsobject',
-                            'CRS': 'EPSG:28992'
-                        }
                     }),
                     visible: false
                 }),
@@ -253,8 +206,7 @@ export default class Viewer extends Component {
             }),
             controls: [
                 new ol.control.ScaleLine(),
-                new ol.control.Zoom(),
-                //new ol.control.ZoomSlider()
+                new ol.control.Zoom()
             ],
             interactions: new ol.interaction.defaults().extend([
                 new ol.interaction.Select({
