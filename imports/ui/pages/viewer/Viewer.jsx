@@ -137,10 +137,10 @@ export default class Viewer extends Component {
                 new ol.layer.Tile({
                     title: Meteor.settings.public.laagNaam.kavels,
                     source: new ol.source.TileWMS({
-                        url: 'https://rijssenholten.geopublisher.nl/staging/geoserver/Bedrijventerreinen_uitgifte_kavels_service/ows?SERVICE=WMS&',
+                        url: 'https://rijssenholten.geopublisher.nl/staging/geoserver/Bedrijventerreinen_uitgiftelocaties_service/ows?SERVICE=WMS&',
                         params: {
                             'FORMAT': 'image/png',
-                            'LAYERS': 'Bedrijventerreinen_uitgifte_kavels',
+                            'LAYERS': 'Bedrijventerreinen_uitgiftelocaties',
                             'CRS': 'EPSG:28992'
                         },
                     }),

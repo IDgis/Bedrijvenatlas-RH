@@ -1,13 +1,5 @@
 import React, { Component } from 'react';
 
-const style = {
-    position: 'fixed',
-    top: '124px',
-    right: '10px',
-    height: '150px',
-    zIndex: 2,
-    borderRadius: '5px'
-}
 
 export default class Legenda extends Component {
 
@@ -16,8 +8,7 @@ export default class Legenda extends Component {
 
         this.state = {
             map: this.props.map,
-            milieuLegenda: null,
-            kavelsLegenda: null
+            milieuLegenda: null
         }
     }
 
@@ -41,31 +32,20 @@ export default class Legenda extends Component {
                         this.setState({milieuLegenda: null});
                     }
                 }
-                if(layer.get('title') === Meteor.settings.public.laagNaam.kavels) {
-                    if(layer.getVisible()) {
-                        this.setState({
-                            kavelsLegenda: <img className='legenda-kavels' src='https://rijssenholten.geopublisher.nl/staging/geoserver/Bedrijventerreinen_uitgifte_kavels_service/ows?service=WMS&request=GetLegendGraphic&format=image%2Fpng&width=20&height=20&layer=Bedrijventerreinen_uitgifte_kavels' />
-                        });
-                    } else {
-                        this.setState({kavelsLegenda: null});
-                    }
-                }
             });
         }
     }
 
     render() {
         let milieuLegenda = this.state.milieuLegenda;
-        let kavelsLegenda = this.state.kavelsLegenda;
         
-        if(milieuLegenda === null && kavelsLegenda === null) {
+        if(milieuLegenda === null) {
             return(
-                <div className='legenda'></div>
+                <div style={{display:'none'}} ></div>
             );
         } else {
             return(
                 <div className='legenda'>
-                    {kavelsLegenda}
                     {milieuLegenda}
                 </div>
             );
