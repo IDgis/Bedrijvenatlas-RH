@@ -1,6 +1,5 @@
 import injectTapEventPlugin from 'react-tap-event-plugin';
 
-console.log('Importing ./Router.jsx ...');
 import './Router.jsx';
 
 // Needed for onTouchTap 

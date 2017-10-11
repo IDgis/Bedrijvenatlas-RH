@@ -6,7 +6,6 @@ import MenuLayout from '../../ui/layouts/MenuLayout.jsx';
 import WelcomePage from '../../ui/pages/welcome/WelcomePage.jsx';
 import WizardPage from '../../ui/pages/wizard/WizardPage.jsx';
 
-console.log('Router.jsx imported!');
 
 FlowRouter.route('/', {
     action() {

@@ -21,7 +21,7 @@
         "searchFields": {
             "Bedrijventerreinen": ["BEDR_TERR","RINNUMMER","KERN","JAAR","OPPBRUTO","OPPNETTO"],
             "Bedrijven": ["BEDR_NAAM","ADR_LABEL","SBI_OMSCHR"],
-            "Uitgifte Kavels": ["KAVELINFO","OPP","KAVELNR","STATUS","TELEFOON","EMAIL"],
+            "Uitgifte Locaties": ["LOC_TYPE","LOC_NM","LOC_URL"],
             "BAG Ligplaats": ["actualiteitsdatum","huisletter","huisnummer","identificatie","openbare_ruimte","postcode","status","toevoeging","woonplaats"],
             "BAG Pand": ["aantal_verblijfsobjecten","actualiteitsdatum","bouwjaar","identificatie","oppervlakte_max","oppervlakte_min","status"],
             "BAG Standplaats": ["actualiteitsdatum","huisletter","huisnummer","identificatie","openbare_ruimte","postcode","status","toevoeging","woonplaats"],
@@ -41,7 +41,10 @@
             "KAVELNR": "Kavel nr",
             "STATUS": "Status",
             "TELEFOON": "Telefoon",
-            "EMAIL": "Email"
+            "EMAIL": "Email",
+            "LOC_TYPE": "Locatie type",
+            "LOC_NM": "Naam",
+            "LOC_URL": "URL"
         },
 
         "iconShadow": "/icons/SCHADUW.svg",

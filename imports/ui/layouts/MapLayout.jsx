@@ -5,6 +5,7 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 import MenuBar from './MenuBar.jsx';
 import Popup from '../pages/viewer/components/popups/Popup.jsx';
+import KavelInfoPopup from '../pages/viewer/components/popups/KavelInfoPopup.jsx';
 import Streetview from '../pages/viewer/Streetview.jsx';
 import Viewer from '../pages/viewer/Viewer.jsx';
 
@@ -79,18 +80,29 @@ export default class MapLayout extends Component {
                 }
             });
 
+            const coords = [that.state.location.x, that.state.location.y];
+            that.getFeatureInfoPopup(that.state.map, coords);
+
             map.forEachFeatureAtPixel(e.pixel, function(feature, layer) {
                 const title = layer.get('title');
                 const laagNaam = Meteor.settings.public.laagNaam;
                 const searchFields = Meteor.settings.public.searchFields[title];
-                const coords = [that.state.location.x, that.state.location.y];
-                if(title === laagNaam.teKoop || title === laagNaam.teHuur || title === laagNaam.kvk || title === laagNaam.kavels) {
+                if(title === laagNaam.teKoop || title === laagNaam.teHuur || title === laagNaam.kvk) {
                     that.setState({featurePopup: <Popup title={title} selectedFeature={feature} coords={coords} screenCoords={e.pixel} searchFields={searchFields} map={that.state.map} openStreetView={that.openStreetView} onRequestClose={that.closePopup} />});
                 }
             });
         });
+    }
 
-        
+    getFeatureInfoPopup = (map, coords) => {
+        let layers = map.getLayers();
+        layers.forEach((layer, index) => {
+            let title = layer.get('title');
+            if(title === Meteor.settings.public.laagNaam.kavels && layer.getVisible()) {
+                let featureInfoPopup = <KavelInfoPopup coords={coords} map={map} title={title} layer={layer} onRequestClose={this.closePopup} />;
+                this.setState({featurePopup: featureInfoPopup});
+            }
+        });
     }
 
     /**

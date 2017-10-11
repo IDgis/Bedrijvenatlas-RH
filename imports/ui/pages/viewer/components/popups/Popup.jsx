@@ -51,7 +51,7 @@ export default class Popup extends Component {
             });
             let url = wmsSource.getGetFeatureInfoUrl(coords, viewResolution, 'EPSG:28992',{'INFO_FORMAT':'application/json'});
 
-            Meteor.call('getFeatureInfo', url, (err, result) => {
+            Meteor.call('getCategorieInfo', url, (err, result) => {
                 if(err) {
                     console.log(err);
                     this.setState({milieuCategorie: ''});
