@@ -4,11 +4,12 @@ import proj4 from 'proj4';
 import './viewer.css';
 import 'whatwg-fetch';
 
-import AutoComplete from 'material-ui/AutoComplete';
-import Drawer from 'material-ui/Drawer';
+//import AutoComplete from 'material-ui/AutoComplete';
+//import Drawer from 'material-ui/Drawer';
 import IconButton from 'material-ui/IconButton';
 
 import LayerMenu from './components/LayerMenu.jsx';
+import Legenda from './components/Legenda.jsx';
 
 
 export default class Viewer extends Component {
@@ -415,6 +416,7 @@ export default class Viewer extends Component {
                     closeMenu={this.closeMenu}
                     anchorEl={this.state.anchorEl}
                 />
+                <Legenda map={this.state.map} />
             </div>
         );
     }
