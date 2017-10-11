@@ -75,7 +75,7 @@ export default class Popup extends Component {
     getFundaLink = (props) => {
         const laagNaam = Meteor.settings.public.laagNaam;
         if(props.title === laagNaam.teKoop || props.title === laagNaam.teHuur) {
-            return <div><br /><RaisedButton href={props.selectedFeature.get('URL')} target='_blank' label='Funda' /><br /></div>
+            return <div><br /><RaisedButton href={props.selectedFeature.get('URL')} target='_blank' label='Makelaar' /><br /></div>
         } else {
             return <div></div>;
         }
