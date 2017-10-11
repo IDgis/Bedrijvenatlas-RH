@@ -127,6 +127,30 @@ body {
     height: 100%;
 }
 
+.list-item {
+    min-height: 0px !important;
+    height: 36px;
+
+    border: 10px none;
+    box-sizing: border-box;
+    display: block;
+    font-family: 'Roboto', sans-serif;
+    cursor: pointer;
+    text-decoration: none;
+    margin: 0px;
+    padding: 0px;
+    outline: medium none currentColor;
+    font-size: 16px;
+    font-weight: inherit;
+    position: relative;
+    z-index: 1;
+    line-height: 16px;
+}
+
+.kaart-laag {
+    padding: 10px 10px 10px 72px;
+}
+
 .ol-viewport {
     height: 100%;
 }
@@ -143,6 +167,7 @@ canvas.ol-unselectable {
     opacity: 0.8;
     border-radius: 5px;
     border: none;
+    cursor: pointer;
 }
 
 .home-button {
@@ -153,6 +178,7 @@ canvas.ol-unselectable {
     opacity: 0.8;
     border-radius: 5px;
     border: none;
+    cursor: pointer;
 }
 
 .legenda {
@@ -193,6 +219,7 @@ canvas.ol-unselectable {
     opacity: 0.8;
     border-radius: 5px;
     border: none;
+    cursor: pointer;
 }
 
 .ol-zoom-out {
@@ -208,6 +235,7 @@ canvas.ol-unselectable {
     opacity: 0.8;
     border-radius: 5px;
     border: none;
+    cursor: pointer;
 }
 
 .popup-close-button {

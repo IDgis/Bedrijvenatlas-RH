@@ -82,10 +82,10 @@ export default class LayerMenu extends Component {
                 console.log('Found layer Kvk Bedrijven...');
 
                 // Set the layer visible
-                layer.setVisible(true);
+                /*layer.setVisible(true);
                 this.setState({
                     kvkVisible: true
-                });
+                });*/
                 let newSearchField = true;
                 
                 layer.getSource().on('change', (e) => {

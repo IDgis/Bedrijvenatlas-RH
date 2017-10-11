@@ -170,8 +170,8 @@ export default class OverigeLagen extends Component {
         let allKvkChecked = this.getAllKvkChecked();
 
         return (
-            <List>
-                <MenuItem primaryText={Meteor.settings.public.laagNaam.vastgoed}
+            <List className='list-menu' >
+                <MenuItem className='list-item' primaryText={Meteor.settings.public.laagNaam.vastgoed}
                     leftIcon={<Checkbox checked={allVastgoedChecked} onTouchTap={this.selectAllVastgoedLayers} />}
                     rightIcon={<ArrowDropRight />}
                     menuItems={[
@@ -180,7 +180,7 @@ export default class OverigeLagen extends Component {
                     ]}
                 />
                 <Kaartlaag primaryText={Meteor.settings.public.laagNaam.kavels} map={this.props.map} />
-                <MenuItem primaryText={Meteor.settings.public.laagNaam.kvk}
+                <MenuItem className='list-item' primaryText={Meteor.settings.public.laagNaam.kvk}
                     leftIcon={<Checkbox checked={allKvkChecked} onTouchTap={this.selectAllKvkLayers} />}
                     rightIcon={<ArrowDropRight />}
                     menuItems={<BedrijvenBranche map={this.props.map} updateParent={this.setAllKvkChecked} />}

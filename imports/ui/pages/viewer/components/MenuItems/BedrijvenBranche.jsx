@@ -210,7 +210,7 @@ export default class BedrijvenBranche extends Component {
         }
 
         const menuItems = categorien.map((val, i) => 
-            <ListItem primaryText={Meteor.settings.public.categorieNaam[val]}
+            <ListItem className='list-item' primaryText={Meteor.settings.public.categorieNaam[val]}
                 leftIcon={<Checkbox checked={this.state[val]} onClick={this.selectBranche} value={val} />}
                 rightIcon={<Avatar src={Meteor.settings.public.categorieUrl[val]} />}
                 key={i}

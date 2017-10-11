@@ -64,7 +64,7 @@ export default class Kaartlaag extends Component {
 
     render() {
         return (
-            <ListItem primaryText={this.props.primaryText} leftCheckbox={<Checkbox checked={this.state.visible} onClick={this.toggleLayer} />} />
+            <ListItem className='list-item' primaryText={this.props.primaryText} leftCheckbox={<Checkbox checked={this.state.visible} onClick={this.toggleLayer} />} />
         );
     }
 }
