@@ -297,7 +297,7 @@ export default class Viewer extends Component {
         }
 
         // Set the kavels layer visible
-        if(voorkeur === 'nieuwbouw' || voorkeur === 'beide') {
+        if(voorkeur === 'nieuwbouw') {
             layers.forEach((layer, index) => {
                 if(layer.get('title') === laagNaam.kavels) {
                     layer.setVisible(true);
