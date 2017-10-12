@@ -4,15 +4,6 @@ import * as ol from 'openlayers';
 import AutoComplete from 'material-ui/AutoComplete';
 
 
-const style = {
-    position: 'fixed',
-    backgroundColor: 'white',
-    height: '86px',
-    zIndex: 1,
-    top: '66px',
-    left: '10px'
-}
-
 export default class SearchBar extends Component {
 
     constructor(props) {
@@ -108,17 +99,19 @@ export default class SearchBar extends Component {
 
     render() {
         return(
-            <div style={style} >
+            <div className='searchbar' >
                 <AutoComplete 
+                    className='auto-complete'
                     floatingLabelText="Zoek bedrijf"
                     dataSource={this.state.searchFields}
                     filter={AutoComplete.caseInsensitiveFilter}
                     anchorOrigin={{horizontal: 'left', vertical: 'bottom'}}
                     targetOrigin={{horizontal: 'left', vertical: 'top'}}
-                    maxSearchResults={20}
+                    maxSearchResults={10}
                     searchText={this.state.searchText}
                     onUpdateInput={this.handleUpdateInput}
                     onNewRequest={this.selectFeature}
+                    listStyle={{backgroundColor:'#0086d6', opacity:0.8, borderRadius:'5px', width:'400px'}}
                 />
             </div>
         );

@@ -127,6 +127,36 @@ body {
     height: 100%;
 }
 
+.searchbar {
+    position: fixed;
+    /*background-color: rgb(115,0,73);*/
+    background-color: #0086d6;
+    height: 86px !important;
+    z-index: 1;
+    top: 66px;
+    left: 10px;
+    color: white;
+    opacity: 0.8;
+    border-radius: 5px;
+}
+
+.auto-complete > label {
+    color: rgba(255,255,255,0.8) !important;
+}
+
+.auto-complete > input {
+    color: rgba(255,255,255,0.8) !important;
+}
+
+.auto-complete > div > hr {
+    border-color: rgb(224, 224, 224) !important;
+}
+
+/* Set the color for the search items */
+div > div > div {
+    color: white;
+}
+
 .list-item {
     min-height: 0px !important;
     height: 36px;
