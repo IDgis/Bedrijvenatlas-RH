@@ -101,7 +101,7 @@ body {
 
 .wizard-questions {
     position: fixed;
-    color: #333;
+    color: #333 !important;
     text-align: left;
     left: 36%;
 }
@@ -109,6 +109,7 @@ body {
 .wizard-header {
     position: relative;
     margin-bottom: 5px;
+    color: black;
 }
 
 .custom-radiobutton {
