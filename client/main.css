@@ -177,6 +177,10 @@ div > div > div {
     line-height: 16px;
 }
 
+.list-item > div > div > div {
+    color: black;
+}
+
 .kaart-laag {
     padding: 10px 10px 10px 72px;
 }
@@ -212,8 +216,8 @@ canvas.ol-unselectable {
 }
 
 .legenda {
-    position: absolute;
-    top: 68px;
+    position: fixed;
+    bottom: 10px;
     right: 10px;
     z-index: 1;
     padding: 5px;
@@ -238,8 +242,8 @@ canvas.ol-unselectable {
 
 .ol-zoom-in {
     position: fixed !important;
-    top: 220px;
-    left: 10px;
+    top: 134px;
+    right: 10px;
     height: 48px;
     width: 48px;
     background-color: rgb(115,0,73);
@@ -254,8 +258,8 @@ canvas.ol-unselectable {
 
 .ol-zoom-out {
     position: fixed !important;
-    top: 278px;
-    left: 10px;
+    top: 192px;
+    right: 10px;
     height: 48px;
     width: 48px;
     background-color: rgb(115,0,73);
