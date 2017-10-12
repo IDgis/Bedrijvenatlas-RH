@@ -10,6 +10,7 @@ import IconButton from 'material-ui/IconButton';
 
 import LayerMenu from './components/LayerMenu.jsx';
 import Legenda from './components/Legenda.jsx';
+import SearchBar from './components/MenuItems/SearchBar.jsx';
 
 
 export default class Viewer extends Component {
@@ -393,6 +394,10 @@ export default class Viewer extends Component {
         });
     }
 
+    /*selectFeature = (searchText) => {
+        console.log(searchText);
+    }*/
+
     /**
      * The main render method that will render the component to the screen
      */
@@ -404,6 +409,7 @@ export default class Viewer extends Component {
 
         return (
             <div id="map" className="map" >
+                <SearchBar map={this.state.map} />
                 <IconButton className='menu-button' style={{backgroundColor:Meteor.settings.public.colorGemeente}} onClick={this.openMenu} title='Menu' >
                     <img src={Meteor.settings.public.iconMenu} />
                 </IconButton>

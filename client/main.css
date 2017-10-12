@@ -161,9 +161,9 @@ canvas.ol-unselectable {
 
 .menu-button {
     position: fixed !important;
-    top: 66px;
+    top: 162px;
     left: 10px;
-    z-index: 1 !important;
+    z-index: 2 !important;
     opacity: 0.8;
     border-radius: 5px;
     border: none;
@@ -208,7 +208,7 @@ canvas.ol-unselectable {
 
 .ol-zoom-in {
     position: fixed !important;
-    top: 124px;
+    top: 220px;
     left: 10px;
     height: 48px;
     width: 48px;
@@ -224,7 +224,7 @@ canvas.ol-unselectable {
 
 .ol-zoom-out {
     position: fixed !important;
-    top: 182px;
+    top: 278px;
     left: 10px;
     height: 48px;
     width: 48px;
