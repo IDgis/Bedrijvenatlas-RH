@@ -101,7 +101,7 @@ body {
 
 .wizard-questions {
     position: fixed;
-    color: #333;
+    color: #333 !important;
     text-align: left;
     left: 36%;
 }
@@ -109,6 +109,7 @@ body {
 .wizard-header {
     position: relative;
     margin-bottom: 5px;
+    color: black;
 }
 
 .custom-radiobutton {
@@ -127,6 +128,64 @@ body {
     height: 100%;
 }
 
+.searchbar {
+    position: fixed;
+    /*background-color: rgb(115,0,73);*/
+    background-color: #0086d6;
+    height: 86px !important;
+    z-index: 1;
+    top: 66px;
+    left: 10px;
+    color: white;
+    opacity: 0.8;
+    border-radius: 5px;
+}
+
+.auto-complete > label {
+    color: rgba(255,255,255,0.8) !important;
+}
+
+.auto-complete > input {
+    color: rgba(255,255,255,0.8) !important;
+}
+
+.auto-complete > div > hr {
+    border-color: rgb(224, 224, 224) !important;
+}
+
+/* Set the color for the search items */
+div > div > div {
+    color: white;
+}
+
+.list-item {
+    min-height: 0px !important;
+    height: 36px;
+
+    border: 10px none;
+    box-sizing: border-box;
+    display: block;
+    font-family: 'Roboto', sans-serif;
+    cursor: pointer;
+    text-decoration: none;
+    margin: 0px;
+    padding: 0px;
+    outline: medium none currentColor;
+    font-size: 16px;
+    font-weight: inherit;
+    position: relative;
+    z-index: 1;
+    line-height: 16px;
+}
+
+.list-item > div > div > div {
+    color: black;
+}
+
+.kaart-laag {
+    padding: 10px 10px 10px 72px;
+}
+
 .ol-viewport {
     height: 100%;
 }
@@ -137,12 +196,13 @@ canvas.ol-unselectable {
 
 .menu-button {
     position: fixed !important;
-    top: 66px;
+    top: 162px;
     left: 10px;
-    z-index: 1 !important;
+    z-index: 2 !important;
     opacity: 0.8;
     border-radius: 5px;
     border: none;
+    cursor: pointer;
 }
 
 .home-button {
@@ -153,6 +213,28 @@ canvas.ol-unselectable {
     opacity: 0.8;
     border-radius: 5px;
     border: none;
+    cursor: pointer;
+}
+
+.legenda {
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+    z-index: 1;
+    padding: 5px;
+    background-color: #730049;
+    opacity: 0.8;
+    height: 220px !important;
+    border-radius: 5px;
+}
+
+.legenda-milieu {
+    position: relative;
+    right: 0px;
+    z-index: 1;
+    display: block;
+    margin-top: 10px;
+    margin-bottom: 5px;
 }
 
 .ol-scale-line {
@@ -161,8 +243,8 @@ canvas.ol-unselectable {
 
 .ol-zoom-in {
     position: fixed !important;
-    top: 124px;
-    left: 10px;
+    top: 134px;
+    right: 10px;
     height: 48px;
     width: 48px;
     background-color: rgb(115,0,73);
@@ -172,12 +254,13 @@ canvas.ol-unselectable {
     opacity: 0.8;
     border-radius: 5px;
     border: none;
+    cursor: pointer;
 }
 
 .ol-zoom-out {
     position: fixed !important;
-    top: 182px;
-    left: 10px;
+    top: 192px;
+    right: 10px;
     height: 48px;
     width: 48px;
     background-color: rgb(115,0,73);
@@ -187,6 +270,7 @@ canvas.ol-unselectable {
     opacity: 0.8;
     border-radius: 5px;
     border: none;
+    cursor: pointer;
 }
 
 .popup-close-button {
