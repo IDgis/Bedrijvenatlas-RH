@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 
+import Avatar from 'material-ui/Avatar';
 import Checkbox from 'material-ui/Checkbox';
 import {ListItem} from 'material-ui/List';
 
@@ -63,8 +64,25 @@ export default class Kaartlaag extends Component {
     }
 
     render() {
-        return (
-            <ListItem className='list-item' primaryText={this.props.primaryText} leftCheckbox={<Checkbox checked={this.state.visible} onClick={this.toggleLayer} />} />
-        );
+        if(this.props.primaryText === Meteor.settings.public.laagNaam.teKoop) {
+            return(
+                <ListItem className='list-item' primaryText={this.props.primaryText} 
+                    leftCheckbox={<Checkbox checked={this.state.visible} onClick={this.toggleLayer} />} 
+                    rightIcon={<Avatar src={Meteor.settings.public.iconKoop} />}
+                />
+            );
+        }
+        else if(this.props.primaryText === Meteor.settings.public.laagNaam.teHuur) {
+            return(
+                <ListItem className='list-item' primaryText={this.props.primaryText} 
+                    leftCheckbox={<Checkbox checked={this.state.visible} onClick={this.toggleLayer} />} 
+                    rightIcon={<Avatar src={Meteor.settings.public.iconHuur} />}
+                />
+            );
+        }
+        else
+            return (
+                <ListItem className='list-item' primaryText={this.props.primaryText} leftCheckbox={<Checkbox checked={this.state.visible} onClick={this.toggleLayer} />} />
+            );
     }
 }
