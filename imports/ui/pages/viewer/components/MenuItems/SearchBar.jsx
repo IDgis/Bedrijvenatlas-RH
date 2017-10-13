@@ -65,8 +65,10 @@ export default class SearchBar extends Component {
                                 // Center around the coordinates of the found feature
                                 // Also zoom in to the feature and set the layer visible
                                 let coords = features[i].getGeometry().getCoordinates();
-                                map.getView().setCenter(coords[0]);
-                                map.getView().setZoom(17.5);
+                                
+                                this.flyTo(coords[0], function(){});
+                                /*map.getView().setCenter(coords[0]);
+                                map.getView().setZoom(17.5);*/
                                 layer.setVisible(true);
 
                                 // Select the found feature
@@ -96,6 +98,36 @@ export default class SearchBar extends Component {
                 }
             });
         }
+    }
+
+    flyTo = (location, done) => {
+        console.log(location);
+        let duration = 2000;
+        let view = this.props.map.getView();
+        let zoom = view.getZoom();
+        let parts = 2;
+        let called = false;
+        function callback(complete) {
+            --parts;
+            if(called) {
+                return;
+            }
+            if(parts === 0 || !complete) {
+                called = true;
+                done(complete);
+            }
+        }
+        view.animate({
+            center: location,
+            duration: duration
+        }, callback);
+        view.animate({
+            zoom: zoom - 1,
+            duration: duration / 2
+        }, {
+            zoom: 17.5,
+            duration: duration / 2
+        }, callback);
     }
 
     filterResults = (searchText, key) => {
