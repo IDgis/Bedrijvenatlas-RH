@@ -44,7 +44,8 @@ Meteor.methods({
         let features = json['features'];
         for(let feature in features) {
             let naam = features[feature]['properties']['BEDR_NAAM'];
-            searchFields.push(naam);
+            let oms = features[feature]['properties']['SBI_OMSCHR'];
+            searchFields.push(naam + ' ' + oms);
         }
         
         return searchFields;

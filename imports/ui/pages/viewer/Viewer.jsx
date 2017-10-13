@@ -206,6 +206,8 @@ export default class Viewer extends Component {
                 center: [229025, 479254],
                 projection: 'EPSG:28992',
                 zoom: 14,
+                extent: [220846, 474494, 237209, 484108],
+                minZoom: 13
             }),
             controls: [
                 new ol.control.ScaleLine(),
@@ -254,9 +256,9 @@ export default class Viewer extends Component {
         // Zoom to the right place
         if(plaats === 'rijssen' && voorkeur === 'nieuwbouw') {
             map.setView(new ol.View({
-                center: [234927, 478849],
+                center: [233000, 480446],
                 projection: 'EPSG:28992',
-                zoom: 17
+                zoom: 15
             }));
         } else if(plaats === 'rijssen') {
             map.setView(new ol.View({

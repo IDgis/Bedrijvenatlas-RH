@@ -57,15 +57,18 @@ export default class SearchBar extends Component {
                         for(i in features) {
 
                             // Find the feature with the correct name
-                            if(features[i].get('BEDR_NAAM') === searchText && newSearch) {
+                            let search = features[i].get('BEDR_NAAM') + ' ' + features[i].get('SBI_OMSCHR');
+                            if(search === searchText && newSearch) {
                                 console.log(searchText + ' found...');
                                 newSearch = false;
 
                                 // Center around the coordinates of the found feature
                                 // Also zoom in to the feature and set the layer visible
                                 let coords = features[i].getGeometry().getCoordinates();
-                                map.getView().setCenter(coords[0]);
-                                map.getView().setZoom(17.5);
+
+                                this.flyTo(coords[0], function(){});
+                                /*map.getView().setCenter(coords[0]);
+                                map.getView().setZoom(17.5);*/
                                 layer.setVisible(true);
 
                                 // Select the found feature
@@ -97,6 +100,47 @@ export default class SearchBar extends Component {
         }
     }
 
+    flyTo = (location, done) => {
+        console.log(location);
+        let duration = 2000;
+        let view = this.props.map.getView();
+        let zoom = view.getZoom();
+        let parts = 2;
+        let called = false;
+        function callback(complete) {
+            --parts;
+            if(called) {
+                return;
+            }
+            if(parts === 0 || !complete) {
+                called = true;
+                done(complete);
+            }
+        }
+        view.animate({
+            center: location,
+            duration: duration
+        }, callback);
+        view.animate({
+            zoom: zoom - 2,
+            duration: duration / 2
+        }, {
+            zoom: 17.5,
+            duration: duration / 2
+        }, callback);
+    }
+
+    filterResults = (searchText, key) => {
+        let texts = searchText.split(' ');
+        let inSearch = true;
+        
+        for(let i in texts) {
+            inSearch = inSearch && ((key.toLowerCase()).indexOf(texts[i].toLowerCase()) !== -1);
+        }
+
+        return inSearch;
+    }
+
     render() {
         return(
             <div className='searchbar' >
@@ -104,7 +148,7 @@ export default class SearchBar extends Component {
                     className='auto-complete'
                     floatingLabelText="Zoek bedrijf"
                     dataSource={this.state.searchFields}
-                    filter={AutoComplete.caseInsensitiveFilter}
+                    filter={this.filterResults}
                     anchorOrigin={{horizontal: 'left', vertical: 'bottom'}}
                     targetOrigin={{horizontal: 'left', vertical: 'top'}}
                     maxSearchResults={10}
