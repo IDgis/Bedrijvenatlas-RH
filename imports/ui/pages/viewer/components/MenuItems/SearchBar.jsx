@@ -57,7 +57,8 @@ export default class SearchBar extends Component {
                         for(i in features) {
 
                             // Find the feature with the correct name
-                            if(features[i].get('BEDR_NAAM') === searchText && newSearch) {
+                            let search = features[i].get('BEDR_NAAM') + ' ' + features[i].get('SBI_OMSCHR');
+                            if(search === searchText && newSearch) {
                                 console.log(searchText + ' found...');
                                 newSearch = false;
 
@@ -97,6 +98,17 @@ export default class SearchBar extends Component {
         }
     }
 
+    filterResults = (searchText, key) => {
+        let texts = searchText.split(' ');
+        let inSearch = true;
+        
+        for(let i in texts) {
+            inSearch = inSearch && ((key.toLowerCase()).indexOf(texts[i].toLowerCase()) !== -1);
+        }
+
+        return inSearch;
+    }
+
     render() {
         return(
             <div className='searchbar' >
@@ -104,7 +116,7 @@ export default class SearchBar extends Component {
                     className='auto-complete'
                     floatingLabelText="Zoek bedrijf"
                     dataSource={this.state.searchFields}
-                    filter={AutoComplete.caseInsensitiveFilter}
+                    filter={this.filterResults}
                     anchorOrigin={{horizontal: 'left', vertical: 'bottom'}}
                     targetOrigin={{horizontal: 'left', vertical: 'top'}}
                     maxSearchResults={10}
