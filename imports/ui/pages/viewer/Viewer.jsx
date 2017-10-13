@@ -206,6 +206,8 @@ export default class Viewer extends Component {
                 center: [229025, 479254],
                 projection: 'EPSG:28992',
                 zoom: 14,
+                extent: [220846, 474494, 237209, 484108],
+                minZoom: 13
             }),
             controls: [
                 new ol.control.ScaleLine(),
