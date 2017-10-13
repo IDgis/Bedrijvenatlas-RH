@@ -65,7 +65,7 @@ export default class SearchBar extends Component {
                                 // Center around the coordinates of the found feature
                                 // Also zoom in to the feature and set the layer visible
                                 let coords = features[i].getGeometry().getCoordinates();
-                                
+
                                 this.flyTo(coords[0], function(){});
                                 /*map.getView().setCenter(coords[0]);
                                 map.getView().setZoom(17.5);*/
@@ -122,7 +122,7 @@ export default class SearchBar extends Component {
             duration: duration
         }, callback);
         view.animate({
-            zoom: zoom - 1,
+            zoom: zoom - 2,
             duration: duration / 2
         }, {
             zoom: 17.5,
