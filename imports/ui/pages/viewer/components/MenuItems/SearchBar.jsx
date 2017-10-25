@@ -57,7 +57,7 @@ export default class SearchBar extends Component {
                         for(i in features) {
 
                             // Find the feature with the correct name
-                            let search = features[i].get('BEDR_NAAM') + ' ' + features[i].get('SBI_OMSCHR');
+                            let search = features[i].get('BEDR_NAAM') + ' | ' + features[i].get('SBI_OMSCHR');
                             if(search === searchText && newSearch) {
                                 console.log(searchText + ' found...');
                                 newSearch = false;
