@@ -5,11 +5,6 @@
             "kvk": "Bedrijven",
             "kavels": "Uitgifte Locaties",
             "ibis": "Bedrijventerreinen",
-            "bag": "BAG",
-            "bagLigplaats": "BAG Ligplaats",
-            "bagPand": "BAG Pand",
-            "bagStandplaats": "BAG Standplaats",
-            "bagVerblijfsobject": "BAG Verblijfsobject",
             "kadastralePercelen": "Kadastrale percelen",
             "luchtfoto": "Luchtfoto",
             "teKoop": "Te Koop",
@@ -22,10 +17,6 @@
             "Bedrijventerreinen": ["BEDR_TERR","RINNUMMER","KERN","JAAR","OPPBRUTO","OPPNETTO"],
             "Bedrijven": ["BEDR_NAAM","ADR_LABEL","SBI_OMSCHR"],
             "Uitgifte Locaties": ["LOC_TYPE","LOC_NM","LOC_URL"],
-            "BAG Ligplaats": ["actualiteitsdatum","huisletter","huisnummer","identificatie","openbare_ruimte","postcode","status","toevoeging","woonplaats"],
-            "BAG Pand": ["aantal_verblijfsobjecten","actualiteitsdatum","bouwjaar","identificatie","oppervlakte_max","oppervlakte_min","status"],
-            "BAG Standplaats": ["actualiteitsdatum","huisletter","huisnummer","identificatie","openbare_ruimte","postcode","status","toevoeging","woonplaats"],
-            "BAG Verblijfsobject": ["actualiteitsdatum","bouwjaar","gebruiksdoel","huisletter","huisnummer","identificatie","openbare_ruimte","oppervlakte","pandidentificatie","pandstatus","postcode","status","toevoeging","woonplaats"],
             "Kadastrale percelen": ["kadastraleGemeenteCode","sectie","perceelnummer","kadastralegrootte"],
             "Te Koop": ["Straat","Huisnummer","Toevoeging","Postcode","Plaats","Oppervlakte","Prijs"],
             "Te Huur": ["Straat","Huisnummer","Toevoeging","Postcode","Plaats","Oppervlakte","Prijs"],
@@ -53,6 +44,14 @@
         "iconSelected": "/icons/SELECTED.svg",
         "iconHome": "/icons/HOME.svg",
         "iconMenu": "/icons/MENU.svg",
+
+        "milieuUrl": {
+            "C2": "/icons/CATEGORIE_2.svg",
+            "C31": "/icons/CATEGORIE_3_1.svg",
+            "C32": "/icons/CATEGORIE_3_2.svg",
+            "C41": "/icons/CATEGORIE_4_1.svg",
+            "C42": "/icons/CATEGORIE_4_2.svg"
+        },
 
         "categorieUrl": {
             "C": "/icons/SBI_RUBRIEK_CODE_C_INDUSTRIE.svg",
