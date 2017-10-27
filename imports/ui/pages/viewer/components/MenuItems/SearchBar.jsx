@@ -11,7 +11,8 @@ export default class SearchBar extends Component {
 
         this.state = {
             searchText: '',
-            searchFields: []
+            searchFields: [],
+            listStyleWidth: '400px'
         };
 
         this.fillSearchFields();
@@ -57,7 +58,7 @@ export default class SearchBar extends Component {
                         for(i in features) {
 
                             // Find the feature with the correct name
-                            let search = features[i].get('BEDR_NAAM') + ' ' + features[i].get('SBI_OMSCHR');
+                            let search = features[i].get('BEDR_NAAM') + ' | ' + features[i].get('SBI_OMSCHR');
                             if(search === searchText && newSearch) {
                                 console.log(searchText + ' found...');
                                 newSearch = false;
@@ -142,6 +143,8 @@ export default class SearchBar extends Component {
     }
 
     render() {
+
+
         return(
             <div className='searchbar' >
                 <AutoComplete 
@@ -155,7 +158,7 @@ export default class SearchBar extends Component {
                     searchText={this.state.searchText}
                     onUpdateInput={this.handleUpdateInput}
                     onNewRequest={this.selectFeature}
-                    listStyle={{backgroundColor:'#0086d6', opacity:0.8, borderRadius:'5px', width:'400px'}}
+                    listStyle={{backgroundColor:'#0086d6', opacity:0.8, borderRadius:'5px', width:this.state.listStyleWidth}}
                 />
             </div>
         );
