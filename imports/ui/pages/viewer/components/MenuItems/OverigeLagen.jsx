@@ -172,8 +172,8 @@ export default class OverigeLagen extends Component {
         return (
             <List className='list-menu' >
                 <MenuItem className='list-item' primaryText={Meteor.settings.public.laagNaam.vastgoed}
-                    leftIcon={<Checkbox checked={allVastgoedChecked} onTouchTap={this.selectAllVastgoedLayers} />}
-                    rightIcon={<ArrowDropRight />}
+                    leftIcon={<Checkbox checked={allVastgoedChecked} onTouchTap={this.selectAllVastgoedLayers} iconStyle={{fill:'white'}} />}
+                    rightIcon={<ArrowDropRight style={{fill:'white'}} />}
                     menuItems={[
                         <Kaartlaag primaryText={Meteor.settings.public.laagNaam.teKoop} map={this.props.map} updateParent={this.setAllVastgoedChecked} />,
                         <Kaartlaag primaryText={Meteor.settings.public.laagNaam.teHuur} map={this.props.map} updateParent={this.setAllVastgoedChecked} />
@@ -181,8 +181,8 @@ export default class OverigeLagen extends Component {
                 />
                 <Kaartlaag primaryText={Meteor.settings.public.laagNaam.kavels} map={this.props.map} />
                 <MenuItem className='list-item' primaryText={Meteor.settings.public.laagNaam.kvk}
-                    leftIcon={<Checkbox checked={allKvkChecked} onTouchTap={this.selectAllKvkLayers} />}
-                    rightIcon={<ArrowDropRight />}
+                    leftIcon={<Checkbox checked={allKvkChecked} onTouchTap={this.selectAllKvkLayers} iconStyle={{fill:'white'}} />}
+                    rightIcon={<ArrowDropRight style={{fill:'white'}} />}
                     menuItems={<BedrijvenBranche map={this.props.map} updateParent={this.setAllKvkChecked} />}
                 />
                 <Kaartlaag primaryText={Meteor.settings.public.laagNaam.milieu} map={this.props.map} />
