@@ -12,8 +12,12 @@ export default class Legenda extends Component {
             teKoopHuurLegenda: <div></div>,
             bedrijvenVisible: false,
             bedrijvenLegenda: <div></div>,
+            kavelsVisible: false,
+            kavelsLegenda: <div></div>,
             milieuVisible: false,
-            milieuLegenda: <div></div>
+            milieuLegenda: <div></div>,
+            bedrijventerreinenVisible: false,
+            bedrijventerreinenLegenda: <div></div>
         }
         this.addListener();
     }
@@ -23,8 +27,10 @@ export default class Legenda extends Component {
             map: nextProps.map
         });
         this.setTeKoopHuurLegenda(nextProps.map);
+        this.setKavelsLegenda(nextProps.map);
         this.setBedrijvenLegenda(nextProps.map);
         this.setMilieuLegenda(nextProps.map);
+        this.setBedrijventerreinenLegenda(nextProps.map);
     }
 
     /**
@@ -109,6 +115,44 @@ export default class Legenda extends Component {
     }
 
     /**
+     * Creates the legenda for available Kavels
+     */
+    setKavelsLegenda(map) {
+        let kavels = Meteor.settings.public.laagNaam.kavels;
+        let kavelsDiv = <div style={{display:'none'}}></div>;
+        let visible = false;
+
+        if(map !== null) {
+            map.getLayers().forEach((layer, index) => {
+                if(layer.get('title') === kavels && layer.getVisible()) {
+                    visible = true;
+                    kavelsDiv = <div className='legenda-item draggable'>
+                        <img className='legenda-icon draggable' src={Meteor.settings.public.iconKavels} /> {kavels}<br />
+                    </div>;
+                }
+            });
+        }
+
+        this.setState({
+            kavelsVisible: visible
+        });
+
+        if(visible) {
+            let legenda = <div className='kavels-legenda draggable'>
+                <h3 className='draggable'>{kavels}</h3>
+                {kavelsDiv}
+            </div>;
+            this.setState({
+                kavelsLegenda: legenda
+            });
+        } else {
+            this.setState({
+                kavelsLegenda: <div style={{display:'none'}}></div>,
+            });
+        }
+    }
+
+    /**
      * Create the legenda for bedrijven
      */
     setBedrijvenLegenda(map) {
@@ -173,7 +217,7 @@ export default class Legenda extends Component {
                         <img className='legenda-icon draggable' src={Meteor.settings.public.milieuUrl.C31} /> Bedrijf tot en met categorie 3.1<br />
                         <img className='legenda-icon draggable' src={Meteor.settings.public.milieuUrl.C32} /> Bedrijf tot en met categorie 3.2<br />
                         <img className='legenda-icon draggable' src={Meteor.settings.public.milieuUrl.C41} /> Bedrijf tot en met categorie 4.1<br />
-                        <img className='legenda-icon draggable' src={Meteor.settings.public.milieuUrl.C42} /> Bedrijf tot en met categorie 4.2
+                        <img className='legenda-icon draggable' src={Meteor.settings.public.milieuUrl.C42} /> Bedrijf tot en met categorie 4.2<br />
                     </div>;
                 }
             });
@@ -199,17 +243,60 @@ export default class Legenda extends Component {
     }
 
     /**
+     * Creates the legenda for Bedrijventerreinen
+     */
+    setBedrijventerreinenLegenda(map) {
+        let terreinen = Meteor.settings.public.laagNaam.ibis;
+        let terreinenDiv = <div style={{display:'none'}}></div>;
+        let visible = false;
+
+        if(map !== null) {
+            map.getLayers().forEach((layer, index) => {
+                if(layer.get('title') === terreinen && layer.getVisible()) {
+                    visible = true;
+                    terreinenDiv = <div className='legenda-item draggable'>
+                        <img className='legenda-icon draggable' src={Meteor.settings.public.iconBedrijventerreinen} /> {terreinen}<br />
+                    </div>;
+                }
+            });
+        }
+
+        this.setState({
+            bedrijventerreinenVisible: visible
+        });
+
+        if(visible) {
+            let legenda = <div className='terreinen-legenda draggable'>
+                <h3 className='draggable'>{terreinen}</h3>
+                {terreinenDiv}
+            </div>;
+            this.setState({
+                bedrijventerreinenLegenda: legenda
+            });
+        } else {
+            this.setState({
+                bedrijventerreinenLegenda: <div style={{display:'none'}}></div>,
+            });
+        }
+    }
+
+    /**
      * Render the legenda to the screen
      */
     render() {
-        let anyVisible = this.state.teKoopHuurVisible || this.state.milieuVisible || this.state.bedrijvenVisible;
-
+        let anyVisible = this.state.teKoopHuurVisible || this.state.milieuVisible || this.state.bedrijvenVisible || this.state.kavelsVisible || this.state.bedrijventerreinenVisible;
+        
         if(anyVisible) {
             return (
                 <div id='legenda' className='legenda draggable'>
+                    <h2 className='legenda-title draggable'>Legenda</h2><hr />
+                    <div className='legenda-list draggable'>
                     {this.state.teKoopHuurLegenda}
+                    {this.state.kavelsLegenda}
                     {this.state.bedrijvenLegenda}
                     {this.state.milieuLegenda}
+                    {this.state.bedrijventerreinenLegenda}
+                    </div>
                 </div>
             );
         } else {

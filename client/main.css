@@ -6,6 +6,8 @@ html {
 body {
     height: 100%;
     margin: 0;
+    /*font-family: 'Titillium Web', 'Times New Roman';*/
+    font-family: "RobotoDraft", "Roboto", "Helvetica Neue", Helvetica, Arial, sans-serif !important;
 }
 
 #react-root {
@@ -239,7 +241,25 @@ canvas.ol-unselectable {
     opacity: 0.8;
     height: auto !important;
     border-radius: 5px;
+    max-height: 500px;
     overflow: hidden;
+    cursor: grab;
+}
+
+.legenda-list {
+    overflow-y: scroll;
+    max-height: 400px;
+}
+
+.legenda:active {
+    cursor: grabbing;
+}
+
+.legenda-title {
+    color: white;
+    text-align: center;
+    margin-bottom: 0px;
+    margin-top: 5px;
 }
 
 .vastgoed-legenda {
