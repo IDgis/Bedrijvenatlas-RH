@@ -61,6 +61,7 @@ export default class Kaartlaag extends Component {
                 this.props.updateParent();
             }
         });
+        this.props.updateLegenda();
     }
 
     render() {

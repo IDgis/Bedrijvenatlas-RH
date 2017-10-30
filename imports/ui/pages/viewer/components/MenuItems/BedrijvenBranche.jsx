@@ -75,6 +75,7 @@ export default class BedrijvenBranche extends Component {
                 this.props.updateParent();
             }
         });
+        this.props.updateLegenda();
     }
 
     updateVisibility = () => {

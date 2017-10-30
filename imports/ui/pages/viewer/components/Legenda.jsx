@@ -83,12 +83,12 @@ export default class Legenda extends Component {
                 if(layer.get('title') === teKoop && layer.getVisible()) {
                     visible = true;
                     teKoopDiv = <div className='legenda-item draggable'>
-                        <img className='legenda-icon draggable' src={Meteor.settings.public.iconKoop} /> {Meteor.settings.public.laagNaam.teKoop}
+                        <img className='legenda-icon draggable' src={Meteor.settings.public.iconKoop} /> {Meteor.settings.public.laagNaam.teKoop} 
                     </div>;
                 } else if(layer.get('title') === teHuur && layer.getVisible()) {
                     visible = true;
                     teHuurDiv = <div className='legenda-item draggable'>
-                        <img className='legenda-icon draggable' src={Meteor.settings.public.iconHuur} /> {Meteor.settings.public.laagNaam.teHuur}
+                        <img className='legenda-icon draggable' src={Meteor.settings.public.iconHuur} /> {Meteor.settings.public.laagNaam.teHuur} 
                     </div>;
                 }
             });
@@ -127,7 +127,7 @@ export default class Legenda extends Component {
                 if(layer.get('title') === kavels && layer.getVisible()) {
                     visible = true;
                     kavelsDiv = <div className='legenda-item draggable'>
-                        <img className='legenda-icon draggable' src={Meteor.settings.public.iconKavels} /> {kavels}<br />
+                        <img className='legenda-icon draggable' src={Meteor.settings.public.iconKavels} /> {kavels} <br />
                     </div>;
                 }
             });
@@ -172,7 +172,7 @@ export default class Legenda extends Component {
                         let categorieUrl = Meteor.settings.public.categorieUrl[cat];
                         let categorieNaam = Meteor.settings.public.categorieNaam[cat];
                         bArr.push(<div key={index}>
-                            <img className='legenda-icon draggable' src={categorieUrl} /> {categorieNaam}
+                            <img className='legenda-icon draggable' src={categorieUrl} /> {categorieNaam} 
                         </div>);
                     }
                 }
@@ -213,11 +213,11 @@ export default class Legenda extends Component {
                 if(layer.get('title') === milieu && layer.getVisible()) {
                     visible = true;
                     milieuDiv = <div className='legenda-item draggable'>
-                        <img className='legenda-icon draggable' src={Meteor.settings.public.milieuUrl.C2} /> Bedrijf tot en met categorie 2<br />
-                        <img className='legenda-icon draggable' src={Meteor.settings.public.milieuUrl.C31} /> Bedrijf tot en met categorie 3.1<br />
-                        <img className='legenda-icon draggable' src={Meteor.settings.public.milieuUrl.C32} /> Bedrijf tot en met categorie 3.2<br />
-                        <img className='legenda-icon draggable' src={Meteor.settings.public.milieuUrl.C41} /> Bedrijf tot en met categorie 4.1<br />
-                        <img className='legenda-icon draggable' src={Meteor.settings.public.milieuUrl.C42} /> Bedrijf tot en met categorie 4.2<br />
+                        <img className='legenda-icon draggable' src={Meteor.settings.public.milieuUrl.C2} /> Bedrijf tot en met categorie 2 <br />
+                        <img className='legenda-icon draggable' src={Meteor.settings.public.milieuUrl.C31} /> Bedrijf tot en met categorie 3.1 <br />
+                        <img className='legenda-icon draggable' src={Meteor.settings.public.milieuUrl.C32} /> Bedrijf tot en met categorie 3.2 <br />
+                        <img className='legenda-icon draggable' src={Meteor.settings.public.milieuUrl.C41} /> Bedrijf tot en met categorie 4.1 <br />
+                        <img className='legenda-icon draggable' src={Meteor.settings.public.milieuUrl.C42} /> Bedrijf tot en met categorie 4.2 <br />
                     </div>;
                 }
             });
@@ -255,7 +255,7 @@ export default class Legenda extends Component {
                 if(layer.get('title') === terreinen && layer.getVisible()) {
                     visible = true;
                     terreinenDiv = <div className='legenda-item draggable'>
-                        <img className='legenda-icon draggable' src={Meteor.settings.public.iconBedrijventerreinen} /> {terreinen}<br />
+                        <img className='legenda-icon draggable' src={Meteor.settings.public.iconBedrijventerreinen} /> {terreinen} <br />
                     </div>;
                 }
             });
