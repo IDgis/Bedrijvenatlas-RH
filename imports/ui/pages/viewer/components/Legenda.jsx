@@ -65,6 +65,31 @@ export default class Legenda extends Component {
         document.addEventListener('mouseup', function(e) {
             draggingTarget = null;
         });
+
+        document.addEventListener('touchstart', function(e) {
+            let name = e.target.className;
+            if(name && name.indexOf('draggable') !== -1) {
+                let doc = document.getElementById('legenda');
+                draggingTarget = e.touches[0];
+                let evt = e.touches[0];
+
+                offsetX = doc.offsetLeft + doc.offsetWidth - evt.clientX;
+                offsetY = evt.clientY - doc.offsetTop;
+            }
+        });
+
+        document.addEventListener('touchend', function(e) {
+            draggingTarget = null;
+        });
+
+        document.addEventListener('touchmove', function(e) {
+            if(draggingTarget) {
+                let evt = e.touches[0];
+                let d = document.getElementById('legenda');
+                d.style.right = (window.innerWidth - evt.clientX - offsetX)+'px';
+                d.style.top = (evt.clientY - offsetY)+'px';
+            }
+        });
     }
 
     /**
@@ -288,14 +313,14 @@ export default class Legenda extends Component {
         
         if(anyVisible) {
             return (
-                <div id='legenda' className='legenda draggable'>
-                    <h2 className='legenda-title draggable'>Legenda</h2><hr />
-                    <div className='legenda-list draggable'>
-                    {this.state.teKoopHuurLegenda}
-                    {this.state.kavelsLegenda}
-                    {this.state.bedrijvenLegenda}
-                    {this.state.milieuLegenda}
-                    {this.state.bedrijventerreinenLegenda}
+                <div id='legenda' className='legenda draggable' draggable={true}>
+                    <h2 className='legenda-title draggable' draggable={true}>Legenda</h2><hr />
+                    <div className='legenda-list draggable' draggable={true}>
+                        {this.state.teKoopHuurLegenda}
+                        {this.state.kavelsLegenda}
+                        {this.state.bedrijvenLegenda}
+                        {this.state.milieuLegenda}
+                        {this.state.bedrijventerreinenLegenda}
                     </div>
                 </div>
             );
