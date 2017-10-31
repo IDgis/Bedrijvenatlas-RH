@@ -396,22 +396,18 @@ export default class Viewer extends Component {
         });
     }
 
-    /*selectFeature = (searchText) => {
-        console.log(searchText);
-    }*/
+    updateLegenda = () => {
+        this.forceUpdate();
+    }
 
     /**
      * The main render method that will render the component to the screen
      */
     render() {
-        /*if(this.state.map) {
-            let viewport = document.getElementsByClassName('ol-viewport').item(0);
-            viewport.setAttribute('style','position: relative; overflow: hidden; width: 100%; height: 100% !important; touch-action: none;');
-        }*/
 
         return (
             <div id="map" className="map" >
-                <SearchBar map={this.state.map} />
+                <SearchBar map={this.state.map} updateLegenda={this.updateLegenda} />
                 <IconButton className='menu-button' style={{backgroundColor:Meteor.settings.public.colorGemeente}} onClick={this.openMenu} title='Menu' >
                     <img src={Meteor.settings.public.iconMenu} />
                 </IconButton>
@@ -422,7 +418,7 @@ export default class Viewer extends Component {
                     map={this.state.map}
                     menuOpen={this.state.menuOpen}
                     closeMenu={this.closeMenu}
-                    anchorEl={this.state.anchorEl}
+                    anchorEl={this.state.anchorEl} updateLegenda={this.updateLegenda}
                 />
                 <Legenda map={this.state.map} />
             </div>

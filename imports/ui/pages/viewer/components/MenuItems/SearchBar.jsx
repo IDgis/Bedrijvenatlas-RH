@@ -19,8 +19,6 @@ export default class SearchBar extends Component {
     }
 
     fillSearchFields = () => {
-        console.log('Filling search fields...');
-        
         let url = 'https://rijssenholten.geopublisher.nl/staging/geoserver/Bedrijventerreinen_KVK_hoofdactiviteiten_per_adres_service/wfs?' +
         'service=wfs&version=1.1.0&request=GetFeature&outputFormat=application/json&resultType=results' +
         '&typeName=Bedrijventerreinen_KVK_hoofdactiviteiten_per_adres_service:Bedrijventerreinen_KVK_hoofdactiviteiten_per_adres&srs=EPSG:28992';
@@ -32,7 +30,6 @@ export default class SearchBar extends Component {
             if(result !== null && result !== undefined) {
                 this.state.searchFields = result;
                 this.state.searchFields = this.state.searchFields.sort();
-                console.log('Search fields filled...');
             }
         });
     }
@@ -43,7 +40,6 @@ export default class SearchBar extends Component {
 
     selectFeature = (searchText) => {
         this.setState({searchText:''});
-        console.log('Searching for: ' + searchText);
 
         // Look for the searched feature in the correct layer
         let map = this.props.map;
@@ -60,7 +56,6 @@ export default class SearchBar extends Component {
                             // Find the feature with the correct name
                             let search = features[i].get('BEDR_NAAM') + ' | ' + features[i].get('SBI_OMSCHR');
                             if(search === searchText && newSearch) {
-                                console.log(searchText + ' found...');
                                 newSearch = false;
 
                                 // Center around the coordinates of the found feature
@@ -68,8 +63,6 @@ export default class SearchBar extends Component {
                                 let coords = features[i].getGeometry().getCoordinates();
 
                                 this.flyTo(coords[0], function(){});
-                                /*map.getView().setCenter(coords[0]);
-                                map.getView().setZoom(17.5);*/
                                 layer.setVisible(true);
 
                                 // Select the found feature
@@ -99,11 +92,11 @@ export default class SearchBar extends Component {
                 }
             });
         }
+        this.props.updateLegenda();
     }
 
     flyTo = (location, done) => {
-        console.log(location);
-        let duration = 2000;
+        let duration = 3000;
         let view = this.props.map.getView();
         let zoom = view.getZoom();
         let parts = 2;
@@ -158,7 +151,7 @@ export default class SearchBar extends Component {
                     searchText={this.state.searchText}
                     onUpdateInput={this.handleUpdateInput}
                     onNewRequest={this.selectFeature}
-                    listStyle={{backgroundColor:'#0086d6', opacity:0.8, borderRadius:'5px', width:this.state.listStyleWidth}}
+                    listStyle={{backgroundColor:'rgb(115,0,73)', opacity:0.8, borderRadius:'5px', width:this.state.listStyleWidth}}
                 />
             </div>
         );

@@ -51,6 +51,7 @@ export default class OverigeLagen extends Component {
         this.setState({
             allKvkChecked: newVisible
         });
+        this.props.updateLegenda();
     }
 
     /**
@@ -75,6 +76,7 @@ export default class OverigeLagen extends Component {
         this.setState({
             allVastgoedChecked: newVisible
         });
+        this.props.updateLegenda();
     }
 
     /**
@@ -172,23 +174,23 @@ export default class OverigeLagen extends Component {
         return (
             <List className='list-menu' >
                 <MenuItem className='list-item' primaryText={Meteor.settings.public.laagNaam.vastgoed}
-                    leftIcon={<Checkbox checked={allVastgoedChecked} onTouchTap={this.selectAllVastgoedLayers} />}
-                    rightIcon={<ArrowDropRight />}
+                    leftIcon={<Checkbox checked={allVastgoedChecked} onTouchTap={this.selectAllVastgoedLayers} iconStyle={{fill:'white'}} />}
+                    rightIcon={<ArrowDropRight style={{fill:'white'}} />}
                     menuItems={[
-                        <Kaartlaag primaryText={Meteor.settings.public.laagNaam.teKoop} map={this.props.map} updateParent={this.setAllVastgoedChecked} />,
-                        <Kaartlaag primaryText={Meteor.settings.public.laagNaam.teHuur} map={this.props.map} updateParent={this.setAllVastgoedChecked} />
+                        <Kaartlaag primaryText={Meteor.settings.public.laagNaam.teKoop} map={this.props.map} updateParent={this.setAllVastgoedChecked} updateLegenda={this.props.updateLegenda} />,
+                        <Kaartlaag primaryText={Meteor.settings.public.laagNaam.teHuur} map={this.props.map} updateParent={this.setAllVastgoedChecked} updateLegenda={this.props.updateLegenda} />
                     ]}
                 />
-                <Kaartlaag primaryText={Meteor.settings.public.laagNaam.kavels} map={this.props.map} />
+                <Kaartlaag primaryText={Meteor.settings.public.laagNaam.kavels} map={this.props.map} updateLegenda={this.props.updateLegenda} />
                 <MenuItem className='list-item' primaryText={Meteor.settings.public.laagNaam.kvk}
-                    leftIcon={<Checkbox checked={allKvkChecked} onTouchTap={this.selectAllKvkLayers} />}
-                    rightIcon={<ArrowDropRight />}
-                    menuItems={<BedrijvenBranche map={this.props.map} updateParent={this.setAllKvkChecked} />}
+                    leftIcon={<Checkbox checked={allKvkChecked} onTouchTap={this.selectAllKvkLayers} iconStyle={{fill:'white'}} />}
+                    rightIcon={<ArrowDropRight style={{fill:'white'}} />}
+                    menuItems={<BedrijvenBranche map={this.props.map} updateParent={this.setAllKvkChecked} updateLegenda={this.props.updateLegenda} />}
                 />
-                <Kaartlaag primaryText={Meteor.settings.public.laagNaam.milieu} map={this.props.map} />
-                <Kaartlaag primaryText={Meteor.settings.public.laagNaam.ibis} map={this.props.map} />
-                <Kaartlaag primaryText={Meteor.settings.public.laagNaam.kadastralePercelen} map={this.props.map} />
-                <Kaartlaag primaryText={Meteor.settings.public.laagNaam.luchtfoto} map={this.props.map} />
+                <Kaartlaag primaryText={Meteor.settings.public.laagNaam.milieu} map={this.props.map} updateLegenda={this.props.updateLegenda} />
+                <Kaartlaag primaryText={Meteor.settings.public.laagNaam.ibis} map={this.props.map} updateLegenda={this.props.updateLegenda} />
+                <Kaartlaag primaryText={Meteor.settings.public.laagNaam.kadastralePercelen} map={this.props.map} updateLegenda={this.props.updateLegenda} />
+                <Kaartlaag primaryText={Meteor.settings.public.laagNaam.luchtfoto} map={this.props.map} updateLegenda={this.props.updateLegenda} />
             </List>
         );
     }

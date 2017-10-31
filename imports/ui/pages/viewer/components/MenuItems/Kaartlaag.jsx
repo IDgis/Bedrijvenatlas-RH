@@ -61,13 +61,14 @@ export default class Kaartlaag extends Component {
                 this.props.updateParent();
             }
         });
+        this.props.updateLegenda();
     }
 
     render() {
         if(this.props.primaryText === Meteor.settings.public.laagNaam.teKoop) {
             return(
                 <ListItem className='list-item' primaryText={this.props.primaryText} 
-                    leftCheckbox={<Checkbox checked={this.state.visible} onClick={this.toggleLayer} />} 
+                    leftCheckbox={<Checkbox checked={this.state.visible} onClick={this.toggleLayer} iconStyle={{fill:'white'}} />} 
                     rightIcon={<Avatar src={Meteor.settings.public.iconKoop} />}
                 />
             );
@@ -75,14 +76,14 @@ export default class Kaartlaag extends Component {
         else if(this.props.primaryText === Meteor.settings.public.laagNaam.teHuur) {
             return(
                 <ListItem className='list-item' primaryText={this.props.primaryText} 
-                    leftCheckbox={<Checkbox checked={this.state.visible} onClick={this.toggleLayer} />} 
+                    leftCheckbox={<Checkbox checked={this.state.visible} onClick={this.toggleLayer} iconStyle={{fill:'white'}} />} 
                     rightIcon={<Avatar src={Meteor.settings.public.iconHuur} />}
                 />
             );
         }
         else
             return (
-                <ListItem className='list-item' primaryText={this.props.primaryText} leftCheckbox={<Checkbox checked={this.state.visible} onClick={this.toggleLayer} />} />
+                <ListItem className='list-item' primaryText={this.props.primaryText} leftCheckbox={<Checkbox checked={this.state.visible} onClick={this.toggleLayer} iconStyle={{fill:'white'}} />} />
             );
     }
 }

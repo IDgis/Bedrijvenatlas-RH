@@ -6,6 +6,8 @@ html {
 body {
     height: 100%;
     margin: 0;
+    /*font-family: 'Titillium Web', 'Times New Roman';*/
+    font-family: "RobotoDraft", "Roboto", "Helvetica Neue", Helvetica, Arial, sans-serif !important;
 }
 
 #react-root {
@@ -130,8 +132,8 @@ body {
 
 .searchbar {
     position: fixed;
-    /*background-color: rgb(115,0,73);*/
-    background-color: #0086d6;
+    background-color: rgb(115,0,73);
+    /*background-color: #0086d6;*/
     height: 86px !important;
     z-index: 1;
     top: 66px;
@@ -139,6 +141,8 @@ body {
     color: white;
     opacity: 0.8;
     border-radius: 5px;
+    padding-left: 10px;
+    width: 270px;
 }
 
 .auto-complete > label {
@@ -162,6 +166,12 @@ div[role="menu"]:hover {
     width: 900px !important;
 }
 
+div[role="presentation"] {
+    background-color: #730049;
+    opacity: 0.8;
+    border-radius: 5px;
+}
+
 .list-item {
     min-height: 0px !important;
     height: 36px;
@@ -180,10 +190,11 @@ div[role="menu"]:hover {
     position: relative;
     z-index: 1;
     line-height: 16px;
+    color: white !important;
 }
 
 .list-item > div > div > div {
-    color: black;
+    color: white;
 }
 
 .kaart-laag {
@@ -230,7 +241,25 @@ canvas.ol-unselectable {
     opacity: 0.8;
     height: auto !important;
     border-radius: 5px;
+    max-height: 500px;
     overflow: hidden;
+    cursor: grab;
+}
+
+.legenda-list {
+    overflow-y: scroll;
+    max-height: 400px;
+}
+
+.legenda:active {
+    cursor: grabbing;
+}
+
+.legenda-title {
+    color: white;
+    text-align: center;
+    margin-bottom: 0px;
+    margin-top: 5px;
 }
 
 .vastgoed-legenda {

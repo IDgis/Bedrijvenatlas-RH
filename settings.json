@@ -45,6 +45,9 @@
         "iconHome": "/icons/HOME.svg",
         "iconMenu": "/icons/MENU.svg",
 
+        "iconBedrijventerreinen": "/icons/BEDRIJVENTERREINEN.svg",
+        "iconKavels": "/icons/KAVELS.svg",
+
         "milieuUrl": {
             "C2": "/icons/CATEGORIE_2.svg",
             "C31": "/icons/CATEGORIE_3_1.svg",

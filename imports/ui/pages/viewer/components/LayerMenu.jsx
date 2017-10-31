@@ -61,7 +61,7 @@ export default class LayerMenu extends Component {
             animation={PopoverAnimationVertical}
             >
                 <Menu>
-                    <OverigeLagen map={this.props.map} />
+                    <OverigeLagen map={this.props.map} updateLegenda={this.props.updateLegenda} />
                 </Menu>
             </Popover>
         );
