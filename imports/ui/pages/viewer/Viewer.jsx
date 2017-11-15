@@ -80,7 +80,7 @@ export default class Viewer extends Component {
                 // Luchtfoto WMTS
                 new ol.layer.Tile({
                     title: Meteor.settings.public.laagNaam.luchtfoto,
-                    source: new ol.source.WMTS({
+                    /*source: new ol.source.WMTS({
                         url: 'http://rijssen-holten.ecw-hosting.nl/lufo/services/wmts_rijssen_holten',
                         layer: 'Rijssen_Holten',
                         matrixSet: 'NLDEPSG28992Scale',
@@ -92,7 +92,18 @@ export default class Viewer extends Component {
                             resolutions: resolutions,
                             matrixIds: matrixIds
                         })
+                    }),*/
+                    source: new ol.source.TileImage({
+                        crossOrigin: null,
+                        extent: extent,
+                        projection: projection,
+                        tileGrid: new ol.tilegrid.TileGrid({
+                            extent: extent,
+                            resolutions: resolutions
+                        }),
+                        url: 'https://geodata.nationaalgeoregister.nl/luchtfoto/rgb/tms/1.0.0/2016_ortho25/EPSG:28992/{z}/{x}/{-y}.jpeg'
                     }),
+                    preload: 1,
                     visible: false
                 }),
                 // Kadastrale percelen WMS
