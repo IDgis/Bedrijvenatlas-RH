@@ -80,7 +80,12 @@ export default class Viewer extends Component {
                 // Luchtfoto WMTS
                 new ol.layer.Tile({
                     title: Meteor.settings.public.laagNaam.luchtfoto,
-                    /*source: new ol.source.WMTS({
+                    source: new ol.source.WMTS({
+                        attributions: [
+                            new ol.Attribution({
+                                html: '© <a href="http://aerodata-surveys.com">Aerodata International Surveys</a>'
+                            })
+                        ],
                         url: 'http://rijssen-holten.ecw-hosting.nl/lufo/services/wmts_rijssen_holten',
                         layer: 'Rijssen_Holten',
                         matrixSet: 'NLDEPSG28992Scale',
@@ -89,22 +94,11 @@ export default class Viewer extends Component {
                         style: 'default',
                         tileGrid: new ol.tilegrid.WMTS({
                             origin: [-285401.92,903401.92],
-                            resolutions: resolutions,
+                            resolutions: [3440.64, 1720.32, 860.16, 430.08, 215.04, 107.52, 53.76, 26.88, 13.44, 6.72, 3.36, 1.68, 0.84, 0.42/*, 0.21, 0.105, 0.0525*/],
                             matrixIds: matrixIds
                         })
-                    }),*/
-                    source: new ol.source.TileImage({
-                        crossOrigin: null,
-                        extent: extent,
-                        projection: projection,
-                        tileGrid: new ol.tilegrid.TileGrid({
-                            extent: extent,
-                            resolutions: resolutions
-                        }),
-                        url: 'https://geodata.nationaalgeoregister.nl/luchtfoto/rgb/tms/1.0.0/2016_ortho25/EPSG:28992/{z}/{x}/{-y}.jpeg'
                     }),
-                    preload: 1,
-                    visible: false
+                    visible: false,
                 }),
                 // Kadastrale percelen WMS
                 new ol.layer.Tile({
@@ -123,7 +117,7 @@ export default class Viewer extends Component {
                 new ol.layer.Tile({
                     title: Meteor.settings.public.laagNaam.milieu,
                     source: new ol.source.TileWMS({
-                        url: 'https://rijssenholten.geopublisher.nl/staging/geoserver/Bedrijventerreinen_RO_categorie_indeling_service/ows?SERVICE=WMS&',
+                        url: 'https://rijssenholten.geopublisher.nl/public/geoserver/Bedrijventerreinen_RO_categorie_indeling_service/ows?SERVICE=WMS&',
                         params: {
                             'FORMAT': 'image/png',
                             'LAYERS': 'Bedrijventerreinen_RO_categorie_indeling',
@@ -136,7 +130,7 @@ export default class Viewer extends Component {
                 new ol.layer.Tile({
                     title: Meteor.settings.public.laagNaam.ibis,
                     source: new ol.source.TileWMS({
-                        url: 'https://rijssenholten.geopublisher.nl/staging/geoserver/Bedrijventerreinen_Rijssen-Holten_service/ows?SERVICE=WMS&',
+                        url: 'https://rijssenholten.geopublisher.nl/public/geoserver/Bedrijventerreinen_Rijssen-Holten_service/ows?SERVICE=WMS&',
                         params: {
                             'FORMAT': 'image/png',
                             'LAYERS': 'Bedrijventerreinen_Rijssen-Holten',
@@ -149,7 +143,7 @@ export default class Viewer extends Component {
                 new ol.layer.Tile({
                     title: Meteor.settings.public.laagNaam.kavels,
                     source: new ol.source.TileWMS({
-                        url: 'https://rijssenholten.geopublisher.nl/staging/geoserver/Bedrijventerreinen_uitgiftelocaties_service/ows?SERVICE=WMS&',
+                        url: 'https://rijssenholten.geopublisher.nl/public/geoserver/Bedrijventerreinen_uitgiftelocaties_service/ows?SERVICE=WMS&',
                         params: {
                             'FORMAT': 'image/png',
                             'LAYERS': 'Bedrijventerreinen_uitgiftelocaties',
@@ -221,8 +215,12 @@ export default class Viewer extends Component {
                 minZoom: 13
             }),
             controls: [
-                new ol.control.ScaleLine(),
-                new ol.control.Zoom()
+                //new ol.control.ScaleLine(),
+                new ol.control.Zoom(),
+                new ol.control.Attribution({
+                    target: 'map',
+                    className: 'attribution'
+                })
             ],
             interactions: new ol.interaction.defaults().extend([
                 new ol.interaction.Select({
@@ -243,7 +241,7 @@ export default class Viewer extends Component {
                         })
                     ]
                 })
-            ])
+            ]),
         });
 
         this.setMapSettings();
