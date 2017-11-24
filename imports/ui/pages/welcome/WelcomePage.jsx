@@ -20,7 +20,7 @@ export default class WelcomePage extends Component {
 
         return(
             <div>
-                <h1>Welkom bij de Bedrijvenatlas</h1>
+                <h1>Vind hier de ideale locatie voor uw bedrijf!</h1>
                 <div>
                     <WizardLink />
                     <ViewerLink />
