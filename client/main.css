@@ -343,3 +343,21 @@ h3 {
     width: 40px;
     min-width: 0px !important;
 }
+
+.attribution {
+    position: fixed;
+    height: 50px !important;
+    bottom: 0px;
+}
+
+.attribution ul {
+    list-style: none;
+}
+
+.attribution ul li:nth-child(1) {
+    display: none;
+}
+
+.attribution button {
+    display: none;
+}
