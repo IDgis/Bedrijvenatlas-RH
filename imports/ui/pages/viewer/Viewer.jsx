@@ -127,9 +127,9 @@ export default class Viewer extends Component {
                     visible: false
                 }),
                 // Bedrijventerreinen WMS
-                new ol.layer.Tile({
+                new ol.layer.Image({
                     title: Meteor.settings.public.laagNaam.ibis,
-                    source: new ol.source.TileWMS({
+                    source: new ol.source.ImageWMS({
                         url: 'https://rijssenholten.geopublisher.nl/public/geoserver/Bedrijventerreinen_Rijssen-Holten_service/ows?SERVICE=WMS&',
                         params: {
                             'FORMAT': 'image/png',
