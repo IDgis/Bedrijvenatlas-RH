@@ -93,13 +93,20 @@
         "homePageGemeente": "http://www.rijssen-holten.nl/home",
         "logoUrlGemeente": "/images/logo-rh.jpg",
         "colorGemeente": "#730049",
-        "homePageIdgis": "https://www.idgis.nl/nl/",
+        "homePageIdgis": "https://idgis.nl/index.php/nl/bedrijvenatlas",
         "logoUrlIdgis": "/images/logoidgisklein.jpg",
 
         "logoWizardUrl": "/icons/KNOP_VESTIGEN_NIEUW_BEDRIJF.svg",
         "logoViewerUrl": "/icons/KNOP_NAAR_DE_KAART.svg",
 
         "teKoopJsonUrl": "/data/vastgoedTeKoop.json",
-        "teHuurJsonUrl": "/data/vastgoedTeHuur.json"
+        "teHuurJsonUrl": "/data/vastgoedTeHuur.json",
+
+        "bedrijvenatlasWmsUrl": "https://rijssenholten.geopublisher.nl/staging/geoserver/Bedrijvenatlas/ows?SERVICE=WMS&",
+        "wmsLayerNames": {
+            "milieuCategorieLayer": "Bedrijventerreinen_RO_categorie_indeling",
+            "bedrijventerreinenLayer": "Bedrijventerreinen_Rijssen-Holten",
+            "uitgifteLocatiesLayer": "Bedrijventerreinen_uitgiftelocaties"
+        }
     }
 }

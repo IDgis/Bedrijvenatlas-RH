@@ -117,10 +117,10 @@ export default class Viewer extends Component {
                 new ol.layer.Tile({
                     title: Meteor.settings.public.laagNaam.milieu,
                     source: new ol.source.TileWMS({
-                        url: 'https://rijssenholten.geopublisher.nl/public/geoserver/Bedrijventerreinen_RO_categorie_indeling_service/ows?SERVICE=WMS&',
+                        url: Meteor.settings.public.bedrijvenatlasWmsUrl,
                         params: {
                             'FORMAT': 'image/png',
-                            'LAYERS': 'Bedrijventerreinen_RO_categorie_indeling',
+                            'LAYERS': Meteor.settings.public.wmsLayerNames.milieuCategorieLayer,
                             'CRS': 'EPSG:28992'
                         }
                     }),
@@ -130,10 +130,10 @@ export default class Viewer extends Component {
                 new ol.layer.Image({
                     title: Meteor.settings.public.laagNaam.ibis,
                     source: new ol.source.ImageWMS({
-                        url: 'https://rijssenholten.geopublisher.nl/public/geoserver/Bedrijventerreinen_Rijssen-Holten_service/ows?SERVICE=WMS&',
+                        url: Meteor.settings.public.bedrijvenatlasWmsUrl,
                         params: {
                             'FORMAT': 'image/png',
-                            'LAYERS': 'Bedrijventerreinen_Rijssen-Holten',
+                            'LAYERS': Meteor.settings.public.wmsLayerNames.bedrijventerreinenLayer,
                             'CRS': 'EPSG:28992'
                         },
                     }),
@@ -143,10 +143,10 @@ export default class Viewer extends Component {
                 new ol.layer.Tile({
                     title: Meteor.settings.public.laagNaam.kavels,
                     source: new ol.source.TileWMS({
-                        url: 'https://rijssenholten.geopublisher.nl/public/geoserver/Bedrijventerreinen_uitgiftelocaties_service/ows?SERVICE=WMS&',
+                        url: Meteor.settings.public.bedrijvenatlasWmsUrl,
                         params: {
                             'FORMAT': 'image/png',
-                            'LAYERS': 'Bedrijventerreinen_uitgiftelocaties',
+                            'LAYERS': Meteor.settings.public.wmsLayerNames.uitgifteLocatiesLayer,
                             'CRS': 'EPSG:28992'
                         },
                     }),
