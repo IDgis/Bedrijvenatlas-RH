@@ -350,8 +350,7 @@ export default class Viewer extends Component {
                 featureTypes: ['Bedrijventerreinen_KVK_hoofdactiviteiten_per_adres'],
                 filter: ol.format.filter.equalTo('SBI_RUBR_C', categorieNaam)
             });
-            
-            fetch('https://rijssenholten.geopublisher.nl/staging/geoserver/Bedrijventerreinen_KVK_hoofdactiviteiten_per_adres_service/wfs', {
+            fetch(Meteor.settings.public.kvkBedrijvenWfsUrl, {
                 method: 'POST',
                 body: new XMLSerializer().serializeToString(featureRequest)
             }).then(function(response) {

@@ -25,7 +25,7 @@ export default class KavelInfoPopup extends Component {
         let title = this.props.title;
         let viewResolution = map.getView().getResolution();
         let wmsSource = new ol.source.TileWMS({
-            url: 'https://rijssenholten.geopublisher.nl/staging/geoserver/Bedrijventerreinen_uitgiftelocaties_service/ows?SERVICE=WMS&',
+            url: Meteor.settings.public.bedrijvenatlasWmsUrl,
             params: {
                 'FORMAT': 'image/png',
                 'LAYERS': 'Bedrijventerreinen_uitgiftelocaties',
