@@ -19,9 +19,9 @@ export default class SearchBar extends Component {
     }
 
     fillSearchFields = () => {
-        let url = 'https://rijssenholten.geopublisher.nl/staging/geoserver/Bedrijventerreinen_KVK_hoofdactiviteiten_per_adres_service/wfs?' +
-        'service=wfs&version=1.1.0&request=GetFeature&outputFormat=application/json&resultType=results' +
-        '&typeName=Bedrijventerreinen_KVK_hoofdactiviteiten_per_adres_service:Bedrijventerreinen_KVK_hoofdactiviteiten_per_adres&srs=EPSG:28992';
+        let url = Meteor.settings.public.kvkBedrijvenWfsUrl +
+        '?service=wfs&version=1.1.0&request=GetFeature&outputFormat=application/json&resultType=results' +
+        '&typeName=Bedrijvenatlas:Bedrijventerreinen_KVK_hoofdactiviteiten_per_adres&srs=EPSG:28992';
 
         Meteor.call('getSearchFields', url, (err, result) => {
             if(err) {

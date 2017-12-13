@@ -42,7 +42,7 @@ export default class Popup extends Component {
             }
             
             let wmsSource = new ol.source.TileWMS({
-                url: 'https://rijssenholten.geopublisher.nl/staging/geoserver/Bedrijventerreinen_RO_categorie_indeling_service/ows?SERVICE=WMS&',
+                url: Meteor.settings.public.bedrijvenatlasWmsUrl,
                 params: {
                     'FORMAT': 'image/png',
                     'LAYERS': 'Bedrijventerreinen_RO_categorie_indeling',
