@@ -102,12 +102,12 @@
         "teKoopJsonUrl": "/data/vastgoedTeKoop.json",
         "teHuurJsonUrl": "/data/vastgoedTeHuur.json",
 
-        "bedrijvenatlasWmsUrl": "https://rijssenholten-pub.geopublisher.nl/geoserver/Bedrijvenatlas/ows?SERVICE=WMS&",
+        "bedrijvenatlasWmsUrl": "https://rijssen-holten-pub.geopublisher.nl/geoserver/Bedrijvenatlas/ows?SERVICE=WMS&",
         "wmsLayerNames": {
             "milieuCategorieLayer": "Bedrijventerreinen_RO_categorie_indeling",
             "bedrijventerreinenLayer": "Bedrijventerreinen_Rijssen-Holten",
             "uitgifteLocatiesLayer": "Bedrijventerreinen_uitgiftelocaties"
         },
-        "kvkBedrijvenWfsUrl": "https://rijssenholten-pub.geopublisher.nl/geoserver/Bedrijvenatlas/wfs"
+        "kvkBedrijvenWfsUrl": "https://rijssen-holten-pub.geopublisher.nl/geoserver/Bedrijvenatlas/wfs"
     }
 }
