@@ -17,17 +17,28 @@ body {
     height: 100%;
 }
 
+.container-fluid {
+    padding-right: 0px;
+    padding-left: 0px;
+    margin-left: 0px;
+    margin-right: 0px;
+}
+
+.row {
+    margin-right: 0px;
+    margin-left: 0px;
+}
+
 .main-header {
     position: fixed;
     height: 56px;
     width: 100%;
     top: 0px;
     z-index: 1;
-    margin: 0;
 }
 
 .menu-bar {
-    position: inherit;
+    position: relative;
     width: 100%;
     height: 56px;
     font-size: 40px;
@@ -42,17 +53,42 @@ body {
     height: 56px;
 }
 
+.logo-rh a {
+    position: absolute;
+    height: 100%;
+}
+
+.logo-rh a img {
+    position: absolute;
+}
+
 .logo-idgis {
     position: absolute;
     top: 0px;
     right: 0px;
     height: 56px;
+    width: 46.5px;
+}
+
+.logo-idgis a {
+    position: absolute;
+    height: 100%;
+    top: 0px;
+    right: 0px;
+}
+
+.logo-idgis a img {
+    position: absolute;
+    top: 0px;
+    right: 0px;
 }
 
 .main-layout {
-    position: relative;
-    top: 56px;
+    position: absolute;
     height: 100%;
+    width: 100%;
+    padding-top: 56px;
+    overflow: hidden;
 }
 
 .welcome-layout {
@@ -204,13 +240,13 @@ div[role="presentation"] {
     padding: 10px 10px 10px 72px;
 }
 
-.ol-viewport {
+/*.ol-viewport {
     height: 100%;
 }
 
 canvas.ol-unselectable {
     position: fixed;
-}
+}*/
 
 .menu-button {
     position: fixed !important;

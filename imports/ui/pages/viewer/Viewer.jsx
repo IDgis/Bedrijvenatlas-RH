@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import * as ol from 'openlayers';
 import proj4 from 'proj4';
-import './viewer.css';
 import 'whatwg-fetch';
 
 //import AutoComplete from 'material-ui/AutoComplete';
