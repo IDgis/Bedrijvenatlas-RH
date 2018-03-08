@@ -239,14 +239,6 @@ div[role="presentation"] {
     padding: 10px 10px 10px 72px;
 }
 
-/*.ol-viewport {
-    height: 100%;
-}
-
-canvas.ol-unselectable {
-    position: fixed;
-}*/
-
 .menu-button {
     position: fixed !important;
     top: 162px;
