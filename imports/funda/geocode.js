@@ -1,90 +1,129 @@
 "use strict";
+console.log('Start geocoding...');
 
-let request = require('request');
-let cheerio = require('cheerio');
-let fs = require('fs');
+const request = require('request');
+const cheerio = require('cheerio');
+const fs = require('fs');
 
-let locationTeKoop = '/home/meteorapp/meteorapp/build/bundle/programs/web.browser/app/data/vastgoedTeKoop.json';
-let locationTeHuur = '/home/meteorapp/meteorapp/build/bundle/programs/web.browser/app/data/vastgoedTeHuur.json';
+const locationTeKoop = '/home/meteorapp/meteorapp/build/bundle/programs/web.browser/app/data/vastgoedTeKoop.json';
+const locationTeHuur = '/home/meteorapp/meteorapp/build/bundle/programs/web.browser/app/data/vastgoedTeHuur.json';
 geocode(locationTeKoop);
 geocode(locationTeHuur);
 
 function geocode(location) {
-    let inputFile = fs.readFileSync(location, 'utf8');
-    let json = JSON.parse(inputFile);
-    let features = json['features'];
+    const inputFile = fs.readFileSync(location, 'utf8');
+    const json = JSON.parse(inputFile);
+    const features = json['features'];
+    
     for(let i = 0; i < features.length; i++) {
-
-        let properties = (features[i])['properties'];
-        let straat = properties['Straat'];
-        let nummer = properties['Huisnummer'];
-        let plaats = properties['Plaats'];
+        const properties = (features[i])['properties'];
+        const straat = properties['Straat'];
+        const nummer = properties['Huisnummer'];
+        const plaats = properties['Plaats'];
         
-        request('http://geodata.nationaalgeoregister.nl/geocoder/Geocoder?zoekterm=' + straat + '+' + nummer + '+' + plaats, (error, response, body) => {
+        request('https://geodata.nationaalgeoregister.nl/locatieserver/v3/suggest?wt=xml&q=' + straat + '+' + nummer + '+' + plaats, (error, response, body) => {
             if(error) {
                 console.log(error);
+                return;
             }
             if(response.statusCode === 200) {
-                let $ = cheerio.load(body);
-                let start = $.xml().indexOf('gml:pos');
-                if(start != -1) {
-                    let end = $.xml().indexOf('<', start);
-                    let coord = $.xml().substring(start+22, end);
-                    let coords = coord.split(' ');
-                    let x = parseFloat(coords[0]);
-                    let y = parseFloat(coords[1]);
-                    coords = [x, y];
-                    addCoords(location, straat, nummer, plaats, coords);
+                const $ = cheerio.load(body, {xmlMode: true});
+                const result = $('result');
+
+                if(result.attr('numFound') == 0) {
+                    console.log('No coordinates found for ' + straat + ' ' + nummer + ' ' + plaats + '. Trying again...');
+                    retryGeocoding(straat, nummer, plaats, location);
                 } else {
-                    findCoords(location, straat, nummer, plaats);
+                    const children = result.children('doc').first()
+                        .children('str').filter((index, element) => element['attribs']['name'] === 'id');
+                    const adresId = children.first().text();
+
+                    lookupAdresId(adresId, straat, nummer, plaats, location);
                 }
             }
         });
     }
 }
 
+function retryGeocoding(straat, nummer, plaats, location) {
+    let altNummer;
+    if(nummer.indexOf('-') != -1) {
+        altNummer = nummer.split('-')[0];
+    }
+
+    request('https://geodata.nationaalgeoregister.nl/locatieserver/v3/suggest?wt=xml&q=' + straat + '+' + (altNummer ? altNummer : nummer) + '+' + plaats, (error, response, body) => {
+            if(error) {
+                console.log(error);
+                return;
+            }
+            if(response.statusCode === 200) {
+                const $ = cheerio.load(body, {xmlMode: true});
+                const result = $('result');
+
+                if(result.attr('numFound') == 0) {
+                    console.log('No coordinates found for ' + straat + ' ' + nummer + ' ' + plaats);
+                    lookupAdresId(null, straat, nummer, plaats, location);
+                } else {
+                    const children = result.children('doc').first()
+                        .children('str').filter((index, element) => element['attribs']['name'] === 'id');
+                    const adresId = children.first().text();
+
+                    lookupAdresId(adresId, straat, nummer, plaats, location);
+                }
+            }
+        });
+}
+
+function lookupAdresId(adresId, straat, nummer, plaats, location) {
+    if(adresId) {
+        request('https://geodata.nationaalgeoregister.nl/locatieserver/v3/lookup?wt=xml&id=' + adresId, (error, response, body) => {
+            if(error) {
+                console.log(error);
+                return;
+            }
+            if(response.statusCode === 200) {
+                const $ = cheerio.load(body, {xmlMode: true});
+                const result = $('result');
+
+                if(result.attr('numFound') == 0) {
+                    console.log('No coordinates found for ' + straat + ' ' + nummer + ' ' + plaats);
+                    console.log('Adding default coords [0, 0]...');
+                    const coords = [0, 0];
+                    addCoords(location, straat, nummer, plaats, coords);
+                } else {
+                    const children = result.children('doc').first()
+                        .children('str').filter((index, element) => element['attribs']['name'] === 'centroide_rd');
+                    const wkt = children.first().text();
+                    const coordinates = wkt.substring(wkt.indexOf('(')+1, wkt.indexOf(')')).split(' ');
+                    const x = parseFloat(coordinates[0]);
+                    const y = parseFloat(coordinates[1]);
+                    const coords = [x, y];
+                    addCoords(location, straat, nummer, plaats, coords);
+                }
+            }
+        });
+    } else {
+        console.log('Adding default coords [0, 0]...');
+        const coords = [0, 0];
+        addCoords(location, straat, nummer, plaats, coords);
+    }
+}
+
 function addCoords(location, straat, nummer, plaats, coords) {
-    let inputFile = fs.readFileSync(location, 'utf8');
-    let json = JSON.parse(inputFile);
+    const inputFile = fs.readFileSync(location, 'utf8');
+    const json = JSON.parse(inputFile);
     let features = json['features'];
     for(let i = 0; i < features.length; i++) {
-        let properties = (features[i])['properties'];
-        let oldStraat = properties['Straat'];
-        let oldNummer = properties['Huisnummer'];
-        let oldPlaats = properties['Plaats'];
-        let geometry = (features[i])['geometry'];
-        let coordinates = geometry['coordinates'];
+        const properties = (features[i])['properties'];
+        const oldStraat = properties['Straat'];
+        const oldNummer = properties['Huisnummer'];
+        const oldPlaats = properties['Plaats'];
+        const geometry = (features[i])['geometry'];
+        const coordinates = geometry['coordinates'];
 
         if(oldStraat === straat && oldNummer === nummer && oldPlaats === plaats && coordinates.length === 0) {
             (features[i])['geometry']['coordinates'] = coords;
             fs.writeFileSync(location, JSON.stringify(json));
         }
     }
-}
-
-function findCoords(location, straat, nummer, plaats) {
-    console.log('Trying again for: ' + straat + ' ' + nummer + ' ' + plaats);
-    request('http://geodata.nationaalgeoregister.nl/geocoder/Geocoder?zoekterm=' + straat + '+' + plaats, (error, response, body) => {
-        if(error) {
-            console.log(error);
-        }
-        if(response.statusCode === 200) {
-            let $ = cheerio.load(body);
-            let start = $.xml().indexOf('gml:pos');
-            if(start != -1) {
-                let end = $.xml().indexOf('<', start);
-                let coord = $.xml().substring(start+22, end);
-                let coords = coord.split(' ');
-                let x = parseFloat(coords[0]);
-                let y = parseFloat(coords[1]);
-                coords = [x, y];
-                addCoords(location, straat, nummer, plaats, coords);
-                console.log('Success for: ' + straat + ' ' + nummer + ' ' + plaats);
-            } else {
-                console.log('Couldn\'t find coords for: ' + straat + ' ' + nummer + ' ' + plaats);
-                let coords = [0, 0];
-                addCoords(location, straat, nummer, plaats, coords);
-            }
-        }
-    });
 }
