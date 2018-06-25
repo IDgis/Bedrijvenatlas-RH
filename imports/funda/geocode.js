@@ -5,8 +5,8 @@ const request = require('request');
 const cheerio = require('cheerio');
 const fs = require('fs');
 
-const locationTeKoop = '/home/meteorapp/meteorapp/build/bundle/programs/web.browser/app/data/vastgoedTeKoop.json';
-const locationTeHuur = '/home/meteorapp/meteorapp/build/bundle/programs/web.browser/app/data/vastgoedTeHuur.json';
+const locationTeKoop = '/home/meteorapp/build/bundle/programs/web.browser/app/data/vastgoedTeKoop.json';
+const locationTeHuur = '/home/meteorapp/build/bundle/programs/web.browser/app/data/vastgoedTeHuur.json';
 geocode(locationTeKoop);
 geocode(locationTeHuur);
 

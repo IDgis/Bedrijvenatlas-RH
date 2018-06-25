@@ -15,8 +15,8 @@ let filesFundaTeHuur = fs.readdirSync(fundaHuurUrl);
 let pagesFundaTeKoop = getPages(fundaKoopUrl, filesFundaTeKoop);
 let pagesFundaTeHuur = getPages(fundaHuurUrl, filesFundaTeHuur);
 
-let outputTeKoop = '/home/meteorapp/meteorapp/build/bundle/programs/web.browser/app/data/vastgoedTeKoop.json';
-let outputTeHuur = '/home/meteorapp/meteorapp/build/bundle/programs/web.browser/app/data/vastgoedTeHuur.json';
+let outputTeKoop = '/home/meteorapp/build/bundle/programs/web.browser/app/data/vastgoedTeKoop.json';
+let outputTeHuur = '/home/meteorapp/build/bundle/programs/web.browser/app/data/vastgoedTeHuur.json';
 
 // Build the GeoJson output file
 buildOutputFile('Te Koop', outputTeKoop, pagesFundaTeKoop);

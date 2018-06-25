@@ -34,7 +34,6 @@ RUN chmod +x /bin/tini
 ADD image /
 RUN pip install setuptools wheel && pip install -r /usr/lib/web/requirements.txt
 
-EXPOSE 80
 WORKDIR /root
 
 ENTRYPOINT ["/startup.sh"]

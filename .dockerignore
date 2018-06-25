@@ -1,3 +1,4 @@
 .meteor/local/
-funda
+imports/funda
 .build/
+node_modules/
