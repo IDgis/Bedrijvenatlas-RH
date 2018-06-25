@@ -1,8 +1,6 @@
 FROM idgis/ubuntu-desktop
 MAINTAINER IDgis bv
 
-EXPOSE 80
-
 # kopieer alle scripts naar de desktop
 COPY . /root/Desktop
 
