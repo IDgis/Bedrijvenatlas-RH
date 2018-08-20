@@ -87,7 +87,7 @@ export default class MapLayout extends Component {
                 const title = layer.get('title');
                 const laagNaam = Meteor.settings.public.laagNaam;
                 const searchFields = Meteor.settings.public.searchFields[title];
-                if(title === laagNaam.teKoop || title === laagNaam.teHuur || title === laagNaam.kvk) {
+                if(title === laagNaam.teKoop || title === laagNaam.teHuur || title === Meteor.settings.public.kvkBedrijven.naam) {
                     that.setState({featurePopup: <Popup title={title} selectedFeature={feature} coords={coords} screenCoords={e.pixel} searchFields={searchFields} map={that.state.map} openStreetView={that.openStreetView} onRequestClose={that.closePopup} />});
                 }
             });

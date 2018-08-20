@@ -39,11 +39,56 @@
             ]
         },
 
+        "kvkBedrijven": {
+            "naam": "Bedrijven",
+            "omschrijving": "KVK Bedrijven",
 
+            "namen": {
+                "C": "Industrie",
+                "E": "Distributie water/afval",
+                "F": "Bouwnijverheid",
+                "G": "Handel/Groothandel",
+                "H": "Vervoer/opslag",
+                "I": "Logies/maaltijd/drank",
+                "J": "Informatica/communicatie",
+                "K": "Financiëel",
+                "L": "Onroerend goed",
+                "M": "Advisering",
+                "N": "Verhuur/overige dienstverlening",
+                "P": "Onderwijs",
+                "Q": "Gezondheidszorg",
+                "S": "Overige dienstverlening"
+            },
 
+            "icons": {
+                "C": "/icons/SBI_RUBRIEK_CODE_C_INDUSTRIE.svg",
+                "E": "/icons/SBI_RUBRIEK_CODE_E_DISTRIBUTIE_WATER_AFVAL.svg",
+                "F": "/icons/SBI_RUBRIEK_CODE_F_BOUWNIJVERHEID.svg",
+                "G": "/icons/SBI_RUBRIEK_CODE_G_DETAILHANDEL.svg",
+                "H": "/icons/SBI_RUBRIEK_CODE_H_VERVOER_OPSLAG.svg",
+                "I": "/icons/SBI_RUBRIEK_CODE_I_LOGIES_MAALTIJD_DRANK.svg",
+                "J": "/icons/SBI_RUBRIEK_CODE_J_INFO_COMMUNICATIE.svg",
+                "K": "/icons/SBI_RUBRIEK_CODE_K_FINANCIEEL.svg",
+                "L": "/icons/SBI_RUBRIEK_CODE_L_ONROEREND_GOED.svg",
+                "M": "/icons/SBI_RUBRIEK_CODE_M_ADVISERING.svg",
+                "N": "/icons/SBI_RUBRIEK_CODE_N_VERHUR_OVR_DIENSTV.svg",
+                "P": "/icons/SBI_RUBRIEK_CODE_P_ONDERWIJS.svg",
+                "Q": "/icons/SBI_RUBRIEK_CODE_Q_GEZONDHEIDSZORG.svg",
+                "S": "/icons/SBI_RUBRIEK_CODE_S_OVERIGE_DIENSTVERL.svg"
+            }
+        },
 
+        "detailHandel": {
+            "omschrijving": "Detail Handel",
 
+            "namen": {
 
+            },
+
+            "icons": {
+
+            }
+        },
 
 
 
@@ -55,7 +100,6 @@
 
 
         "laagNaam": {
-            "kvk": "Bedrijven",
             "kavels": "Uitgifte Locaties",
             "ibis": "Bedrijventerreinen",
             "kadastralePercelen": "Kadastrale percelen",
@@ -107,40 +151,6 @@
             "C32": "/icons/CATEGORIE_3_2.svg",
             "C41": "/icons/CATEGORIE_4_1.svg",
             "C42": "/icons/CATEGORIE_4_2.svg"
-        },
-
-        "categorieUrl": {
-            "C": "/icons/SBI_RUBRIEK_CODE_C_INDUSTRIE.svg",
-            "E": "/icons/SBI_RUBRIEK_CODE_E_DISTRIBUTIE_WATER_AFVAL.svg",
-            "F": "/icons/SBI_RUBRIEK_CODE_F_BOUWNIJVERHEID.svg",
-            "G": "/icons/SBI_RUBRIEK_CODE_G_DETAILHANDEL.svg",
-            "H": "/icons/SBI_RUBRIEK_CODE_H_VERVOER_OPSLAG.svg",
-            "I": "/icons/SBI_RUBRIEK_CODE_I_LOGIES_MAALTIJD_DRANK.svg",
-            "J": "/icons/SBI_RUBRIEK_CODE_J_INFO_COMMUNICATIE.svg",
-            "K": "/icons/SBI_RUBRIEK_CODE_K_FINANCIEEL.svg",
-            "L": "/icons/SBI_RUBRIEK_CODE_L_ONROEREND_GOED.svg",
-            "M": "/icons/SBI_RUBRIEK_CODE_M_ADVISERING.svg",
-            "N": "/icons/SBI_RUBRIEK_CODE_N_VERHUR_OVR_DIENSTV.svg",
-            "P": "/icons/SBI_RUBRIEK_CODE_P_ONDERWIJS.svg",
-            "Q": "/icons/SBI_RUBRIEK_CODE_Q_GEZONDHEIDSZORG.svg",
-            "S": "/icons/SBI_RUBRIEK_CODE_S_OVERIGE_DIENSTVERL.svg"
-        },
-
-        "categorieNaam": {
-            "C": "Industrie",
-            "E": "Distributie water/afval",
-            "F": "Bouwnijverheid",
-            "G": "Handel/Groothandel",
-            "H": "Vervoer/opslag",
-            "I": "Logies/maaltijd/drank",
-            "J": "Informatica/communicatie",
-            "K": "Financiëel",
-            "L": "Onroerend goed",
-            "M": "Advisering",
-            "N": "Verhuur/overige dienstverlening",
-            "P": "Onderwijs",
-            "Q": "Gezondheidszorg",
-            "S": "Overige dienstverlening"
         },
 
         "teKoopJsonUrl": "/data/vastgoedTeKoop.json",

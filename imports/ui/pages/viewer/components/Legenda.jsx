@@ -181,21 +181,20 @@ export default class Legenda extends Component {
      * Create the legenda for bedrijven
      */
     setBedrijvenLegenda(map) {
-        let bedrijven = Meteor.settings.public.laagNaam.kvk;
-        let bedrijvenDiv = <div></div>;
+        const bedrijven = Meteor.settings.public.kvkBedrijven.naam;
         let visible = false;
-        let bArr = [];
+        const bArr = [];
 
         if(map !== null) {
             map.getLayers().forEach((layer, index) => {
                 if(layer.get('title') === bedrijven && layer.getVisible()) {
                     visible = true;
-                    let source = layer.getSource();
+                    const source = layer.getSource();
                     if(source.getState() === 'ready') {
-                        let features = source.getFeatures();
-                        let cat = features[0].get('SBI_RUBR_C');
-                        let categorieUrl = Meteor.settings.public.categorieUrl[cat];
-                        let categorieNaam = Meteor.settings.public.categorieNaam[cat];
+                        const features = source.getFeatures();
+                        const cat = features[0].get('SBI_RUBR_C');
+                        const categorieUrl = Meteor.settings.public.kvkBedrijven.icons[cat];
+                        const categorieNaam = Meteor.settings.public.kvkBedrijven.namen[cat];
                         bArr.push(<div key={index}>
                             <img className='legenda-icon draggable' src={categorieUrl} /> {categorieNaam} 
                         </div>);
@@ -209,8 +208,8 @@ export default class Legenda extends Component {
         });
 
         if(visible) {
-            let legenda = <div className='bedrijven-legenda draggable'>
-                <h3 className='draggable'>{Meteor.settings.public.laagNaam.kvk}</h3>
+            const legenda = <div className='bedrijven-legenda draggable'>
+                <h3 className='draggable'>{Meteor.settings.public.kvkBedrijven.naam}</h3>
                 <div className='bedrijven-legenda-item draggable'>
                     {bArr}
                 </div>

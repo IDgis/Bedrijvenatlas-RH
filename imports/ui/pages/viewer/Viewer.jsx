@@ -3,8 +3,6 @@ import * as ol from 'openlayers';
 import proj4 from 'proj4';
 import 'whatwg-fetch';
 
-//import AutoComplete from 'material-ui/AutoComplete';
-//import Drawer from 'material-ui/Drawer';
 import IconButton from 'material-ui/IconButton';
 
 import LayerMenu from './components/LayerMenu.jsx';
@@ -328,7 +326,7 @@ export default class Viewer extends Component {
      * Add all kvk layers by SBI code
      */
     addKvkLayers() {
-        let categorien = Meteor.settings.public.categorieUrl;
+        let categorien = Meteor.settings.public.kvkBedrijven.icons;
         let that = this;
 
         for(c in categorien) {
@@ -350,12 +348,12 @@ export default class Viewer extends Component {
                 let features = new ol.format.GeoJSON().readFeatures(json);
                 let source = new ol.source.Vector();
                 let layer = new ol.layer.Vector({
-                    title: Meteor.settings.public.laagNaam.kvk,
+                    title: Meteor.settings.public.kvkBedrijven.naam,
                     source: source,
                     style: [
                         new ol.style.Style({
                             image: new ol.style.Icon({
-                                src: Meteor.settings.public.categorieUrl[categorieNaam],
+                                src: Meteor.settings.public.kvkBedrijven.icons[categorieNaam],
                                 imgSize: [48,48], // for IE11
                                 scale: 0.5
                             }),

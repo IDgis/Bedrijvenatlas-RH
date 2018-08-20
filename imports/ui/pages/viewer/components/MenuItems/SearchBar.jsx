@@ -42,31 +42,31 @@ export default class SearchBar extends Component {
         this.setState({searchText:''});
 
         // Look for the searched feature in the correct layer
-        let map = this.props.map;
+        const map = this.props.map;
         if(map !== null) {
-            let layers = map.getLayers();
-            layers.forEach((layer, index) => {
-                if(layer.get('title') === Meteor.settings.public.laagNaam.kvk) {
+            const layers = map.getLayers();
+            layers.forEach(layer => {
+                if(layer.get('title') === Meteor.settings.public.kvkBedrijven.naam) {
                     let newSearch = true;
-                    let source = layer.getSource();
+                    const source = layer.getSource();
                     if(source.getState() === 'ready') {
-                        let features = source.getFeatures();
+                        const features = source.getFeatures();
                         for(i in features) {
 
                             // Find the feature with the correct name
-                            let search = features[i].get('BEDR_NAAM') + ' | ' + features[i].get('SBI_OMSCHR');
+                            const search = features[i].get('BEDR_NAAM') + ' | ' + features[i].get('SBI_OMSCHR');
                             if(search === searchText && newSearch) {
                                 newSearch = false;
 
                                 // Center around the coordinates of the found feature
                                 // Also zoom in to the feature and set the layer visible
-                                let coords = features[i].getGeometry().getCoordinates();
+                                const coords = features[i].getGeometry().getCoordinates();
 
                                 this.flyTo(coords[0], function(){});
                                 layer.setVisible(true);
 
                                 // Select the found feature
-                                let select = new ol.interaction.Select({
+                                const select = new ol.interaction.Select({
                                     style: [
                                         new ol.style.Style({
                                             image: new ol.style.Icon({
@@ -151,7 +151,7 @@ export default class SearchBar extends Component {
                     searchText={this.state.searchText}
                     onUpdateInput={this.handleUpdateInput}
                     onNewRequest={this.selectFeature}
-                    listStyle={{backgroundColor:'rgb(115,0,73)', opacity:0.8, borderRadius:'5px', width:this.state.listStyleWidth}}
+                    listStyle={{backgroundColor:Meteor.settings.public.gemeenteConfig.colorGemeente, opacity:0.8, borderRadius:'5px', width:this.state.listStyleWidth}}
                 />
             </div>
         );

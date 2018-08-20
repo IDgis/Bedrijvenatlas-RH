@@ -3,8 +3,6 @@ import React, { Component } from 'react';
 import Avatar from 'material-ui/Avatar';
 import Checkbox from 'material-ui/Checkbox';
 import {List, ListItem} from 'material-ui/List';
-import MenuItem from 'material-ui/MenuItem';
-import Popover, {PopoverAnimationVertical} from 'material-ui/Popover';
 
 export default class BedrijvenBranche extends Component {
 
@@ -13,22 +11,9 @@ export default class BedrijvenBranche extends Component {
 
         this.state = {
             map: this.props.map,
-            menuOpen: false,
-            C: false,
-            E: false,
-            F: false,
-            G: false,
-            H: false,
-            I: false,
-            J: false,
-            K: false,
-            L: false,
-            M: false,
-            N: false,
-            P: false,
-            Q: false,
-            S: false
+            menuOpen: false
         }
+        this.setDefaultVisibility();
         this.updateVisibility();
     }
 
@@ -56,18 +41,18 @@ export default class BedrijvenBranche extends Component {
      * Show the icons of the selected branche on the map
      */
     selectBranche = (e) => {
-        let categorie = e.target.value;
-        let map = this.state.map;
-        let layers = map.getLayers();
-        layers.forEach((layer, index, arr) => {
-            if(layer.get('title') === Meteor.settings.public.laagNaam.kvk) {
-                let source = layer.getSource();
+        const categorie = e.target.value;
+        const map = this.state.map;
+        const layers = map.getLayers();
+        layers.forEach(layer => {
+            if(layer.get('title') === Meteor.settings.public.kvkBedrijven.naam) {
+                const source = layer.getSource();
                 if(source.getState() === 'ready') {
-                    let features = source.getFeatures();
-                    let id = features[0].get('SBI_RUBR_C');
+                    const features = source.getFeatures();
+                    const id = features[0].get('SBI_RUBR_C');
                     if(id === categorie) {
                         layer.setVisible(!layer.getVisible());
-                        this.setVisibility(categorie, layer.getVisible());
+                        this.state[categorie] = layer.getVisible();
                     }
                 }
             }
@@ -78,43 +63,27 @@ export default class BedrijvenBranche extends Component {
         this.props.updateLegenda();
     }
 
+    setDefaultVisibility = () => {
+        const kvkCategorieen = Object.keys(Meteor.settings.public.kvkBedrijven.namen);
+        kvkCategorieen.forEach(category => {
+            this.state[category] = false;
+        });
+    }
+
     updateVisibility = () => {
-        let map = this.state.map;
+        const map = this.state.map;
         if(map !== null) {
-            let layers = map.getLayers();
-            layers.forEach((layer, index) => {
-                if(layer.get('title') === Meteor.settings.public.laagNaam.kvk) {
-                    let source = layer.getSource();
+            const layers = map.getLayers();
+            layers.forEach(layer => {
+                if(layer.get('title') === Meteor.settings.public.kvkBedrijven.naam) {
+                    const source = layer.getSource();
                     if(source.getState() === 'ready') {
-                        let features = source.getFeatures();
-                        let id = features[0].get('SBI_RUBR_C');
-                        this.setVisibility(id, layer.getVisible());
+                        const features = source.getFeatures();
+                        const id = features[0].get('SBI_RUBR_C');
+                        this.state[id] = layer.getVisible();
                     }
                 }
             });
-        }
-    }
-
-    /**
-     * Set the visibility, so the checkbox shows the right value
-     */
-    setVisibility = (cat, newVisible) => {
-        switch (cat) {
-            case 'C': this.state.C = newVisible; break;
-            case 'E': this.state.E = newVisible; break;
-            case 'F': this.state.F = newVisible; break;
-            case 'G': this.state.G = newVisible; break;
-            case 'H': this.state.H = newVisible; break;
-            case 'I': this.state.I = newVisible; break;
-            case 'J': this.state.J = newVisible; break;
-            case 'K': this.state.K = newVisible; break;
-            case 'L': this.state.L = newVisible; break;
-            case 'M': this.state.M = newVisible; break;
-            case 'N': this.state.N = newVisible; break;
-            case 'P': this.state.P = newVisible; break;
-            case 'Q': this.state.Q = newVisible; break;
-            case 'S': this.state.S = newVisible; break;
-            default: break;
         }
     }
 
@@ -123,18 +92,18 @@ export default class BedrijvenBranche extends Component {
      */
     getMenuItems = (val) => {
         if(this.state.map !== null) {
-            let retArr = [];
-            let map = this.state.map;
-            let layers = map.getLayers();
-            layers.forEach((layer, index, arr) => {
-                if(layer.get('title') === Meteor.settings.public.laagNaam.kvk) {
-                    let source = layer.getSource();
+            const retArr = [];
+            const map = this.state.map;
+            const layers = map.getLayers();
+            layers.forEach(layer => {
+                if(layer.get('title') === Meteor.settings.public.kvkBedrijven.naam) {
+                    const source = layer.getSource();
                     if(source.getState() === 'ready') {
-                        let features = source.getFeatures();
+                        const features = source.getFeatures();
                         for(let i = 0; i < features.length; i++) {
-                            let id = features[i].get('SBI_RUBR_C');
+                            const id = features[i].get('SBI_RUBR_C');
                             if(id === val) {
-                                let name = features[i].get('BEDR_NAAM');
+                                const name = features[i].get('BEDR_NAAM');
                                 retArr.push(<ListItem primaryText={name} key={i} onClick={this.triggerClick} />);
                             }
                         }
@@ -149,30 +118,30 @@ export default class BedrijvenBranche extends Component {
      * If clicked on a menu item, select the clicked name and zoom in to it
      */
     triggerClick = (event) => {
-        let clickedName = event.target.textContent;
-        let map = this.state.map;
-        let layers = map.getLayers();
-        layers.forEach((layer, index, arr) => {
-            if(layer.get('title') === Meteor.settings.public.laagNaam.kvk) {
+        const clickedName = event.target.textContent;
+        const map = this.state.map;
+        const layers = map.getLayers();
+        layers.forEach(layer => {
+            if(layer.get('title') === Meteor.settings.public.kvkBedrijven.naam) {
                 let newSearch = true;
-                let source = layer.getSource();
+                const source = layer.getSource();
                 if(source.getState() === 'ready') {
                     let features = source.getFeatures();
                     for(let i = 0; i < features.length; i++) {
                         if(features[i].get('BEDR_NAAM') === clickedName && newSearch) {
                             newSearch = false;
-                            let cat = features[i].get('SBI_RUBR_C');
+                            const cat = features[i].get('SBI_RUBR_C');
                             layer.setVisible(true);
-                            this.setVisibility(cat, layer.getVisible());
+                            this.state[cat] = layer.getVisible();
 
                             // Center around the coordinates of the found feature
-                            let coords = features[i].getGeometry().getCoordinates();
+                            const coords = features[i].getGeometry().getCoordinates();
                             map.getView().setCenter(coords[0]);
 
                             // Zoom to the feature found
                             map.getView().setZoom(17);
 
-                            let select = new ol.interaction.Select({
+                            const select = new ol.interaction.Select({
                                 style: [
                                     new ol.style.Style({
                                         image: new ol.style.Icon({
@@ -191,7 +160,7 @@ export default class BedrijvenBranche extends Component {
                                 ]
                             });
                             map.addInteraction(select);
-                            let collection = select.getFeatures().push(features[i]);
+                            /*let collection = */select.getFeatures().push(features[i]);
 
                             this.closeMenu();
                         }
@@ -205,15 +174,12 @@ export default class BedrijvenBranche extends Component {
      * The render method to render the component
      */
     render() {
-        const categorien = [];
-        for(c in Meteor.settings.public.categorieUrl) {
-            categorien.push(c);
-        }
+        const categorien = Object.keys(Meteor.settings.public.kvkBedrijven.icons);
 
         const menuItems = categorien.map((val, i) => 
-            <ListItem className='list-item' primaryText={Meteor.settings.public.categorieNaam[val]}
+            <ListItem className='list-item' primaryText={Meteor.settings.public.kvkBedrijven.namen[val]}
                 leftIcon={<Checkbox checked={this.state[val]} onClick={this.selectBranche} value={val} iconStyle={{fill:'white'}} />}
-                rightIcon={<Avatar src={Meteor.settings.public.categorieUrl[val]} />}
+                rightIcon={<Avatar src={Meteor.settings.public.kvkBedrijven.icons[val]} />}
                 key={i}
             />
         );

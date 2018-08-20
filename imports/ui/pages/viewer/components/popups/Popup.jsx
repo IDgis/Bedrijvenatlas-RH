@@ -27,15 +27,14 @@ export default class Popup extends Component {
 
     componentDidMount = () => {
         let title = this.props.title;
-        let that = this;
         let laagNaam = Meteor.settings.public.laagNaam;
-        if(title === laagNaam.kvk || title === laagNaam.teKoop || title === laagNaam.teHuur) {
+        if(title === Meteor.settings.public.kvkBedrijven.naam || title === laagNaam.teKoop || title === laagNaam.teHuur) {
             let map = this.props.map;
             let view = map.getView();
             let viewResolution = view.getResolution();
             let coords = [];
 
-            if(title === laagNaam.kvk) {
+            if(title === Meteor.settings.public.kvkBedrijven.naam) {
                 coords = this.props.selectedFeature.getGeometry().getCoordinates()[0];
             } else {
                 coords = this.props.selectedFeature.getGeometry().getCoordinates();
@@ -83,7 +82,7 @@ export default class Popup extends Component {
 
     getStreetviewButton = (props) => {
         const laagNaam = Meteor.settings.public.laagNaam;
-        if(props.title === laagNaam.teKoop || props.title === laagNaam.teHuur || props.title === laagNaam.kvk) {
+        if(props.title === laagNaam.teKoop || props.title === laagNaam.teHuur || props.title === Meteor.settings.public.kvkBedrijven.naam) {
             return <div><br /><RaisedButton label='Streetview' onClick={props.openStreetView} /><br /></div>;
         } else {
             return <div></div>;
@@ -101,10 +100,9 @@ export default class Popup extends Component {
     }
 
     getPopupFields = (searchFields, selectedFeature) => {
-        let returnFields = [];
         let res = [];
         for(let i in searchFields) {
-            let top = (i*25+70)
+            //let top = (i*25+70)
             let searchField = searchFields[i];
             let alias = Meteor.settings.public.alias[searchField];
             let oms = (alias !== undefined) ? alias : searchField;
@@ -144,7 +142,7 @@ export default class Popup extends Component {
         const width = 500;
         const left = this.getHorizontalPosition(width);
 
-        if(this.state.milieuCategorie !== '' && this.state.milieuCategorie !== null && (title === laagNaam.kvk || title === laagNaam.teKoop || title === laagNaam.teHuur)) {
+        if(this.state.milieuCategorie !== '' && this.state.milieuCategorie !== null && (title === Meteor.settings.public.kvkBedrijven.naam || title === laagNaam.teKoop || title === laagNaam.teHuur)) {
             returnField.push(
                 <tr key={returnField.length}>
                     <td style={{width:'100px'}} ><b>Categorie:</b></td>

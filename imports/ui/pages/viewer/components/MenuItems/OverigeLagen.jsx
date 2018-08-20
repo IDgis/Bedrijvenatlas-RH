@@ -6,9 +6,8 @@ import Kaartlaag from './Kaartlaag.jsx';
 
 import ArrowDropRight from 'material-ui/svg-icons/navigation-arrow-drop-right';
 import Checkbox from 'material-ui/Checkbox';
-import {List, ListItem} from 'material-ui/List';
+import {List} from 'material-ui/List';
 import MenuItem from 'material-ui/MenuItem';
-import Popover, {PopoverAnimationVertical} from 'material-ui/Popover';
 
 export default class OverigeLagen extends Component {
 
@@ -34,14 +33,14 @@ export default class OverigeLagen extends Component {
     /**
      * Turns all KVK layers on and off at once
      */
-    selectAllKvkLayers = (event, l) => {
+    selectAllKvkLayers = () => {
         let newVisible = !this.state.allKvkChecked;
-        let kvk = Meteor.settings.public.laagNaam.kvk;
+        let kvk = Meteor.settings.public.kvkBedrijven.naam;
         let map = this.props.map;
 
         if(map != null) {
             let layers = map.getLayers();
-            layers.forEach((layer, index) => {
+            layers.forEach(layer => {
                 if(layer.get('title') === kvk) {
                     layer.setVisible(newVisible);
                 }
@@ -83,13 +82,13 @@ export default class OverigeLagen extends Component {
      * Checks whether all KVK layers are checked or not and sets its internal state
      */
     setAllKvkChecked = () => {
-        let kvk = Meteor.settings.public.laagNaam.kvk;
-        let map = this.props.map;
+        const kvk = Meteor.settings.public.kvkBedrijven.naam;
+        const map = this.props.map;
 
         if(map != null) {
             let allVisible = true;
-            let layers = map.getLayers();
-            layers.forEach((layer, index) => {
+            const layers = map.getLayers();
+            layers.forEach(layer => {
                 if(layer.get('title') === kvk) {
                     allVisible = allVisible && layer.getVisible();
                 }
@@ -127,13 +126,13 @@ export default class OverigeLagen extends Component {
      * Get the visibility of all KVK layers
      */
     getAllKvkChecked = () => {
-        let kvk = Meteor.settings.public.laagNaam.kvk;
-        let map = this.props.map;
+        const kvk = Meteor.settings.public.kvkBedrijven.naam;
+        const map = this.props.map;
         let visible = false
 
         if(map !== null) {
             let layers = map.getLayers();
-            layers.forEach((layer, index) => {
+            layers.forEach(layer => {
                 if(layer.get('title') === kvk) {
                     if(layer.getVisible()) visible = true;
                 }
@@ -168,8 +167,8 @@ export default class OverigeLagen extends Component {
      * The main render method that will render the component to the screen
      */
     render() {
-        let allVastgoedChecked = this.getAllVastgoedChecked();
-        let allKvkChecked = this.getAllKvkChecked();
+        const allVastgoedChecked = this.getAllVastgoedChecked();
+        const allKvkChecked = this.getAllKvkChecked();
 
         return (
             <List className='list-menu' >
@@ -182,7 +181,7 @@ export default class OverigeLagen extends Component {
                     ]}
                 />
                 <Kaartlaag primaryText={Meteor.settings.public.laagNaam.kavels} map={this.props.map} updateLegenda={this.props.updateLegenda} />
-                <MenuItem className='list-item' primaryText={Meteor.settings.public.laagNaam.kvk}
+                <MenuItem className='list-item' primaryText={Meteor.settings.public.kvkBedrijven.naam}
                     leftIcon={<Checkbox checked={allKvkChecked} onTouchTap={this.selectAllKvkLayers} iconStyle={{fill:'white'}} />}
                     rightIcon={<ArrowDropRight style={{fill:'white'}} />}
                     menuItems={<BedrijvenBranche map={this.props.map} updateParent={this.setAllKvkChecked} updateLegenda={this.props.updateLegenda} />}
