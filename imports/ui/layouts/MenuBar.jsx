@@ -9,16 +9,16 @@ export default class MenuBar extends Component {
 
     render() {
         return(
-            <div className='menu-bar' style={{backgroundColor:Meteor.settings.public.colorGemeente}} >
+            <div className='menu-bar' style={{backgroundColor:Meteor.settings.public.gemeenteConfig.colorGemeente}} >
                 <div className='logo-rh' >
-                    <a href={Meteor.settings.public.homePageGemeente} target='_blank' >
-                        <img style={{height:'56px'}} src={Meteor.settings.public.logoUrlGemeente} alt='logo Gemeente Rijssen-Holten' />
+                    <a href={Meteor.settings.public.gemeenteConfig.homePage} target='_blank' >
+                        <img style={{height:'56px'}} src={Meteor.settings.public.gemeenteConfig.logo} alt='logo Gemeente Rijssen-Holten' />
                     </a>
                 </div>
                 Bedrijvenatlas
                 <div className='logo-idgis' >
-                    <a href={Meteor.settings.public.homePageIdgis} target='_blank' >
-                        <img style={{height:'56px'}} src={Meteor.settings.public.logoUrlIdgis} alt='logo Idgis' />
+                    <a href={Meteor.settings.public.idgisConfig.homePage} target='_blank' >
+                        <img style={{height:'56px'}} src={Meteor.settings.public.idgisConfig.logo} alt='logo Idgis' />
                     </a>
                 </div>
             </div>

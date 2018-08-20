@@ -69,7 +69,7 @@ export default class KavelInfoPopup extends Component {
         const left = (window.innerWidth/2)-(width/2);
         if(this.state.popupText !== null) {
             return(
-                <Paper className='valid' style={{position:'absolute', width:width, top:'60px', left:left, borderRadius:5, zIndex:10, backgroundColor:Meteor.settings.public.colorGemeente, opacity:0.8, color:'white'}} zDepth={5} >
+                <Paper className='valid' style={{position:'absolute', width:width, top:'60px', left:left, borderRadius:5, zIndex:10, backgroundColor:Meteor.settings.public.gemeenteConfig.colorGemeente, opacity:0.8, color:'white'}} zDepth={5} >
                     <RaisedButton className='popup-close-button' label='X' onTouchTap={this.props.onRequestClose} />
                     <div style={{position:'relative', left:'20px'}}><br />
                         <h3><u>{this.props.title}</u></h3>
@@ -82,7 +82,7 @@ export default class KavelInfoPopup extends Component {
         }
         else {
             return (
-                <Paper className='valid' style={{position:'absolute', width:width, top:'60px', left:left, borderRadius:5, zIndex:10, backgroundColor:Meteor.settings.public.colorGemeente, opacity:0.8, color:'white'}} zDepth={5} >
+                <Paper className='valid' style={{position:'absolute', width:width, top:'60px', left:left, borderRadius:5, zIndex:10, backgroundColor:Meteor.settings.public.gemeenteConfig.colorGemeente, opacity:0.8, color:'white'}} zDepth={5} >
                     <RaisedButton className='popup-close-button' label='X' onTouchTap={this.props.onRequestClose} />
                     <div style={{position:'relative', left:'20px'}}><br />
                         <h3><u>{this.props.title}</u></h3>

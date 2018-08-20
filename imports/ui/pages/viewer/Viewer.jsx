@@ -30,7 +30,7 @@ export default class Viewer extends Component {
      * Sets up the initial OpenLayers map and layers
      */
     componentDidMount() {
-        let extent = [-285401.92,22598.08,595401.92,903401.92];
+        let extent = Meteor.settings.public.gemeenteConfig.extent;
         let resolutions = [3440.64, 1720.32, 860.16, 430.08, 215.04, 107.52, 53.76, 26.88, 13.44, 6.72, 3.36, 1.68, 0.84, 0.42, 0.21, 0.105, 0.0525];
         let projection = new ol.proj.Projection({code:'EPSG:28992', units:'m', extent: extent});
         let matrixIds = [];
@@ -210,7 +210,8 @@ export default class Viewer extends Component {
                 center: [229025, 479254],
                 projection: 'EPSG:28992',
                 zoom: 14,
-                extent: [220846, 474494, 237209, 484108],
+                //extent: [220846, 474494, 237209, 484108],
+                extent: extent,
                 minZoom: 13
             }),
             controls: [
@@ -253,51 +254,42 @@ export default class Viewer extends Component {
      * Sets the initial view based on the answers in the wizard screen
      */
     setMapSettings() {
-        let laagNaam = Meteor.settings.public.laagNaam;
-        let map = this.state.map;
-        let layers = map.getLayers();
+        const laagNaam = Meteor.settings.public.laagNaam;
+        const map = this.state.map;
+        const layers = map.getLayers();
 
-        let plaats = Session.get('plaats');
-        let voorkeur = Session.get('pand');
-        let huurKoop = Session.get('huur-koop')
+        const voorkeur = Session.get('pand');
+        const huurKoop = Session.get('huur-koop');
+
+        const selectedPlaats = Meteor.settings.public.gemeenteConfig.plaatsen.filter(plaats => 
+            plaats.value === Session.get('plaats')
+        )[0];
 
         // Zoom to the right place
-        if(plaats === 'rijssen' && voorkeur === 'nieuwbouw') {
+        if (selectedPlaats) {
             map.setView(new ol.View({
-                center: [233000, 480446],
+                center: selectedPlaats.center,
                 projection: 'EPSG:28992',
-                zoom: 15
-            }));
-        } else if(plaats === 'rijssen') {
-            map.setView(new ol.View({
-                center: [231657, 480800],
-                projection: 'EPSG:28992',
-                zoom: 14.5
-            }));
-        } else if(plaats === 'holten') {
-            map.setView(new ol.View({
-                center: [225008, 477254],
-                projection: 'EPSG:28992',
-                zoom: 15
+                zoom: selectedPlaats.zoom
             }));
         }
 
         // Set the visibility of the layers
         if(voorkeur === 'bestaand' || voorkeur === 'beide') {
             if(huurKoop === 'koop') {
-                layers.forEach((layer, index) => {
+                layers.forEach(layer => {
                     if(layer.get('title') === laagNaam.teKoop) {
                         layer.setVisible(true);
                     }
                 });
             } else if(huurKoop === 'huur') {
-                layers.forEach((layer, index) => {
+                layers.forEach(layer => {
                     if(layer.get('title') === laagNaam.teHuur) {
                         layer.setVisible(true);
                     }
                 });
             } else if(huurKoop === 'beide') {
-                layers.forEach((layer, index) => {
+                layers.forEach(layer => {
                     let title = layer.get('title');
                     if(title === laagNaam.teKoop || title === laagNaam.teHuur) {
                         layer.setVisible(true);
@@ -308,7 +300,7 @@ export default class Viewer extends Component {
 
         // Set the kavels layer visible
         if(voorkeur === 'nieuwbouw') {
-            layers.forEach((layer, index) => {
+            layers.forEach(layer => {
                 if(layer.get('title') === laagNaam.kavels) {
                     layer.setVisible(true);
                 }
@@ -415,10 +407,10 @@ export default class Viewer extends Component {
         return (
             <div id="map" className="map" >
                 <SearchBar map={this.state.map} updateLegenda={this.updateLegenda} />
-                <IconButton className='menu-button' style={{backgroundColor:Meteor.settings.public.colorGemeente}} onClick={this.openMenu} title='Menu' >
+                <IconButton className='menu-button' style={{backgroundColor:Meteor.settings.public.gemeenteConfig.colorGemeente}} onClick={this.openMenu} title='Menu' >
                     <img src={Meteor.settings.public.iconMenu} />
                 </IconButton>
-                <IconButton className='home-button' href='/' style={{backgroundColor:Meteor.settings.public.colorGemeente}} title='Home' >
+                <IconButton className='home-button' href='/' style={{backgroundColor:Meteor.settings.public.gemeenteConfig.colorGemeente}} title='Home' >
                     <img src={Meteor.settings.public.iconHome} />
                 </IconButton>
                 <LayerMenu

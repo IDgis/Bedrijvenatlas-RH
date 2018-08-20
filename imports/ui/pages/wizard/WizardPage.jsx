@@ -34,25 +34,34 @@ export default class WizardPage extends Component {
                     <div>
                         <h2 className='wizard-header'>Naar wat voor pand bent u op zoek?</h2>
                         <RadioButtonGroup name="pand" defaultSelected="beide" onChange={this.setPandValue.bind(this)}>
-                            <RadioButton value="bestaand" label="Ik zoek een bestaand pand" className='custom-radiobutton' iconStyle={{fill: '#730049'}} labelStyle={{color:'#111'}} />
-                            <RadioButton value="nieuwbouw" label="Ik wil nieuw bouwen" className='custom-radiobutton' iconStyle={{fill: '#730049'}} labelStyle={{color:'#111'}} />
-                            <RadioButton value="beide" label="Geen voorkeur" className='custom-radiobutton' iconStyle={{fill: '#730049'}} labelStyle={{color:'#111'}} />
+                            <RadioButton value="bestaand" label="Ik zoek een bestaand pand" className='custom-radiobutton' iconStyle={{fill: Meteor.settings.public.gemeenteConfig.colorGemeente}} labelStyle={{color:'#111'}} />
+                            <RadioButton value="nieuwbouw" label="Ik wil nieuw bouwen" className='custom-radiobutton' iconStyle={{fill: Meteor.settings.public.gemeenteConfig.colorGemeente}} labelStyle={{color:'#111'}} />
+                            <RadioButton value="beide" label="Geen voorkeur" className='custom-radiobutton' iconStyle={{fill: Meteor.settings.public.gemeenteConfig.colorGemeente}} labelStyle={{color:'#111'}} />
                         </RadioButtonGroup>
                     </div>
                     <div>
                         <h2 className='wizard-header'>Wilt u kopen of huren?</h2>
                         <RadioButtonGroup name="huur-koop" defaultSelected="beide" onChange={this.setHuurKoopValue.bind(this)}>
-                            <RadioButton value="koop" label="Kopen" className='custom-radiobutton' iconStyle={{fill: '#730049'}} labelStyle={{color:'#111'}} />
-                            <RadioButton value="huur" label="Huren" className='custom-radiobutton' iconStyle={{fill: '#730049'}} labelStyle={{color:'#111'}} />
-                            <RadioButton value="beide" label="Geen voorkeur" className='custom-radiobutton' iconStyle={{fill: '#730049'}} labelStyle={{color:'#111'}} />
+                            <RadioButton value="koop" label="Kopen" className='custom-radiobutton' iconStyle={{fill: Meteor.settings.public.gemeenteConfig.colorGemeente}} labelStyle={{color:'#111'}} />
+                            <RadioButton value="huur" label="Huren" className='custom-radiobutton' iconStyle={{fill: Meteor.settings.public.gemeenteConfig.colorGemeente}} labelStyle={{color:'#111'}} />
+                            <RadioButton value="beide" label="Geen voorkeur" className='custom-radiobutton' iconStyle={{fill: Meteor.settings.public.gemeenteConfig.colorGemeente}} labelStyle={{color:'#111'}} />
                         </RadioButtonGroup>
                     </div>
                     <div>
                         <h2 className='wizard-header'>In welke plaats zoekt u de mogelijkheden?</h2>
                         <RadioButtonGroup name="plaats" defaultSelected="beide" onChange={this.setPlaatsValue.bind(this)}>
-                            <RadioButton value="rijssen" label="Rijssen" className='custom-radiobutton' iconStyle={{fill: '#730049'}} labelStyle={{color:'#111'}} />
-                            <RadioButton value="holten" label="Holten" className='custom-radiobutton' iconStyle={{fill: '#730049'}} labelStyle={{color:'#111'}} />
-                            <RadioButton value="beide" label="Geen voorkeur" className='custom-radiobutton' iconStyle={{fill: '#730049'}} labelStyle={{color:'#111'}} />
+                        {
+                            Meteor.settings.public.gemeenteConfig.plaatsen.map((plaats, index) => 
+                                <RadioButton 
+                                    key={plaats.value + index} 
+                                    value={plaats.value} 
+                                    label={plaats.naam} 
+                                    className='custom-radiobutton' 
+                                    iconStyle={{fill: Meteor.settings.public.gemeenteConfig.colorGemeente}} 
+                                    labelStyle={{color: '#111'}} 
+                                />
+                            )
+                        }
                         </RadioButtonGroup>
                     </div>
                 </div>
@@ -62,7 +71,7 @@ export default class WizardPage extends Component {
                     label="Zoek op de kaart" 
                     labelPosition="before"
                     primary={true} 
-                    buttonStyle={{backgroundColor:Meteor.settings.public.colorGemeente}}
+                    buttonStyle={{backgroundColor:Meteor.settings.public.gemeenteConfig.colorGemeente}}
                     icon={ <img style={{height:'100%'}} src="/images/navigate_next_w.png" /> }
                 />
             </div>

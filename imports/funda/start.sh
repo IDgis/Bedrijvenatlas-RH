@@ -35,7 +35,7 @@ do
 
     echo "Download Funda Holten te huur page $i"
     if [ -e /root/Desktop/Funda/Huur/Holten$i.html ]; then
-        rm /root/Desktop/Funda/Huur.Holten$i.html
+        rm /root/Desktop/Funda/Huur/Holten$i.html
     fi
     /root/Desktop/savePages.sh "https://fundainbusiness.nl/alle-bedrijfsaanbod/holten/huur/p$i/" -b "firefox" -d "/root/Desktop/Funda/Huur/Holten$i.html"
     sleep 5s

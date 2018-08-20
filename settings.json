@@ -1,6 +1,59 @@
 {
     "public": {
 
+        "idgisConfig": {
+            "homePage": "https://www.idgis.nl/index.php/nl/bedrijvenatlas",
+            "logo": "/images/idgis/logo.jpg"
+        },
+
+        "gemeenteConfig": {
+            "naam": "Rijssen-Holten",
+            "homePage": "https://www.rijssen-holten.nl/home",
+            "logo": "/images/rijssenholten/logo.jpg",
+            "colorGemeente": "#730049",
+
+            "logoWizardKnop": "/icons/rijssenholten/KNOP_VESTIGEN_NIEUW_BEDRIJF.svg",
+            "logoViewerKnop": "/icons/rijssenholten/KNOP_NAAR_DE_KAART.svg",
+
+            "extent": [ -285401.92, 22598.08, 595401.92, 903401.92 ],
+
+            "plaatsen": [
+                {
+                    "naam": "Rijssen",
+                    "value": "rijssen",
+                    "center": [ 231657, 480800 ],
+                    "zoom": 14.5
+                },
+                {
+                    "naam": "Holten",
+                    "value": "holten",
+                    "center": [ 225008, 477254 ],
+                    "zoom": 15
+                },
+                {
+                    "naam": "Geen voorkeur",
+                    "value": "beide",
+                    "center": [ 229025, 479254 ],
+                    "zoom": 14
+                }
+            ]
+        },
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         "laagNaam": {
             "kvk": "Bedrijven",
             "kavels": "Uitgifte Locaties",
@@ -89,15 +142,6 @@
             "Q": "Gezondheidszorg",
             "S": "Overige dienstverlening"
         },
-
-        "homePageGemeente": "http://www.rijssen-holten.nl/home",
-        "logoUrlGemeente": "/images/logo-rh.jpg",
-        "colorGemeente": "#730049",
-        "homePageIdgis": "https://idgis.nl/index.php/nl/bedrijvenatlas",
-        "logoUrlIdgis": "/images/logoidgisklein.jpg",
-
-        "logoWizardUrl": "/icons/KNOP_VESTIGEN_NIEUW_BEDRIJF.svg",
-        "logoViewerUrl": "/icons/KNOP_NAAR_DE_KAART.svg",
 
         "teKoopJsonUrl": "/data/vastgoedTeKoop.json",
         "teHuurJsonUrl": "/data/vastgoedTeHuur.json",
