@@ -93,7 +93,6 @@ export default class Viewer extends Component {
             } else if (service === 'wms') {
                 return this.getWmsLayer(layer);
             } else if (service === 'geojson') {
-                console.log(layer);
                 return this.getGeoJsonLayer(layer);
             }
         });
