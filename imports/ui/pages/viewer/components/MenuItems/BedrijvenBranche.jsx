@@ -160,7 +160,7 @@ export default class BedrijvenBranche extends Component {
                                 ]
                             });
                             map.addInteraction(select);
-                            /*let collection = */select.getFeatures().push(features[i]);
+                            select.getFeatures().push(features[i]);
 
                             this.closeMenu();
                         }

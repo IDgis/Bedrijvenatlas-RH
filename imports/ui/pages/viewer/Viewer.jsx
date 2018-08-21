@@ -74,30 +74,60 @@ export default class Viewer extends Component {
         this.props.mapToParent(this.state.map);
     }
 
+    /**
+     * Returns all Layers to add to the Map
+     */
     getMapLayers = () => {
+        const allLayers = [];
+
+        const baseLayers = Meteor.settings.public.baseLayers;
+        const overlayLayers = Meteor.settings.public.overlayLayers;
+        const fundaLayers = Meteor.settings.public.fundaLayers;
+
+        this.addLayers(baseLayers, allLayers);
+        this.addLayers(overlayLayers, allLayers);
+        this.addLayers(fundaLayers, allLayers);
+
+        return allLayers;
+    }
+
+    /**
+     * Adds all layers to the existing array of layers
+     * 
+     * @param {Array} layers The layers array to add
+     * @param {Array} allLayers All layers will be added to this array
+     */
+    addLayers = (layers, allLayers) => {
         const extent = Meteor.settings.public.gemeenteConfig.extent;
         const projection = new ol.proj.Projection({code: 'EPSG:28992', units: 'm', extent: extent});
         const matrixIds = [];
 
-        for(let i = 0; i < 16; i++) {
+        for (let i = 0; i < 16; i++) {
             matrixIds[i] = 'EPSG:28992:' + i.toString();
         }
 
-        return Meteor.settings.public.lagen.map(layer => {
+        layers.forEach(layer => {
             const service = layer.service;
 
             if (service === 'tms') {
-                return this.getTmsLayer(layer, extent, projection);
+                allLayers.push(this.getTmsLayer(layer, extent, projection));
             } else if (service === 'wmts') {
-                return this.getWmtsLayer(layer, projection, matrixIds);
+                allLayers.push(this.getWmtsLayer(layer, projection, matrixIds));
             } else if (service === 'wms') {
-                return this.getWmsLayer(layer);
+                allLayers.push(this.getWmsLayer(layer));
             } else if (service === 'geojson') {
-                return this.getGeoJsonLayer(layer);
+                allLayers.push(this.getGeoJsonLayer(layer));
             }
         });
     }
 
+    /**
+     * Creates an OpenLayers TMS Layer
+     * 
+     * @param {Object} tmsLayer The TMS Layer object to convert to an OpenLayers Object
+     * @param {Array} extent The extent of the layer
+     * @param {Object} projection The projection object of the given layer
+     */
     getTmsLayer = (tmsLayer, extent, projection) => (
         new ol.layer.Tile({
             title: tmsLayer.titel,
@@ -116,6 +146,13 @@ export default class Viewer extends Component {
         })
     );
 
+    /**
+     * Creates an OpenLayers WMTS Layer
+     * 
+     * @param {Object} wmtsLayer The WMTS Layer object to convert to an OpenLayers Object
+     * @param {Object} projection The projection object of the given layer
+     * @param {Array} matrixIds The matrixIds to use for this layer
+     */
     getWmtsLayer = (wmtsLayer, projection, matrixIds) => (
         new ol.layer.Tile({
             title: wmtsLayer.titel,
@@ -137,6 +174,11 @@ export default class Viewer extends Component {
         })
     );
 
+    /**
+     * Creates an OpenLayers WMS Layer
+     * 
+     * @param {Object} wmsLayer The WMS Layer object to convert to an OpenLayers Object
+     */
     getWmsLayer = (wmsLayer) => (
         wmsLayer.tiling ?
         new ol.layer.Tile({
@@ -165,6 +207,11 @@ export default class Viewer extends Component {
         })
     )
 
+    /**
+     * Creates an OpenLayers GeoJSON Layer
+     * 
+     * @param {Object} geoJsonLayer The GeoJson Layer object to convert to an OpenLayers Object
+     */
     getGeoJsonLayer = (geoJsonLayer) => (
         new ol.layer.Vector({
             title: geoJsonLayer.titel,
