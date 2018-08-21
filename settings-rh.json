@@ -3,19 +3,21 @@
 
         "idgisConfig": {
             "homePage": "https://www.idgis.nl/index.php/nl/bedrijvenatlas",
-            "logo": "/idgis/images/logo.jpg"
+            "logo": "/idgis/images/logo.jpg",
+            "altText": "idgis"
         },
 
         "gemeenteConfig": {
             "naam": "Rijssen-Holten",
             "homePage": "https://www.rijssen-holten.nl/home",
             "logo": "/rijssenholten/images/logo.jpg",
+            "altText": "Rijssen Holten",
             "colorGemeente": "#730049",
 
             "logoWizardKnop": "/rijssenholten/icons/KNOP_VESTIGEN_NIEUW_BEDRIJF.svg",
             "logoViewerKnop": "/rijssenholten/icons/KNOP_NAAR_DE_KAART.svg",
 
-            "extent": [ -285401.92, 22598.08, 595401.92, 903401.92 ],
+            "extent": [ 220846, 474494, 237209, 484108 ],
             "center": [ 229025, 479254 ],
             "zoom": 14,
             "minZoom": 13,

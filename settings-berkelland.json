@@ -1,0 +1,244 @@
+{
+    "public": {
+
+        "idgisConfig": {
+            "homePage": "https://www.idgis.nl/index.php/nl/bedrijvenatlas",
+            "logo": "/idgis/images/logo.jpg",
+            "altText": "idgis"
+        },
+
+        "gemeenteConfig": {
+            "naam": "Berkelland",
+            "homePage": "https://www.gemeenteberkelland.nl/",
+            "logo": "/berkelland/images/logo.png",
+            "altText": "Berkelland",
+            "colorGemeente": "#004D93",
+
+            "logoWizardKnop": "/rijssenholten/icons/KNOP_VESTIGEN_NIEUW_BEDRIJF.svg",
+            "logoViewerKnop": "/rijssenholten/icons/KNOP_NAAR_DE_KAART.svg",
+
+            "extent": [ 220754, 445975, 251434, 467576 ],
+            "center": [ 236094, 456775 ],
+            "zoom": 13,
+            "minZoom": 12,
+
+            "plaatsen": [
+                {
+                    "naam": "Beltrum",
+                    "value": "beltrum",
+                    "center": [ 235653, 453835 ],
+                    "zoom": 15.5
+                },
+                {
+                    "naam": "Borculo",
+                    "value": "borculo",
+                    "center": [ 233033, 459578 ],
+                    "zoom": 15
+                },
+                {
+                    "naam": "Eibergen",
+                    "value": "eibergen",
+                    "center": [ 241457, 457568 ],
+                    "zoom": 15
+                },
+                {
+                    "naam": "Neede",
+                    "value": "neede",
+                    "center": [ 239004, 461467 ],
+                    "zoom": 15
+                },
+                {
+                    "naam": "Ruurlo",
+                    "value": "ruurlo",
+                    "center": [ 228158, 455892 ],
+                    "zoom": 15
+                },
+                {
+                    "naam": "Geen voorkeur",
+                    "value": "beide",
+                    "center": [ 236094, 456775 ],
+                    "zoom": 13
+                }
+            ]
+        },
+
+        "kvkBedrijven": {
+            "naam": "Bedrijven",
+            "omschrijving": "KVK Bedrijven",
+
+            "namen": {
+                "C": "Industrie",
+                "E": "Distributie water/afval",
+                "F": "Bouwnijverheid",
+                "G": "Handel/Groothandel",
+                "H": "Vervoer/opslag",
+                "I": "Logies/maaltijd/drank",
+                "J": "Informatica/communicatie",
+                "K": "Financiëel",
+                "L": "Onroerend goed",
+                "M": "Advisering",
+                "N": "Verhuur/overige dienstverlening",
+                "P": "Onderwijs",
+                "Q": "Gezondheidszorg",
+                "S": "Overige dienstverlening"
+            },
+
+            "icons": {
+                "C": "/icons/SBI_RUBRIEK_CODE_C_INDUSTRIE.svg",
+                "E": "/icons/SBI_RUBRIEK_CODE_E_DISTRIBUTIE_WATER_AFVAL.svg",
+                "F": "/icons/SBI_RUBRIEK_CODE_F_BOUWNIJVERHEID.svg",
+                "G": "/icons/SBI_RUBRIEK_CODE_G_DETAILHANDEL.svg",
+                "H": "/icons/SBI_RUBRIEK_CODE_H_VERVOER_OPSLAG.svg",
+                "I": "/icons/SBI_RUBRIEK_CODE_I_LOGIES_MAALTIJD_DRANK.svg",
+                "J": "/icons/SBI_RUBRIEK_CODE_J_INFO_COMMUNICATIE.svg",
+                "K": "/icons/SBI_RUBRIEK_CODE_K_FINANCIEEL.svg",
+                "L": "/icons/SBI_RUBRIEK_CODE_L_ONROEREND_GOED.svg",
+                "M": "/icons/SBI_RUBRIEK_CODE_M_ADVISERING.svg",
+                "N": "/icons/SBI_RUBRIEK_CODE_N_VERHUR_OVR_DIENSTV.svg",
+                "P": "/icons/SBI_RUBRIEK_CODE_P_ONDERWIJS.svg",
+                "Q": "/icons/SBI_RUBRIEK_CODE_Q_GEZONDHEIDSZORG.svg",
+                "S": "/icons/SBI_RUBRIEK_CODE_S_OVERIGE_DIENSTVERL.svg"
+            }
+        },
+
+        "detailHandel": {
+            "omschrijving": "Detail Handel",
+
+            "namen": {
+
+            },
+
+            "icons": {
+
+            }
+        },
+
+        "baseLayers": [
+            {
+                "service": "tms",
+                "titel": "BRT",
+                "url": "https://geodata.nationaalgeoregister.nl/tms/1.0.0/brtachtergrondkaart/{z}/{x}/{-y}.png",
+                "resolutions": [ 3440.64, 1720.32, 860.16, 430.08, 215.04, 107.52, 53.76, 26.88, 13.44, 6.72, 3.36, 1.68, 0.84, 0.42, 0.21, 0.105, 0.0525 ],
+                "omschrijving": "BRT Achtergrond",
+                "visible": true
+            },
+            {
+                "service": "wmts",
+                "titel": "BGT",
+                "url": "https://geodata.nationaalgeoregister.nl/tiles/service/wmts",
+                "layer": "bgtachtergrond",
+                "matrixSet": "EPSG:28992:16",
+                "format": "image/png8",
+                "style": "default",
+                "origin": [ -285401.92,903401.92 ],
+                "resolutions": [ 3440.64, 1720.32, 860.16, 430.08, 215.04, 107.52, 53.76, 26.88, 13.44, 6.72, 3.36, 1.68, 0.84, 0.42, 0.21, 0.105, 0.0525 ],
+                "omschrijving": "BGT Achtergrond",
+                "visible": false
+            }
+        ],
+
+        "overlayLayers": [
+            {
+                "service": "wms",
+                "titel": "Kadastrale percelen",
+                "url": "https://geodata.nationaalgeoregister.nl/kadastralekaartv3/ows?SERVICE=WMS&",
+                "format": "image/png",
+                "layers": "kadastralekaart",
+                "tiling": true,
+                "omschrijving": "TileWMS Kadastrale percelen",
+                "visible": false
+            }
+        ],
+
+        "fundaLayers": [
+            {
+                "service": "geojson",
+                "titel": "Te Koop",
+                "url": "/data/vastgoedTeKoop.json",
+                "icon": "/icons/TE_KOOP.svg",
+                "shadow": "/icons/SCHADUW.svg",
+                "visible": false
+            },
+            {
+                "service": "geojson",
+                "titel": "Te Huur",
+                "url": "/data/vastgoedTeHuur.json",
+                "icon": "/icons/TE_HUUR.svg",
+                "shadow": "/icons/SCHADUW.svg",
+                "visible": false
+            }
+        ],
+
+
+
+
+
+
+
+
+        "laagNaam": {
+            "kavels": "Uitgifte Locaties",
+            "ibis": "Bedrijventerreinen",
+            "kadastralePercelen": "Kadastrale percelen",
+            "luchtfoto": "Luchtfoto",
+            "teKoop": "Te Koop",
+            "teHuur": "Te Huur",
+            "vastgoed": "Te Koop\/Huur",
+            "milieu": "Milieucategorieën"
+        },
+
+        "searchFields": {
+            "Bedrijventerreinen": ["BEDR_TERR","RINNUMMER","KERN","JAAR","OPPBRUTO","OPPNETTO"],
+            "Bedrijven": ["BEDR_NAAM","ADR_LABEL","SBI_OMSCHR"],
+            "Uitgifte Locaties": ["LOC_TYPE","LOC_NM","LOC_URL"],
+            "Kadastrale percelen": ["kadastraleGemeenteCode","sectie","perceelnummer","kadastralegrootte"],
+            "Te Koop": ["Straat","Huisnummer","Toevoeging","Postcode","Plaats","Oppervlakte","Prijs"],
+            "Te Huur": ["Straat","Huisnummer","Toevoeging","Postcode","Plaats","Oppervlakte","Prijs"],
+            "Milieucategoriën": ["CATEGORIE"]
+        },
+
+        "alias": {
+            "SBI_OMSCHR": "Omschrijving",
+            "BEDR_NAAM": "Bedrijfsnaam",
+            "ADR_LABEL": "Adres",
+            "KAVELINFO": "Kavel info",
+            "OPP": "Oppervlakte",
+            "KAVELNR": "Kavel nr",
+            "STATUS": "Status",
+            "TELEFOON": "Telefoon",
+            "EMAIL": "Email",
+            "LOC_TYPE": "Locatie type",
+            "LOC_NM": "Naam",
+            "LOC_URL": "URL"
+        },
+
+        "iconShadow": "/icons/SCHADUW.svg",
+        "iconKoop": "/icons/TE_KOOP.svg",
+        "iconHuur": "/icons/TE_HUUR.svg",
+        "iconSelected": "/rijssenholten/icons/SELECTED.svg",
+        "iconHome": "/icons/HOME.svg",
+        "iconMenu": "/icons/MENU.svg",
+
+        "iconBedrijventerreinen": "/rijssenholten/icons/BEDRIJVENTERREINEN.svg",
+        "iconKavels": "/rijssenholten/icons/KAVELS.svg",
+
+        "milieuUrl": {
+            "C2": "/rijssenholten/icons/CATEGORIE_2.svg",
+            "C31": "/rijssenholten/icons/CATEGORIE_3_1.svg",
+            "C32": "/rijssenholten/icons/CATEGORIE_3_2.svg",
+            "C41": "/rijssenholten/icons/CATEGORIE_4_1.svg",
+            "C42": "/rijssenholten/icons/CATEGORIE_4_2.svg"
+        },
+
+        "teKoopJsonUrl": "/data/vastgoedTeKoop.json",
+        "teHuurJsonUrl": "/data/vastgoedTeHuur.json",
+
+        "bedrijvenatlasWmsUrl": "https://rijssen-holten-pub.geopublisher.nl/geoserver/Bedrijvenatlas/ows?SERVICE=WMS&",
+        "wmsLayerNames": {
+            "milieuCategorieLayer": "Bedrijventerreinen_RO_categorie_indeling",
+            "bedrijventerreinenLayer": "Bedrijventerreinen_Rijssen-Holten",
+            "uitgifteLocatiesLayer": "Bedrijventerreinen_uitgiftelocaties"
+        },
+        "kvkBedrijvenWfsUrl": "https://rijssen-holten-pub.geopublisher.nl/geoserver/Bedrijvenatlas/wfs"
+    }
+}

@@ -98,7 +98,7 @@ export default class Viewer extends Component {
      * @param {Array} allLayers All layers will be added to this array
      */
     addLayers = (layers, allLayers) => {
-        const extent = Meteor.settings.public.gemeenteConfig.extent;
+        const extent = [-285401.92,22598.08,595401.92,903401.92];
         const projection = new ol.proj.Projection({code: 'EPSG:28992', units: 'm', extent: extent});
         const matrixIds = [];
 
