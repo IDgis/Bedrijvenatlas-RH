@@ -47,6 +47,9 @@
         "kvkBedrijven": {
             "naam": "Bedrijven",
             "omschrijving": "KVK Bedrijven",
+            "url": "https://rijssen-holten-pub.geopublisher.nl/geoserver/Bedrijvenatlas/wfs",
+            "featurePrefix": "Bedrijventerreinen_KVK_hoofdactiviteiten_per_adres_service",
+            "featureTypes": ["Bedrijventerreinen_KVK_hoofdactiviteiten_per_adres"],
 
             "namen": {
                 "C": "Industrie",
@@ -80,11 +83,16 @@
                 "P": "/icons/SBI_RUBRIEK_CODE_P_ONDERWIJS.svg",
                 "Q": "/icons/SBI_RUBRIEK_CODE_Q_GEZONDHEIDSZORG.svg",
                 "S": "/icons/SBI_RUBRIEK_CODE_S_OVERIGE_DIENSTVERL.svg"
-            }
+            },
+            "iconShadow": "/icons/SCHADUW.svg"
         },
 
         "detailHandel": {
+            "naam": "Detailhandel",
             "omschrijving": "Detail Handel",
+            "url": "",
+            "featurePrefix": "",
+            "featureTypes": [],
 
             "namen": {
 
@@ -92,7 +100,8 @@
 
             "icons": {
 
-            }
+            },
+            "iconShadow": "/icons/SCHADUW.svg"
         },
 
         "baseLayers": [

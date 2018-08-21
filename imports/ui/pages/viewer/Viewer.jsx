@@ -70,7 +70,7 @@ export default class Viewer extends Component {
 
         this.setMapSettings();
         this.setBackgroundLayer();
-        this.addKvkLayers();
+        this.addKvkLayers(Meteor.settings.public.kvkBedrijven);
         this.props.mapToParent(this.state.map);
     }
 
@@ -330,35 +330,31 @@ export default class Viewer extends Component {
     /**
      * Add all kvk layers by SBI code
      */
-    addKvkLayers() {
-        let categorien = Meteor.settings.public.kvkBedrijven.icons;
-        let that = this;
-
-        for(c in categorien) {
-            let categorieNaam = c[0];
-
-            let featureRequest = new ol.format.WFS().writeGetFeature({
+    addKvkLayers = (layerConfig) => {
+        Object.keys(layerConfig.icons).forEach(category => {
+            const featureRequest = new ol.format.WFS().writeGetFeature({
                 srsName: 'EPSG:28992',
                 outputFormat: 'application/json',
-                featurePrefix: 'Bedrijventerreinen_KVK_hoofdactiviteiten_per_adres_service',
-                featureTypes: ['Bedrijventerreinen_KVK_hoofdactiviteiten_per_adres'],
-                filter: ol.format.filter.equalTo('SBI_RUBR_C', categorieNaam)
+                featurePrefix: layerConfig.featurePrefix,
+                featureTypes: layerConfig.featureTypes,
+                filter: ol.format.filter.equalTo('SBI_RUBR_C', category)
             });
-            fetch(Meteor.settings.public.kvkBedrijvenWfsUrl, {
+
+            fetch(layerConfig.url, {
                 method: 'POST',
                 body: new XMLSerializer().serializeToString(featureRequest)
-            }).then(function(response) {
+            }).then(response => {
                 return response.json();
-            }).then(function(json) {
-                let features = new ol.format.GeoJSON().readFeatures(json);
-                let source = new ol.source.Vector();
-                let layer = new ol.layer.Vector({
-                    title: Meteor.settings.public.kvkBedrijven.naam,
+            }).then(json => {
+                const features = new ol.format.GeoJSON().readFeatures(json);
+                const source = new ol.source.Vector();
+                const layer = new ol.layer.Vector({
+                    title: layerConfig.naam,
                     source: source,
                     style: [
                         new ol.style.Style({
                             image: new ol.style.Icon({
-                                src: Meteor.settings.public.kvkBedrijven.icons[categorieNaam],
+                                src: layerConfig.icons[category],
                                 imgSize: [48,48], // for IE11
                                 scale: 0.5
                             }),
@@ -366,7 +362,7 @@ export default class Viewer extends Component {
                         }),
                         new ol.style.Style({
                             image: new ol.style.Icon({
-                                src: Meteor.settings.public.iconShadow,
+                                src: layerConfig.iconShadow,
                                 scale: 0.5,
                                 opacity: 0.7
                             }),
@@ -376,9 +372,9 @@ export default class Viewer extends Component {
                     visible: false
                 });
                 source.addFeatures(features);
-                that.state.map.addLayer(layer);
-            })
-        }
+                this.state.map.addLayer(layer);
+            });
+        });
     }
 
     /**

@@ -65,6 +65,9 @@
         "kvkBedrijven": {
             "naam": "Bedrijven",
             "omschrijving": "KVK Bedrijven",
+            "url": "",
+            "featurePrefix": "",
+            "featureTypes": [],
 
             "namen": {
                 "C": "Industrie",
@@ -98,11 +101,16 @@
                 "P": "/icons/SBI_RUBRIEK_CODE_P_ONDERWIJS.svg",
                 "Q": "/icons/SBI_RUBRIEK_CODE_Q_GEZONDHEIDSZORG.svg",
                 "S": "/icons/SBI_RUBRIEK_CODE_S_OVERIGE_DIENSTVERL.svg"
-            }
+            },
+            "iconShadow": "/icons/SCHADUW.svg"
         },
 
         "detailHandel": {
+            "naam": "detailHandel",
             "omschrijving": "Detail Handel",
+            "url": "",
+            "featurePrefix": "",
+            "featureTypes": [],
 
             "namen": {
 
@@ -110,7 +118,8 @@
 
             "icons": {
 
-            }
+            },
+            "iconShadow": "/icons/SCHADUW.svg"
         },
 
         "baseLayers": [
