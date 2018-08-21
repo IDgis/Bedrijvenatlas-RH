@@ -3,17 +3,17 @@
 
         "idgisConfig": {
             "homePage": "https://www.idgis.nl/index.php/nl/bedrijvenatlas",
-            "logo": "/images/idgis/logo.jpg"
+            "logo": "/idgis/images/logo.jpg"
         },
 
         "gemeenteConfig": {
             "naam": "Rijssen-Holten",
             "homePage": "https://www.rijssen-holten.nl/home",
-            "logo": "/images/rijssenholten/logo.jpg",
+            "logo": "/rijssenholten/images/logo.jpg",
             "colorGemeente": "#730049",
 
-            "logoWizardKnop": "/icons/rijssenholten/KNOP_VESTIGEN_NIEUW_BEDRIJF.svg",
-            "logoViewerKnop": "/icons/rijssenholten/KNOP_NAAR_DE_KAART.svg",
+            "logoWizardKnop": "/rijssenholten/icons/KNOP_VESTIGEN_NIEUW_BEDRIJF.svg",
+            "logoViewerKnop": "/rijssenholten/icons/KNOP_NAAR_DE_KAART.svg",
 
             "extent": [ -285401.92, 22598.08, 595401.92, 903401.92 ],
             "center": [ 229025, 479254 ],
@@ -244,19 +244,19 @@
         "iconShadow": "/icons/SCHADUW.svg",
         "iconKoop": "/icons/TE_KOOP.svg",
         "iconHuur": "/icons/TE_HUUR.svg",
-        "iconSelected": "/icons/SELECTED.svg",
+        "iconSelected": "/rijssenholten/icons/SELECTED.svg",
         "iconHome": "/icons/HOME.svg",
         "iconMenu": "/icons/MENU.svg",
 
-        "iconBedrijventerreinen": "/icons/BEDRIJVENTERREINEN.svg",
-        "iconKavels": "/icons/KAVELS.svg",
+        "iconBedrijventerreinen": "/rijssenholten/icons/BEDRIJVENTERREINEN.svg",
+        "iconKavels": "/rijssenholten/icons/KAVELS.svg",
 
         "milieuUrl": {
-            "C2": "/icons/CATEGORIE_2.svg",
-            "C31": "/icons/CATEGORIE_3_1.svg",
-            "C32": "/icons/CATEGORIE_3_2.svg",
-            "C41": "/icons/CATEGORIE_4_1.svg",
-            "C42": "/icons/CATEGORIE_4_2.svg"
+            "C2": "/rijssenholten/icons/CATEGORIE_2.svg",
+            "C31": "/rijssenholten/icons/CATEGORIE_3_1.svg",
+            "C32": "/rijssenholten/icons/CATEGORIE_3_2.svg",
+            "C41": "/rijssenholten/icons/CATEGORIE_4_1.svg",
+            "C42": "/rijssenholten/icons/CATEGORIE_4_2.svg"
         },
 
         "teKoopJsonUrl": "/data/vastgoedTeKoop.json",

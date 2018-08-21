@@ -93,7 +93,7 @@ body {
 
 .welcome-layout {
     position: fixed;
-    background-image: url('images/GRH-VLETGAARSMATEN-BEDRIJVENTERREIN.jpg');
+    background-image: url('/rijssenholten/images/GRH-VLETGAARSMATEN-BEDRIJVENTERREIN.jpg');
     background-size: cover;
     text-align: center;
     top: 56px;
