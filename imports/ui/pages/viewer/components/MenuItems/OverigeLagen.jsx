@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { Meteor } from 'meteor/meteor';
 
-import BedrijvenBranche from './BedrijvenBranche.jsx';
-import Kaartlaag from './Kaartlaag.jsx';
+import Bedrijvenlaag from './Bedrijvenlaag';
+import Kaartlaag from './Kaartlaag';
 
 import ArrowDropRight from 'material-ui/svg-icons/navigation-arrow-drop-right';
 import Checkbox from 'material-ui/Checkbox';
@@ -163,6 +163,18 @@ export default class OverigeLagen extends Component {
         return visible;
     }
 
+    getFundaMenuItems = () => (
+        Meteor.settings.public.fundaLayers.map((layer, index) => (
+            <Kaartlaag layer={layer} map={this.props.map} updateParent={this.setAllVastgoedChecked} updateLegenda={this.props.updateLegenda} key={layer.titel + index} />
+        ))
+    );
+
+    getCustomLayers = () => (
+        Meteor.settings.public.overlayLayers.map((layer, index) => (
+            <Kaartlaag layer={layer} map={this.props.map} updateLegenda={this.props.updateLegenda} key={layer.titel + index} />
+        ))
+    )
+
     /**
      * The main render method that will render the component to the screen
      */
@@ -170,26 +182,26 @@ export default class OverigeLagen extends Component {
         const allVastgoedChecked = this.getAllVastgoedChecked();
         const allKvkChecked = this.getAllKvkChecked();
 
+        const fundaMenuItems = this.getFundaMenuItems();
+        const customLayers = this.getCustomLayers();
+
         return (
             <List className='list-menu' >
-                <MenuItem className='list-item' primaryText={Meteor.settings.public.laagNaam.vastgoed}
+                <MenuItem className='list-item' primaryText='Te Koop/Huur' 
                     leftIcon={<Checkbox checked={allVastgoedChecked} onTouchTap={this.selectAllVastgoedLayers} iconStyle={{fill:'white'}} />}
                     rightIcon={<ArrowDropRight style={{fill:'white'}} />}
-                    menuItems={[
-                        <Kaartlaag primaryText={Meteor.settings.public.laagNaam.teKoop} map={this.props.map} updateParent={this.setAllVastgoedChecked} updateLegenda={this.props.updateLegenda} />,
-                        <Kaartlaag primaryText={Meteor.settings.public.laagNaam.teHuur} map={this.props.map} updateParent={this.setAllVastgoedChecked} updateLegenda={this.props.updateLegenda} />
-                    ]}
-                />
-                <Kaartlaag primaryText={Meteor.settings.public.laagNaam.kavels} map={this.props.map} updateLegenda={this.props.updateLegenda} />
+                    menuItems={fundaMenuItems}
+                    />
                 <MenuItem className='list-item' primaryText={Meteor.settings.public.kvkBedrijven.naam}
                     leftIcon={<Checkbox checked={allKvkChecked} onTouchTap={this.selectAllKvkLayers} iconStyle={{fill:'white'}} />}
                     rightIcon={<ArrowDropRight style={{fill:'white'}} />}
-                    menuItems={<BedrijvenBranche map={this.props.map} updateParent={this.setAllKvkChecked} updateLegenda={this.props.updateLegenda} />}
-                />
-                <Kaartlaag primaryText={Meteor.settings.public.laagNaam.milieu} map={this.props.map} updateLegenda={this.props.updateLegenda} />
-                <Kaartlaag primaryText={Meteor.settings.public.laagNaam.ibis} map={this.props.map} updateLegenda={this.props.updateLegenda} />
-                <Kaartlaag primaryText={Meteor.settings.public.laagNaam.kadastralePercelen} map={this.props.map} updateLegenda={this.props.updateLegenda} />
-                <Kaartlaag primaryText={Meteor.settings.public.laagNaam.luchtfoto} map={this.props.map} updateLegenda={this.props.updateLegenda} />
+                    menuItems={<Bedrijvenlaag 
+                        layer={Meteor.settings.public.kvkBedrijven} 
+                        map={this.props.map} 
+                        updateParent={this.setAllKvkChecked} 
+                        updateLegenda={this.props.updateLegenda} />}
+                    />
+                { customLayers }
             </List>
         );
     }
