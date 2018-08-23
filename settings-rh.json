@@ -196,6 +196,7 @@
             {
                 "service": "geojson",
                 "titel": "Te Koop",
+                "omschrijving": "Panden te koop volgens Funda",
                 "url": "/data/vastgoedTeKoop.json",
                 "icon": "/icons/TE_KOOP.svg",
                 "shadow": "/icons/SCHADUW.svg",
@@ -204,6 +205,7 @@
             {
                 "service": "geojson",
                 "titel": "Te Huur",
+                "omschrijving": "Panden te huur volgens Funda",
                 "url": "/data/vastgoedTeHuur.json",
                 "icon": "/icons/TE_HUUR.svg",
                 "shadow": "/icons/SCHADUW.svg",
