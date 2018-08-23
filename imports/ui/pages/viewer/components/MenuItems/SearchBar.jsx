@@ -19,9 +19,9 @@ export default class SearchBar extends Component {
     }
 
     fillSearchFields = () => {
-        let url = Meteor.settings.public.kvkBedrijvenWfsUrl +
-        '?service=wfs&version=1.1.0&request=GetFeature&outputFormat=application/json&resultType=results' +
-        '&typeName=Bedrijvenatlas:Bedrijventerreinen_KVK_hoofdactiviteiten_per_adres&srs=EPSG:28992';
+        const kvkBedrijven = Meteor.settings.public.kvkBedrijven;
+        const url = `${kvkBedrijven.url}?service=WFS&version=1.1.0&request=GetFeature&outputFormat=application/json` +
+        `&resultType=results&typeName=${kvkBedrijven.namespace}:${kvkBedrijven.featureTypes[0]}`;
 
         Meteor.call('getSearchFields', url, (err, result) => {
             if(err) {

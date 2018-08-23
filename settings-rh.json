@@ -48,6 +48,7 @@
             "naam": "Bedrijven",
             "omschrijving": "KVK Bedrijven",
             "url": "https://rijssen-holten-pub.geopublisher.nl/geoserver/Bedrijvenatlas/wfs",
+            "namespace": "Bedrijvenatlas",
             "featurePrefix": "Bedrijventerreinen_KVK_hoofdactiviteiten_per_adres_service",
             "featureTypes": ["Bedrijventerreinen_KVK_hoofdactiviteiten_per_adres"],
 
@@ -91,6 +92,7 @@
             "naam": "Detailhandel",
             "omschrijving": "Detail Handel",
             "url": "",
+            "namespace": "",
             "featurePrefix": "",
             "featureTypes": [],
 

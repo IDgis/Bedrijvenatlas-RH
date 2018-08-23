@@ -66,6 +66,7 @@
             "naam": "Bedrijven",
             "omschrijving": "KVK Bedrijven",
             "url": "",
+            "namespace": "",
             "featurePrefix": "",
             "featureTypes": [],
 
@@ -109,6 +110,7 @@
             "naam": "detailHandel",
             "omschrijving": "Detail Handel",
             "url": "",
+            "namespace": "",
             "featurePrefix": "",
             "featureTypes": [],
 
