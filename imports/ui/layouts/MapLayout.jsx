@@ -53,43 +53,56 @@ export default class MapLayout extends Component {
     /**
      * Listen for click events on the map and creates a popup for the selected features.
      */
-    addMapListener() {
-        let map = this.state.map;
-        let that = this;
+    addMapListener = () => {
+        const map = this.state.map;
 
-        map.getView().on('change:resolution', function() {
-            let maxZoom = 16
-            let layers = map.getLayers();
-            layers.forEach((layer, index) => {
-                if(layer.get('title') === 'BGT') {
-                    if(maxZoom <= map.getView().getZoom()) layer.setVisible(true);
-                    else layer.setVisible(false);
+        map.getView().on('change:resolution', () => {
+            const mapToggleZoom = 16;
+            map.getLayers().forEach(layer => {
+                if (layer.get('title') === 'BGT') {
+                    mapToggleZoom <= map.getView().getZoom() ? layer.setVisible(true) : layer.setVisible(false);
                 }
-                if(layer.get('title') === 'BRT') {
-                    if(maxZoom+1 >= map.getView().getZoom()) layer.setVisible(true);
-                    else layer.setVisible(false);
-                } 
+                if (layer.get('title') === 'BRT') {
+                    mapToggleZoom + 1 >= map.getView().getZoom() ? layer.setVisible(true) : layer.setVisible(false);
+                }
             });
         });
-    
-        map.on('click', function(e) {
-            that.setState({
+
+        map.on('click', e => {
+            this.setState({
                 location: {
                     x: e.coordinate[0],
                     y: e.coordinate[1]
                 }
             });
 
-            const coords = [that.state.location.x, that.state.location.y];
-            that.getFeatureInfoPopup(that.state.map, coords);
+            const coords = [this.state.location.x, this.state.location.y];
+            this.getFeatureInfoPopup(this.state.map, coords);
 
-            map.forEachFeatureAtPixel(e.pixel, function(feature, layer) {
+            map.forEachFeatureAtPixel(e.pixel, (feature, layer) => {
                 const title = layer.get('title');
-                const laagNaam = Meteor.settings.public.laagNaam;
+                const layerNames = [];
+
+                Meteor.settings.public.fundaLayers.forEach(layer => layerNames.push(layer.titel));
+                layerNames.push(Meteor.settings.public.kvkBedrijven.naam);
                 const searchFields = Meteor.settings.public.searchFields[title];
-                if(title === laagNaam.teKoop || title === laagNaam.teHuur || title === Meteor.settings.public.kvkBedrijven.naam) {
-                    that.setState({featurePopup: <Popup title={title} selectedFeature={feature} coords={coords} screenCoords={e.pixel} searchFields={searchFields} map={that.state.map} openStreetView={that.openStreetView} onRequestClose={that.closePopup} />});
-                }
+
+                layerNames.forEach(name => {
+                    if (title === name) {
+                        this.setState({
+                            featurePopup: <Popup 
+                                            title={title} 
+                                            selectedFeature={feature} 
+                                            coords={coords} 
+                                            screenCoords={e.pixel} 
+                                            searchFields={searchFields} 
+                                            map={this.state.map}
+                                            openStreetView={this.openStreetView}
+                                            onRequestClose={this.closePopup}
+                                            />
+                        });
+                    }
+                });
             });
         });
     }
