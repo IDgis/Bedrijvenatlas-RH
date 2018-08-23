@@ -277,7 +277,7 @@ div[role="presentation"] {
 }
 
 .legenda-list {
-    overflow-y: scroll;
+    overflow-y: auto;
     max-height: 400px;
 }
 
