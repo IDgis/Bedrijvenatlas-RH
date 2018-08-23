@@ -4,10 +4,10 @@ LABEL maintainer="IDgis bv"
 RUN mkdir /home/meteorapp
 WORKDIR /home/meteorapp
 
-ADD ../../../ ./app
-COPY ./rijssenholten.html ./app/client/head.html
-COPY ./rijssenholten.css ./app/client/main.css
-COPY ./favicon.ico ./app/public/images/favicon.ico
+ADD . ./app
+COPY ./imports/config/rijssenholten/rijssenholten.html ./app/client/head.html
+COPY ./imports/config/rijssenholten/rijssenholten.css ./app/client/main.css
+COPY ./imports/config/rijssenholten/favicon.ico ./app/public/images/favicon.ico
 
 RUN cd /home/meteorapp/app \
     && meteor npm install --production \
