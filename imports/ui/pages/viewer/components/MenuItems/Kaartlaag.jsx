@@ -68,7 +68,8 @@ export default class Kaartlaag extends Component {
         const iconAvailable = this.props.layer.icon !== undefined;
 
         return (
-            <ListItem className='list-item' primaryText={this.props.layer.titel}
+            <ListItem className='list-item'
+                primaryText={<div>{this.props.layer.titel} <span title={this.props.layer.omschrijving} className="glyphicon glyphicon-info-sign text-primary" ></span></div>}
                 leftCheckbox={<Checkbox checked={this.state.visible} onClick={this.toggleLayer} iconStyle={{fill:'white'}} />}
                 rightIcon={iconAvailable ? <Avatar src={this.props.layer.icon} /> : null}
                 />
