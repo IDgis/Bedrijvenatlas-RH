@@ -187,6 +187,7 @@
                 "format": "image/png",
                 "layers": "Bedrijventerreinen_uitgiftelocaties",
                 "tiling": true,
+                "showFeatureInfo": true,
                 "omschrijving": "TileWMS Uitgifte Locaties",
                 "visible": false
             }

@@ -36,7 +36,8 @@ export default class Viewer extends Component {
                 projection: 'EPSG:28992',
                 zoom: Meteor.settings.public.gemeenteConfig.zoom,
                 extent: Meteor.settings.public.gemeenteConfig.extent,
-                minZoom: Meteor.settings.public.gemeenteConfig.minZoom
+                minZoom: Meteor.settings.public.gemeenteConfig.minZoom,
+                maxZoom: 21
             }),
             controls: [
                 //new ol.control.ScaleLine(),
