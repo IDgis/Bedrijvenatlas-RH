@@ -1,325 +1,174 @@
 import React, { Component } from 'react';
 
-
 export default class Legenda extends Component {
 
     constructor(props) {
         super(props);
 
         this.state = {
-            map: this.props.map,
-            teKoopHuurVisible: false,
-            teKoopHuurLegenda: <div></div>,
-            bedrijvenVisible: false,
-            bedrijvenLegenda: <div></div>,
-            kavelsVisible: false,
-            kavelsLegenda: <div></div>,
-            milieuVisible: false,
-            milieuLegenda: <div></div>,
-            bedrijventerreinenVisible: false,
-            bedrijventerreinenLegenda: <div></div>
+            legendaItems: []
         }
-        this.addListener();
+
+        this.addLegendaListener();
     }
 
-    componentWillReceiveProps(nextProps) {
-        this.setState({
-            map: nextProps.map
-        });
-        this.setTeKoopHuurLegenda(nextProps.map);
-        this.setKavelsLegenda(nextProps.map);
-        this.setBedrijvenLegenda(nextProps.map);
-        this.setMilieuLegenda(nextProps.map);
-        this.setBedrijventerreinenLegenda(nextProps.map);
+    componentWillReceiveProps(props) {
+        const legendaItems = [];
+        const layers = props.map.getLayers();
+
+        this.getFundaLegenda(layers, legendaItems);
+        this.getKvkBedrijvenLegenda(layers, legendaItems);
+        this.getOverlayLayersLegenda(layers, legendaItems);
+
+        this.setState({legendaItems});
     }
 
     /**
-     * Add a listener for dragging the legenda component
+     * Adds a listener for the Legenda component
      */
-    addListener() {
-        let draggingTarget = null;
+    addLegendaListener = () => {
+        let draggingComponent = null;
         let offsetX;
         let offsetY;
 
-        document.addEventListener('mousemove', function(e) {
-            if(draggingTarget) {
-                let evt = e || window.event;
-                let d = document.getElementById('legenda');
-                d.style.right = (window.innerWidth - evt.clientX - offsetX)+'px';
-                d.style.top = (evt.clientY - offsetY)+'px';
+        // Handle mouse events
+
+        document.addEventListener('mousedown', e => {
+            const name = e.target.className;
+            if (name && name.indexOf('legenda') !== -1) {
+                const legenda = document.getElementById('legenda');
+                draggingComponent = e.target;
+                const evt = e || window.event;
+
+                offsetX = legenda.offsetLeft + legenda.offsetWidth - evt.clientX;
+                offsetY = evt.clientY - legenda.offsetTop;
             }
         });
 
-        document.addEventListener('mousedown', function(e) {
-            let name = e.target.className;
-            if(name && name.indexOf('draggable') !== -1) {
-                let doc = document.getElementById('legenda');
-                draggingTarget = e.target;
-                let evt = e || window.event;
+        document.addEventListener('mouseup', e => {
+            draggingComponent = null;
+        });
 
-                offsetX = doc.offsetLeft + doc.offsetWidth - evt.clientX;
-                offsetY = evt.clientY - doc.offsetTop;
+        document.addEventListener('mousemove', e => {
+            if (draggingComponent) {
+                const evt = e || window.event;
+                const legenda = document.getElementById('legenda');
+
+                legenda.style.right = (window.innerWidth - evt.clientX - offsetX) + 'px';
+                legenda.style.top = (evt.clientY - offsetY) + 'px';
             }
         });
 
-        document.addEventListener('mouseup', function(e) {
-            draggingTarget = null;
-        });
+        // Handle touch events
 
-        document.addEventListener('touchstart', function(e) {
-            let name = e.target.className;
-            if(name && name.indexOf('draggable') !== -1) {
-                let doc = document.getElementById('legenda');
-                draggingTarget = e.touches[0];
-                let evt = e.touches[0];
+        document.addEventListener('touchstart', e => {
+            const name = e.target.className;
+            if (name && name.indexOf('legenda') !== -1) {
+                const legenda = document.getElementById('legenda');
+                draggingComponent = e.touches[0];
+                const evt = e.touches[0];
 
-                offsetX = doc.offsetLeft + doc.offsetWidth - evt.clientX;
-                offsetY = evt.clientY - doc.offsetTop;
+                offsetX = legenda.offsetLeft + legenda.offsetWidth - evt.clientX;
+                offsetY = evt.clientY - legenda.offsetTop;
             }
         });
 
-        document.addEventListener('touchend', function(e) {
-            draggingTarget = null;
+        document.addEventListener('touchend', e => {
+            draggingComponent = null;
         });
 
-        document.addEventListener('touchmove', function(e) {
-            if(draggingTarget) {
-                let evt = e.touches[0];
-                let d = document.getElementById('legenda');
-                d.style.right = (window.innerWidth - evt.clientX - offsetX)+'px';
-                d.style.top = (evt.clientY - offsetY)+'px';
+        document.addEventListener('touchmove', e => {
+            if (draggingComponent) {
+                const evt = e.touches[0];
+                const legenda = document.getElementById('legenda');
+                
+                legenda.style.right = (window.innerWidth - evt.clientX - offsetX) + 'px';
+                legenda.style.top = (evt.clientY - offsetY) + 'px';
             }
         });
     }
 
-    /**
-     * Create the legenda with icons for Te Koop/Huur
-     */
-    setTeKoopHuurLegenda(map) {
-        let teKoop = Meteor.settings.public.laagNaam.teKoop;
-        let teHuur = Meteor.settings.public.laagNaam.teHuur;
+    getFundaLegenda = (layers, legendaItems) => {
+        const fundaItems = [];
 
-        let teKoopDiv = <div style={{display:'none'}}></div>;
-        let teHuurDiv = <div style={{display:'none'}}></div>;
-        let visible = false;
-
-        if(map !== null) {
-            map.getLayers().forEach((layer, index) => {
-                if(layer.get('title') === teKoop && layer.getVisible()) {
-                    visible = true;
-                    teKoopDiv = <div className='legenda-item draggable'>
-                        <img className='legenda-icon draggable' src={Meteor.settings.public.iconKoop} /> {Meteor.settings.public.laagNaam.teKoop} 
-                    </div>;
-                } else if(layer.get('title') === teHuur && layer.getVisible()) {
-                    visible = true;
-                    teHuurDiv = <div className='legenda-item draggable'>
-                        <img className='legenda-icon draggable' src={Meteor.settings.public.iconHuur} /> {Meteor.settings.public.laagNaam.teHuur} 
-                    </div>;
+        layers.forEach((layer, index) => {
+            Meteor.settings.public.fundaLayers.forEach(layerConfig => {
+                if (layer.get('title') === layerConfig.titel && layer.getVisible()) {
+                    fundaItems.push(
+                        <div key={`legenda_funda_${index}`}>
+                            <img className='legenda-icon' src={layerConfig.icon} /> {layerConfig.titel}
+                        </div>
+                    );
                 }
             });
-        }
-
-        this.setState({
-            teKoopHuurVisible: visible
         });
 
-        if(visible) {
-            let legenda = <div className='vastgoed-legenda draggable'>
-                <h3 className='draggable'>{Meteor.settings.public.laagNaam.vastgoed}</h3>
-                {teKoopDiv}
-                {teHuurDiv}
-            </div>;
-            this.setState({
-                teKoopHuurLegenda: legenda
-            });
-        } else {
-            this.setState({
-                teKoopHuurLegenda: <div style={{display:'none'}}></div>,
-            });
-        }
-    }
-
-    /**
-     * Creates the legenda for available Kavels
-     */
-    setKavelsLegenda(map) {
-        let kavels = Meteor.settings.public.laagNaam.kavels;
-        let kavelsDiv = <div style={{display:'none'}}></div>;
-        let visible = false;
-
-        if(map !== null) {
-            map.getLayers().forEach((layer, index) => {
-                if(layer.get('title') === kavels && layer.getVisible()) {
-                    visible = true;
-                    kavelsDiv = <div className='legenda-item draggable'>
-                        <img className='legenda-icon draggable' src={Meteor.settings.public.iconKavels} /> {kavels} <br />
-                    </div>;
-                }
-            });
-        }
-
-        this.setState({
-            kavelsVisible: visible
-        });
-
-        if(visible) {
-            let legenda = <div className='kavels-legenda draggable'>
-                <h3 className='draggable'>{kavels}</h3>
-                {kavelsDiv}
-            </div>;
-            this.setState({
-                kavelsLegenda: legenda
-            });
-        } else {
-            this.setState({
-                kavelsLegenda: <div style={{display:'none'}}></div>,
-            });
-        }
-    }
-
-    /**
-     * Create the legenda for bedrijven
-     */
-    setBedrijvenLegenda(map) {
-        const bedrijven = Meteor.settings.public.kvkBedrijven.naam;
-        let visible = false;
-        const bArr = [];
-
-        if(map !== null) {
-            map.getLayers().forEach((layer, index) => {
-                if(layer.get('title') === bedrijven && layer.getVisible()) {
-                    visible = true;
-                    const source = layer.getSource();
-                    if(source.getState() === 'ready') {
-                        const features = source.getFeatures();
-                        const cat = features[0].get('SBI_RUBR_C');
-                        const categorieUrl = Meteor.settings.public.kvkBedrijven.icons[cat];
-                        const categorieNaam = Meteor.settings.public.kvkBedrijven.namen[cat];
-                        bArr.push(<div key={index}>
-                            <img className='legenda-icon draggable' src={categorieUrl} /> {categorieNaam} 
-                        </div>);
-                    }
-                }
-            });
-        }
-
-        this.setState({
-            bedrijvenVisible: visible
-        });
-
-        if(visible) {
-            const legenda = <div className='bedrijven-legenda draggable'>
-                <h3 className='draggable'>{Meteor.settings.public.kvkBedrijven.naam}</h3>
-                <div className='bedrijven-legenda-item draggable'>
-                    {bArr}
+        if (fundaItems.length > 0) {
+            legendaItems.push(
+                <div key="legenda_funda">
+                    <h3>Te Koop/Huur</h3>
+                    {fundaItems}
                 </div>
-            </div>;
-            this.setState({
-                bedrijvenLegenda: legenda
-            });
-        } else {
-            this.setState({
-                bedrijvenLegenda: <div style={{display:'none'}}></div>
-            });
+            );
         }
     }
 
-    /**
-     * Create the legenda for milieucategorien
-     */
-    setMilieuLegenda(map) {
-        let milieu = Meteor.settings.public.laagNaam.milieu;
-        let milieuDiv = <div style={{display:'none'}}></div>;
-        let visible = false;
+    getKvkBedrijvenLegenda = (layers, legendaItems) => {
+        const kvkBedrijven = Meteor.settings.public.kvkBedrijven;
+        const kvkItems = [];
 
-        if(map !== null) {
-            map.getLayers().forEach((layer, index) => {
-                if(layer.get('title') === milieu && layer.getVisible()) {
-                    visible = true;
-                    milieuDiv = <div className='legenda-item draggable'>
-                        <img className='legenda-icon draggable' src={Meteor.settings.public.milieuUrl.C2} /> Bedrijf tot en met categorie 2 <br />
-                        <img className='legenda-icon draggable' src={Meteor.settings.public.milieuUrl.C31} /> Bedrijf tot en met categorie 3.1 <br />
-                        <img className='legenda-icon draggable' src={Meteor.settings.public.milieuUrl.C32} /> Bedrijf tot en met categorie 3.2 <br />
-                        <img className='legenda-icon draggable' src={Meteor.settings.public.milieuUrl.C41} /> Bedrijf tot en met categorie 4.1 <br />
-                        <img className='legenda-icon draggable' src={Meteor.settings.public.milieuUrl.C42} /> Bedrijf tot en met categorie 4.2 <br />
-                    </div>;
+        layers.forEach((layer, index) => {
+            if (layer.get('title') === kvkBedrijven.naam && layer.getVisible()) {
+                const source = layer.getSource();
+                if (source.getState() === 'ready') {
+                    const features = source.getFeatures();
+                    const category = features[0].get('SBI_RUBR_C');
+                    const categoryIcon = kvkBedrijven.icons[category];
+                    const categoryName = kvkBedrijven.namen[category];
+
+                    kvkItems.push(
+                        <div key={`legenda_kvk_${index}`}>
+                            <img className='legenda-icon' src={categoryIcon} /> {categoryName}
+                        </div>
+                    );
                 }
-            });
-        }
-
-        this.setState({
-            milieuVisible: visible
+            }
         });
 
-        if(visible) {
-            let legenda = <div className='milieu-legenda draggable'>
-                <h3 className='draggable'>{Meteor.settings.public.laagNaam.milieu}</h3>
-                {milieuDiv}
-            </div>;
-            this.setState({
-                milieuLegenda: legenda
-            });
-        } else {
-            this.setState({
-                milieuLegenda: <div style={{display:'none'}}></div>,
-            });
+        if (kvkItems.length > 0) {
+            legendaItems.push(
+                <div key="legenda_kvk">
+                    <h3>{kvkBedrijven.naam}</h3>
+                    {kvkItems}
+                </div>
+            );
         }
     }
 
-    /**
-     * Creates the legenda for Bedrijventerreinen
-     */
-    setBedrijventerreinenLegenda(map) {
-        let terreinen = Meteor.settings.public.laagNaam.ibis;
-        let terreinenDiv = <div style={{display:'none'}}></div>;
-        let visible = false;
+    getOverlayLayersLegenda = (layers, legendaItems) => {
+        layers.forEach((layer, index) => {
+            Meteor.settings.public.overlayLayers.forEach(layerConfig => {
+                if (layer.get('title') === layerConfig.titel && layer.getVisible() && layerConfig.service === 'wms') {
+                    const url = `${layerConfig.url}&request=GetLegendGraphic&layer=${layerConfig.layers}&format=image/png&width=20&height=20&transparent=true&legend_options=fontColor:0xFFFFFF;fontName:Roboto`;
 
-        if(map !== null) {
-            map.getLayers().forEach((layer, index) => {
-                if(layer.get('title') === terreinen && layer.getVisible()) {
-                    visible = true;
-                    terreinenDiv = <div className='legenda-item draggable'>
-                        <img className='legenda-icon draggable' src={Meteor.settings.public.iconBedrijventerreinen} /> {terreinen} <br />
-                    </div>;
+                    legendaItems.push(
+                        <div key={`legenda_${index}`}>
+                            <h3>{layer.get('title')}</h3>
+                            <img src={url} />
+                        </div>
+                    );
                 }
             });
-        }
-
-        this.setState({
-            bedrijventerreinenVisible: visible
         });
-
-        if(visible) {
-            let legenda = <div className='terreinen-legenda draggable'>
-                <h3 className='draggable'>{terreinen}</h3>
-                {terreinenDiv}
-            </div>;
-            this.setState({
-                bedrijventerreinenLegenda: legenda
-            });
-        } else {
-            this.setState({
-                bedrijventerreinenLegenda: <div style={{display:'none'}}></div>,
-            });
-        }
     }
 
-    /**
-     * Render the legenda to the screen
-     */
     render() {
-        let anyVisible = this.state.teKoopHuurVisible || this.state.milieuVisible || this.state.bedrijvenVisible || this.state.kavelsVisible || this.state.bedrijventerreinenVisible;
-        
-        if(anyVisible) {
-            return (
-                <div id='legenda' className='legenda draggable' draggable={true}>
-                    <h2 className='legenda-title draggable' draggable={true}>Legenda</h2><hr />
-                    <div className='legenda-list draggable' draggable={true}>
-                        {this.state.teKoopHuurLegenda}
-                        {this.state.kavelsLegenda}
-                        {this.state.bedrijvenLegenda}
-                        {this.state.milieuLegenda}
-                        {this.state.bedrijventerreinenLegenda}
+        if (this.state.legendaItems.length > 0) {
+            return(
+                <div id='legenda' className='legenda'>
+                    <h2 id='legendaheader' className='legenda-title'>Legenda</h2><hr />
+                    <div className='legenda-list'>
+                        {this.state.legendaItems}
                     </div>
                 </div>
             );

@@ -122,7 +122,6 @@ export default class MapLayout extends Component {
                 const title = layer.get('title');
                 Meteor.settings.public.overlayLayers.forEach(overlayLayer => {
                     if (title === overlayLayer.titel && overlayLayer.service === 'wms' && overlayLayer.showFeatureInfo) {
-                        console.log(title);
                         popup = <FeatureInfoPopup coords={this.location} map={map} layer={layer} layerConfig={overlayLayer} onRequestClose={this.closePopup} />;
                     }
                 });
