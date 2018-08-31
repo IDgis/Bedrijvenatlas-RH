@@ -28,29 +28,29 @@ export default class Kaartlaag extends Component {
         let map = this.props.map;
         let layers = map.getLayers();
         let allSameNameVisible = true;
-        layers.forEach((layer, index) => {
-            if(layer.get('title') === this.props.primaryText) {
+        layers.forEach(layer => {
+            if(layer.get('title') === this.props.layer.titel) {
                 allSameNameVisible = allSameNameVisible && layer.getVisible();
             }
         });
-        layers.forEach((layer, index) => {
-            if(layer.get('title') === this.props.primaryText) {
+        layers.forEach(layer => {
+            if(layer.get('title') === this.props.layer.titel) {
                 this.state.visible = allSameNameVisible;
             }
         });
     }
 
-    toggleLayer = (event) => {
+    toggleLayer = () => {
         let map = this.props.map;
         let layers = map.getLayers();
         let allSameNameVisible = true;
-        layers.forEach((layer, index) => {
-            if(layer.get('title') === this.props.primaryText) {
+        layers.forEach(layer => {
+            if(layer.get('title') === this.props.layer.titel) {
                 allSameNameVisible = allSameNameVisible && layer.getVisible();
             }
         });
-        layers.forEach((layer, index) => {
-            if(layer.get('title') === this.props.primaryText) {
+        layers.forEach(layer => {
+            if(layer.get('title') === this.props.layer.titel) {
                 let newVisible = !allSameNameVisible;
                 this.setState({
                     visible: newVisible
@@ -65,25 +65,14 @@ export default class Kaartlaag extends Component {
     }
 
     render() {
-        if(this.props.primaryText === Meteor.settings.public.laagNaam.teKoop) {
-            return(
-                <ListItem className='list-item' primaryText={this.props.primaryText} 
-                    leftCheckbox={<Checkbox checked={this.state.visible} onClick={this.toggleLayer} iconStyle={{fill:'white'}} />} 
-                    rightIcon={<Avatar src={Meteor.settings.public.iconKoop} />}
+        const iconAvailable = this.props.layer.icon !== undefined;
+
+        return (
+            <ListItem className='list-item'
+                primaryText={<div>{this.props.layer.titel} <span title={this.props.layer.omschrijving} className="glyphicon glyphicon-info-sign text-primary" ></span></div>}
+                leftCheckbox={<Checkbox checked={this.state.visible} onClick={this.toggleLayer} iconStyle={{fill:'white'}} />}
+                rightIcon={iconAvailable ? <Avatar src={this.props.layer.icon} /> : null}
                 />
-            );
-        }
-        else if(this.props.primaryText === Meteor.settings.public.laagNaam.teHuur) {
-            return(
-                <ListItem className='list-item' primaryText={this.props.primaryText} 
-                    leftCheckbox={<Checkbox checked={this.state.visible} onClick={this.toggleLayer} iconStyle={{fill:'white'}} />} 
-                    rightIcon={<Avatar src={Meteor.settings.public.iconHuur} />}
-                />
-            );
-        }
-        else
-            return (
-                <ListItem className='list-item' primaryText={this.props.primaryText} leftCheckbox={<Checkbox checked={this.state.visible} onClick={this.toggleLayer} iconStyle={{fill:'white'}} />} />
-            );
+        );
     }
 }

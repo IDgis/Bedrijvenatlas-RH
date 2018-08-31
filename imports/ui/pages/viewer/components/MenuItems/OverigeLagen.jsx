@@ -1,14 +1,13 @@
 import React, { Component } from 'react';
 import { Meteor } from 'meteor/meteor';
 
-import BedrijvenBranche from './BedrijvenBranche.jsx';
-import Kaartlaag from './Kaartlaag.jsx';
+import Bedrijvenlaag from './Bedrijvenlaag';
+import Kaartlaag from './Kaartlaag';
 
 import ArrowDropRight from 'material-ui/svg-icons/navigation-arrow-drop-right';
 import Checkbox from 'material-ui/Checkbox';
-import {List, ListItem} from 'material-ui/List';
+import {List} from 'material-ui/List';
 import MenuItem from 'material-ui/MenuItem';
-import Popover, {PopoverAnimationVertical} from 'material-ui/Popover';
 
 export default class OverigeLagen extends Component {
 
@@ -34,14 +33,14 @@ export default class OverigeLagen extends Component {
     /**
      * Turns all KVK layers on and off at once
      */
-    selectAllKvkLayers = (event, l) => {
+    selectAllKvkLayers = () => {
         let newVisible = !this.state.allKvkChecked;
-        let kvk = Meteor.settings.public.laagNaam.kvk;
+        let kvk = Meteor.settings.public.kvkBedrijven.naam;
         let map = this.props.map;
 
         if(map != null) {
             let layers = map.getLayers();
-            layers.forEach((layer, index) => {
+            layers.forEach(layer => {
                 if(layer.get('title') === kvk) {
                     layer.setVisible(newVisible);
                 }
@@ -58,24 +57,24 @@ export default class OverigeLagen extends Component {
      * Turns all Vastgoed layers on and off at once
      */
     selectAllVastgoedLayers = (event, l) => {
-        let newVisible = !this.state.allVastgoedChecked;
+        const newVisible = !this.state.allVastgoedChecked;
+        const fundaLayers = Meteor.settings.public.fundaLayers;
 
-        let teKoop = Meteor.settings.public.laagNaam.teKoop;
-        let teHuur = Meteor.settings.public.laagNaam.teHuur;
-
-        let map = this.props.map;
-        if(map != null) {
-            let layers = map.getLayers();
-            layers.forEach((layer, index) => {
-                if(layer.get('title') === teKoop || layer.get('title') === teHuur) {
-                    layer.setVisible(newVisible);
-                }
+        if (this.props.map) {
+            const layers = this.props.map.getLayers();
+            fundaLayers.forEach(fundaLayer => {
+                layers.forEach(layer => {
+                    if (layer.get('title') === fundaLayer.titel) {
+                        layer.setVisible(newVisible);
+                    }
+                });
             });
         }
 
         this.setState({
             allVastgoedChecked: newVisible
         });
+        
         this.props.updateLegenda();
     }
 
@@ -83,13 +82,13 @@ export default class OverigeLagen extends Component {
      * Checks whether all KVK layers are checked or not and sets its internal state
      */
     setAllKvkChecked = () => {
-        let kvk = Meteor.settings.public.laagNaam.kvk;
-        let map = this.props.map;
+        const kvk = Meteor.settings.public.kvkBedrijven.naam;
+        const map = this.props.map;
 
         if(map != null) {
             let allVisible = true;
-            let layers = map.getLayers();
-            layers.forEach((layer, index) => {
+            const layers = map.getLayers();
+            layers.forEach(layer => {
                 if(layer.get('title') === kvk) {
                     allVisible = allVisible && layer.getVisible();
                 }
@@ -105,17 +104,17 @@ export default class OverigeLagen extends Component {
      * Checks whether all Vastgoed layers are checked or not and sets its internal state
      */
     setAllVastgoedChecked = () => {
-        let teKoop = Meteor.settings.public.laagNaam.teKoop;
-        let teHuur = Meteor.settings.public.laagNaam.teHuur;
+        const fundaLayers = Meteor.settings.public.fundaLayers;
 
-        let map = this.props.map;
-        if(map != null) {
+        if (this.props.map) {
             let allVisible = true;
-            let layers = map.getLayers();
-            layers.forEach((layer, index) => {
-                if(layer.get('title') === teKoop || layer.get('title') === teHuur) {
-                    allVisible = allVisible && layer.getVisible();
-                }
+            const layers = this.props.map.getLayers();
+            fundaLayers.forEach(fundaLayer => {
+                layers.forEach(layer => {
+                    if (layer.get('title') === fundaLayer.titel) {
+                        allVisible = allVisible && layer.getVisible();
+                    }
+                });
             });
             this.setState({
                 allVastgoedChecked: allVisible
@@ -127,13 +126,13 @@ export default class OverigeLagen extends Component {
      * Get the visibility of all KVK layers
      */
     getAllKvkChecked = () => {
-        let kvk = Meteor.settings.public.laagNaam.kvk;
-        let map = this.props.map;
+        const kvk = Meteor.settings.public.kvkBedrijven.naam;
+        const map = this.props.map;
         let visible = false
 
         if(map !== null) {
             let layers = map.getLayers();
-            layers.forEach((layer, index) => {
+            layers.forEach(layer => {
                 if(layer.get('title') === kvk) {
                     if(layer.getVisible()) visible = true;
                 }
@@ -147,50 +146,62 @@ export default class OverigeLagen extends Component {
      * Get the visibility of all Vastgoed layers
      */
     getAllVastgoedChecked = () => {
-        let teKoop = Meteor.settings.public.laagNaam.teKoop;
-        let teHuur = Meteor.settings.public.laagNaam.teHuur;
-        let map = this.props.map;
-        let visible = false;
+        const fundaLayers = Meteor.settings.public.fundaLayers;
+        let anyVisible = false;
 
-        if(map !== null) {
-            let layers = map.getLayers();
-            layers.forEach((layer, index) => {
-                if(layer.get('title') === teKoop || layer.get('title') === teHuur) {
-                    if(layer.getVisible()) visible = true;
-                }
+        if (this.props.map) {
+            const layers = this.props.map.getLayers();
+            fundaLayers.forEach(fundaLayer => {
+                layers.forEach(layer => {
+                    if (layer.get('title') === fundaLayer.titel && layer.getVisible()) {
+                        anyVisible = true;
+                    }
+                });
             });
-            return visible;
+            return anyVisible;
         }
-        return visible;
+        return anyVisible;
     }
+
+    getFundaMenuItems = () => (
+        Meteor.settings.public.fundaLayers.map((layer, index) => (
+            <Kaartlaag layer={layer} map={this.props.map} updateParent={this.setAllVastgoedChecked} updateLegenda={this.props.updateLegenda} key={layer.titel + index} />
+        ))
+    );
+
+    getCustomLayers = () => (
+        Meteor.settings.public.overlayLayers.map((layer, index) => (
+            <Kaartlaag layer={layer} map={this.props.map} updateLegenda={this.props.updateLegenda} key={layer.titel + index} />
+        ))
+    )
 
     /**
      * The main render method that will render the component to the screen
      */
     render() {
-        let allVastgoedChecked = this.getAllVastgoedChecked();
-        let allKvkChecked = this.getAllKvkChecked();
+        const allVastgoedChecked = this.getAllVastgoedChecked();
+        const allKvkChecked = this.getAllKvkChecked();
+
+        const fundaMenuItems = this.getFundaMenuItems();
+        const customLayers = this.getCustomLayers();
 
         return (
             <List className='list-menu' >
-                <MenuItem className='list-item' primaryText={Meteor.settings.public.laagNaam.vastgoed}
+                <MenuItem className='list-item' primaryText='Te Koop/Huur' 
                     leftIcon={<Checkbox checked={allVastgoedChecked} onTouchTap={this.selectAllVastgoedLayers} iconStyle={{fill:'white'}} />}
                     rightIcon={<ArrowDropRight style={{fill:'white'}} />}
-                    menuItems={[
-                        <Kaartlaag primaryText={Meteor.settings.public.laagNaam.teKoop} map={this.props.map} updateParent={this.setAllVastgoedChecked} updateLegenda={this.props.updateLegenda} />,
-                        <Kaartlaag primaryText={Meteor.settings.public.laagNaam.teHuur} map={this.props.map} updateParent={this.setAllVastgoedChecked} updateLegenda={this.props.updateLegenda} />
-                    ]}
-                />
-                <Kaartlaag primaryText={Meteor.settings.public.laagNaam.kavels} map={this.props.map} updateLegenda={this.props.updateLegenda} />
-                <MenuItem className='list-item' primaryText={Meteor.settings.public.laagNaam.kvk}
+                    menuItems={fundaMenuItems}
+                    />
+                <MenuItem className='list-item' primaryText={Meteor.settings.public.kvkBedrijven.naam}
                     leftIcon={<Checkbox checked={allKvkChecked} onTouchTap={this.selectAllKvkLayers} iconStyle={{fill:'white'}} />}
                     rightIcon={<ArrowDropRight style={{fill:'white'}} />}
-                    menuItems={<BedrijvenBranche map={this.props.map} updateParent={this.setAllKvkChecked} updateLegenda={this.props.updateLegenda} />}
-                />
-                <Kaartlaag primaryText={Meteor.settings.public.laagNaam.milieu} map={this.props.map} updateLegenda={this.props.updateLegenda} />
-                <Kaartlaag primaryText={Meteor.settings.public.laagNaam.ibis} map={this.props.map} updateLegenda={this.props.updateLegenda} />
-                <Kaartlaag primaryText={Meteor.settings.public.laagNaam.kadastralePercelen} map={this.props.map} updateLegenda={this.props.updateLegenda} />
-                <Kaartlaag primaryText={Meteor.settings.public.laagNaam.luchtfoto} map={this.props.map} updateLegenda={this.props.updateLegenda} />
+                    menuItems={<Bedrijvenlaag 
+                        layer={Meteor.settings.public.kvkBedrijven} 
+                        map={this.props.map} 
+                        updateParent={this.setAllKvkChecked} 
+                        updateLegenda={this.props.updateLegenda} />}
+                    />
+                { customLayers }
             </List>
         );
     }

@@ -3,8 +3,6 @@ import * as ol from 'openlayers';
 import proj4 from 'proj4';
 import 'whatwg-fetch';
 
-//import AutoComplete from 'material-ui/AutoComplete';
-//import Drawer from 'material-ui/Drawer';
 import IconButton from 'material-ui/IconButton';
 
 import LayerMenu from './components/LayerMenu.jsx';
@@ -30,188 +28,16 @@ export default class Viewer extends Component {
      * Sets up the initial OpenLayers map and layers
      */
     componentDidMount() {
-        let extent = [-285401.92,22598.08,595401.92,903401.92];
-        let resolutions = [3440.64, 1720.32, 860.16, 430.08, 215.04, 107.52, 53.76, 26.88, 13.44, 6.72, 3.36, 1.68, 0.84, 0.42, 0.21, 0.105, 0.0525];
-        let projection = new ol.proj.Projection({code:'EPSG:28992', units:'m', extent: extent});
-        let matrixIds = [];
-
-        for(let i = 0; i < 16; i++) {
-            matrixIds[i] = 'EPSG:28992:' + i.toString();
-        }
-
-        this.state.map  = new ol.Map({
+        this.state.map = new ol.Map({
             target: 'map',
-            layers: [
-                // BRT Achtergrondkaart TMS
-                new ol.layer.Tile({
-                    title: 'BRT',
-                    preload: 1,
-                    source: new ol.source.TileImage({
-                        crossOrigin: null,
-                        extent: extent,
-                        projection: projection,
-                        tileGrid: new ol.tilegrid.TileGrid({
-                            extent: extent,
-                            resolutions: resolutions
-                        }),
-                        url: 'https://geodata.nationaalgeoregister.nl/tms/1.0.0/brtachtergrondkaart/{z}/{x}/{-y}.png'
-                    }),
-                    visible: true,
-                }),
-                // BGT Achtergrondkaart WMTS
-                new ol.layer.Tile({
-                    title: 'BGT',
-                    source: new ol.source.WMTS({
-                        url: 'https://geodata.nationaalgeoregister.nl/tiles/service/wmts',
-                        layer: 'bgtachtergrond',
-                        matrixSet: 'EPSG:28992:16',
-                        format: 'image/png8',
-                        projection: projection,
-                        style: 'default',
-                        tileGrid: new ol.tilegrid.WMTS({
-                            origin: [-285401.92,903401.92],
-                            resolutions: resolutions,
-                            matrixIds: matrixIds,
-                        }),
-                    }),
-                    visible: false
-                }),
-                // Luchtfoto WMTS
-                new ol.layer.Tile({
-                    title: Meteor.settings.public.laagNaam.luchtfoto,
-                    source: new ol.source.WMTS({
-                        attributions: [
-                            new ol.Attribution({
-                                html: '© <a href="http://aerodata-surveys.com">Aerodata International Surveys</a>'
-                            })
-                        ],
-                        url: 'http://rijssen-holten.ecw-hosting.nl/lufo/services/wmts_rijssen_holten',
-                        layer: 'Rijssen_Holten',
-                        matrixSet: 'NLDEPSG28992Scale',
-                        format: 'image/jpg',
-                        projection: projection,
-                        style: 'default',
-                        tileGrid: new ol.tilegrid.WMTS({
-                            origin: [-285401.92,903401.92],
-                            resolutions: [3440.64, 1720.32, 860.16, 430.08, 215.04, 107.52, 53.76, 26.88, 13.44, 6.72, 3.36, 1.68, 0.84, 0.42/*, 0.21, 0.105, 0.0525*/],
-                            matrixIds: matrixIds
-                        })
-                    }),
-                    visible: false,
-                }),
-                // Kadastrale percelen WMS
-                new ol.layer.Tile({
-                    title: Meteor.settings.public.laagNaam.kadastralePercelen,
-                    source: new ol.source.TileWMS({
-                        url: 'https://geodata.nationaalgeoregister.nl/kadastralekaartv3/ows?SERVICE=WMS&',
-                        params: {
-                            'FORMAT': 'image/png',
-                            'LAYERS': 'kadastralekaart',
-                            'CRS': 'EPSG:28992'
-                        },
-                    }),
-                    visible: false
-                }),
-                // Milieu categoriën WMS
-                new ol.layer.Tile({
-                    title: Meteor.settings.public.laagNaam.milieu,
-                    source: new ol.source.TileWMS({
-                        url: Meteor.settings.public.bedrijvenatlasWmsUrl,
-                        params: {
-                            'FORMAT': 'image/png',
-                            'LAYERS': Meteor.settings.public.wmsLayerNames.milieuCategorieLayer,
-                            'CRS': 'EPSG:28992'
-                        }
-                    }),
-                    visible: false
-                }),
-                // Bedrijventerreinen WMS
-                new ol.layer.Image({
-                    title: Meteor.settings.public.laagNaam.ibis,
-                    source: new ol.source.ImageWMS({
-                        url: Meteor.settings.public.bedrijvenatlasWmsUrl,
-                        params: {
-                            'FORMAT': 'image/png',
-                            'LAYERS': Meteor.settings.public.wmsLayerNames.bedrijventerreinenLayer,
-                            'CRS': 'EPSG:28992'
-                        },
-                    }),
-                    visible: false
-                }),
-                // Uitgifte kavels WMS
-                new ol.layer.Tile({
-                    title: Meteor.settings.public.laagNaam.kavels,
-                    source: new ol.source.TileWMS({
-                        url: Meteor.settings.public.bedrijvenatlasWmsUrl,
-                        params: {
-                            'FORMAT': 'image/png',
-                            'LAYERS': Meteor.settings.public.wmsLayerNames.uitgifteLocatiesLayer,
-                            'CRS': 'EPSG:28992'
-                        },
-                    }),
-                    visible: false
-                }),
-                // Te koop GeoJSON
-                new ol.layer.Vector({
-                    title: Meteor.settings.public.laagNaam.teKoop,
-                    source: new ol.source.Vector({
-                        url: Meteor.settings.public.teKoopJsonUrl,
-                        format: new ol.format.GeoJSON(),
-                    }),
-                    style: [
-                        new ol.style.Style({
-                            image: new ol.style.Icon({
-                                src: Meteor.settings.public.iconKoop,
-                                imgSize: [48,48], // for IE11
-                                scale: 0.5
-                            }),
-                            zIndex: 1
-                        }),
-                        new ol.style.Style({
-                            image: new ol.style.Icon({
-                                src: Meteor.settings.public.iconShadow,
-                                scale: 0.5,
-                                opacity: 0.7
-                            }),
-                            zIndex: 0
-                        })
-                    ],
-                    visible: false
-                }),
-                // Te huur GeoJSON
-                new ol.layer.Vector({
-                    title: Meteor.settings.public.laagNaam.teHuur,
-                    source: new ol.source.Vector({
-                        url: Meteor.settings.public.teHuurJsonUrl,
-                        format: new ol.format.GeoJSON()
-                    }),
-                    style: [
-                        new ol.style.Style({
-                            image: new ol.style.Icon({
-                                src: Meteor.settings.public.iconHuur,
-                                imgSize: [48, 48], // for IE11
-                                scale: 0.5
-                            }),
-                            zIndex: 1,
-                        }),
-                        new ol.style.Style({
-                            image: new ol.style.Icon({
-                                src: Meteor.settings.public.iconShadow,
-                                scale: 0.5,
-                                opacity: 0.7
-                            }),
-                            zIndex: 0
-                        })
-                    ],
-                    visible: false
-                })
-            ],
+            layers: this.getMapLayers(),
             view: new ol.View({
-                center: [229025, 479254],
+                center: Meteor.settings.public.gemeenteConfig.center,
                 projection: 'EPSG:28992',
-                zoom: 14,
-                extent: [220846, 474494, 237209, 484108],
-                minZoom: 13
+                zoom: Meteor.settings.public.gemeenteConfig.zoom,
+                extent: Meteor.settings.public.gemeenteConfig.extent,
+                minZoom: Meteor.settings.public.gemeenteConfig.minZoom,
+                maxZoom: 21
             }),
             controls: [
                 //new ol.control.ScaleLine(),
@@ -226,78 +52,251 @@ export default class Viewer extends Component {
                     style: [
                         new ol.style.Style({
                             image: new ol.style.Icon({
-                                src: Meteor.settings.public.iconSelected,
+                                src: Meteor.settings.public.gemeenteConfig.iconSelected,
+                                imgSize: [ 48, 48 ], // for IE11
                                 scale: 0.5
                             }),
                             zIndex: 1
                         }),
                         new ol.style.Style({
                             image: new ol.style.Icon({
-                                src: Meteor.settings.public.iconShadow,
+                                src: Meteor.settings.public.gemeenteConfig.iconShadow,
+                                imgSize: [ 48, 48 ], // for IE11
                                 scale: 0.5
                             }),
                             zIndex: 0
                         })
                     ]
                 })
-            ]),
+            ])
         });
 
         this.setMapSettings();
         this.setBackgroundLayer();
-        this.addKvkLayers();
+        this.addKvkLayers(Meteor.settings.public.kvkBedrijven);
         this.props.mapToParent(this.state.map);
+    }
+
+    /**
+     * Returns all Layers to add to the Map
+     */
+    getMapLayers = () => {
+        const allLayers = [];
+
+        const baseLayers = Meteor.settings.public.baseLayers;
+        const overlayLayers = Meteor.settings.public.overlayLayers;
+        const fundaLayers = Meteor.settings.public.fundaLayers;
+
+        this.addLayers(baseLayers, allLayers);
+        this.addLayers(overlayLayers, allLayers);
+        this.addLayers(fundaLayers, allLayers);
+
+        return allLayers;
+    }
+
+    /**
+     * Adds all layers to the existing array of layers
+     * 
+     * @param {Array} layers The layers array to add
+     * @param {Array} allLayers All layers will be added to this array
+     */
+    addLayers = (layers, allLayers) => {
+        const extent = [-285401.92,22598.08,595401.92,903401.92];
+        const projection = new ol.proj.Projection({code: 'EPSG:28992', units: 'm', extent: extent});
+        const matrixIds = [];
+
+        for (let i = 0; i < 16; i++) {
+            matrixIds[i] = 'EPSG:28992:' + i.toString();
+        }
+
+        layers.forEach(layer => {
+            const service = layer.service;
+
+            if (service === 'tms') {
+                allLayers.push(this.getTmsLayer(layer, extent, projection));
+            } else if (service === 'wmts') {
+                allLayers.push(this.getWmtsLayer(layer, projection, matrixIds));
+            } else if (service === 'wms') {
+                allLayers.push(this.getWmsLayer(layer));
+            } else if (service === 'geojson') {
+                allLayers.push(this.getGeoJsonLayer(layer));
+            }
+        });
+    }
+
+    /**
+     * Creates an OpenLayers TMS Layer
+     * 
+     * @param {Object} tmsLayer The TMS Layer object to convert to an OpenLayers Object
+     * @param {Array} extent The extent of the layer
+     * @param {Object} projection The projection object of the given layer
+     */
+    getTmsLayer = (tmsLayer, extent, projection) => (
+        new ol.layer.Tile({
+            title: tmsLayer.titel,
+            preload: 1,
+            source: new ol.source.TileImage({
+                crossOrigin: null,
+                extent: extent,
+                projection: projection,
+                tileGrid: new ol.tilegrid.TileGrid({
+                    extent: extent,
+                    resolutions: tmsLayer.resolutions
+                }),
+                url: tmsLayer.url
+            }),
+            visible: tmsLayer.visible
+        })
+    );
+
+    /**
+     * Creates an OpenLayers WMTS Layer
+     * 
+     * @param {Object} wmtsLayer The WMTS Layer object to convert to an OpenLayers Object
+     * @param {Object} projection The projection object of the given layer
+     * @param {Array} matrixIds The matrixIds to use for this layer
+     */
+    getWmtsLayer = (wmtsLayer, projection, matrixIds) => (
+        new ol.layer.Tile({
+            title: wmtsLayer.titel,
+            source: new ol.source.WMTS({
+                attributions: this.getAttributions(wmtsLayer.attributions),
+                url: wmtsLayer.url,
+                layer: wmtsLayer.layer,
+                matrixSet: wmtsLayer.matrixSet,
+                format: wmtsLayer.format,
+                projection: projection,
+                style: wmtsLayer.style,
+                tileGrid: new ol.tilegrid.WMTS({
+                    origin: wmtsLayer.origin,
+                    resolutions: wmtsLayer.resolutions,
+                    matrixIds: matrixIds
+                })
+            }),
+            visible: wmtsLayer.visible
+        })
+    );
+
+    /**
+     * Creates an OpenLayers WMS Layer
+     * 
+     * @param {Object} wmsLayer The WMS Layer object to convert to an OpenLayers Object
+     */
+    getWmsLayer = (wmsLayer) => (
+        wmsLayer.tiling ?
+        new ol.layer.Tile({
+            title: wmsLayer.titel,
+            source: new ol.source.TileWMS({
+                url: wmsLayer.url,
+                params: {
+                    'FORMAT': wmsLayer.format,
+                    'LAYERS': wmsLayer.layers,
+                    'CRS': 'EPSG:28992'
+                }
+            }),
+            visible: wmsLayer.visible
+        }) :
+        new ol.layer.Image({
+            title: wmsLayer.titel,
+            source: new ol.source.ImageWMS({
+                url: wmsLayer.url,
+                params: {
+                    'FORMAT': wmsLayer.format,
+                    'LAYERS': wmsLayer.layers,
+                    'CRS': 'EPSG:28992'
+                }
+            }),
+            visible: wmsLayer.visible
+        })
+    )
+
+    /**
+     * Creates an OpenLayers GeoJSON Layer
+     * 
+     * @param {Object} geoJsonLayer The GeoJson Layer object to convert to an OpenLayers Object
+     */
+    getGeoJsonLayer = (geoJsonLayer) => (
+        new ol.layer.Vector({
+            title: geoJsonLayer.titel,
+            source: new ol.source.Vector({
+                url: geoJsonLayer.url,
+                format: new ol.format.GeoJSON()
+            }),
+            style: [
+                new ol.style.Style({
+                    image: new ol.style.Icon({
+                        src: geoJsonLayer.icon,
+                        imgSize: [ 48, 48 ], // for IE11
+                        scale: 0.5
+                    }),
+                    zIndex: 1
+                }),
+                new ol.style.Style({
+                    image: new ol.style.Icon({
+                        src: geoJsonLayer.shadow,
+                        imgSize: [ 48, 48 ], // for IE11
+                        scale: 0.5,
+                        opacity: 0.7
+                    }),
+                    zIndex: 0
+                })
+            ],
+            visible: geoJsonLayer.visible
+        })
+    )
+
+    getAttributions = (attributions) => {
+        if (attributions) {
+            return attributions.map(attr => (
+                new ol.Attribution({
+                    html: `<a href=${attr.url}>${attr.text}</a>`
+                })
+            ));
+        } else {
+            return null;
+        }
     }
 
     /**
      * Sets the initial view based on the answers in the wizard screen
      */
     setMapSettings() {
-        let laagNaam = Meteor.settings.public.laagNaam;
-        let map = this.state.map;
-        let layers = map.getLayers();
+        const laagNaam = Meteor.settings.public.laagNaam;
+        const map = this.state.map;
+        const layers = map.getLayers();
 
-        let plaats = Session.get('plaats');
-        let voorkeur = Session.get('pand');
-        let huurKoop = Session.get('huur-koop')
+        const voorkeur = Session.get('pand');
+        const huurKoop = Session.get('huur-koop');
+
+        const selectedPlaats = Meteor.settings.public.gemeenteConfig.plaatsen.filter(plaats => 
+            plaats.value === Session.get('plaats')
+        )[0];
 
         // Zoom to the right place
-        if(plaats === 'rijssen' && voorkeur === 'nieuwbouw') {
+        if (selectedPlaats) {
             map.setView(new ol.View({
-                center: [233000, 480446],
+                center: selectedPlaats.center,
                 projection: 'EPSG:28992',
-                zoom: 15
-            }));
-        } else if(plaats === 'rijssen') {
-            map.setView(new ol.View({
-                center: [231657, 480800],
-                projection: 'EPSG:28992',
-                zoom: 14.5
-            }));
-        } else if(plaats === 'holten') {
-            map.setView(new ol.View({
-                center: [225008, 477254],
-                projection: 'EPSG:28992',
-                zoom: 15
+                zoom: selectedPlaats.zoom
             }));
         }
 
         // Set the visibility of the layers
         if(voorkeur === 'bestaand' || voorkeur === 'beide') {
             if(huurKoop === 'koop') {
-                layers.forEach((layer, index) => {
+                layers.forEach(layer => {
                     if(layer.get('title') === laagNaam.teKoop) {
                         layer.setVisible(true);
                     }
                 });
             } else if(huurKoop === 'huur') {
-                layers.forEach((layer, index) => {
+                layers.forEach(layer => {
                     if(layer.get('title') === laagNaam.teHuur) {
                         layer.setVisible(true);
                     }
                 });
             } else if(huurKoop === 'beide') {
-                layers.forEach((layer, index) => {
+                layers.forEach(layer => {
                     let title = layer.get('title');
                     if(title === laagNaam.teKoop || title === laagNaam.teHuur) {
                         layer.setVisible(true);
@@ -308,7 +307,7 @@ export default class Viewer extends Component {
 
         // Set the kavels layer visible
         if(voorkeur === 'nieuwbouw') {
-            layers.forEach((layer, index) => {
+            layers.forEach(layer => {
                 if(layer.get('title') === laagNaam.kavels) {
                     layer.setVisible(true);
                 }
@@ -317,10 +316,10 @@ export default class Viewer extends Component {
     }
 
     setBackgroundLayer() {
-        let map = this.state.map;
-        let maxZoom = 16;
-        let layers = map.getLayers();
-        layers.forEach((layer, index) => {
+        const map = this.state.map;
+        const maxZoom = 16;
+        const layers = map.getLayers();
+        layers.forEach(layer => {
             if(layer.get('title') === 'BGT') {
                 if(maxZoom <= map.getView().getZoom()) layer.setVisible(true);
                 else layer.setVisible(false);
@@ -335,35 +334,31 @@ export default class Viewer extends Component {
     /**
      * Add all kvk layers by SBI code
      */
-    addKvkLayers() {
-        let categorien = Meteor.settings.public.categorieUrl;
-        let that = this;
-
-        for(c in categorien) {
-            let categorieNaam = c[0];
-
-            let featureRequest = new ol.format.WFS().writeGetFeature({
+    addKvkLayers = (layerConfig) => {
+        Object.keys(layerConfig.icons).forEach(category => {
+            const featureRequest = new ol.format.WFS().writeGetFeature({
                 srsName: 'EPSG:28992',
                 outputFormat: 'application/json',
-                featurePrefix: 'Bedrijventerreinen_KVK_hoofdactiviteiten_per_adres_service',
-                featureTypes: ['Bedrijventerreinen_KVK_hoofdactiviteiten_per_adres'],
-                filter: ol.format.filter.equalTo('SBI_RUBR_C', categorieNaam)
+                featurePrefix: layerConfig.featurePrefix,
+                featureTypes: layerConfig.featureTypes,
+                filter: ol.format.filter.equalTo('SBI_RUBR_C', category)
             });
-            fetch(Meteor.settings.public.kvkBedrijvenWfsUrl, {
+
+            fetch(layerConfig.url, {
                 method: 'POST',
                 body: new XMLSerializer().serializeToString(featureRequest)
-            }).then(function(response) {
+            }).then(response => {
                 return response.json();
-            }).then(function(json) {
-                let features = new ol.format.GeoJSON().readFeatures(json);
-                let source = new ol.source.Vector();
-                let layer = new ol.layer.Vector({
-                    title: Meteor.settings.public.laagNaam.kvk,
+            }).then(json => {
+                const features = new ol.format.GeoJSON().readFeatures(json);
+                const source = new ol.source.Vector();
+                const layer = new ol.layer.Vector({
+                    title: layerConfig.naam,
                     source: source,
                     style: [
                         new ol.style.Style({
                             image: new ol.style.Icon({
-                                src: Meteor.settings.public.categorieUrl[categorieNaam],
+                                src: layerConfig.icons[category],
                                 imgSize: [48,48], // for IE11
                                 scale: 0.5
                             }),
@@ -371,7 +366,8 @@ export default class Viewer extends Component {
                         }),
                         new ol.style.Style({
                             image: new ol.style.Icon({
-                                src: Meteor.settings.public.iconShadow,
+                                src: layerConfig.iconShadow,
+                                imgSize: [ 48, 48 ], // for IE11
                                 scale: 0.5,
                                 opacity: 0.7
                             }),
@@ -381,9 +377,9 @@ export default class Viewer extends Component {
                     visible: false
                 });
                 source.addFeatures(features);
-                that.state.map.addLayer(layer);
-            })
-        }
+                this.state.map.addLayer(layer);
+            });
+        });
     }
 
     /**
@@ -415,11 +411,11 @@ export default class Viewer extends Component {
         return (
             <div id="map" className="map" >
                 <SearchBar map={this.state.map} updateLegenda={this.updateLegenda} />
-                <IconButton className='menu-button' style={{backgroundColor:Meteor.settings.public.colorGemeente}} onClick={this.openMenu} title='Menu' >
-                    <img src={Meteor.settings.public.iconMenu} />
+                <IconButton className='menu-button' style={{backgroundColor:Meteor.settings.public.gemeenteConfig.colorGemeente}} onClick={this.openMenu} title='Menu' >
+                    <img src={Meteor.settings.public.gemeenteConfig.iconMenu} />
                 </IconButton>
-                <IconButton className='home-button' href='/' style={{backgroundColor:Meteor.settings.public.colorGemeente}} title='Home' >
-                    <img src={Meteor.settings.public.iconHome} />
+                <IconButton className='home-button' href='/' style={{backgroundColor:Meteor.settings.public.gemeenteConfig.colorGemeente}} title='Home' >
+                    <img src={Meteor.settings.public.gemeenteConfig.iconHome} />
                 </IconButton>
                 <LayerMenu
                     map={this.state.map}

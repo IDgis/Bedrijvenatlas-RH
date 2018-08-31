@@ -6,19 +6,21 @@ volumes:
 services:
   bedrijvenatlas:
     restart: always
-    image: idgis/bedrijvenatlas-rh:${VERSION}
+    image: idgis/bedrijvenatlas-${IMAGE_GEMEENTE}:${VERSION}
     ports:
-      - "80:80"
+      - "80:3000"
     environment:
       - METEOR_SETTINGS=${METEOR_SETTINGS}
       - ROOT_URL=${ROOT_URL}
     volumes:
-      - vastgoedfiles:/home/meteorapp/meteorapp/build/bundle/programs/web.browser/app/data
+      - vastgoedfiles:/home/meteorapp/build/bundle/programs/web.browser/app/data
 
   funda-scraper:
     restart: always
-    image: idgis/funda-scraper
+    image: idgis/funda-scraper:1.0.0
     depends_on:
       - bedrijvenatlas
+    environment:
+      - GEMEENTE=${GEMEENTE}
     volumes:
-      - vastgoedfiles:/home/meteorapp/meteorapp/build/bundle/programs/web.browser/app/data
+      - vastgoedfiles:/home/meteorapp/build/bundle/programs/web.browser/app/data

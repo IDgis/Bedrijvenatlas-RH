@@ -1,0 +1,222 @@
+{
+    "public": {
+
+        "idgisConfig": {
+            "homePage": "https://www.idgis.nl/index.php/nl/bedrijvenatlas",
+            "logo": "/idgis/images/logo.jpg",
+            "altText": "idgis"
+        },
+
+        "gemeenteConfig": {
+            "naam": "Rijssen-Holten",
+            "homePage": "https://www.rijssen-holten.nl/home",
+            "logo": "/rijssenholten/images/logo.jpg",
+            "altText": "Rijssen Holten",
+            "colorGemeente": "#730049",
+
+            "logoWizardKnop": "/rijssenholten/icons/KNOP_VESTIGEN_NIEUW_BEDRIJF.svg",
+            "logoViewerKnop": "/rijssenholten/icons/KNOP_NAAR_DE_KAART.svg",
+            "iconSelected": "/rijssenholten/icons/SELECTED.svg",
+            "iconShadow": "/icons/SCHADUW.svg",
+
+            "iconHome": "/icons/HOME.svg",
+            "iconMenu": "/icons/MENU.svg",
+
+            "extent": [ 220846, 474494, 237209, 484108 ],
+            "center": [ 229025, 479254 ],
+            "zoom": 14,
+            "minZoom": 13,
+
+            "plaatsen": [
+                {
+                    "naam": "Rijssen",
+                    "value": "rijssen",
+                    "center": [ 231657, 480800 ],
+                    "zoom": 14.5
+                },
+                {
+                    "naam": "Holten",
+                    "value": "holten",
+                    "center": [ 225008, 477254 ],
+                    "zoom": 15
+                },
+                {
+                    "naam": "Geen voorkeur",
+                    "value": "beide",
+                    "center": [ 229025, 479254 ],
+                    "zoom": 14
+                }
+            ]
+        },
+
+        "kvkBedrijven": {
+            "naam": "Bedrijven",
+            "omschrijving": "KVK Bedrijven",
+            "url": "https://rijssen-holten-pub.geopublisher.nl/geoserver/Bedrijvenatlas/wfs",
+            "namespace": "Bedrijvenatlas",
+            "featurePrefix": "Bedrijventerreinen_KVK_hoofdactiviteiten_per_adres_service",
+            "featureTypes": ["Bedrijventerreinen_KVK_hoofdactiviteiten_per_adres"],
+
+            "namen": {
+                "C": "Industrie",
+                "E": "Distributie water/afval",
+                "F": "Bouwnijverheid",
+                "G": "Handel/Groothandel",
+                "H": "Vervoer/opslag",
+                "I": "Logies/maaltijd/drank",
+                "J": "Informatica/communicatie",
+                "K": "Financiëel",
+                "L": "Onroerend goed",
+                "M": "Advisering",
+                "N": "Verhuur/overige dienstverlening",
+                "P": "Onderwijs",
+                "Q": "Gezondheidszorg",
+                "S": "Overige dienstverlening"
+            },
+
+            "icons": {
+                "C": "/icons/SBI_RUBRIEK_CODE_C_INDUSTRIE.svg",
+                "E": "/icons/SBI_RUBRIEK_CODE_E_DISTRIBUTIE_WATER_AFVAL.svg",
+                "F": "/icons/SBI_RUBRIEK_CODE_F_BOUWNIJVERHEID.svg",
+                "G": "/icons/SBI_RUBRIEK_CODE_G_DETAILHANDEL.svg",
+                "H": "/icons/SBI_RUBRIEK_CODE_H_VERVOER_OPSLAG.svg",
+                "I": "/icons/SBI_RUBRIEK_CODE_I_LOGIES_MAALTIJD_DRANK.svg",
+                "J": "/icons/SBI_RUBRIEK_CODE_J_INFO_COMMUNICATIE.svg",
+                "K": "/icons/SBI_RUBRIEK_CODE_K_FINANCIEEL.svg",
+                "L": "/icons/SBI_RUBRIEK_CODE_L_ONROEREND_GOED.svg",
+                "M": "/icons/SBI_RUBRIEK_CODE_M_ADVISERING.svg",
+                "N": "/icons/SBI_RUBRIEK_CODE_N_VERHUR_OVR_DIENSTV.svg",
+                "P": "/icons/SBI_RUBRIEK_CODE_P_ONDERWIJS.svg",
+                "Q": "/icons/SBI_RUBRIEK_CODE_Q_GEZONDHEIDSZORG.svg",
+                "S": "/icons/SBI_RUBRIEK_CODE_S_OVERIGE_DIENSTVERL.svg"
+            },
+            "iconShadow": "/icons/SCHADUW.svg"
+        },
+
+        "detailHandel": {
+            "naam": "Detailhandel",
+            "omschrijving": "Detail Handel",
+            "url": "",
+            "namespace": "",
+            "featurePrefix": "",
+            "featureTypes": [],
+
+            "namen": {
+
+            },
+
+            "icons": {
+
+            },
+            "iconShadow": "/icons/SCHADUW.svg"
+        },
+
+        "baseLayers": [
+            {
+                "service": "tms",
+                "titel": "BRT",
+                "url": "https://geodata.nationaalgeoregister.nl/tms/1.0.0/brtachtergrondkaart/{z}/{x}/{-y}.png",
+                "resolutions": [ 3440.64, 1720.32, 860.16, 430.08, 215.04, 107.52, 53.76, 26.88, 13.44, 6.72, 3.36, 1.68, 0.84, 0.42, 0.21, 0.105, 0.0525 ],
+                "omschrijving": "BRT Achtergrond",
+                "visible": true
+            },
+            {
+                "service": "wmts",
+                "titel": "BGT",
+                "url": "https://geodata.nationaalgeoregister.nl/tiles/service/wmts",
+                "layer": "bgtachtergrond",
+                "matrixSet": "EPSG:28992:16",
+                "format": "image/png8",
+                "style": "default",
+                "origin": [ -285401.92,903401.92 ],
+                "resolutions": [ 3440.64, 1720.32, 860.16, 430.08, 215.04, 107.52, 53.76, 26.88, 13.44, 6.72, 3.36, 1.68, 0.84, 0.42, 0.21, 0.105, 0.0525 ],
+                "omschrijving": "BGT Achtergrond",
+                "visible": false
+            }
+        ],
+
+        "overlayLayers": [
+            {
+                "service": "wmts",
+                "titel": "Luchtfoto",
+                "url": "http://rijssen-holten.ecw-hosting.nl/lufo/services/wmts_rijssen_holten",
+                "layer": "Rijssen_Holten",
+                "matrixSet": "NLDEPSG28992Scale",
+                "format": "image/jpg",
+                "style": "default",
+                "origin": [ -285401.92,903401.92 ],
+                "resolutions": [ 3440.64, 1720.32, 860.16, 430.08, 215.04, 107.52, 53.76, 26.88, 13.44, 6.72, 3.36, 1.68, 0.84, 0.42 ],
+                "omschrijving": "Luchtfoto Rijssen-Holten",
+                "attributions": [
+                    {
+                        "url": "https://www.slagboomenpeeters.com/nl/",
+                        "text": "© Slagboom en Peeters luchtfotografie"
+                    }
+                ],
+                "visible": false
+            },
+            {
+                "service": "wms",
+                "titel": "Kadastrale percelen",
+                "url": "https://geodata.nationaalgeoregister.nl/kadastralekaartv3/ows?SERVICE=WMS&",
+                "format": "image/png",
+                "layers": "kadastralekaart",
+                "tiling": true,
+                "omschrijving": "TileWMS Kadastrale percelen",
+                "visible": false
+            },
+            {
+                "service": "wms",
+                "titel": "Milieucategorieën",
+                "url": "https://rijssen-holten-pub.geopublisher.nl/geoserver/Bedrijvenatlas/ows?SERVICE=WMS&",
+                "format": "image/png",
+                "layers": "Bedrijventerreinen_RO_categorie_indeling",
+                "tiling": true,
+                "omschrijving": "TileWMS Milieu Categorieën",
+                "visible": false
+            },
+            {
+                "service": "wms",
+                "titel": "Bedrijventerreinen",
+                "url": "https://rijssen-holten-pub.geopublisher.nl/geoserver/Bedrijvenatlas/ows?SERVICE=WMS&",
+                "format": "image/png",
+                "layers": "Bedrijventerreinen_Rijssen-Holten",
+                "tiling": false,
+                "omschrijving": "ImageWMS Bedrijventerreinen",
+                "visible": false
+            },
+            {
+                "service": "wms",
+                "titel": "Uitgifte Locaties",
+                "url": "https://rijssen-holten-pub.geopublisher.nl/geoserver/Bedrijvenatlas/ows?SERVICE=WMS&",
+                "format": "image/png",
+                "layers": "Bedrijventerreinen_uitgiftelocaties",
+                "tiling": true,
+                "showFeatureInfo": true,
+                "omschrijving": "TileWMS Uitgifte Locaties",
+                "visible": false
+            }
+        ],
+
+        "fundaLayers": [
+            {
+                "service": "geojson",
+                "titel": "Te Koop",
+                "omschrijving": "Panden te koop volgens Funda",
+                "url": "/data/vastgoedTeKoop.json",
+                "icon": "/icons/TE_KOOP.svg",
+                "shadow": "/icons/SCHADUW.svg",
+                "visible": false
+            },
+            {
+                "service": "geojson",
+                "titel": "Te Huur",
+                "omschrijving": "Panden te huur volgens Funda",
+                "url": "/data/vastgoedTeHuur.json",
+                "icon": "/icons/TE_HUUR.svg",
+                "shadow": "/icons/SCHADUW.svg",
+                "visible": false
+            }
+        ]
+    }
+}

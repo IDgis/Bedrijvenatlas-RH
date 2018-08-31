@@ -1,11 +1,8 @@
 import React, { Component } from 'react';
-import * as ol from 'openlayers';
 
-import Drawer from 'material-ui/Drawer';
 import Menu from 'material-ui/Menu';
 import Popover, {PopoverAnimationVertical} from 'material-ui/Popover';
 
-import BedrijvenBranche from './MenuItems/BedrijvenBranche.jsx';
 import OverigeLagen from './MenuItems/OverigeLagen.jsx';
 
 export default class LayerMenu extends Component {

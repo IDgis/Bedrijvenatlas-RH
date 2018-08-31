@@ -3,11 +3,11 @@ import * as ol from 'openlayers';
 import proj4 from 'proj4';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
-import MenuBar from './MenuBar.jsx';
-import Popup from '../pages/viewer/components/popups/Popup.jsx';
-import KavelInfoPopup from '../pages/viewer/components/popups/KavelInfoPopup.jsx';
-import Streetview from '../pages/viewer/Streetview.jsx';
-import Viewer from '../pages/viewer/Viewer.jsx';
+import MenuBar from './MenuBar';
+import FeatureInfoPopup from '../pages/viewer/components/popups/FeatureInfoPopup';
+import FeaturePopup from '../pages/viewer/components/popups/FeaturePopup';
+import Streetview from '../pages/viewer/Streetview';
+import Viewer from '../pages/viewer/Viewer';
 
 
 export default class MapLayout extends Component {
@@ -16,93 +16,95 @@ export default class MapLayout extends Component {
         super(props);
 
         this.state = {
-            coords: {
-                x: 0,
-                y: 0
-            },
-            location: {
-                x: 0,
-                y: 0
-            },
-            map: null,
             menuOpen: false,
             featurePopup: <div></div>,
             streetView: <div></div>
         };
-    }
 
-    /**
-     * Update the mouse coordinates on the screen 
-     */
-    onMouseMove(e) {
-        this.state.coords.x = e.screenX;
-        this.state.coords.y = e.screenY;
+        this.location = [0,0];
     }
 
     /**
      * Sets the map variable to the state so it can be passed to other components
      */
-    setMap = (mapVar) => {
-        this.setState({
-            map: mapVar
-        });
-        this.state.map = mapVar;
-        this.addMapListener();
+    setMap = (map) => {
+        if (map) {
+            this.handleResolutionChange(map);
+            this.handleMapClick(map);
+        }
     };
+
+    /**
+     * Listen for zoom events on the map and select different background layers
+     */
+    handleResolutionChange = (map) => {
+        map.getView().on('change:resolution', () => {
+            const mapToggleZoom = 16;
+            map.getLayers().forEach(layer => {
+                if (layer.get('title') === 'BGT') {
+                    layer.setVisible(mapToggleZoom <= map.getView().getZoom());
+                }
+                if (layer.get('title') === 'BRT') {
+                    layer.setVisible(mapToggleZoom + 1 >= map.getView().getZoom());
+                }
+            })
+        });
+    }
 
     /**
      * Listen for click events on the map and creates a popup for the selected features.
      */
-    addMapListener() {
-        let map = this.state.map;
-        let that = this;
+    handleMapClick = (map) => {
+        map.on('click', e => {
+            this.location = [e.coordinate[0], e.coordinate[1]];
 
-        map.getView().on('change:resolution', function() {
-            let maxZoom = 16
-            let layers = map.getLayers();
-            layers.forEach((layer, index) => {
-                if(layer.get('title') === 'BGT') {
-                    if(maxZoom <= map.getView().getZoom()) layer.setVisible(true);
-                    else layer.setVisible(false);
-                }
-                if(layer.get('title') === 'BRT') {
-                    if(maxZoom+1 >= map.getView().getZoom()) layer.setVisible(true);
-                    else layer.setVisible(false);
-                } 
-            });
-        });
-    
-        map.on('click', function(e) {
-            that.setState({
-                location: {
-                    x: e.coordinate[0],
-                    y: e.coordinate[1]
-                }
-            });
+            // For GetFeatureInfo request
+            let popup = this.getFeatureInfoPopup(map); // TODO: aanpassen?
 
-            const coords = [that.state.location.x, that.state.location.y];
-            that.getFeatureInfoPopup(that.state.map, coords);
-
-            map.forEachFeatureAtPixel(e.pixel, function(feature, layer) {
+            // Check if the user clicked on a feature (from WFS / GeoJSON)
+            // For GetFeature request
+            map.forEachFeatureAtPixel(e.pixel, (feature, layer) => {
                 const title = layer.get('title');
-                const laagNaam = Meteor.settings.public.laagNaam;
-                const searchFields = Meteor.settings.public.searchFields[title];
-                if(title === laagNaam.teKoop || title === laagNaam.teHuur || title === laagNaam.kvk) {
-                    that.setState({featurePopup: <Popup title={title} selectedFeature={feature} coords={coords} screenCoords={e.pixel} searchFields={searchFields} map={that.state.map} openStreetView={that.openStreetView} onRequestClose={that.closePopup} />});
-                }
+                const layerNames = [];
+
+                Meteor.settings.public.fundaLayers.forEach(fundaLayer => layerNames.push(fundaLayer.titel));
+                layerNames.push(Meteor.settings.public.kvkBedrijven.naam);
+
+                layerNames.forEach(name => {
+                    if (title === name) {
+                        popup = <FeaturePopup 
+                                    feature={feature}
+                                    layer={layer}
+                                    coords={this.location}
+                                    screenCoords={e.pixel}
+                                    openStreetView={this.openStreetView}
+                                    onRequestClose={this.closePopup}
+                                    />
+                    }
+                });
+            });
+
+            this.setState({
+                featurePopup: popup
             });
         });
     }
 
-    getFeatureInfoPopup = (map, coords) => {
-        let layers = map.getLayers();
-        layers.forEach((layer, index) => {
-            let title = layer.get('title');
-            if(title === Meteor.settings.public.laagNaam.kavels && layer.getVisible()) {
-                let featureInfoPopup = <KavelInfoPopup coords={coords} map={map} title={title} layer={layer} onRequestClose={this.closePopup} />;
-                this.setState({featurePopup: featureInfoPopup});
+    getFeatureInfoPopup = (map) => {
+        let popup = <div></div>;
+
+        map.getLayers().forEach(layer => {
+            if (layer.getVisible()) {
+                const title = layer.get('title');
+                Meteor.settings.public.overlayLayers.forEach(overlayLayer => {
+                    if (title === overlayLayer.titel && overlayLayer.service === 'wms' && overlayLayer.showFeatureInfo) {
+                        popup = <FeatureInfoPopup coords={this.location} map={map} layer={layer} layerConfig={overlayLayer} onRequestClose={this.closePopup} />;
+                    }
+                });
             }
         });
+
+        return popup;
     }
 
     /**
@@ -120,8 +122,7 @@ export default class MapLayout extends Component {
     openStreetView = (event) => {
         proj4.defs('EPSG:28992', '+proj=sterea +lat_0=52.15616055555555 +lon_0=5.38763888888889 +k=0.9999079 +x_0=155000 +y_0=463000 +ellps=bessel +towgs84=565.417,50.3319,465.552,-0.398957,0.343988,-1.8774,4.0725 +units=m +no_defs');
         ol.proj.setProj4(proj4);
-        let oldCoord=[this.state.location.x,this.state.location.y];
-        let coord = ol.proj.transform([oldCoord[0],oldCoord[1]],'EPSG:28992','EPSG:4326');
+        let coord = ol.proj.transform([this.location[0],this.location[1]],'EPSG:28992','EPSG:4326');
 
         this.setState({
             streetView: <Streetview coords={coord} close={this.closeStreetView} />
@@ -152,8 +153,6 @@ export default class MapLayout extends Component {
     render() {
         proj4.defs('EPSG:28992', '+proj=sterea +lat_0=52.15616055555555 +lon_0=5.38763888888889 +k=0.9999079 +x_0=155000 +y_0=463000 +ellps=bessel +towgs84=565.417,50.3319,465.552,-0.398957,0.343988,-1.8774,4.0725 +units=m +no_defs');
         ol.proj.setProj4(proj4);
-        let oldCoord=[this.state.location.x,this.state.location.y];
-        let coord = ol.proj.transform([oldCoord[0],oldCoord[1]],'EPSG:28992','EPSG:4326');
 
         return (
             <MuiThemeProvider>
@@ -161,7 +160,7 @@ export default class MapLayout extends Component {
                     <header className="main-header row">
                         <MenuBar />
                     </header>
-                    <main onMouseMove={this.onMouseMove.bind(this)} className="main-layout row" >
+                    <main className="main-layout row" >
                         <Viewer mapToParent={this.setMap} featurePopup={this.setKvkPopup} />
                         {this.state.featurePopup}
                         {this.state.streetView}

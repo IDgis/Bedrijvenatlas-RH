@@ -8,7 +8,7 @@ export default class ViewerLink extends Component {
             <a href="/viewer" className='a-link'>
                 <div className='viewer-link'>
                     <div>
-                        <img className='image-link' src={Meteor.settings.public.logoViewerUrl} />
+                        <img className='image-link' src={Meteor.settings.public.gemeenteConfig.logoViewerKnop} />
                     </div>
                     <div className='text-link'>
                         <h2>Zoeken op de kaart</h2>

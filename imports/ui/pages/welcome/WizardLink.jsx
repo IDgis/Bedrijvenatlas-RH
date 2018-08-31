@@ -8,7 +8,7 @@ export default class WizardLink extends Component {
             <a href="/wizard" className='a-link'>
                 <div className='wizard-link'>
                     <div>
-                        <img className='image-link' src={Meteor.settings.public.logoWizardUrl} />
+                        <img className='image-link' src={Meteor.settings.public.gemeenteConfig.logoWizardKnop} />
                     </div>
                     <div className='text-link'>
                         <h2>Ik wil een bedrijf (her)vestigen</h2>
