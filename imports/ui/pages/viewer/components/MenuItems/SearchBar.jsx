@@ -71,6 +71,7 @@ export default class SearchBar extends Component {
                                         new ol.style.Style({
                                             image: new ol.style.Icon({
                                                 src: Meteor.settings.public.gemeenteConfig.iconSelected,
+                                                imgSize: [ 48, 48 ], // for IE11
                                                 scale: 0.5
                                             }),
                                             zIndex: 1
@@ -78,6 +79,7 @@ export default class SearchBar extends Component {
                                         new ol.style.Style({
                                             image: new ol.style.Icon({
                                                 src: Meteor.settings.public.gemeenteConfig.iconShadow,
+                                                imgSize: [ 48, 48 ], // for IE11
                                                 scale: 0.5
                                             }),
                                             zIndex: 0
