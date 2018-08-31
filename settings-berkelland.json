@@ -16,6 +16,11 @@
 
             "logoWizardKnop": "/rijssenholten/icons/KNOP_VESTIGEN_NIEUW_BEDRIJF.svg",
             "logoViewerKnop": "/rijssenholten/icons/KNOP_NAAR_DE_KAART.svg",
+            "iconSelected": "/rijssenholten/icons/SELECTED.svg",
+            "iconShadow": "/icons/SCHADUW.svg",
+
+            "iconHome": "/icons/HOME.svg",
+            "iconMenu": "/icons/MENU.svg",
 
             "extent": [ 220754, 445975, 251434, 467576 ],
             "center": [ 236094, 456775 ],
@@ -178,78 +183,6 @@
                 "shadow": "/icons/SCHADUW.svg",
                 "visible": false
             }
-        ],
-
-
-
-
-
-
-
-
-        "laagNaam": {
-            "kavels": "Uitgifte Locaties",
-            "ibis": "Bedrijventerreinen",
-            "kadastralePercelen": "Kadastrale percelen",
-            "luchtfoto": "Luchtfoto",
-            "teKoop": "Te Koop",
-            "teHuur": "Te Huur",
-            "vastgoed": "Te Koop\/Huur",
-            "milieu": "Milieucategorieën"
-        },
-
-        "searchFields": {
-            "Bedrijventerreinen": ["BEDR_TERR","RINNUMMER","KERN","JAAR","OPPBRUTO","OPPNETTO"],
-            "Bedrijven": ["BEDR_NAAM","ADR_LABEL","SBI_OMSCHR"],
-            "Uitgifte Locaties": ["LOC_TYPE","LOC_NM","LOC_URL"],
-            "Kadastrale percelen": ["kadastraleGemeenteCode","sectie","perceelnummer","kadastralegrootte"],
-            "Te Koop": ["Straat","Huisnummer","Toevoeging","Postcode","Plaats","Oppervlakte","Prijs"],
-            "Te Huur": ["Straat","Huisnummer","Toevoeging","Postcode","Plaats","Oppervlakte","Prijs"],
-            "Milieucategoriën": ["CATEGORIE"]
-        },
-
-        "alias": {
-            "SBI_OMSCHR": "Omschrijving",
-            "BEDR_NAAM": "Bedrijfsnaam",
-            "ADR_LABEL": "Adres",
-            "KAVELINFO": "Kavel info",
-            "OPP": "Oppervlakte",
-            "KAVELNR": "Kavel nr",
-            "STATUS": "Status",
-            "TELEFOON": "Telefoon",
-            "EMAIL": "Email",
-            "LOC_TYPE": "Locatie type",
-            "LOC_NM": "Naam",
-            "LOC_URL": "URL"
-        },
-
-        "iconShadow": "/icons/SCHADUW.svg",
-        "iconKoop": "/icons/TE_KOOP.svg",
-        "iconHuur": "/icons/TE_HUUR.svg",
-        "iconSelected": "/rijssenholten/icons/SELECTED.svg",
-        "iconHome": "/icons/HOME.svg",
-        "iconMenu": "/icons/MENU.svg",
-
-        "iconBedrijventerreinen": "/rijssenholten/icons/BEDRIJVENTERREINEN.svg",
-        "iconKavels": "/rijssenholten/icons/KAVELS.svg",
-
-        "milieuUrl": {
-            "C2": "/rijssenholten/icons/CATEGORIE_2.svg",
-            "C31": "/rijssenholten/icons/CATEGORIE_3_1.svg",
-            "C32": "/rijssenholten/icons/CATEGORIE_3_2.svg",
-            "C41": "/rijssenholten/icons/CATEGORIE_4_1.svg",
-            "C42": "/rijssenholten/icons/CATEGORIE_4_2.svg"
-        },
-
-        "teKoopJsonUrl": "/data/vastgoedTeKoop.json",
-        "teHuurJsonUrl": "/data/vastgoedTeHuur.json",
-
-        "bedrijvenatlasWmsUrl": "https://rijssen-holten-pub.geopublisher.nl/geoserver/Bedrijvenatlas/ows?SERVICE=WMS&",
-        "wmsLayerNames": {
-            "milieuCategorieLayer": "Bedrijventerreinen_RO_categorie_indeling",
-            "bedrijventerreinenLayer": "Bedrijventerreinen_Rijssen-Holten",
-            "uitgifteLocatiesLayer": "Bedrijventerreinen_uitgiftelocaties"
-        },
-        "kvkBedrijvenWfsUrl": "https://rijssen-holten-pub.geopublisher.nl/geoserver/Bedrijvenatlas/wfs"
+        ]
     }
 }

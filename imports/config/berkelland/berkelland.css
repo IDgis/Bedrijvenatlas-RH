@@ -261,10 +261,10 @@ div[role="presentation"] {
     cursor: pointer;
 }
 
-.legenda {
+#legenda {
     position: absolute;
     right: 10px;
-    top: 200px;
+    top: 250px;
     z-index: 1;
     padding: 5px;
     background-color: #004D93;
@@ -272,38 +272,25 @@ div[role="presentation"] {
     height: auto !important;
     border-radius: 5px;
     max-height: 500px;
+    width: 255px;
     overflow: hidden;
     cursor: grab;
 }
 
-.legenda-list {
-    overflow-y: auto;
-    max-height: 400px;
-}
-
-.legenda:active {
+#legenda:active {
     cursor: grabbing;
 }
 
-.legenda-title {
+#legendaheader {
     color: white;
     text-align: center;
     margin-bottom: 0px;
     margin-top: 5px;
 }
 
-.vastgoed-legenda {
-    position: relative;
-    min-height: 60px !important;
-}
-
-.milieu-legenda {
-    position: relative;
-    min-height: 150px !important;
-}
-
-.bedrijven-legenda {
-    position: relative;
+.legenda-list {
+    overflow-y: auto;
+    max-height: 400px;
 }
 
 h3 {
@@ -316,15 +303,6 @@ h3 {
 
 .legenda-icon {
     width: 18px;
-}
-
-.legenda-milieu {
-    position: relative;
-    right: 0px;
-    z-index: 1;
-    display: block;
-    margin-top: 10px;
-    margin-bottom: 5px;
 }
 
 .ol-scale-line {
