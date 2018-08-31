@@ -188,6 +188,7 @@
             {
                 "service": "wms",
                 "titel": "Uitgifte Locaties",
+                "type": "nieuwbouw",
                 "url": "https://rijssen-holten-pub.geopublisher.nl/geoserver/Bedrijvenatlas/ows?SERVICE=WMS&",
                 "format": "image/png",
                 "layers": "Bedrijventerreinen_uitgiftelocaties",
@@ -202,6 +203,7 @@
             {
                 "service": "geojson",
                 "titel": "Te Koop",
+                "type": "koop",
                 "omschrijving": "Panden te koop volgens Funda",
                 "url": "/data/vastgoedTeKoop.json",
                 "icon": "/icons/TE_KOOP.svg",
@@ -211,6 +213,7 @@
             {
                 "service": "geojson",
                 "titel": "Te Huur",
+                "type": "huur",
                 "omschrijving": "Panden te huur volgens Funda",
                 "url": "/data/vastgoedTeHuur.json",
                 "icon": "/icons/TE_HUUR.svg",

@@ -264,6 +264,8 @@ export default class Viewer extends Component {
         const laagNaam = Meteor.settings.public.laagNaam;
         const map = this.state.map;
         const layers = map.getLayers();
+        const fundaLayers = Meteor.settings.public.fundaLayers;
+        const overlayLayers = Meteor.settings.public.overlayLayers;
 
         const voorkeur = Session.get('pand');
         const huurKoop = Session.get('huur-koop');
@@ -284,35 +286,44 @@ export default class Viewer extends Component {
         // Set the visibility of the layers
         if(voorkeur === 'bestaand' || voorkeur === 'beide') {
             if(huurKoop === 'koop') {
-                layers.forEach(layer => {
-                    if(layer.get('title') === laagNaam.teKoop) {
-                        layer.setVisible(true);
-                    }
+                fundaLayers.forEach(fundaLayer => {
+                    layers.forEach(layer => {
+                        if (layer.get('title') === fundaLayer.titel && fundaLayer.type === 'koop') {
+                            layer.setVisible(true);
+                        }
+                    });
                 });
             } else if(huurKoop === 'huur') {
-                layers.forEach(layer => {
-                    if(layer.get('title') === laagNaam.teHuur) {
-                        layer.setVisible(true);
-                    }
+                fundaLayers.forEach(fundaLayer => {
+                    layers.forEach(layer => {
+                        if (layer.get('title') === fundaLayer.titel && fundaLayer.type === 'huur') {
+                            layer.setVisible(true);
+                        }
+                    });
                 });
             } else if(huurKoop === 'beide') {
-                layers.forEach(layer => {
-                    let title = layer.get('title');
-                    if(title === laagNaam.teKoop || title === laagNaam.teHuur) {
-                        layer.setVisible(true);
-                    }
+                fundaLayers.forEach(fundaLayer => {
+                    layers.forEach(layer => {
+                        if (layer.get('title') === fundaLayer.titel) {
+                            layer.setVisible(true);
+                        }
+                    });
                 });
             }
         }
 
         // Set the kavels layer visible
         if(voorkeur === 'nieuwbouw') {
-            layers.forEach(layer => {
-                if(layer.get('title') === laagNaam.kavels) {
-                    layer.setVisible(true);
-                }
+            overlayLayers.forEach(overlayLayer => {
+                layers.forEach(layer => {
+                    if (layer.get('title') === overlayLayer.titel && overlayLayer.type === 'nieuwbouw') {
+                        layer.setVisible(true);
+                    }
+                });
             });
         }
+
+        this.updateLegenda();
     }
 
     setBackgroundLayer() {
