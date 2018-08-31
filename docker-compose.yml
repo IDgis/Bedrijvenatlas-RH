@@ -6,7 +6,7 @@ volumes:
 services:
   bedrijvenatlas:
     restart: always
-    image: idgis/bedrijvenatlas-rh:${VERSION}
+    image: idgis/bedrijvenatlas-${IMAGE_GEMEENTE}:${VERSION}
     ports:
       - "80:3000"
     environment:
