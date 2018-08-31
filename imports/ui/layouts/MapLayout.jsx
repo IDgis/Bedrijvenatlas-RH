@@ -21,21 +21,8 @@ export default class MapLayout extends Component {
             streetView: <div></div>
         };
 
-        /*this.coords = {
-            x: 0,
-            y: 0
-        };*/
         this.location = [0,0];
     }
-
-    /**
-     * Update the mouse coordinates on the screen 
-     */
-    /*onMouseMove(e) {
-        // TODO: onnodig?
-        this.coords.x = e.screenX;
-        this.coords.y = e.screenY;
-    }*/
 
     /**
      * Sets the map variable to the state so it can be passed to other components
@@ -82,7 +69,6 @@ export default class MapLayout extends Component {
 
                 Meteor.settings.public.fundaLayers.forEach(fundaLayer => layerNames.push(fundaLayer.titel));
                 layerNames.push(Meteor.settings.public.kvkBedrijven.naam);
-                const searchFields = Meteor.settings.public.searchFields[title]; // TODO: onnodig?
 
                 layerNames.forEach(name => {
                     if (title === name) {
@@ -94,16 +80,6 @@ export default class MapLayout extends Component {
                                     openStreetView={this.openStreetView}
                                     onRequestClose={this.closePopup}
                                     />
-                        /*popup = <Popup 
-                                    title={title} 
-                                    selectedFeature={feature} 
-                                    coords={this.location} 
-                                    screenCoords={e.pixel} 
-                                    searchFields={searchFields} 
-                                    map={map}
-                                    openStreetView={this.openStreetView}
-                                    onRequestClose={this.closePopup}
-                                    />;*/
                     }
                 });
             });
@@ -177,7 +153,6 @@ export default class MapLayout extends Component {
     render() {
         proj4.defs('EPSG:28992', '+proj=sterea +lat_0=52.15616055555555 +lon_0=5.38763888888889 +k=0.9999079 +x_0=155000 +y_0=463000 +ellps=bessel +towgs84=565.417,50.3319,465.552,-0.398957,0.343988,-1.8774,4.0725 +units=m +no_defs');
         ol.proj.setProj4(proj4);
-        //let coord = ol.proj.transform([this.location[0],this.location[1]],'EPSG:28992','EPSG:4326');
 
         return (
             <MuiThemeProvider>
@@ -185,7 +160,7 @@ export default class MapLayout extends Component {
                     <header className="main-header row">
                         <MenuBar />
                     </header>
-                    <main /*onMouseMove={this.onMouseMove.bind(this)}*/ className="main-layout row" >
+                    <main className="main-layout row" >
                         <Viewer mapToParent={this.setMap} featurePopup={this.setKvkPopup} />
                         {this.state.featurePopup}
                         {this.state.streetView}

@@ -128,8 +128,6 @@ export default class Popup extends Component {
         } else {
             return (x - (width + offset));
         }
-
-        return (window.innerWidth/2-100);
     }
 
     render() {

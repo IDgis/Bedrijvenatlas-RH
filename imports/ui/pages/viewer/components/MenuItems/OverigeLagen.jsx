@@ -57,24 +57,24 @@ export default class OverigeLagen extends Component {
      * Turns all Vastgoed layers on and off at once
      */
     selectAllVastgoedLayers = (event, l) => {
-        let newVisible = !this.state.allVastgoedChecked;
+        const newVisible = !this.state.allVastgoedChecked;
+        const fundaLayers = Meteor.settings.public.fundaLayers;
 
-        let teKoop = Meteor.settings.public.laagNaam.teKoop;
-        let teHuur = Meteor.settings.public.laagNaam.teHuur;
-
-        let map = this.props.map;
-        if(map != null) {
-            let layers = map.getLayers();
-            layers.forEach((layer, index) => {
-                if(layer.get('title') === teKoop || layer.get('title') === teHuur) {
-                    layer.setVisible(newVisible);
-                }
+        if (this.props.map) {
+            const layers = this.props.map.getLayers();
+            fundaLayers.forEach(fundaLayer => {
+                layers.forEach(layer => {
+                    if (layer.get('title') === fundaLayer.titel) {
+                        layer.setVisible(newVisible);
+                    }
+                });
             });
         }
 
         this.setState({
             allVastgoedChecked: newVisible
         });
+        
         this.props.updateLegenda();
     }
 
@@ -104,17 +104,17 @@ export default class OverigeLagen extends Component {
      * Checks whether all Vastgoed layers are checked or not and sets its internal state
      */
     setAllVastgoedChecked = () => {
-        let teKoop = Meteor.settings.public.laagNaam.teKoop;
-        let teHuur = Meteor.settings.public.laagNaam.teHuur;
+        const fundaLayers = Meteor.settings.public.fundaLayers;
 
-        let map = this.props.map;
-        if(map != null) {
+        if (this.props.map) {
             let allVisible = true;
-            let layers = map.getLayers();
-            layers.forEach((layer, index) => {
-                if(layer.get('title') === teKoop || layer.get('title') === teHuur) {
-                    allVisible = allVisible && layer.getVisible();
-                }
+            const layers = this.props.map.getLayers();
+            fundaLayers.forEach(fundaLayer => {
+                layers.forEach(layer => {
+                    if (layer.get('title') === fundaLayer.titel) {
+                        allVisible = allVisible && layer.getVisible();
+                    }
+                });
             });
             this.setState({
                 allVastgoedChecked: allVisible
@@ -146,21 +146,21 @@ export default class OverigeLagen extends Component {
      * Get the visibility of all Vastgoed layers
      */
     getAllVastgoedChecked = () => {
-        let teKoop = Meteor.settings.public.laagNaam.teKoop;
-        let teHuur = Meteor.settings.public.laagNaam.teHuur;
-        let map = this.props.map;
-        let visible = false;
+        const fundaLayers = Meteor.settings.public.fundaLayers;
+        let anyVisible = false;
 
-        if(map !== null) {
-            let layers = map.getLayers();
-            layers.forEach((layer, index) => {
-                if(layer.get('title') === teKoop || layer.get('title') === teHuur) {
-                    if(layer.getVisible()) visible = true;
-                }
+        if (this.props.map) {
+            const layers = this.props.map.getLayers();
+            fundaLayers.forEach(fundaLayer => {
+                layers.forEach(layer => {
+                    if (layer.get('title') === fundaLayer.titel && layer.getVisible()) {
+                        anyVisible = true;
+                    }
+                });
             });
-            return visible;
+            return anyVisible;
         }
-        return visible;
+        return anyVisible;
     }
 
     getFundaMenuItems = () => (

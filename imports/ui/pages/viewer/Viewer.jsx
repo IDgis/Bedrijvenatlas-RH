@@ -52,14 +52,14 @@ export default class Viewer extends Component {
                     style: [
                         new ol.style.Style({
                             image: new ol.style.Icon({
-                                src: Meteor.settings.public.iconSelected,
+                                src: Meteor.settings.public.gemeenteConfig.iconSelected,
                                 scale: 0.5
                             }),
                             zIndex: 1
                         }),
                         new ol.style.Style({
                             image: new ol.style.Icon({
-                                src: Meteor.settings.public.iconShadow,
+                                src: Meteor.settings.public.gemeenteConfig.iconShadow,
                                 scale: 0.5
                             }),
                             zIndex: 0
@@ -408,10 +408,10 @@ export default class Viewer extends Component {
             <div id="map" className="map" >
                 <SearchBar map={this.state.map} updateLegenda={this.updateLegenda} />
                 <IconButton className='menu-button' style={{backgroundColor:Meteor.settings.public.gemeenteConfig.colorGemeente}} onClick={this.openMenu} title='Menu' >
-                    <img src={Meteor.settings.public.iconMenu} />
+                    <img src={Meteor.settings.public.gemeenteConfig.iconMenu} />
                 </IconButton>
                 <IconButton className='home-button' href='/' style={{backgroundColor:Meteor.settings.public.gemeenteConfig.colorGemeente}} title='Home' >
-                    <img src={Meteor.settings.public.iconHome} />
+                    <img src={Meteor.settings.public.gemeenteConfig.iconHome} />
                 </IconButton>
                 <LayerMenu
                     map={this.state.map}
