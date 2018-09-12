@@ -73,6 +73,7 @@ export default class MapLayout extends Component {
                 layerNames.forEach(name => {
                     if (title === name) {
                         popup = <FeaturePopup 
+                                    map={map}
                                     feature={feature}
                                     layer={layer}
                                     coords={this.location}
