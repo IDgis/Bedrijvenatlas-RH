@@ -229,7 +229,7 @@
             "LOC_NM": "Betreft",
             "LOC_TYPE": "Bedrijventerrein",
             "SBI_OMSCHR": "Activiteiten (SBI)",
-            "SBI_RUBR": "Activiteiten rubriek (SBI)"
+            "SBI_RUBR_C": "Activiteiten rubriek (SBI)"
         }
     }
 }

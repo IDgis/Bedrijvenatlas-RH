@@ -24,23 +24,25 @@ export default class FeaturePopup extends Component {
     getPopupFields = () => {
         const properties = this.props.feature.getProperties();
         const keys = Object.keys(properties);
+        const aliasKeys = Object.keys(Meteor.settings.public.aliassen);
         const fields = [];
         let count = 0;
 
         keys.forEach((key, index) => {
+            const alias = this.getAlias(key, aliasKeys);
             if (typeof properties[key] !== 'object') {
                 if (typeof properties[key] === 'string' && properties[key].indexOf('http') !== -1) {
                     fields.push(
                         <tr key={`field_${index}`}>
                             <td colSpan={2} style={{width:'450px', paddingBottom:'5px', paddingTop:'5px'}}>
-                                <RaisedButton href={properties[key]} target='_blank' label={`Meer informatie (${key})`} />
+                                <RaisedButton href={properties[key]} target='_blank' label={`Meer informatie (${alias})`} />
                             </td>
                         </tr>
                     );
                 } else {
                     fields.push(
                         <tr key={`property_${index}`}>
-                            <td style={{width:'100px'}}><b>{key}:</b></td>
+                            <td style={{width:'100px'}}><b>{alias}:</b></td>
                             <td style={{width:'350px'}}>{properties[key]}</td>
                         </tr>
                     );
@@ -53,6 +55,17 @@ export default class FeaturePopup extends Component {
         fields.push(this.getStreetviewButton(++count));
 
         this.setState({fields});
+    }
+
+    getAlias = (key, aliasKeys) => {
+        let alias = key;
+        [...aliasKeys].forEach(aliasKey => {
+            if (aliasKey === key) {
+                alias = Meteor.settings.public.aliassen[key];
+            }
+        });
+
+        return alias;
     }
 
     getMilieucategorie = () => {
