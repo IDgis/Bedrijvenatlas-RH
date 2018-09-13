@@ -220,6 +220,16 @@
                 "shadow": "/icons/SCHADUW.svg",
                 "visible": false
             }
-        ]
+        ],
+
+        "aliassen": {
+            "ADR_ID_BAG": "Identificatie BAG",
+            "ADR_LABEL": "Locatieadres",
+            "BEDR_NAAM": "Bedrijfsfnaam",
+            "LOC_NM": "Betreft",
+            "LOC_TYPE": "Bedrijventerrein",
+            "SBI_OMSCHR": "Activiteiten (SBI)",
+            "SBI_RUBR": "Activiteiten rubriek (SBI)"
+        }
     }
 }
