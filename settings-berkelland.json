@@ -183,6 +183,10 @@
                 "shadow": "/icons/SCHADUW.svg",
                 "visible": false
             }
-        ]
+        ],
+
+        "aliassen": {
+            
+        }
     }
 }
