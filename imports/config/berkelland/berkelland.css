@@ -171,7 +171,6 @@ body {
 
 .searchbar {
     position: fixed;
-    background-color: #004D93;
     height: 86px !important;
     z-index: 1;
     top: 66px;
