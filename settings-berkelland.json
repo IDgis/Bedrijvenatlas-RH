@@ -70,43 +70,17 @@
         "kvkBedrijven": {
             "naam": "Bedrijven",
             "omschrijving": "KVK Bedrijven",
-            "url": "",
-            "namespace": "",
-            "featurePrefix": "",
-            "featureTypes": [],
+            "url": "https://rijssen-holten-pub.geopublisher.nl/geoserver/Bedrijvenatlas/wfs",
+            "namespace": "Bedrijvenatlas",
+            "featurePrefix": "Bedrijventerreinen_KVK_hoofdactiviteiten_per_adres_service",
+            "featureTypes": ["Bedrijventerreinen_KVK_hoofdactiviteiten_per_adres"],
 
             "namen": {
-                "C": "Industrie",
-                "E": "Distributie water/afval",
-                "F": "Bouwnijverheid",
-                "G": "Handel/Groothandel",
-                "H": "Vervoer/opslag",
-                "I": "Logies/maaltijd/drank",
-                "J": "Informatica/communicatie",
-                "K": "Financiëel",
-                "L": "Onroerend goed",
-                "M": "Advisering",
-                "N": "Verhuur/overige dienstverlening",
-                "P": "Onderwijs",
-                "Q": "Gezondheidszorg",
-                "S": "Overige dienstverlening"
+                
             },
 
             "icons": {
-                "C": "/icons/SBI_RUBRIEK_CODE_C_INDUSTRIE.svg",
-                "E": "/icons/SBI_RUBRIEK_CODE_E_DISTRIBUTIE_WATER_AFVAL.svg",
-                "F": "/icons/SBI_RUBRIEK_CODE_F_BOUWNIJVERHEID.svg",
-                "G": "/icons/SBI_RUBRIEK_CODE_G_DETAILHANDEL.svg",
-                "H": "/icons/SBI_RUBRIEK_CODE_H_VERVOER_OPSLAG.svg",
-                "I": "/icons/SBI_RUBRIEK_CODE_I_LOGIES_MAALTIJD_DRANK.svg",
-                "J": "/icons/SBI_RUBRIEK_CODE_J_INFO_COMMUNICATIE.svg",
-                "K": "/icons/SBI_RUBRIEK_CODE_K_FINANCIEEL.svg",
-                "L": "/icons/SBI_RUBRIEK_CODE_L_ONROEREND_GOED.svg",
-                "M": "/icons/SBI_RUBRIEK_CODE_M_ADVISERING.svg",
-                "N": "/icons/SBI_RUBRIEK_CODE_N_VERHUR_OVR_DIENSTV.svg",
-                "P": "/icons/SBI_RUBRIEK_CODE_P_ONDERWIJS.svg",
-                "Q": "/icons/SBI_RUBRIEK_CODE_Q_GEZONDHEIDSZORG.svg",
-                "S": "/icons/SBI_RUBRIEK_CODE_S_OVERIGE_DIENSTVERL.svg"
+                
             },
             "iconShadow": "/icons/SCHADUW.svg"
         },
@@ -162,6 +136,26 @@
                 "layers": "kadastralekaart",
                 "tiling": true,
                 "omschrijving": "TileWMS Kadastrale percelen",
+                "visible": false
+            },
+            {
+                "service": "wms",
+                "titel": "Bedrijventerreinen",
+                "url": "http://geoserver.prvgld.nl/geoserver/IBIS/wfs?SERVICE=WMS&",
+                "format": "image/png",
+                "layers": "bedrijventerrein",
+                "tiling": false,
+                "omschrijving": "ImageWMS Bedrijventerreinen",
+                "visible": false
+            },
+            {
+                "service": "wms",
+                "titel": "Kavels",
+                "url": "http://geoserver.prvgld.nl/geoserver/IBIS/wfs?SERVICE=WMS&",
+                "format": "image/png",
+                "layers": "bedrijvenkavels",
+                "tiling": false,
+                "omschrijving": "ImageWMS Bedrijvenkavels",
                 "visible": false
             }
         ],
