@@ -163,7 +163,7 @@
             },
             {
                 "service": "wms",
-                "titel": "Kavels",
+                "titel": "Bedrijvenkavels",
                 "url": "http://geoserver.prvgld.nl/geoserver/IBIS/wfs?SERVICE=WMS&",
                 "format": "image/png",
                 "layers": "bedrijvenkavels",
