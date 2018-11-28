@@ -9,5 +9,5 @@ export VERSION=1.0.5
 export GEMEENTE=gemeente-berkelland
 
 docker-compose \
-	-p rh \
+	-p bkl \
 	up -d
