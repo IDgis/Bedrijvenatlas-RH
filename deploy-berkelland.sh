@@ -11,5 +11,5 @@ export GEMEENTE=gemeente-berkelland
 export FUNDA_SCRAPER_VERSION=1.1.2
 
 docker-compose \
-	-p rh \
+	-p bkl \
 	up -d
