@@ -70,17 +70,43 @@
         "kvkBedrijven": {
             "naam": "Bedrijven",
             "omschrijving": "KVK Bedrijven",
-            "url": "https://rijssen-holten-pub.geopublisher.nl/geoserver/Bedrijvenatlas/wfs",
+            "url": "https://berkelland-pub.geopublisher.nl/geoserver/Bedrijvenatlas/wfs",
             "namespace": "Bedrijvenatlas",
-            "featurePrefix": "Bedrijventerreinen_KVK_hoofdactiviteiten_per_adres_service",
-            "featureTypes": ["Bedrijventerreinen_KVK_hoofdactiviteiten_per_adres"],
+            "featurePrefix": "KVK_Hoofdactiviteiten_service",
+            "featureTypes": ["KVK_Hoofdactiviteiten"],
 
             "namen": {
-                
+                "C": "Industie",
+                "E": "Distributie water/afval",
+                "F": "Bouwnijverheid",
+                "G": "Handel/Groothandel",
+                "H": "Vervoer/Opslag",
+                "I": "Logies/Maaltijd/Drank",
+                "J": "Informatica/Communicatie",
+                "K": "Financieel",
+                "L": "Onroerend goed",
+                "M": "Advisering",
+                "N": "Verhuur/Overige dienstverlening",
+                "P": "Onderwijs",
+                "Q": "Gezondheidszorg",
+                "S": "Overige dienstverlening"
             },
 
             "icons": {
-                
+                "C": "/icons/SBI_RUBRIEK_CODE_C_INDUSTRIE.svg",
+                "E": "/icons/SBI_RUBRIEK_CODE_E_DISTRIBUTIE_WATER_AFVAL.svg",
+                "F": "/icons/SBI_RUBRIEK_CODE_F_BOUWNIJVERHEID.svg",
+                "G": "/icons/SBI_RUBRIEK_CODE_G_DETAILHANDEL.svg",
+                "H": "/icons/SBI_RUBRIEK_CODE_H_VERVOER_OPSLAG.svg",
+                "I": "/icons/SBI_RUBRIEK_CODE_I_LOGIES_MAALTIJD_DRANK.svg",
+                "J": "/icons/SBI_RUBRIEK_CODE_J_INFO_COMMUNICATIE.svg",
+                "K": "/icons/SBI_RUBRIEK_CODE_K_FINANCIEEL.svg",
+                "L": "/icons/SBI_RUBRIEK_CODE_L_ONROEREND_GOED.svg",
+                "M": "/icons/SBI_RUBRIEK_CODE_M_ADVISERING.svg",
+                "N": "/icons/SBI_RUBRIEK_CODE_N_VERHUR_OVR_DIENSTV.svg",
+                "P": "/icons/SBI_RUBRIEK_CODE_P_ONDERWIJS.svg",
+                "Q": "/icons/SBI_RUBRIEK_CODE_Q_GEZONDHEIDSZORG.svg",
+                "S": "/icons/SBI_RUBRIEK_CODE_S_OVERIGE_DIENSTVERL.svg"
             },
             "iconShadow": "/icons/SCHADUW.svg"
         },
@@ -149,6 +175,16 @@
                 "layers": "kadastralekaart",
                 "tiling": true,
                 "omschrijving": "TileWMS Kadastrale percelen",
+                "visible": false
+            },
+            {
+                "service": "wms",
+                "titel": "Milieucategorieën",
+                "url": "https://berkelland-pub.geopublisher.nl/geoserver/Bedrijvenatlas/ows?SERVICE=WMS&",
+                "format": "image/png",
+                "layers": "Milieucategorieen",
+                "tiling": true,
+                "omschrijving": "TileWMS Milieu Categorieën",
                 "visible": false
             },
             {
