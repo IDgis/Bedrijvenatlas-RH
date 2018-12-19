@@ -14,9 +14,9 @@
             "altText": "Berkelland",
             "colorGemeente": "#004D93",
 
-            "logoWizardKnop": "/rijssenholten/icons/KNOP_VESTIGEN_NIEUW_BEDRIJF.svg",
-            "logoViewerKnop": "/rijssenholten/icons/KNOP_NAAR_DE_KAART.svg",
-            "iconSelected": "/rijssenholten/icons/SELECTED.svg",
+            "logoWizardKnop": "/berkelland/icons/KNOP_VESTIGEN_NIEUW_BEDRIJF.svg",
+            "logoViewerKnop": "/berkelland/icons/KNOP_NAAR_DE_KAART.svg",
+            "iconSelected": "/berkelland/icons/SELECTED.svg",
             "iconShadow": "/icons/SCHADUW.svg",
 
             "iconHome": "/icons/HOME.svg",
