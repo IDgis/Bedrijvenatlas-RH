@@ -2,7 +2,7 @@
 
 if [ ! -z $1 ]; then
     if [ $1 == berkelland ]; then
-        echo "Image berkerlland aan het bouwen ..."
+        echo "Image berkelland aan het bouwen ..."
         docker build --pull --no-cache -f Dockerfile-berkelland -t idgis/bedrijvenatlas-berkelland .
     elif [ $1 == rijssenholten ]; then
         echo "Image rijssenholten aan het bouwen ..."
