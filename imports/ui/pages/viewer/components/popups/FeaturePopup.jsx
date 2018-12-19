@@ -100,11 +100,9 @@ export default class FeaturePopup extends Component {
     getBestemmingsplanButton = (index) => {
         const x = this.props.coords[0];
         const y = this.props.coords[1];
-        const x_offset = 300;
-        const y_offset = 150;
 
-        const ruimtelijkeplannenUrl = `https://www.ruimtelijkeplannen.nl/web-roo/roo/bestemmingsplannen?` +
-            `bbx1=${x - x_offset}&bby1=${y - y_offset}&bbx2=${x + x_offset}&bby2=${y + y_offset}`;
+        const ruimtelijkeplannenUrl = `https://www.ruimtelijkeplannen.nl/viewer#!/marker/${x}/${y}/` +
+            `cs/${x}/${y}/1720.32`;
 
         return (
             <tr key={`field_${index}`}>
