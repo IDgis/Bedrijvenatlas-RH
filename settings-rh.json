@@ -142,6 +142,7 @@
                 "url": "http://rijssen-holten.ecw-hosting.nl/lufo/services/wmts_rijssen_holten",
                 "layer": "Rijssen_Holten",
                 "matrixSet": "NLDEPSG28992Scale",
+                "matrixSetPrefix": "EPSG:28992:",
                 "format": "image/jpg",
                 "style": "default",
                 "origin": [ -285401.92,903401.92 ],

@@ -103,11 +103,6 @@ export default class Viewer extends Component {
     addLayers = (layers, allLayers) => {
         const extent = [-285401.92,22598.08,595401.92,903401.92];
         const projection = new ol.proj.Projection({code: 'EPSG:28992', units: 'm', extent: extent});
-        const matrixIds = [];
-
-        for (let i = 0; i < 16; i++) {
-            matrixIds[i] = 'EPSG:28992:' + i.toString();
-        }
 
         layers.forEach(layer => {
             const service = layer.service;
@@ -115,7 +110,7 @@ export default class Viewer extends Component {
             if (service === 'tms') {
                 allLayers.push(this.getTmsLayer(layer, extent, projection));
             } else if (service === 'wmts') {
-                allLayers.push(this.getWmtsLayer(layer, projection, matrixIds));
+                allLayers.push(this.getWmtsLayer(layer, projection));
             } else if (service === 'wms') {
                 allLayers.push(this.getWmsLayer(layer));
             } else if (service === 'geojson') {
@@ -154,10 +149,15 @@ export default class Viewer extends Component {
      * 
      * @param {Object} wmtsLayer The WMTS Layer object to convert to an OpenLayers Object
      * @param {Object} projection The projection object of the given layer
-     * @param {Array} matrixIds The matrixIds to use for this layer
      */
-    getWmtsLayer = (wmtsLayer, projection, matrixIds) => (
-        new ol.layer.Tile({
+    getWmtsLayer = (wmtsLayer, projection) => {
+        const matrixIds = [];
+
+        for (let i = 0; i < 16; i++) {
+            matrixIds[i] = ((wmtsLayer.matrixSetPrefix || '') + i.toString());
+        }
+
+        return new ol.layer.Tile({
             title: wmtsLayer.titel,
             source: new ol.source.WMTS({
                 attributions: this.getAttributions(wmtsLayer.attributions),
@@ -175,7 +175,7 @@ export default class Viewer extends Component {
             }),
             visible: wmtsLayer.visible
         })
-    );
+    };
 
     /**
      * Creates an OpenLayers WMS Layer

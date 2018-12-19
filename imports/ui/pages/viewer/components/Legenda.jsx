@@ -165,7 +165,7 @@ export default class Legenda extends Component {
     render() {
         if (this.state.legendaItems.length > 0) {
             return(
-                <div id='legenda' className='legenda'>
+                <div id='legenda' className='legenda' style={{backgroundColor:Meteor.settings.public.gemeenteConfig.colorGemeente}}>
                     <h2 id='legendaheader' className='legenda-title'>Legenda</h2><hr />
                     <div className='legenda-list'>
                         {this.state.legendaItems}

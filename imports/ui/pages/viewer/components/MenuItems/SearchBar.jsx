@@ -139,7 +139,7 @@ export default class SearchBar extends Component {
 
     render() {
         return(
-            <div className='searchbar' >
+            <div className='searchbar' style={{backgroundColor: Meteor.settings.public.gemeenteConfig.colorGemeente}}>
                 <AutoComplete 
                     className='auto-complete'
                     floatingLabelText="Zoek bedrijf"

@@ -14,9 +14,9 @@
             "altText": "Berkelland",
             "colorGemeente": "#004D93",
 
-            "logoWizardKnop": "/rijssenholten/icons/KNOP_VESTIGEN_NIEUW_BEDRIJF.svg",
-            "logoViewerKnop": "/rijssenholten/icons/KNOP_NAAR_DE_KAART.svg",
-            "iconSelected": "/rijssenholten/icons/SELECTED.svg",
+            "logoWizardKnop": "/berkelland/icons/KNOP_VESTIGEN_NIEUW_BEDRIJF.svg",
+            "logoViewerKnop": "/berkelland/icons/KNOP_NAAR_DE_KAART.svg",
+            "iconSelected": "/berkelland/icons/SELECTED.svg",
             "iconShadow": "/icons/SCHADUW.svg",
 
             "iconHome": "/icons/HOME.svg",
@@ -70,23 +70,23 @@
         "kvkBedrijven": {
             "naam": "Bedrijven",
             "omschrijving": "KVK Bedrijven",
-            "url": "",
-            "namespace": "",
-            "featurePrefix": "",
-            "featureTypes": [],
+            "url": "https://berkelland-pub.geopublisher.nl/geoserver/Bedrijvenatlas/wfs",
+            "namespace": "Bedrijvenatlas",
+            "featurePrefix": "KVK_Hoofdactiviteiten_service",
+            "featureTypes": ["KVK_Hoofdactiviteiten"],
 
             "namen": {
-                "C": "Industrie",
+                "C": "Industie",
                 "E": "Distributie water/afval",
                 "F": "Bouwnijverheid",
                 "G": "Handel/Groothandel",
-                "H": "Vervoer/opslag",
-                "I": "Logies/maaltijd/drank",
-                "J": "Informatica/communicatie",
-                "K": "Financiëel",
+                "H": "Vervoer/Opslag",
+                "I": "Logies/Maaltijd/Drank",
+                "J": "Informatica/Communicatie",
+                "K": "Financieel",
                 "L": "Onroerend goed",
                 "M": "Advisering",
-                "N": "Verhuur/overige dienstverlening",
+                "N": "Verhuur/Overige dienstverlening",
                 "P": "Onderwijs",
                 "Q": "Gezondheidszorg",
                 "S": "Overige dienstverlening"
@@ -155,6 +155,19 @@
 
         "overlayLayers": [
             {
+                "service": "wmts",
+                "titel": "Luchtfoto",
+                "url": "https://geodata.nationaalgeoregister.nl/luchtfoto/rgb/wmts",
+                "layer": "Actueel_ortho25",
+                "matrixSet": "EPSG:28992",
+                "format": "image/jpeg",
+                "style": "default",
+                "origin": [ -285401.92,903401.92 ],
+                "resolutions": [ 3440.64, 1720.32, 860.16, 430.08, 215.04, 107.52, 53.76, 26.88, 13.44, 6.72, 3.36, 1.68, 0.84, 0.42, 0.21 ],
+                "omschrijving": "Luchtfoto Actueel",
+                "visible": false
+            },
+            {
                 "service": "wms",
                 "titel": "Kadastrale percelen",
                 "url": "https://geodata.nationaalgeoregister.nl/kadastralekaartv3/ows?SERVICE=WMS&",
@@ -163,6 +176,36 @@
                 "tiling": true,
                 "omschrijving": "TileWMS Kadastrale percelen",
                 "visible": false
+            },
+            {
+                "service": "wms",
+                "titel": "Milieucategorieën",
+                "url": "https://berkelland-pub.geopublisher.nl/geoserver/Bedrijvenatlas/ows?SERVICE=WMS&",
+                "format": "image/png",
+                "layers": "Milieucategorieen",
+                "tiling": true,
+                "omschrijving": "TileWMS Milieu Categorieën",
+                "visible": false
+            },
+            {
+                "service": "wms",
+                "titel": "Bedrijventerreinen",
+                "url": "http://geoserver.prvgld.nl/geoserver/IBIS/wfs?SERVICE=WMS&",
+                "format": "image/png",
+                "layers": "bedrijventerrein",
+                "tiling": false,
+                "omschrijving": "ImageWMS Bedrijventerreinen",
+                "visible": false
+            },
+            {
+                "service": "wms",
+                "titel": "Bedrijvenkavels",
+                "url": "http://geoserver.prvgld.nl/geoserver/IBIS/wfs?SERVICE=WMS&",
+                "format": "image/png",
+                "layers": "bedrijvenkavels",
+                "tiling": false,
+                "omschrijving": "ImageWMS Bedrijvenkavels",
+                "visible": false
             }
         ],
 
@@ -170,6 +213,8 @@
             {
                 "service": "geojson",
                 "titel": "Te Koop",
+                "type": "koop",
+                "omschrijving": "Panden te koop volgens Funda",
                 "url": "/data/vastgoedTeKoop.json",
                 "icon": "/icons/TE_KOOP.svg",
                 "shadow": "/icons/SCHADUW.svg",
@@ -178,6 +223,8 @@
             {
                 "service": "geojson",
                 "titel": "Te Huur",
+                "type": "huur",
+                "omschrijving": "Panden te huur volgens Funda",
                 "url": "/data/vastgoedTeHuur.json",
                 "icon": "/icons/TE_HUUR.svg",
                 "shadow": "/icons/SCHADUW.svg",
