@@ -17,7 +17,7 @@ services:
 
   funda-scraper:
     restart: always
-    image: idgis/funda-scraper:1.0.0
+    image: idgis/funda-scraper:${FUNDA_SCRAPER_VERSION}
     depends_on:
       - bedrijvenatlas
     environment:

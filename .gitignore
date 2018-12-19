@@ -3,3 +3,7 @@ node_modules/
 .project
 .classpath
 /.build/
+
+# IntelliJ
+.idea/
+*.iml

@@ -8,6 +8,8 @@ export IMAGE_GEMEENTE=berkelland
 export VERSION=1.0.5
 export GEMEENTE=gemeente-berkelland
 
+export FUNDA_SCRAPER_VERSION=1.1.2
+
 docker-compose \
-	-p rh \
+	-p bkl \
 	up -d
