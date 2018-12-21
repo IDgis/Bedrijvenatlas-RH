@@ -17,6 +17,7 @@ export default class OverigeLagen extends Component {
         this.state = {
             map: this.props.map,
             allKvkChecked: false,
+            allDetailHandelChecked: false,
             allVastgoedChecked: false
         }
     }
@@ -49,6 +50,26 @@ export default class OverigeLagen extends Component {
 
         this.setState({
             allKvkChecked: newVisible
+        });
+        this.props.updateLegenda();
+    }
+
+    selectAllDetailHandelLayers = (event, l) => {
+        let newVisible = !this.state.allDetailHandelChecked;
+        let detailHandel = Meteor.settings.public.detailHandel.naam;
+        let map = this.props.map;
+
+        if (map != null) {
+            let layers = map.getLayers();
+            layers.forEach(layer => {
+                if (layer.get('title') === detailHandel) {
+                    layer.setVisible(newVisible);
+                }
+            });
+        }
+
+        this.setState({
+            allDetailHandelChecked: newVisible
         });
         this.props.updateLegenda();
     }
@@ -100,6 +121,25 @@ export default class OverigeLagen extends Component {
         }
     }
 
+    setAllDetailHandelChecked = () => {
+        const detailHandel = Meteor.settings.public.detailHandel.naam;
+        const map = this.props.map;
+
+        if (map != null) {
+            let allVisible = true;
+            const layers = map.getLayers();
+            layers.forEach(layer => {
+                if (layer.get('title') === detailHandel) {
+                    allVisible = allVisible && layer.getVisible();
+                }
+            });
+
+            this.setState({
+                allDetailHandelChecked: allVisible
+            });
+        }
+    }
+
     /**
      * Checks whether all Vastgoed layers are checked or not and sets its internal state
      */
@@ -123,18 +163,19 @@ export default class OverigeLagen extends Component {
     }
 
     /**
-     * Get the visibility of all KVK layers
+     * Get the visibility of all KVK and Detailhandel layers
      */
-    getAllKvkChecked = () => {
-        const kvk = Meteor.settings.public.kvkBedrijven.naam;
+    getAllLayerGroupChecked = (layerGroupName) => {
         const map = this.props.map;
-        let visible = false
+        let visible = false;
 
-        if(map !== null) {
+        if (map !== null) {
             let layers = map.getLayers();
             layers.forEach(layer => {
-                if(layer.get('title') === kvk) {
-                    if(layer.getVisible()) visible = true;
+                if (layer.get('title') === layerGroupName) {
+                    if (layer.getVisible()) {
+                        visible = true;
+                    }
                 }
             });
             return visible;
@@ -180,7 +221,8 @@ export default class OverigeLagen extends Component {
      */
     render() {
         const allVastgoedChecked = this.getAllVastgoedChecked();
-        const allKvkChecked = this.getAllKvkChecked();
+        const allKvkChecked = this.getAllLayerGroupChecked(Meteor.settings.public.kvkBedrijven.naam);
+        const allDetailHandelChecked = this.getAllLayerGroupChecked(Meteor.settings.public.detailHandel.naam);
 
         const fundaMenuItems = this.getFundaMenuItems();
         const customLayers = this.getCustomLayers();
@@ -201,6 +243,15 @@ export default class OverigeLagen extends Component {
                         updateParent={this.setAllKvkChecked} 
                         updateLegenda={this.props.updateLegenda} />}
                     />
+                <MenuItem className='list-item' primaryText={Meteor.settings.public.detailHandel.naam}
+                    leftIcon={<Checkbox checked={allDetailHandelChecked} onTouchTap={this.selectAllDetailHandelLayers} iconStyle={{fill:'white'}} />}
+                    rightIcon={<ArrowDropRight style={{fill:'white'}} />}
+                    menuItems={<Bedrijvenlaag
+                        layer={Meteor.settings.public.detailHandel}
+                        map={this.props.map}
+                        updateParent={this.setAllDetailHandelChecked}
+                        updateLegenda={this.props.updateLegenda} />}
+                />
                 { customLayers }
             </List>
         );

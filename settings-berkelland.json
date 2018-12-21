@@ -112,19 +112,19 @@
         },
 
         "detailHandel": {
-            "naam": "detailHandel",
-            "omschrijving": "Detail Handel",
-            "url": "",
-            "namespace": "",
-            "featurePrefix": "",
-            "featureTypes": [],
+            "naam": "Detailhandel",
+            "omschrijving": "Detailhandel",
+            "url": "https://berkelland-pub.geopublisher.nl/geoserver/Bedrijvenatlas/wfs",
+            "namespace": "Bedrijvenatlas",
+            "featurePrefix": "Detailhandel_service",
+            "featureTypes": ["Detailhandel"],
 
             "namen": {
-
+                "G": "Detailhandel"
             },
 
             "icons": {
-
+                "G": "/berkelland/icons/SELECTED.svg"
             },
             "iconShadow": "/icons/SCHADUW.svg"
         },
@@ -212,9 +212,9 @@
         "fundaLayers": [
             {
                 "service": "geojson",
-                "titel": "Te Koop",
+                "titel": "Bedrijfspanden te Koop",
                 "type": "koop",
-                "omschrijving": "Panden te koop volgens Funda",
+                "omschrijving": "Bedrijfspanden te koop volgens Funda",
                 "url": "/data/vastgoedTeKoop.json",
                 "icon": "/icons/TE_KOOP.svg",
                 "shadow": "/icons/SCHADUW.svg",
@@ -222,10 +222,30 @@
             },
             {
                 "service": "geojson",
-                "titel": "Te Huur",
+                "titel": "Bedrijfspanden te Huur",
                 "type": "huur",
-                "omschrijving": "Panden te huur volgens Funda",
+                "omschrijving": "Bedrijfspanden te huur volgens Funda",
                 "url": "/data/vastgoedTeHuur.json",
+                "icon": "/icons/TE_HUUR.svg",
+                "shadow": "/icons/SCHADUW.svg",
+                "visible": false
+            },
+            {
+                "service": "geojson",
+                "titel": "Winkelpanden te Koop",
+                "type": "koop",
+                "omschrijving": "Detailhandelpanden te koop volgens Funda",
+                "url": "/data/detailhandelTeKoop.json",
+                "icon": "/icons/TE_KOOP.svg",
+                "shadow": "/icons/SCHADUW.svg",
+                "visible": false
+            },
+            {
+                "service": "geojson",
+                "titel": "Winkelpanden te Huur",
+                "type": "huur",
+                "omschrijving": "Detailhandelpanden te huur volgens Funda",
+                "url": "/data/detailhandelTeHuur.json",
                 "icon": "/icons/TE_HUUR.svg",
                 "shadow": "/icons/SCHADUW.svg",
                 "visible": false

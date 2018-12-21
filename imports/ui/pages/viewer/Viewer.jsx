@@ -74,6 +74,7 @@ export default class Viewer extends Component {
         this.setMapSettings();
         this.setBackgroundLayer();
         this.addKvkLayers(Meteor.settings.public.kvkBedrijven);
+        this.addKvkLayers(Meteor.settings.public.detailHandel);
         this.props.mapToParent(this.state.map);
     }
 
