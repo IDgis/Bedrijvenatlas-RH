@@ -25,7 +25,7 @@
             "extent": [ 220754, 445975, 251434, 467576 ],
             "center": [ 236094, 456775 ],
             "zoom": 13,
-            "minZoom": 12,
+            "minZoom": 13,
 
             "plaatsen": [
                 {
@@ -216,7 +216,7 @@
                 "type": "koop",
                 "omschrijving": "Bedrijfspanden te koop volgens Funda",
                 "url": "/data/vastgoedTeKoop.json",
-                "icon": "/icons/TE_KOOP.svg",
+                "icon": "/icons/TE_KOOP_BEDRIJF.svg",
                 "shadow": "/icons/SCHADUW.svg",
                 "visible": false
             },
@@ -226,7 +226,7 @@
                 "type": "huur",
                 "omschrijving": "Bedrijfspanden te huur volgens Funda",
                 "url": "/data/vastgoedTeHuur.json",
-                "icon": "/icons/TE_HUUR.svg",
+                "icon": "/icons/TE_HUUR_BEDRIJF.svg",
                 "shadow": "/icons/SCHADUW.svg",
                 "visible": false
             },
@@ -236,7 +236,7 @@
                 "type": "koop",
                 "omschrijving": "Detailhandelpanden te koop volgens Funda",
                 "url": "/data/detailhandelTeKoop.json",
-                "icon": "/icons/TE_KOOP.svg",
+                "icon": "/icons/TE_KOOP_DETAILHANDEL.svg",
                 "shadow": "/icons/SCHADUW.svg",
                 "visible": false
             },
@@ -246,7 +246,7 @@
                 "type": "huur",
                 "omschrijving": "Detailhandelpanden te huur volgens Funda",
                 "url": "/data/detailhandelTeHuur.json",
-                "icon": "/icons/TE_HUUR.svg",
+                "icon": "/icons/TE_HUUR_DETAILHANDEL.svg",
                 "shadow": "/icons/SCHADUW.svg",
                 "visible": false
             }
