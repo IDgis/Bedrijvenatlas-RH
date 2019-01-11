@@ -35,7 +35,7 @@ export default class Legenda extends Component {
 
         document.addEventListener('mousedown', e => {
             const name = e.target.className;
-            if (name && name.indexOf('legenda') !== -1) {
+            if (name && typeof name === 'string' && name.indexOf('legenda') !== -1) {
                 const legenda = document.getElementById('legenda');
                 draggingComponent = e.target;
                 const evt = e || window.event;

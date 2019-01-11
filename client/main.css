@@ -199,45 +199,6 @@ div > div > div {
     color: white;
 }
 
-div[role="menu"]:hover {
-    width: 900px !important;
-}
-
-div[role="presentation"] {
-    background-color: #730049;
-    opacity: 0.8;
-    border-radius: 5px;
-}
-
-.list-item {
-    min-height: 0px !important;
-    height: 36px;
-
-    border: 10px none;
-    box-sizing: border-box;
-    display: block;
-    font-family: 'Roboto', sans-serif;
-    cursor: pointer;
-    text-decoration: none;
-    margin: 0px;
-    padding: 0px;
-    outline: medium none currentColor;
-    font-size: 16px;
-    font-weight: inherit;
-    position: relative;
-    z-index: 1;
-    line-height: 16px;
-    color: white !important;
-}
-
-.list-item > div > div > div {
-    color: white;
-}
-
-.kaart-laag {
-    padding: 10px 10px 10px 72px;
-}
-
 .menu-button {
     position: fixed !important;
     top: 162px;
