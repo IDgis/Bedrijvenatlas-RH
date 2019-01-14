@@ -21,15 +21,6 @@ export default class OverigeLagen extends Component {
         }
     }
 
-    componentWillReceiveProps(nextProps) {
-        this.setState({
-            map: nextProps.map,
-        });
-
-        this.setAllKvkChecked();
-        this.setAllVastgoedChecked();
-    }
-
     /**
      * Turns all KVK layers on and off at once
      */
@@ -203,11 +194,20 @@ export default class OverigeLagen extends Component {
         return anyVisible;
     }
 
-    getFundaMenuItems = () => (
-        Meteor.settings.public.fundaLayers.map((layer, index) => (
-            <Kaartlaag layer={layer} map={this.props.map} updateParent={this.setAllVastgoedChecked} updateLegenda={this.props.updateLegenda} key={layer.titel + index} />
-        ))
-    );
+    getFundaMenuItems = () => {
+        const { map } = this.props;
+        return Meteor.settings.public.fundaLayers.map((layer, index) => {
+            let newVisible;
+
+            map.getLayers().forEach(l => {
+                if (l.get('title') === layer.titel) {
+                    newVisible = l.getVisible();
+                }
+            });
+            
+            return <Kaartlaag layer={layer} map={this.props.map} updateParent={this.setAllVastgoedChecked} updateLegenda={this.props.updateLegenda} visible={newVisible} key={layer.titel + index} />
+        });
+    };
 
     getCustomLayers = () => (
         Meteor.settings.public.overlayLayers.map((layer, index) => (
@@ -216,7 +216,6 @@ export default class OverigeLagen extends Component {
     )
 
     toggleSubmenu = (e, items) => {
-        console.log(e.currentTarget);
         const rect = e.currentTarget.getBoundingClientRect();
 
         const selectedItem = rect.top;
@@ -254,7 +253,7 @@ export default class OverigeLagen extends Component {
                     isChecked={allVastgoedChecked}
                     selectAll={this.selectAllVastgoedLayers}
                     items={fundaMenuItems}
-                    onClick={this.toggleSubmenu}
+                    toggleSubmenu={this.toggleSubmenu}
                     />
                 <ListItem 
                     primaryText={Meteor.settings.public.kvkBedrijven.naam} 
@@ -265,7 +264,7 @@ export default class OverigeLagen extends Component {
                         map={this.props.map} 
                         updateParent={this.setAllKvkChecked} 
                         updateLegenda={this.props.updateLegenda} />}
-                    onClick={this.toggleSubmenu}
+                    toggleSubmenu={this.toggleSubmenu}
                     />
                 <ListItem 
                     primaryText={Meteor.settings.public.detailHandel.naam} 
@@ -276,7 +275,7 @@ export default class OverigeLagen extends Component {
                         map={this.props.map}
                         updateParent={this.setAllDetailHandelChecked}
                         updateLegenda={this.props.updateLegenda} />}
-                    onClick={this.toggleSubmenu}
+                    toggleSubmenu={this.toggleSubmenu}
                     />
                 { customLayers }
                 { listItemMenu }

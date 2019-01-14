@@ -70,8 +70,7 @@ export default class Bedrijvenlaag extends Component {
     /**
      * Show the icons of the selected branche on the map
      */
-    selectBranche = (event) => {
-        const clickedCategory = event.target.value;
+    selectBranche = (event, cat) => {
         const { map } = this.props;
 
         if (map !== null) {
@@ -81,7 +80,7 @@ export default class Bedrijvenlaag extends Component {
                     if (source.getState() === 'ready') {
                         const features = source.getFeatures();
                         const category = features[0].get('SBI_RUBR_C');
-                        if (category === clickedCategory) {
+                        if (category === cat) {
                             layer.setVisible(!layer.getVisible());
                             this.setState({
                                 ['category']: layer.getVisible
@@ -126,8 +125,7 @@ export default class Bedrijvenlaag extends Component {
             {
                 Object.keys(layer.icons).map((category, i) => (
                     <div className='list-item' style={listItemStyle} key={category + i} >
-                        <div style={{cursor:'pointer',position:'absolute',overflow:'visible',display:'block',height:'24px',width:'24px',top:'0px',margin:'5px 12px',left:'4px'}}>
-                            <input type="checkbox" color="#757575" style={{position:'absolute',cursor:'inherit',pointerEvents:'all',opacity:'0',width:'100%',height:'100%',zIndex:'2',left:'0px',boxSizing:'borderBox',padding:'0px',margin:'0px'}} value={category} checked={this.state[category]} onClick={this.selectBranche} />
+                        <div style={{cursor:'pointer',position:'absolute',overflow:'visible',display:'block',height:'24px',width:'24px',top:'0px',margin:'5px 12px',left:'4px'}} onClick={(e) => this.selectBranche(e, category)}>
                             <div style={{display:'flex',width:'100%',height:'100%'}}>
                                 <div style={{transition:'all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms',float:'left',position:'relative',display:'block',flexShrink:'0',width:'24px',marginRight:'16px',marginLeft:'0px',height:'24px',fill:'white'}}>
                                     <div>

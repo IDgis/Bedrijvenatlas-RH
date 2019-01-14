@@ -26,6 +26,15 @@ const listItemStyle = {
 
 export default class ListItem extends Component {
 
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            listItemMenu: null,
+            selectedItem: null
+        };
+    }
+
     getCheckboxValue = () => {
         const { isChecked } = this.props;
 
@@ -39,12 +48,12 @@ export default class ListItem extends Component {
     }
 
     render() {
-        const { primaryText, selectAll, items, onClick } = this.props;
+        const { primaryText, selectAll, toggleSubmenu, items } = this.props;
 
         return (
             <div className='list-item' style={listItemStyle} >
-                <div style={{cursor:'pointer',position:'absolute',overflow:'visible',display:'block',height:'24px',width:'24px',top:'0px',margin:'5px 12px',left:'4px'}}>
-                    <input type="checkbox" color="#757575" style={{position:'absolute',cursor:'inherit',pointerEvents:'all',opacity:'0',width:'100%',height:'100%',zIndex:'2',left:'0px',boxSizing:'border-box',padding:'0px',margin:'0px'}} value={this.getCheckboxValue} onClick={selectAll} />
+                <div style={{cursor:'pointer',position:'absolute',overflow:'visible',display:'block',height:'24px',width:'24px',top:'0px',margin:'5px 12px',left:'4px'}} onClick={selectAll} >
+                    <input type="checkbox" color="#757575" style={{position:'absolute',cursor:'inherit',pointerEvents:'all',opacity:'0',width:'100%',height:'100%',zIndex:'2',left:'0px',boxSizing:'border-box',padding:'0px',margin:'0px'}} value={this.getCheckboxValue()} />
                     <div style={{display:'flex',width:'100%',height:'100%'}}>
                         <div style={{transition:'all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms',float:'left',position:'relative',display:'block',flexShrink:'0',width:'24px',marginRight:'16px',marginLeft:'0px',height:'24px',fill:'white'}}>
                             <div>
@@ -54,7 +63,7 @@ export default class ListItem extends Component {
                         </div>
                     </div>
                 </div>
-                <div onClick={(e) => {onClick(e, items)}} >
+                <div onClick={(e) => {toggleSubmenu(e, items)}} >
                     <svg viewBox="0 0 24 24" style={{display:'block',color:'rgba(0, 0, 0, 0.87)',fill:'white',height:'24px',width:'24px',transition:'all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms',position:'absolute',top:'0px',margin:'5px 12px',right:'4px'}}><path d="M9.5,7l5,5l-5,5V7z"></path></svg>
                     <div>{ primaryText }</div>
                 </div>
