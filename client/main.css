@@ -199,6 +199,16 @@ div > div > div {
     color: white;
 }
 
+div[data-reactroot] > div > div > div[role="presentation"] > div[role="menu"]:hover {
+    width: 900px !important;
+}
+
+div[data-reactroot] > div > div > div[role="presentation"] {
+    background-color: #004D93;
+    opacity: 0.8;
+    border-radius: 5px;
+}
+
 .menu-button {
     position: fixed !important;
     top: 162px;
@@ -254,6 +264,11 @@ div > div > div {
 
 h3 {
     margin-bottom: 5px;
+}
+
+.legenda-explantion {
+    font-size: 0.9em;
+    font-style: italic;
 }
 
 .legenda-item {

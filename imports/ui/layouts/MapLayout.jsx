@@ -69,6 +69,7 @@ export default class MapLayout extends Component {
 
                 Meteor.settings.public.fundaLayers.forEach(fundaLayer => layerNames.push(fundaLayer.titel));
                 layerNames.push(Meteor.settings.public.kvkBedrijven.naam);
+                layerNames.push(Meteor.settings.public.detailHandel.naam);
 
                 layerNames.forEach(name => {
                     if (title === name) {

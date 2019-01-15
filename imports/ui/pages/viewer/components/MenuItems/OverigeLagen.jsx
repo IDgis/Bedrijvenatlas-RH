@@ -250,6 +250,7 @@ export default class OverigeLagen extends Component {
             <div className='list-menu' style={{padding:'8px 0px'}} >
                 <ListItem 
                     primaryText='Te Koop/Huur' 
+                    description='Bedrijfs- en winkelpanden die volgens Funda te koop of te huur staan'
                     isChecked={allVastgoedChecked}
                     selectAll={this.selectAllVastgoedLayers}
                     items={fundaMenuItems}
@@ -257,6 +258,7 @@ export default class OverigeLagen extends Component {
                     />
                 <ListItem 
                     primaryText={Meteor.settings.public.kvkBedrijven.naam} 
+                    description={Meteor.settings.public.kvkBedrijven.omschrijving}
                     isChecked={allKvkChecked}
                     selectAll={this.selectAllKvkLayers}
                     items={<Bedrijvenlaag 
@@ -268,6 +270,7 @@ export default class OverigeLagen extends Component {
                     />
                 <ListItem 
                     primaryText={Meteor.settings.public.detailHandel.naam} 
+                    description={Meteor.settings.public.detailHandel.omschrijving}
                     isChecked={allDetailHandelChecked}
                     selectAll={this.selectAllDetailHandelLayers}
                     items={<Bedrijvenlaag

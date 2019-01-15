@@ -18,6 +18,7 @@ export default class Legenda extends Component {
 
         this.getFundaLegenda(layers, legendaItems);
         this.getKvkBedrijvenLegenda(layers, legendaItems);
+        this.getDetailhandelLegenda(layers, legendaItems);
         this.getOverlayLayersLegenda(layers, legendaItems);
 
         this.setState({legendaItems});
@@ -107,6 +108,7 @@ export default class Legenda extends Component {
             legendaItems.push(
                 <div key="legenda_funda">
                     <h3>Te Koop/Huur</h3>
+                     <p className='legenda-explantion'>Bedrijfs- en winkelpanden die volgens Funda te koop of te huur staan</p>
                     {fundaItems}
                 </div>
             );
@@ -139,7 +141,41 @@ export default class Legenda extends Component {
             legendaItems.push(
                 <div key="legenda_kvk">
                     <h3>{kvkBedrijven.naam}</h3>
+                    { kvkBedrijven.omschrijving ? <p className='legenda-explantion'>{kvkBedrijven.omschrijving}</p> : null }
                     {kvkItems}
+                </div>
+            );
+        }
+    }
+
+    getDetailhandelLegenda = (layers, legendaItems) => {
+        const detailHandel = Meteor.settings.public.detailHandel;
+        const detailHandelItems = [];
+
+        layers.forEach((layer, i) => {
+            if (layer.get('title') === detailHandel.naam && layer.getVisible()) {
+                const source = layer.getSource();
+                if (source.getState() === 'ready') {
+                    const features = source.getFeatures();
+                    const category = features[0].get('SBI_RUBR_C');
+                    const categoryIcon = detailHandel.icons[category];
+                    const categoryName = detailHandel.namen[category];
+
+                    detailHandelItems.push(
+                        <div key={`legenda_detail_${i}`}>
+                            <img className='legenda-icon' src={categoryIcon} /> { categoryName }
+                        </div>
+                    );
+                }
+            }
+        });
+
+        if (detailHandelItems.length > 0) {
+            legendaItems.push(
+                <div key="legenda_detail">
+                    <h3>{ detailHandel.naam }</h3>
+                    { detailHandel.omschrijving ? <p className='legenda-explantion'>{ detailHandel.omschrijving }</p> : null }
+                    { detailHandelItems }
                 </div>
             );
         }
@@ -154,6 +190,7 @@ export default class Legenda extends Component {
                     legendaItems.push(
                         <div key={`legenda_${index}`}>
                             <h3>{layer.get('title')}</h3>
+                            { layerConfig.omschrijving ? <p className='legenda-explantion'>{layerConfig.omschrijving}</p> : null }
                             <img src={url} />
                         </div>
                     );

@@ -139,7 +139,7 @@ export default class Bedrijvenlaag extends Component {
                             {
                                 <img size="40" color="#757575" src={layer.icons[category]} style={{color:'rgb(117, 117, 117)',backgroundColor:'rgb(188, 188, 188)',display:'block',alignItems:'center',justifyContent:'center',fontSize:'20px',borderRadius:'50%',height:'24px',width:'24px',position:'absolute',top:'0px',margin:'12px',right:'4px'}} />
                             }
-                            { layer.namen[category] } <span title={ layer.omschrijving } className="glyphicon glyphicon-info-sign text-primary" ></span>
+                            { layer.namen[category] }
                         </div>
                     </div>
                 ))

@@ -69,7 +69,7 @@
 
         "kvkBedrijven": {
             "naam": "Bedrijven",
-            "omschrijving": "KVK Bedrijven",
+            "omschrijving": "Bedrijven uit het KVK bestand",
             "url": "https://berkelland-pub.geopublisher.nl/geoserver/Bedrijvenatlas/wfs",
             "namespace": "Bedrijvenatlas",
             "featurePrefix": "KVK_Hoofdactiviteiten_service",
@@ -113,7 +113,7 @@
 
         "detailHandel": {
             "naam": "Detailhandel",
-            "omschrijving": "Detailhandel",
+            "omschrijving": "Detailhandel bedrijven uit het KVK bestand",
             "url": "https://berkelland-pub.geopublisher.nl/geoserver/Bedrijvenatlas/wfs",
             "namespace": "Bedrijvenatlas",
             "featurePrefix": "Detailhandel_service",
@@ -164,7 +164,7 @@
                 "style": "default",
                 "origin": [ -285401.92,903401.92 ],
                 "resolutions": [ 3440.64, 1720.32, 860.16, 430.08, 215.04, 107.52, 53.76, 26.88, 13.44, 6.72, 3.36, 1.68, 0.84, 0.42, 0.21 ],
-                "omschrijving": "Luchtfoto Actueel",
+                "omschrijving": "Luchtfoto Actueel PDOK",
                 "visible": false
             },
             {
@@ -174,7 +174,6 @@
                 "format": "image/png",
                 "layers": "kadastralekaart",
                 "tiling": true,
-                "omschrijving": "TileWMS Kadastrale percelen",
                 "visible": false
             },
             {
@@ -184,7 +183,7 @@
                 "format": "image/png",
                 "layers": "Milieucategorieen",
                 "tiling": true,
-                "omschrijving": "TileWMS Milieu Categorieën",
+                "omschrijving": "Raadpleeg voor de zekerheid altijd het bestemmingsplan. Er kunnen namelijk uitzonderingen voorkomen",
                 "visible": false
             },
             {
@@ -194,7 +193,7 @@
                 "format": "image/png",
                 "layers": "bedrijventerrein",
                 "tiling": false,
-                "omschrijving": "ImageWMS Bedrijventerreinen",
+                "omschrijving": "IBIS Bedrijventerreinen",
                 "visible": false
             },
             {
@@ -204,7 +203,7 @@
                 "format": "image/png",
                 "layers": "bedrijvenkavels",
                 "tiling": false,
-                "omschrijving": "ImageWMS Bedrijvenkavels",
+                "omschrijving": "IBIS Bedrijvenkavels",
                 "visible": false
             }
         ],
