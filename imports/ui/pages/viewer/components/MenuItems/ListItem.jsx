@@ -48,7 +48,7 @@ export default class ListItem extends Component {
     }
 
     render() {
-        const { primaryText, description, selectAll, toggleSubmenu, items } = this.props;
+        const { primaryText, selectAll, toggleSubmenu, items } = this.props;
 
         return (
             <div className='list-item' style={listItemStyle} >
@@ -65,7 +65,7 @@ export default class ListItem extends Component {
                 </div>
                 <div onClick={(e) => {toggleSubmenu(e, items)}} >
                     <svg viewBox="0 0 24 24" style={{display:'block',color:'rgba(0, 0, 0, 0.87)',fill:'white',height:'24px',width:'24px',transition:'all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms',position:'absolute',top:'0px',margin:'5px 12px',right:'4px'}}><path d="M9.5,7l5,5l-5,5V7z"></path></svg>
-                    <div style={{display:'inline-block'}}>{ primaryText }</div> { description ? <span title={description} className="glyphicon glyphicon-info-sign text-warning" ></span> : null }
+                    <div style={{display:'inline-block'}}>{ primaryText }</div>
                 </div>
             </div>
         );

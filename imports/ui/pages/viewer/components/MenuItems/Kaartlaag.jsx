@@ -79,7 +79,6 @@ export default class Kaartlaag extends Component {
         const { layer } = this.props;
         const { visible } = this.state;
         const iconAvailable = layer.icon !== undefined;
-        const showDescription = layer.omschrijving && !(layer.type && (layer.type === 'koop' || layer.type === 'huur'));
 
         return (
             <div className='list-item' style={listItemStyle}>
@@ -97,7 +96,7 @@ export default class Kaartlaag extends Component {
                     {
                         iconAvailable ? <img size="40" color="#757575" src={layer.icon} style={{color:'rgb(117, 117, 117)',backgroundColor:'rgb(188, 188, 188)',display:'block',alignItems:'center',justifyContent:'center',fontSize:'20px',borderRadius:'50%',height:'24px',width:'24px',position:'absolute',top:'0px',margin:'12px',right:'4px'}} /> : null
                     }
-                    { layer.titel } { showDescription ? <span title={ layer.omschrijving } className="glyphicon glyphicon-info-sign text-warning" ></span> : null }
+                    { layer.titel }
                 </div>
             </div>
         );
