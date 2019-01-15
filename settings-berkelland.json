@@ -253,6 +253,12 @@
 
         "aliassen": {
             
+        },
+
+        "searchConfig": {
+            "bedrijfsNaam": "BEDR_NAAM",
+            "sbiOmschrijving": "SBI_OMSCHR",
+            "milieuCategorie": "NAAM"
         }
     }
 }
