@@ -1,20 +1,29 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-
-export default class ViewerLink extends Component {
-
-    render() {
-        return (
-            <a href="/viewer" className='a-link'>
-                <div className='viewer-link'>
-                    <div>
-                        <img className='image-link' src={Meteor.settings.public.gemeenteConfig.logoViewerKnop} />
-                    </div>
-                    <div className='text-link'>
-                        <h2>Zoeken op de kaart</h2>
-                    </div>
-                </div>
-            </a>
-        );
-    }
+const linkStyle = {
+    textDecoration: 'none',
+    color: '#000',
+    opacity: 1
 }
+
+const iconStyle = {
+    position: 'relative',
+    width: '80%',
+    boxShadow: '3px 3px 10px 2px grey'
+}
+
+const textStyle = {
+    position: 'relative',
+    color: '#000'
+}
+
+export default ViewerLink = () => (
+    <div className="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+        <a href="/viewer" style={linkStyle}>
+            <img style={iconStyle} src={ Meteor.settings.public.gemeenteConfig.logoViewerKnop } />
+            <div style={textStyle}>
+                <h2>Zoeken op de kaart</h2>
+            </div>
+        </a>
+    </div>
+);

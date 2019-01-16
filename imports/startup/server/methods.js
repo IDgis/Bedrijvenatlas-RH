@@ -9,7 +9,7 @@ Meteor.methods({
         let json = JSON.parse(content);
         let feature = json['features'][0];
         if(feature !== undefined) {
-            let categorie = feature['properties']['CATEGORIE'];
+            let categorie = feature['properties'][Meteor.settings.public.searchConfig.milieuCategorie];
             return categorie;
         }
         return null;
@@ -36,8 +36,8 @@ Meteor.methods({
         let json = JSON.parse(content);
         let features = json['features'];
         for(let feature in features) {
-            let naam = features[feature]['properties']['BEDR_NAAM'];
-            let oms = features[feature]['properties']['SBI_OMSCHR'];
+            let naam = features[feature]['properties'][Meteor.settings.public.searchConfig.bedrijfsNaam];
+            let oms = features[feature]['properties'][Meteor.settings.public.searchConfig.sbiOmschrijving];
             searchFields.push(naam + ' | ' + oms);
         }
         

@@ -6,7 +6,7 @@ volumes:
 services:
   bedrijvenatlas:
     restart: always
-    image: idgis/bedrijvenatlas-${IMAGE_GEMEENTE}:${VERSION}
+    image: idgis/bedrijvenatlas-${IMAGE_GEMEENTE}:${BA_VERSION}
     ports:
       - "80:3000"
     environment:
@@ -22,5 +22,6 @@ services:
       - bedrijvenatlas
     environment:
       - GEMEENTE=${GEMEENTE}
+      - BEDRIJVENTERREINEN_FEATURES=${BEDRIJVENTERREINEN_FEATURE_BOUNDS}
     volumes:
       - vastgoedfiles:/home/meteorapp/build/bundle/programs/web.browser/app/data

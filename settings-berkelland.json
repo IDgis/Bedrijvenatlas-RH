@@ -10,12 +10,15 @@
         "gemeenteConfig": {
             "naam": "Berkelland",
             "homePage": "https://www.gemeenteberkelland.nl/",
+            "contactPage": "https://www.gemeenteberkelland.nl/Ondernemers/Rij_2/Team_EZ/Economische_Zaken/Team_EZ",
             "logo": "/berkelland/images/logo.png",
             "altText": "Berkelland",
             "colorGemeente": "#004D93",
+            "backgroundImage": "/rijssenholten/images/GRH-VLETGAARSMATEN-BEDRIJVENTERREIN.jpg",
 
             "logoWizardKnop": "/berkelland/icons/KNOP_VESTIGEN_NIEUW_BEDRIJF.svg",
             "logoViewerKnop": "/berkelland/icons/KNOP_NAAR_DE_KAART.svg",
+            "logoContactKnop": "/berkelland/icons/KNOP_CONTACT.svg",
             "iconSelected": "/berkelland/icons/SELECTED.svg",
             "iconShadow": "/icons/SCHADUW.svg",
 
@@ -25,7 +28,7 @@
             "extent": [ 220754, 445975, 251434, 467576 ],
             "center": [ 236094, 456775 ],
             "zoom": 13,
-            "minZoom": 12,
+            "minZoom": 13,
 
             "plaatsen": [
                 {
@@ -69,7 +72,7 @@
 
         "kvkBedrijven": {
             "naam": "Bedrijven",
-            "omschrijving": "KVK Bedrijven",
+            "omschrijving": "Bedrijven uit het KVK bestand",
             "url": "https://berkelland-pub.geopublisher.nl/geoserver/Bedrijvenatlas/wfs",
             "namespace": "Bedrijvenatlas",
             "featurePrefix": "KVK_Hoofdactiviteiten_service",
@@ -112,19 +115,19 @@
         },
 
         "detailHandel": {
-            "naam": "detailHandel",
-            "omschrijving": "Detail Handel",
-            "url": "",
-            "namespace": "",
-            "featurePrefix": "",
-            "featureTypes": [],
+            "naam": "Detailhandel",
+            "omschrijving": "Detailhandel bedrijven uit het KVK bestand",
+            "url": "https://berkelland-pub.geopublisher.nl/geoserver/Bedrijvenatlas/wfs",
+            "namespace": "Bedrijvenatlas",
+            "featurePrefix": "Detailhandel_service",
+            "featureTypes": ["Detailhandel"],
 
             "namen": {
-
+                "G": "Detailhandel"
             },
 
             "icons": {
-
+                "G": "/berkelland/icons/SELECTED.svg"
             },
             "iconShadow": "/icons/SCHADUW.svg"
         },
@@ -164,7 +167,7 @@
                 "style": "default",
                 "origin": [ -285401.92,903401.92 ],
                 "resolutions": [ 3440.64, 1720.32, 860.16, 430.08, 215.04, 107.52, 53.76, 26.88, 13.44, 6.72, 3.36, 1.68, 0.84, 0.42, 0.21 ],
-                "omschrijving": "Luchtfoto Actueel",
+                "omschrijving": "Luchtfoto Actueel PDOK",
                 "visible": false
             },
             {
@@ -174,7 +177,6 @@
                 "format": "image/png",
                 "layers": "kadastralekaart",
                 "tiling": true,
-                "omschrijving": "TileWMS Kadastrale percelen",
                 "visible": false
             },
             {
@@ -184,7 +186,7 @@
                 "format": "image/png",
                 "layers": "Milieucategorieen",
                 "tiling": true,
-                "omschrijving": "TileWMS Milieu Categorieën",
+                "omschrijving": "Raadpleeg voor de zekerheid altijd het bestemmingsplan. Er kunnen namelijk uitzonderingen voorkomen",
                 "visible": false
             },
             {
@@ -194,7 +196,7 @@
                 "format": "image/png",
                 "layers": "bedrijventerrein",
                 "tiling": false,
-                "omschrijving": "ImageWMS Bedrijventerreinen",
+                "omschrijving": "IBIS Bedrijventerreinen",
                 "visible": false
             },
             {
@@ -204,7 +206,7 @@
                 "format": "image/png",
                 "layers": "bedrijvenkavels",
                 "tiling": false,
-                "omschrijving": "ImageWMS Bedrijvenkavels",
+                "omschrijving": "IBIS Bedrijvenkavels",
                 "visible": false
             }
         ],
@@ -212,21 +214,41 @@
         "fundaLayers": [
             {
                 "service": "geojson",
-                "titel": "Te Koop",
+                "titel": "Bedrijfspanden te Koop",
                 "type": "koop",
-                "omschrijving": "Panden te koop volgens Funda",
+                "omschrijving": "Bedrijfspanden te koop volgens Funda",
                 "url": "/data/vastgoedTeKoop.json",
-                "icon": "/icons/TE_KOOP.svg",
+                "icon": "/icons/TE_KOOP_BEDRIJF.svg",
                 "shadow": "/icons/SCHADUW.svg",
                 "visible": false
             },
             {
                 "service": "geojson",
-                "titel": "Te Huur",
+                "titel": "Bedrijfspanden te Huur",
                 "type": "huur",
-                "omschrijving": "Panden te huur volgens Funda",
+                "omschrijving": "Bedrijfspanden te huur volgens Funda",
                 "url": "/data/vastgoedTeHuur.json",
-                "icon": "/icons/TE_HUUR.svg",
+                "icon": "/icons/TE_HUUR_BEDRIJF.svg",
+                "shadow": "/icons/SCHADUW.svg",
+                "visible": false
+            },
+            {
+                "service": "geojson",
+                "titel": "Winkelpanden te Koop",
+                "type": "koop",
+                "omschrijving": "Detailhandelpanden te koop volgens Funda",
+                "url": "/data/detailhandelTeKoop.json",
+                "icon": "/icons/TE_KOOP_DETAILHANDEL.svg",
+                "shadow": "/icons/SCHADUW.svg",
+                "visible": false
+            },
+            {
+                "service": "geojson",
+                "titel": "Winkelpanden te Huur",
+                "type": "huur",
+                "omschrijving": "Detailhandelpanden te huur volgens Funda",
+                "url": "/data/detailhandelTeHuur.json",
+                "icon": "/icons/TE_HUUR_DETAILHANDEL.svg",
                 "shadow": "/icons/SCHADUW.svg",
                 "visible": false
             }
@@ -234,6 +256,12 @@
 
         "aliassen": {
             
+        },
+
+        "searchConfig": {
+            "bedrijfsNaam": "BEDR_NAAM",
+            "sbiOmschrijving": "SBI_OMSCHR",
+            "milieuCategorie": "NAAM"
         }
     }
 }

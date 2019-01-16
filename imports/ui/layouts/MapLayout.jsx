@@ -10,6 +10,20 @@ import Streetview from '../pages/viewer/Streetview';
 import Viewer from '../pages/viewer/Viewer';
 
 
+const pageStyle = {
+    position: 'relative',
+    width: '100%',
+    height: '100%',
+    display: 'inline-block'
+};
+
+const mapLayoutStyle = {
+    position: 'absolute',
+    bottom: '0px',
+    top: '56px',
+    width: '100%'
+};
+
 export default class MapLayout extends Component {
 
     constructor(props) {
@@ -69,6 +83,7 @@ export default class MapLayout extends Component {
 
                 Meteor.settings.public.fundaLayers.forEach(fundaLayer => layerNames.push(fundaLayer.titel));
                 layerNames.push(Meteor.settings.public.kvkBedrijven.naam);
+                layerNames.push(Meteor.settings.public.detailHandel.naam);
 
                 layerNames.forEach(name => {
                     if (title === name) {
@@ -157,11 +172,11 @@ export default class MapLayout extends Component {
 
         return (
             <MuiThemeProvider>
-                <div className="container-fluid">
-                    <header className="main-header row">
+                <div style={pageStyle}>
+                    <header className='main-header'>
                         <MenuBar />
                     </header>
-                    <main className="main-layout row" >
+                    <main style={mapLayoutStyle}>
                         <Viewer mapToParent={this.setMap} featurePopup={this.setKvkPopup} />
                         {this.state.featurePopup}
                         {this.state.streetView}

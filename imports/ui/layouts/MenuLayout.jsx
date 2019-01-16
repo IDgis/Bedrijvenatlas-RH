@@ -3,17 +3,33 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 import MenuBar from './MenuBar.jsx';
 
-const MenuLayout = ({content}) => (
+const pageStyle = {
+    position: 'relative',
+    width: '100%',
+    height: '100%',
+    display: 'inline-block'
+};
+
+const welcomeLayoutStyle = {
+    backgroundImage: `url(\'${Meteor.settings.public.gemeenteConfig.backgroundImage}\')`,
+    backgroundSize: 'cover',
+    position: 'absolute',
+    textAlign: 'center',
+    overflowY: 'auto',
+    bottom: '0px',
+    top: '56px',
+    width: '100%'
+};
+
+export default MenuLayout = ({content}) => (
     <MuiThemeProvider>
-        <div>
-            <header className='main-header'>
+        <div style={pageStyle}>
+            <header className="main-header">
                 <MenuBar />
             </header>
-            <main className='welcome-layout'>
-                    { content }
+            <main style={welcomeLayoutStyle}>
+                { content }
             </main>
         </div>
     </MuiThemeProvider>
 );
-
-export default MenuLayout;
