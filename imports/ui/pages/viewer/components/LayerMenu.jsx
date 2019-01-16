@@ -30,8 +30,7 @@ const menuPresentationStyle = {
 };
 
 const innerMenuStyle = {
-    padding: '8px 0px',
-    display: 'table-cell'
+    padding: '8px 0px'
 };
 
 export default class LayerMenu extends Component {

@@ -17,12 +17,12 @@ const textStyle = {
     color: '#000'
 }
 
-export default WizardLink = () => (
+export default ContactLink = () => (
     <div className="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-        <a href="/wizard" style={linkStyle}>
-            <img style={iconStyle} src={ Meteor.settings.public.gemeenteConfig.logoWizardKnop } />
+        <a href={ Meteor.settings.public.gemeenteConfig.contactPage } target="_blank" style={linkStyle}>
+            <img style={iconStyle} src={ Meteor.settings.public.gemeenteConfig.logoContactKnop } />
             <div style={textStyle}>
-                <h2>Ik wil een bedrijf (her)vestigen</h2>
+                <h2>Meer informatie</h2>
             </div>
         </a>
     </div>

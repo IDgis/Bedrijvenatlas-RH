@@ -30,8 +30,8 @@ export default class WizardPage extends Component {
     render() {
         return (
             <div>
-                <div className='wizard-questions'>
-                    <div>
+                <div className='row'>
+                    <div className='col-xs-12 col-sm-12 col-md-12 col-lg-12' style={{textAlign:'left',padding:'1em 20%'}}>
                         <h2 className='wizard-header'>Naar wat voor pand bent u op zoek?</h2>
                         <RadioButtonGroup name="pand" defaultSelected="beide" onChange={this.setPandValue.bind(this)}>
                             <RadioButton value="bestaand" label="Ik zoek een bestaand pand" className='custom-radiobutton' iconStyle={{fill: Meteor.settings.public.gemeenteConfig.colorGemeente}} labelStyle={{color:'#111'}} />
@@ -39,7 +39,9 @@ export default class WizardPage extends Component {
                             <RadioButton value="beide" label="Geen voorkeur" className='custom-radiobutton' iconStyle={{fill: Meteor.settings.public.gemeenteConfig.colorGemeente}} labelStyle={{color:'#111'}} />
                         </RadioButtonGroup>
                     </div>
-                    <div>
+                </div>
+                <div className='row'>
+                    <div className='col-xs-12 col-sm-12 col-md-12 col-lg-12' style={{textAlign:'left',padding:'1em 20%'}}>
                         <h2 className='wizard-header'>Wilt u kopen of huren?</h2>
                         <RadioButtonGroup name="huur-koop" defaultSelected="beide" onChange={this.setHuurKoopValue.bind(this)}>
                             <RadioButton value="koop" label="Kopen" className='custom-radiobutton' iconStyle={{fill: Meteor.settings.public.gemeenteConfig.colorGemeente}} labelStyle={{color:'#111'}} />
@@ -47,7 +49,9 @@ export default class WizardPage extends Component {
                             <RadioButton value="beide" label="Geen voorkeur" className='custom-radiobutton' iconStyle={{fill: Meteor.settings.public.gemeenteConfig.colorGemeente}} labelStyle={{color:'#111'}} />
                         </RadioButtonGroup>
                     </div>
-                    <div>
+                </div>
+                <div className='row'>
+                    <div className='col-xs-12 col-sm-12 col-md-12 col-lg-12' style={{textAlign:'left',padding:'1em 20%'}}>
                         <h2 className='wizard-header'>In welke plaats zoekt u de mogelijkheden?</h2>
                         <RadioButtonGroup name="plaats" defaultSelected="beide" onChange={this.setPlaatsValue.bind(this)}>
                         {

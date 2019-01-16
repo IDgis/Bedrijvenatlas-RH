@@ -30,8 +30,7 @@ export default ListItemMenu = ({left, top, items}) => {
     };
     
     const innerMenuStyle = {
-        padding: '8px 0px',
-        display: 'table-cell'
+        padding: '8px 0px'
     };
 
     return (

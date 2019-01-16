@@ -10,12 +10,15 @@
         "gemeenteConfig": {
             "naam": "Berkelland",
             "homePage": "https://www.gemeenteberkelland.nl/",
+            "contactPage": "https://www.gemeenteberkelland.nl/Ondernemers/Rij_2/Team_EZ/Economische_Zaken/Team_EZ",
             "logo": "/berkelland/images/logo.png",
             "altText": "Berkelland",
             "colorGemeente": "#004D93",
+            "backgroundImage": "/rijssenholten/images/GRH-VLETGAARSMATEN-BEDRIJVENTERREIN.jpg",
 
             "logoWizardKnop": "/berkelland/icons/KNOP_VESTIGEN_NIEUW_BEDRIJF.svg",
             "logoViewerKnop": "/berkelland/icons/KNOP_NAAR_DE_KAART.svg",
+            "logoContactKnop": "/berkelland/icons/KNOP_CONTACT.svg",
             "iconSelected": "/berkelland/icons/SELECTED.svg",
             "iconShadow": "/icons/SCHADUW.svg",
 

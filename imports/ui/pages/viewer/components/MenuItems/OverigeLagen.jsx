@@ -259,22 +259,22 @@ export default class OverigeLagen extends Component {
                     primaryText={Meteor.settings.public.kvkBedrijven.naam} 
                     isChecked={allKvkChecked}
                     selectAll={this.selectAllKvkLayers}
-                    items={<Bedrijvenlaag 
+                    items={Object.keys(Meteor.settings.public.kvkBedrijven.namen).length > 0 ? <Bedrijvenlaag 
                         layer={Meteor.settings.public.kvkBedrijven} 
                         map={this.props.map} 
                         updateParent={this.setAllKvkChecked} 
-                        updateLegenda={this.props.updateLegenda} />}
+                        updateLegenda={this.props.updateLegenda} /> : null}
                     toggleSubmenu={this.toggleSubmenu}
                     />
                 <ListItem 
                     primaryText={Meteor.settings.public.detailHandel.naam}
                     isChecked={allDetailHandelChecked}
                     selectAll={this.selectAllDetailHandelLayers}
-                    items={<Bedrijvenlaag
+                    items={Object.keys(Meteor.settings.public.detailHandel.namen).length > 0 ? <Bedrijvenlaag
                         layer={Meteor.settings.public.detailHandel}
                         map={this.props.map}
                         updateParent={this.setAllDetailHandelChecked}
-                        updateLegenda={this.props.updateLegenda} />}
+                        updateLegenda={this.props.updateLegenda} /> : null}
                     toggleSubmenu={this.toggleSubmenu}
                     />
                 { customLayers }

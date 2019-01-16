@@ -50,7 +50,7 @@ export default class ListItem extends Component {
     render() {
         const { primaryText, selectAll, toggleSubmenu, items } = this.props;
 
-        return (
+        return items ? (
             <div className='list-item' style={listItemStyle} >
                 <div style={{cursor:'pointer',position:'absolute',overflow:'visible',display:'block',height:'24px',width:'24px',top:'0px',margin:'5px 12px',left:'4px'}} onClick={selectAll} >
                     <input type="checkbox" color="#757575" style={{position:'absolute',cursor:'inherit',pointerEvents:'all',opacity:'0',width:'100%',height:'100%',zIndex:'2',left:'0px',boxSizing:'border-box',padding:'0px',margin:'0px'}} value={this.getCheckboxValue()} />
@@ -68,6 +68,6 @@ export default class ListItem extends Component {
                     <div style={{display:'inline-block'}}>{ primaryText }</div>
                 </div>
             </div>
-        );
+        ) : null;
     }
 }
