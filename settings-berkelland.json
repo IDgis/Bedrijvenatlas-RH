@@ -222,6 +222,7 @@
             {
                 "service": "wms",
                 "titel": "Bedrijvenkavels",
+                "type": "nieuwbouw",
                 "url": "http://geoserver.prvgld.nl/geoserver/IBIS/wfs?SERVICE=WMS&",
                 "format": "image/png",
                 "layers": "bedrijvenkavels",
