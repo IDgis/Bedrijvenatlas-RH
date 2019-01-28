@@ -248,7 +248,7 @@
         "aliassen": {
             "ADR_ID_BAG": "Identificatie BAG",
             "ADR_LABEL": "Locatieadres",
-            "BEDR_NAAM": "Bedrijfsfnaam",
+            "BEDR_NAAM": "Bedrijfsnaam",
             "LOC_NM": "Betreft",
             "LOC_TYPE": "Bedrijventerrein",
             "SBI_OMSCHR": "Activiteiten (SBI)",

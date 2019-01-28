@@ -276,7 +276,12 @@
         ],
 
         "aliassen": {
-            
+            "ADR_ID_BAG": "Identificatie BAG",
+            "ADR_LABEL": "Locatieadres",
+            "BEDR_NAAM": "Bedrijfsnaam",
+            "SBI_OMSCHR": "Activiteiten (SBI)",
+            "SBI_RUBR_C": "Activiteiten rubriek (SBI)",
+            "SBI_SUBRBR": "Activiteiten subrubriek (SBI)"
         },
 
         "searchConfig": {
