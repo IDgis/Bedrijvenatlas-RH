@@ -369,12 +369,13 @@ export default class Viewer extends Component {
      */
     addKvkLayers = (layerConfig) => {
         Object.keys(layerConfig.icons).forEach(category => {
+            const filter = ol.format.filter.equalTo(layerConfig.filterColumn, category);
             const featureRequest = new ol.format.WFS().writeGetFeature({
                 srsName: 'EPSG:28992',
                 outputFormat: 'application/json',
                 featurePrefix: layerConfig.featurePrefix,
                 featureTypes: layerConfig.featureTypes,
-                filter: ol.format.filter.equalTo('SBI_RUBR_C', category)
+                filter: filter
             });
 
             fetch(layerConfig.url, {

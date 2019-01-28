@@ -155,9 +155,9 @@ export default class Legenda extends Component {
         layers.forEach((layer, i) => {
             if (layer.get('title') === detailHandel.naam && layer.getVisible()) {
                 const source = layer.getSource();
-                if (source.getState() === 'ready') {
+                if (source.getState() === 'ready' && source.getFeatures().length > 0) {
                     const features = source.getFeatures();
-                    const category = features[0].get('SBI_RUBR_C');
+                    const category = features[0].get(detailHandel.filterColumn);
                     const categoryIcon = detailHandel.icons[category];
                     const categoryName = detailHandel.namen[category];
 

@@ -77,12 +77,12 @@
             "namespace": "Bedrijvenatlas",
             "featurePrefix": "KVK_Hoofdactiviteiten_service",
             "featureTypes": ["KVK_Hoofdactiviteiten"],
+            "filterColumn": "SBI_RUBR_C",
 
             "namen": {
                 "C": "Industie",
                 "E": "Distributie water/afval",
                 "F": "Bouwnijverheid",
-                "G": "Handel/Groothandel",
                 "H": "Vervoer/Opslag",
                 "I": "Logies/Maaltijd/Drank",
                 "J": "Informatica/Communicatie",
@@ -99,7 +99,6 @@
                 "C": "/icons/SBI_RUBRIEK_CODE_C_INDUSTRIE.svg",
                 "E": "/icons/SBI_RUBRIEK_CODE_E_DISTRIBUTIE_WATER_AFVAL.svg",
                 "F": "/icons/SBI_RUBRIEK_CODE_F_BOUWNIJVERHEID.svg",
-                "G": "/icons/SBI_RUBRIEK_CODE_G_DETAILHANDEL.svg",
                 "H": "/icons/SBI_RUBRIEK_CODE_H_VERVOER_OPSLAG.svg",
                 "I": "/icons/SBI_RUBRIEK_CODE_I_LOGIES_MAALTIJD_DRANK.svg",
                 "J": "/icons/SBI_RUBRIEK_CODE_J_INFO_COMMUNICATIE.svg",
@@ -121,13 +120,34 @@
             "namespace": "Bedrijvenatlas",
             "featurePrefix": "Detailhandel_service",
             "featureTypes": ["Detailhandel"],
+            "filterColumn": "SBI_SUBRBR",
 
             "namen": {
-                "G": "Detailhandel"
+                "45": "Handel in reparatie auto's/aanhangers",
+                "46": "Groothandel en handelsbemiddeling",
+                "47.1": "Supermarkten/warenhuizen",
+                "47.2": "Winkels in voedings/genotsmiddelen",
+                "47.3": "Benzinestations",
+                "47.4": "Winkels in consumentenelektronica",
+                "47.5": "Winkels in huishoudelijke artikelen",
+                "47.6": "Winkels in lectuur/sport/kampeer/recreatie",
+                "47.7": "Winkels in overige artikelen",
+                "47.8": "Markthandel",
+                "47.9": "Detailhandel niet via winkel/markt"
             },
 
             "icons": {
-                "G": "/berkelland/icons/SELECTED.svg"
+                "45": "/icons/SBI_RUBRIEK_CODE_45_HANDEL_AUTO.svg",
+                "46": "/icons/SBI_RUBRIEK_CODE_46_GROOTHANDEL.svg",
+                "47.1": "/icons/SBI_RUBRIEK_CODE_47_1_SUPERMARKT_WARENHUIS.svg",
+                "47.2": "/icons/SBI_RUBRIEK_CODE_47_2_WINKEL_VOEDING.svg",
+                "47.3": "/icons/SBI_RUBRIEK_CODE_47_3_BENZINESTATION.svg",
+                "47.4": "/icons/SBI_RUBRIEK_CODE_47_4_WINKEL_ELEKTRONICA.svg",
+                "47.5": "/icons/SBI_RUBRIEK_CODE_47_5_WINKEL_HUISHOUDELIJK.svg",
+                "47.6": "/icons/SBI_RUBRIEK_CODE_47_6_WINKEL_RECREATIE.svg",
+                "47.7": "/icons/SBI_RUBRIEK_CODE_47_7_WINKEL_OVERIG.svg",
+                "47.8": "/icons/SBI_RUBRIEK_CODE_47_8_MARKTHANDEL.svg",
+                "47.9": "/icons/SBI_RUBRIEK_CODE_47_9_DETAILHANDEL_NIET_WINKEL.svg"
             },
             "iconShadow": "/icons/SCHADUW.svg"
         },

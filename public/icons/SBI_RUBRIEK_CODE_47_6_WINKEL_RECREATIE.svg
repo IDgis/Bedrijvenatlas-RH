@@ -1,0 +1,528 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="48"
+   height="48"
+   viewBox="0 0 48 48"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.92.2 (5c3e80d, 2017-08-06)"
+   sodipodi:docname="47.6_WINKEL_RECREATIE.svg">
+  <defs
+     id="defs4">
+    <filter
+       color-interpolation-filters="sRGB"
+       inkscape:menu-tooltip="Blur as if the object flies vertically; adjust Standard Deviation to vary force"
+       inkscape:menu="Blurs"
+       inkscape:label="Motion blur, vertical"
+       id="filter3853">
+      <feGaussianBlur
+         result="fbSourceGraphic"
+         stdDeviation="5 0.01"
+         in="SourceGraphic"
+         id="feGaussianBlur3855" />
+      <feColorMatrix
+         id="feColorMatrix3857"
+         values="0 0 0 -1 0 0 0 0 -1 0 0 0 0 -1 0 0 0 0 1 0"
+         in="fbSourceGraphic"
+         result="fbSourceGraphicAlpha" />
+      <feGaussianBlur
+         stdDeviation="0.01 5"
+         in="fbSourceGraphic"
+         id="feGaussianBlur3859" />
+    </filter>
+    <inkscape:perspective
+       inkscape:persp3d-origin="290 : 193.33333 : 1"
+       id="perspective3653-9"
+       sodipodi:type="inkscape:persp3d"
+       inkscape:vp_x="0 : 290 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_z="580 : 290 : 1" />
+    <inkscape:perspective
+       inkscape:persp3d-origin="290 : 193.33333 : 1"
+       id="perspective3653-5-5"
+       sodipodi:type="inkscape:persp3d"
+       inkscape:vp_x="0 : 290 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_z="580 : 290 : 1" />
+    <inkscape:perspective
+       inkscape:persp3d-origin="290 : 193.33333 : 1"
+       id="perspective3653"
+       sodipodi:type="inkscape:persp3d"
+       inkscape:vp_x="0 : 290 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_z="580 : 290 : 1" />
+    <inkscape:perspective
+       inkscape:persp3d-origin="290 : 193.33333 : 1"
+       id="perspective3653-5"
+       sodipodi:type="inkscape:persp3d"
+       inkscape:vp_x="0 : 290 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_z="580 : 290 : 1" />
+    <filter
+       color-interpolation-filters="sRGB"
+       inkscape:menu-tooltip="Blur as if the object flies vertically; adjust Standard Deviation to vary force"
+       inkscape:menu="Blurs"
+       inkscape:label="Motion blur, vertical"
+       id="filter3853-0">
+      <feGaussianBlur
+         result="fbSourceGraphic"
+         stdDeviation="5 0.01"
+         in="SourceGraphic"
+         id="feGaussianBlur3855-21" />
+      <feColorMatrix
+         id="feColorMatrix3857-0"
+         values="0 0 0 -1 0 0 0 0 -1 0 0 0 0 -1 0 0 0 0 1 0"
+         in="fbSourceGraphic"
+         result="fbSourceGraphicAlpha" />
+      <feGaussianBlur
+         stdDeviation="0.01 5"
+         in="fbSourceGraphic"
+         id="feGaussianBlur3859-0" />
+    </filter>
+    <inkscape:perspective
+       inkscape:persp3d-origin="290 : 193.33333 : 1"
+       id="perspective3653-9-4"
+       sodipodi:type="inkscape:persp3d"
+       inkscape:vp_x="0 : 290 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_z="580 : 290 : 1" />
+    <inkscape:perspective
+       inkscape:persp3d-origin="290 : 193.33333 : 1"
+       id="perspective3653-5-5-2"
+       sodipodi:type="inkscape:persp3d"
+       inkscape:vp_x="0 : 290 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_z="580 : 290 : 1" />
+    <inkscape:perspective
+       inkscape:persp3d-origin="290 : 193.33333 : 1"
+       id="perspective3653-2"
+       sodipodi:type="inkscape:persp3d"
+       inkscape:vp_x="0 : 290 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_z="580 : 290 : 1" />
+    <inkscape:perspective
+       inkscape:persp3d-origin="290 : 193.33333 : 1"
+       id="perspective3653-5-4"
+       sodipodi:type="inkscape:persp3d"
+       inkscape:vp_x="0 : 290 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_z="580 : 290 : 1" />
+    <filter
+       color-interpolation-filters="sRGB"
+       inkscape:menu-tooltip="Blur as if the object flies vertically; adjust Standard Deviation to vary force"
+       inkscape:menu="Blurs"
+       inkscape:label="Motion blur, vertical"
+       id="filter3853-3">
+      <feGaussianBlur
+         result="fbSourceGraphic"
+         stdDeviation="5 0.01"
+         in="SourceGraphic"
+         id="feGaussianBlur3855-2" />
+      <feColorMatrix
+         id="feColorMatrix3857-2"
+         values="0 0 0 -1 0 0 0 0 -1 0 0 0 0 -1 0 0 0 0 1 0"
+         in="fbSourceGraphic"
+         result="fbSourceGraphicAlpha" />
+      <feGaussianBlur
+         stdDeviation="0.01 5"
+         in="fbSourceGraphic"
+         id="feGaussianBlur3859-5" />
+    </filter>
+    <inkscape:perspective
+       inkscape:persp3d-origin="290 : 193.33333 : 1"
+       id="perspective3653-9-8"
+       sodipodi:type="inkscape:persp3d"
+       inkscape:vp_x="0 : 290 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_z="580 : 290 : 1" />
+    <inkscape:perspective
+       inkscape:persp3d-origin="290 : 193.33333 : 1"
+       id="perspective3653-5-5-7"
+       sodipodi:type="inkscape:persp3d"
+       inkscape:vp_x="0 : 290 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_z="580 : 290 : 1" />
+    <inkscape:perspective
+       inkscape:persp3d-origin="290 : 193.33333 : 1"
+       id="perspective3653-54"
+       sodipodi:type="inkscape:persp3d"
+       inkscape:vp_x="0 : 290 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_z="580 : 290 : 1" />
+    <inkscape:perspective
+       inkscape:persp3d-origin="290 : 193.33333 : 1"
+       id="perspective3653-5-0"
+       sodipodi:type="inkscape:persp3d"
+       inkscape:vp_x="0 : 290 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_z="580 : 290 : 1" />
+    <filter
+       color-interpolation-filters="sRGB"
+       inkscape:menu-tooltip="Blur as if the object flies vertically; adjust Standard Deviation to vary force"
+       inkscape:menu="Blurs"
+       inkscape:label="Motion blur, vertical"
+       id="filter3853-5">
+      <feGaussianBlur
+         result="fbSourceGraphic"
+         stdDeviation="5 0.01"
+         in="SourceGraphic"
+         id="feGaussianBlur3855-0" />
+      <feColorMatrix
+         id="feColorMatrix3857-29"
+         values="0 0 0 -1 0 0 0 0 -1 0 0 0 0 -1 0 0 0 0 1 0"
+         in="fbSourceGraphic"
+         result="fbSourceGraphicAlpha" />
+      <feGaussianBlur
+         stdDeviation="0.01 5"
+         in="fbSourceGraphic"
+         id="feGaussianBlur3859-08" />
+    </filter>
+    <inkscape:perspective
+       inkscape:persp3d-origin="290 : 193.33333 : 1"
+       id="perspective3653-9-9"
+       sodipodi:type="inkscape:persp3d"
+       inkscape:vp_x="0 : 290 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_z="580 : 290 : 1" />
+    <inkscape:perspective
+       inkscape:persp3d-origin="290 : 193.33333 : 1"
+       id="perspective3653-5-5-4"
+       sodipodi:type="inkscape:persp3d"
+       inkscape:vp_x="0 : 290 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_z="580 : 290 : 1" />
+    <inkscape:perspective
+       inkscape:persp3d-origin="290 : 193.33333 : 1"
+       id="perspective3653-4"
+       sodipodi:type="inkscape:persp3d"
+       inkscape:vp_x="0 : 290 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_z="580 : 290 : 1" />
+    <inkscape:perspective
+       inkscape:persp3d-origin="290 : 193.33333 : 1"
+       id="perspective3653-5-6"
+       sodipodi:type="inkscape:persp3d"
+       inkscape:vp_x="0 : 290 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_z="580 : 290 : 1" />
+    <filter
+       color-interpolation-filters="sRGB"
+       inkscape:menu-tooltip="Blur as if the object flies vertically; adjust Standard Deviation to vary force"
+       inkscape:menu="Blurs"
+       inkscape:label="Motion blur, vertical"
+       id="filter3853-9">
+      <feGaussianBlur
+         result="fbSourceGraphic"
+         stdDeviation="5 0.01"
+         in="SourceGraphic"
+         id="feGaussianBlur3855-20" />
+      <feColorMatrix
+         id="feColorMatrix3857-8"
+         values="0 0 0 -1 0 0 0 0 -1 0 0 0 0 -1 0 0 0 0 1 0"
+         in="fbSourceGraphic"
+         result="fbSourceGraphicAlpha" />
+      <feGaussianBlur
+         stdDeviation="0.01 5"
+         in="fbSourceGraphic"
+         id="feGaussianBlur3859-4" />
+    </filter>
+    <inkscape:perspective
+       inkscape:persp3d-origin="290 : 193.33333 : 1"
+       id="perspective3653-9-41"
+       sodipodi:type="inkscape:persp3d"
+       inkscape:vp_x="0 : 290 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_z="580 : 290 : 1" />
+    <inkscape:perspective
+       inkscape:persp3d-origin="290 : 193.33333 : 1"
+       id="perspective3653-5-5-8"
+       sodipodi:type="inkscape:persp3d"
+       inkscape:vp_x="0 : 290 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_z="580 : 290 : 1" />
+    <inkscape:perspective
+       inkscape:persp3d-origin="290 : 193.33333 : 1"
+       id="perspective3653-91"
+       sodipodi:type="inkscape:persp3d"
+       inkscape:vp_x="0 : 290 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_z="580 : 290 : 1" />
+    <inkscape:perspective
+       inkscape:persp3d-origin="290 : 193.33333 : 1"
+       id="perspective3653-5-05"
+       sodipodi:type="inkscape:persp3d"
+       inkscape:vp_x="0 : 290 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_z="580 : 290 : 1" />
+    <filter
+       color-interpolation-filters="sRGB"
+       inkscape:menu-tooltip="Blur as if the object flies vertically; adjust Standard Deviation to vary force"
+       inkscape:menu="Blurs"
+       inkscape:label="Motion blur, vertical"
+       id="filter3853-53">
+      <feGaussianBlur
+         result="fbSourceGraphic"
+         stdDeviation="5 0.01"
+         in="SourceGraphic"
+         id="feGaussianBlur3855-8" />
+      <feColorMatrix
+         id="feColorMatrix3857-6"
+         values="0 0 0 -1 0 0 0 0 -1 0 0 0 0 -1 0 0 0 0 1 0"
+         in="fbSourceGraphic"
+         result="fbSourceGraphicAlpha" />
+      <feGaussianBlur
+         stdDeviation="0.01 5"
+         in="fbSourceGraphic"
+         id="feGaussianBlur3859-3" />
+    </filter>
+    <inkscape:perspective
+       inkscape:persp3d-origin="290 : 193.33333 : 1"
+       id="perspective3653-9-2"
+       sodipodi:type="inkscape:persp3d"
+       inkscape:vp_x="0 : 290 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_z="580 : 290 : 1" />
+    <inkscape:perspective
+       inkscape:persp3d-origin="290 : 193.33333 : 1"
+       id="perspective3653-5-5-3"
+       sodipodi:type="inkscape:persp3d"
+       inkscape:vp_x="0 : 290 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_z="580 : 290 : 1" />
+    <inkscape:perspective
+       inkscape:persp3d-origin="290 : 193.33333 : 1"
+       id="perspective3653-1"
+       sodipodi:type="inkscape:persp3d"
+       inkscape:vp_x="0 : 290 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_z="580 : 290 : 1" />
+    <inkscape:perspective
+       inkscape:persp3d-origin="290 : 193.33333 : 1"
+       id="perspective3653-5-7"
+       sodipodi:type="inkscape:persp3d"
+       inkscape:vp_x="0 : 290 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_z="580 : 290 : 1" />
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="14.481547"
+     inkscape:cx="16.996045"
+     inkscape:cy="19.640919"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     inkscape:window-width="1920"
+     inkscape:window-height="1017"
+     inkscape:window-x="1912"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1" />
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Laag 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(0,-1004.3622)">
+    <rect
+       ry="9.6995745"
+       y="1005.8802"
+       x="1.3561161"
+       height="45.234459"
+       width="44.999073"
+       id="rect3435"
+       style="fill:#ffffff;fill-opacity:1;stroke:#d45500;stroke-width:0.88619024;stroke-opacity:1" />
+    <rect
+       style="fill:#d45500;fill-opacity:1;stroke:#d45500;stroke-width:0.73167545;stroke-opacity:1"
+       id="rect3803"
+       width="41.709263"
+       height="41.236824"
+       x="2.9865186"
+       y="1007.6642"
+       ry="8.8423662" />
+    <g
+       transform="matrix(0.09063537,0,0,0.0842626,4.7072253,1010.7024)"
+       id="g868" />
+    <g
+       transform="matrix(0.09063537,0,0,0.0842626,4.7072253,1010.7024)"
+       id="g870" />
+    <g
+       transform="matrix(0.09063537,0,0,0.0842626,4.7072253,1010.7024)"
+       id="g872" />
+    <g
+       transform="matrix(0.09063537,0,0,0.0842626,4.7072253,1010.7024)"
+       id="g874" />
+    <g
+       transform="matrix(0.09063537,0,0,0.0842626,4.7072253,1010.7024)"
+       id="g876" />
+    <g
+       transform="matrix(0.09063537,0,0,0.0842626,4.7072253,1010.7024)"
+       id="g878" />
+    <g
+       transform="matrix(0.09063537,0,0,0.0842626,4.7072253,1010.7024)"
+       id="g880" />
+    <g
+       transform="matrix(0.09063537,0,0,0.0842626,4.7072253,1010.7024)"
+       id="g882" />
+    <g
+       transform="matrix(0.09063537,0,0,0.0842626,4.7072253,1010.7024)"
+       id="g884" />
+    <g
+       transform="matrix(0.09063537,0,0,0.0842626,4.7072253,1010.7024)"
+       id="g886" />
+    <g
+       transform="matrix(0.09063537,0,0,0.0842626,4.7072253,1010.7024)"
+       id="g888" />
+    <g
+       transform="matrix(0.09063537,0,0,0.0842626,4.7072253,1010.7024)"
+       id="g890" />
+    <g
+       transform="matrix(0.09063537,0,0,0.0842626,4.7072253,1010.7024)"
+       id="g892" />
+    <g
+       transform="matrix(0.09063537,0,0,0.0842626,4.7072253,1010.7024)"
+       id="g894" />
+    <g
+       transform="matrix(0.09063537,0,0,0.0842626,4.7072253,1010.7024)"
+       id="g896" />
+    <g
+       transform="matrix(0.0592448,0,0,0.06639183,9.8571282,1011.0429)"
+       id="g7994"
+       style="fill:#ffffff;fill-opacity:1" />
+    <g
+       transform="matrix(0.0592448,0,0,0.06639183,9.8571282,1011.0429)"
+       id="g7996"
+       style="fill:#ffffff;fill-opacity:1" />
+    <g
+       transform="matrix(0.0592448,0,0,0.06639183,9.8571282,1011.0429)"
+       id="g7998"
+       style="fill:#ffffff;fill-opacity:1" />
+    <g
+       transform="matrix(0.0592448,0,0,0.06639183,9.8571282,1011.0429)"
+       id="g8000"
+       style="fill:#ffffff;fill-opacity:1" />
+    <g
+       transform="matrix(0.0592448,0,0,0.06639183,9.8571282,1011.0429)"
+       id="g8002"
+       style="fill:#ffffff;fill-opacity:1" />
+    <g
+       transform="matrix(0.0592448,0,0,0.06639183,9.8571282,1011.0429)"
+       id="g8004"
+       style="fill:#ffffff;fill-opacity:1" />
+    <g
+       transform="matrix(0.0592448,0,0,0.06639183,9.8571282,1011.0429)"
+       id="g8006"
+       style="fill:#ffffff;fill-opacity:1" />
+    <g
+       transform="matrix(0.0592448,0,0,0.06639183,9.8571282,1011.0429)"
+       id="g8008"
+       style="fill:#ffffff;fill-opacity:1" />
+    <g
+       transform="matrix(0.0592448,0,0,0.06639183,9.8571282,1011.0429)"
+       id="g8010"
+       style="fill:#ffffff;fill-opacity:1" />
+    <g
+       transform="matrix(0.0592448,0,0,0.06639183,9.8571282,1011.0429)"
+       id="g8012"
+       style="fill:#ffffff;fill-opacity:1" />
+    <g
+       transform="matrix(0.0592448,0,0,0.06639183,9.8571282,1011.0429)"
+       id="g8014"
+       style="fill:#ffffff;fill-opacity:1" />
+    <g
+       transform="matrix(0.0592448,0,0,0.06639183,9.8571282,1011.0429)"
+       id="g8016"
+       style="fill:#ffffff;fill-opacity:1" />
+    <g
+       transform="matrix(0.0592448,0,0,0.06639183,9.8571282,1011.0429)"
+       id="g8018"
+       style="fill:#ffffff;fill-opacity:1" />
+    <g
+       transform="matrix(0.0592448,0,0,0.06639183,9.8571282,1011.0429)"
+       id="g8020"
+       style="fill:#ffffff;fill-opacity:1" />
+    <g
+       transform="matrix(0.0592448,0,0,0.06639183,9.8571282,1011.0429)"
+       id="g8022"
+       style="fill:#ffffff;fill-opacity:1" />
+    <g
+       transform="matrix(0.03064612,0,0,0.03329754,28.235596,1031.6805)"
+       id="g9388" />
+    <g
+       transform="matrix(0.03064612,0,0,0.03329754,28.235596,1031.6805)"
+       id="g9390" />
+    <g
+       transform="matrix(0.03064612,0,0,0.03329754,28.235596,1031.6805)"
+       id="g9392" />
+    <g
+       transform="matrix(0.03064612,0,0,0.03329754,28.235596,1031.6805)"
+       id="g9394" />
+    <g
+       transform="matrix(0.03064612,0,0,0.03329754,28.235596,1031.6805)"
+       id="g9396" />
+    <g
+       transform="matrix(0.03064612,0,0,0.03329754,28.235596,1031.6805)"
+       id="g9398" />
+    <g
+       transform="matrix(0.03064612,0,0,0.03329754,28.235596,1031.6805)"
+       id="g9400" />
+    <g
+       transform="matrix(0.03064612,0,0,0.03329754,28.235596,1031.6805)"
+       id="g9402" />
+    <g
+       transform="matrix(0.03064612,0,0,0.03329754,28.235596,1031.6805)"
+       id="g9404" />
+    <g
+       transform="matrix(0.03064612,0,0,0.03329754,28.235596,1031.6805)"
+       id="g9406" />
+    <g
+       transform="matrix(0.03064612,0,0,0.03329754,28.235596,1031.6805)"
+       id="g9408" />
+    <g
+       transform="matrix(0.03064612,0,0,0.03329754,28.235596,1031.6805)"
+       id="g9410" />
+    <g
+       transform="matrix(0.03064612,0,0,0.03329754,28.235596,1031.6805)"
+       id="g9412" />
+    <g
+       transform="matrix(0.03064612,0,0,0.03329754,28.235596,1031.6805)"
+       id="g9414" />
+    <g
+       transform="matrix(0.03064612,0,0,0.03329754,28.235596,1031.6805)"
+       id="g9416" />
+    <path
+       style="stroke-width:0.0867741;fill:#ffffff;fill-opacity:1"
+       inkscape:connector-curvature="0"
+       d="m 17.170348,1012.3514 -8.9377016,25.6629 -0.4602969,-1.7981 c -0.2088907,-0.8159 -0.828303,-1.2279 -1.383126,-0.921 -0.5550843,0.3069 -0.8358552,1.2166 -0.6269628,2.032 0,0 1.3188119,5.1486 1.3204788,5.1547 0.1540995,0.5837 0.5643255,1.0049 1.000007,1.0049 H 28.013562 Z m -0.217561,13.9668 4.880075,14.0127 h -9.760423 z m 0,0"
+       id="path10040" />
+    <path
+       style="stroke-width:0.0867741;fill:#ffffff;fill-opacity:1"
+       inkscape:connector-curvature="0"
+       d="m 41.021779,1042.4803 1.251686,-4.7298 c 0.214762,-0.8124 -0.05895,-1.7264 -0.611863,-2.0425 -0.55313,-0.3154 -1.175069,0.088 -1.389832,0.8989 l -0.384797,1.4538 -9.16198,-26.2657 c -0.145133,-0.4164 -0.408555,-0.7167 -0.719525,-0.82 H 19.103535 l 9.536146,27.3823 0.608515,-1.8616 c 0.256702,-0.7852 0.897931,-1.1165 1.432892,-0.7392 0.534684,0.3772 0.759795,1.3196 0.503082,2.1053 l -1.791398,5.6246 h 10.621724 c 0.477908,0 0.819076,-0.3069 1.007283,-1.0061 z m 0,0"
+       id="path10042" />
+  </g>
+</svg>

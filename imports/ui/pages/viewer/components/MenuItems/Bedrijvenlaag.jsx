@@ -52,15 +52,15 @@ export default class Bedrijvenlaag extends Component {
     }
 
     updateVisibility = () => {
-        const { map } = this.props;
+        const { map, layer } = this.props;
         if (map !== null) {
-            map.getLayers().forEach(layer => {
-                if (layer.get('title') === this.props.layer.naam) {
-                    const source = layer.getSource();
-                    if (source.getState() === 'ready') {
+            map.getLayers().forEach(l => {
+                if (l.get('title') === layer.naam) {
+                    const source = l.getSource();
+                    if (source.getState() === 'ready' && source.getFeatures().length > 0) {
                         const features = source.getFeatures();
-                        const category = features[0].get('SBI_RUBR_C');
-                        this.state[category] = layer.getVisible();
+                        const category = features[0].get(layer.filterColumn);
+                        this.state[category] = l.getVisible();
                     }
                 }
             });
@@ -71,19 +71,19 @@ export default class Bedrijvenlaag extends Component {
      * Show the icons of the selected branche on the map
      */
     selectBranche = (event, cat) => {
-        const { map } = this.props;
+        const { map, layer } = this.props;
 
         if (map !== null) {
-            map.getLayers().forEach(layer => {
-                if (layer.get('title') === this.props.layer.naam) {
-                    const source = layer.getSource();
-                    if (source.getState() === 'ready') {
+            map.getLayers().forEach(l => {
+                if (l.get('title') === layer.naam) {
+                    const source = l.getSource();
+                    if (source.getState() === 'ready' && source.getFeatures().length > 0) {
                         const features = source.getFeatures();
-                        const category = features[0].get('SBI_RUBR_C');
+                        const category = features[0].get(layer.filterColumn);
                         if (category === cat) {
-                            layer.setVisible(!layer.getVisible());
+                            l.setVisible(!l.getVisible());
                             this.setState({
-                                ['category']: layer.getVisible
+                                ['category']: l.getVisible()
                             });
                         }
                     }
@@ -105,8 +105,8 @@ export default class Bedrijvenlaag extends Component {
         map.getLayers().forEach(l => {
             if (l.get('title') === layer.naam) {
                 const source = l.getSource();
-                if (source.getState() === 'ready') {
-                    const c = source.getFeatures()[0].get('SBI_RUBR_C');
+                if (source.getState() === 'ready' && source.getFeatures().length > 0) {
+                    const c = source.getFeatures()[0].get(layer.filterColumn);
                     if (c === category) {
                         isVisible = l.getVisible();
                     }
