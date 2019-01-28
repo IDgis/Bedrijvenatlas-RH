@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-import OverigeLagen from './MenuItems/OverigeLagen.jsx';
+import OverigeLagen from './MenuItems/OverigeLagen';
 import { Meteor } from 'meteor/meteor';
 
 const menuStyle = {
@@ -33,49 +33,18 @@ const innerMenuStyle = {
     padding: '8px 0px'
 };
 
-export default class LayerMenu extends Component {
-
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            bedrijvenIndexAZOpen: false,
-            kvkVisible: false,
-            updateKvk: false
-        }
-    }
-
-    /**
-     * Sets the visibility of the KVK layer to the new value
-     */
-    setKvkVisible = (newVisible) => {
-        this.setState({
-            kvkVisible: newVisible
-        });
-    }
-
-    updateKvkChecked = () => {
-        this.setState({
-            updateKvk: true
-        });
-    }
-
-    /**
-     * The main render method that will render the component to the screen
-     */
-    render() {
-        if (this.props.menuOpen) {
-            return (
-                <div style={menuStyle} >
-                    <div role='presentation' style={menuPresentationStyle} >
-                        <div role='menu' style={innerMenuStyle}>
-                            <OverigeLagen map={this.props.map} updateLegenda={this.props.updateLegenda} />
-                        </div>
+export default LayerMenu = ({map, updateLegenda, menuOpen}) => {
+    if (menuOpen) {
+        return (
+            <div style={menuStyle} >
+                <div role='presentation' style={menuPresentationStyle} >
+                    <div role='menu' style={innerMenuStyle} >
+                        <OverigeLagen map={map} updateLegenda={updateLegenda} />
                     </div>
                 </div>
-            );
-        } else {
-            return null;
-        }
+            </div>
+        );
+    } else {
+        return null;
     }
 }
