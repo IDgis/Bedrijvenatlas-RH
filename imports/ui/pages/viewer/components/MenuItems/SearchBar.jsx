@@ -16,11 +16,19 @@ export default class SearchBar extends Component {
         const kvkBedrijven = Meteor.settings.public.kvkBedrijven;
         const detailHandel = Meteor.settings.public.detailHandel;
 
-        const urlKvk = this.createGetFeatureUrl(kvkBedrijven);
-        const urlDetailHandel = this.createGetFeatureUrl(detailHandel);
+        let resultsKvk = [];
+        let resultsDetailHandel = [];
 
-        const resultsKvk = await this.getMeteorCallAsync('getSearchFields', urlKvk);
-        const resultsDetailHandel = await this.getMeteorCallAsync('getSearchFields', urlDetailHandel);
+        if (Object.keys(kvkBedrijven.namen).length > 0) {
+            const urlKvk = this.createGetFeatureUrl(kvkBedrijven);
+            resultsKvk = await this.getMeteorCallAsync('getSearchFields', urlKvk);
+        }
+
+        if (Object.keys(detailHandel.namen).length > 0) {
+            const urlDetailHandel = this.createGetFeatureUrl(detailHandel);
+            resultsDetailHandel = await this.getMeteorCallAsync('getSearchFields', urlDetailHandel);
+        }
+        
         const searchFields = [...resultsKvk, ...resultsDetailHandel].sort();
 
         this.setState({ searchFields });

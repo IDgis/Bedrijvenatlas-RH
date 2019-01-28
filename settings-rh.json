@@ -59,6 +59,7 @@
             "namespace": "Bedrijvenatlas",
             "featurePrefix": "Bedrijventerreinen_KVK_hoofdactiviteiten_per_adres_service",
             "featureTypes": ["Bedrijventerreinen_KVK_hoofdactiviteiten_per_adres"],
+            "filterColumn": "SBI_RUBR_C",
 
             "namen": {
                 "C": "Industrie",
