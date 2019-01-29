@@ -10,12 +10,15 @@
         "gemeenteConfig": {
             "naam": "Rijssen-Holten",
             "homePage": "https://www.rijssen-holten.nl/home",
+            "contactPage": "https://www.rijssen-holten.nl/ondernemer",
             "logo": "/rijssenholten/images/logo.jpg",
             "altText": "Rijssen Holten",
             "colorGemeente": "#730049",
+            "backgroundImage": "/rijssenholten/images/GRH-VLETGAARSMATEN-BEDRIJVENTERREIN.jpg",
 
             "logoWizardKnop": "/rijssenholten/icons/KNOP_VESTIGEN_NIEUW_BEDRIJF.svg",
             "logoViewerKnop": "/rijssenholten/icons/KNOP_NAAR_DE_KAART.svg",
+            "logoContactKnop": "/rijssenholten/icons/KNOP_CONTACT.svg",
             "iconSelected": "/rijssenholten/icons/SELECTED.svg",
             "iconShadow": "/icons/SCHADUW.svg",
 
@@ -56,6 +59,7 @@
             "namespace": "Bedrijvenatlas",
             "featurePrefix": "Bedrijventerreinen_KVK_hoofdactiviteiten_per_adres_service",
             "featureTypes": ["Bedrijventerreinen_KVK_hoofdactiviteiten_per_adres"],
+            "filterColumn": "SBI_RUBR_C",
 
             "namen": {
                 "C": "Industrie",
@@ -142,6 +146,7 @@
                 "url": "http://rijssen-holten.ecw-hosting.nl/lufo/services/wmts_rijssen_holten",
                 "layer": "Rijssen_Holten",
                 "matrixSet": "NLDEPSG28992Scale",
+                "matrixSetPrefix": "EPSG:28992:",
                 "format": "image/jpg",
                 "style": "default",
                 "origin": [ -285401.92,903401.92 ],
@@ -162,7 +167,6 @@
                 "format": "image/png",
                 "layers": "kadastralekaart",
                 "tiling": true,
-                "omschrijving": "TileWMS Kadastrale percelen",
                 "visible": false
             },
             {
@@ -172,7 +176,7 @@
                 "format": "image/png",
                 "layers": "Bedrijventerreinen_RO_categorie_indeling",
                 "tiling": true,
-                "omschrijving": "TileWMS Milieu Categorieën",
+                "omschrijving": "Raadpleeg voor de zekerheid altijd het bestemmingsplan. Er kunnen namelijk uitzonderingen voorkomen",
                 "visible": false
             },
             {
@@ -182,7 +186,7 @@
                 "format": "image/png",
                 "layers": "Bedrijventerreinen_Rijssen-Holten",
                 "tiling": false,
-                "omschrijving": "ImageWMS Bedrijventerreinen",
+                "omschrijving": "IBIS Bedrijventerreinen",
                 "visible": false
             },
             {
@@ -194,7 +198,7 @@
                 "layers": "Bedrijventerreinen_uitgiftelocaties",
                 "tiling": true,
                 "showFeatureInfo": true,
-                "omschrijving": "TileWMS Uitgifte Locaties",
+                "omschrijving": "Uitgifte Locaties zoals bij de gemeente bekend",
                 "visible": false
             }
         ],
@@ -202,21 +206,41 @@
         "fundaLayers": [
             {
                 "service": "geojson",
-                "titel": "Te Koop",
+                "titel": "Bedrijfspanden te Koop",
                 "type": "koop",
-                "omschrijving": "Panden te koop volgens Funda",
+                "omschrijving": "Bedrijfspanden te koop volgens Funda",
                 "url": "/data/vastgoedTeKoop.json",
-                "icon": "/icons/TE_KOOP.svg",
+                "icon": "/icons/TE_KOOP_BEDRIJF.svg",
                 "shadow": "/icons/SCHADUW.svg",
                 "visible": false
             },
             {
                 "service": "geojson",
-                "titel": "Te Huur",
+                "titel": "Bedrijfspanden te Huur",
                 "type": "huur",
-                "omschrijving": "Panden te huur volgens Funda",
+                "omschrijving": "Bedrijfspanden te huur volgens Funda",
                 "url": "/data/vastgoedTeHuur.json",
-                "icon": "/icons/TE_HUUR.svg",
+                "icon": "/icons/TE_HUUR_BEDRIJF.svg",
+                "shadow": "/icons/SCHADUW.svg",
+                "visible": false
+            },
+            {
+                "service": "geojson",
+                "titel": "Winkelpanden te Koop",
+                "type": "koop",
+                "omschrijving": "Detailhandelpanden te koop volgens Funda",
+                "url": "/data/detailhandelTeKoop.json",
+                "icon": "/icons/TE_KOOP_DETAILHANDEL.svg",
+                "shadow": "/icons/SCHADUW.svg",
+                "visible": false
+            },
+            {
+                "service": "geojson",
+                "titel": "Winkelpanden te Huur",
+                "type": "huur",
+                "omschrijving": "Detailhandelpanden te huur volgens Funda",
+                "url": "/data/detailhandelTeHuur.json",
+                "icon": "/icons/TE_HUUR_DETAILHANDEL.svg",
                 "shadow": "/icons/SCHADUW.svg",
                 "visible": false
             }
@@ -225,11 +249,17 @@
         "aliassen": {
             "ADR_ID_BAG": "Identificatie BAG",
             "ADR_LABEL": "Locatieadres",
-            "BEDR_NAAM": "Bedrijfsfnaam",
+            "BEDR_NAAM": "Bedrijfsnaam",
             "LOC_NM": "Betreft",
             "LOC_TYPE": "Bedrijventerrein",
             "SBI_OMSCHR": "Activiteiten (SBI)",
             "SBI_RUBR_C": "Activiteiten rubriek (SBI)"
+        },
+
+        "searchConfig": {
+            "bedrijfsNaam": "BEDR_NAAM",
+            "sbiOmschrijving": "SBI_OMSCHR",
+            "milieuCategorie": "CATEGORIE"
         }
     }
 }

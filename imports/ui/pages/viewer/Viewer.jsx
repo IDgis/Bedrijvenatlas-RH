@@ -10,6 +10,27 @@ import Legenda from './components/Legenda.jsx';
 import SearchBar from './components/MenuItems/SearchBar.jsx';
 
 
+const menuButtonStyle = {
+    backgroundColor: Meteor.settings.public.gemeenteConfig.colorGemeente,
+    border: '10px none',
+    boxSizing: 'border-box',
+    display: 'inline-block',
+    fontFamily: 'Roboto, sans-serif',
+    cursor: 'pointer',
+    textDecoration: 'none',
+    margin: '0px',
+    padding: '12px',
+    outline: 'currentcolor none medium',
+    fontSize: '0px',
+    fontWeight: 'inherit',
+    position: 'relative',
+    zIndex: '1',
+    overflow: 'visible',
+    transition: 'all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms',
+    width: '48px',
+    height: '48px'
+}
+
 export default class Viewer extends Component {
 
     constructor(props) {
@@ -74,6 +95,7 @@ export default class Viewer extends Component {
         this.setMapSettings();
         this.setBackgroundLayer();
         this.addKvkLayers(Meteor.settings.public.kvkBedrijven);
+        this.addKvkLayers(Meteor.settings.public.detailHandel);
         this.props.mapToParent(this.state.map);
     }
 
@@ -103,11 +125,6 @@ export default class Viewer extends Component {
     addLayers = (layers, allLayers) => {
         const extent = [-285401.92,22598.08,595401.92,903401.92];
         const projection = new ol.proj.Projection({code: 'EPSG:28992', units: 'm', extent: extent});
-        const matrixIds = [];
-
-        for (let i = 0; i < 16; i++) {
-            matrixIds[i] = 'EPSG:28992:' + i.toString();
-        }
 
         layers.forEach(layer => {
             const service = layer.service;
@@ -115,7 +132,7 @@ export default class Viewer extends Component {
             if (service === 'tms') {
                 allLayers.push(this.getTmsLayer(layer, extent, projection));
             } else if (service === 'wmts') {
-                allLayers.push(this.getWmtsLayer(layer, projection, matrixIds));
+                allLayers.push(this.getWmtsLayer(layer, projection));
             } else if (service === 'wms') {
                 allLayers.push(this.getWmsLayer(layer));
             } else if (service === 'geojson') {
@@ -154,10 +171,15 @@ export default class Viewer extends Component {
      * 
      * @param {Object} wmtsLayer The WMTS Layer object to convert to an OpenLayers Object
      * @param {Object} projection The projection object of the given layer
-     * @param {Array} matrixIds The matrixIds to use for this layer
      */
-    getWmtsLayer = (wmtsLayer, projection, matrixIds) => (
-        new ol.layer.Tile({
+    getWmtsLayer = (wmtsLayer, projection) => {
+        const matrixIds = [];
+
+        for (let i = 0; i < 16; i++) {
+            matrixIds[i] = ((wmtsLayer.matrixSetPrefix || '') + i.toString());
+        }
+
+        return new ol.layer.Tile({
             title: wmtsLayer.titel,
             source: new ol.source.WMTS({
                 attributions: this.getAttributions(wmtsLayer.attributions),
@@ -175,7 +197,7 @@ export default class Viewer extends Component {
             }),
             visible: wmtsLayer.visible
         })
-    );
+    };
 
     /**
      * Creates an OpenLayers WMS Layer
@@ -347,12 +369,13 @@ export default class Viewer extends Component {
      */
     addKvkLayers = (layerConfig) => {
         Object.keys(layerConfig.icons).forEach(category => {
+            const filter = ol.format.filter.equalTo(layerConfig.filterColumn, category);
             const featureRequest = new ol.format.WFS().writeGetFeature({
                 srsName: 'EPSG:28992',
                 outputFormat: 'application/json',
                 featurePrefix: layerConfig.featurePrefix,
                 featureTypes: layerConfig.featureTypes,
-                filter: ol.format.filter.equalTo('SBI_RUBR_C', category)
+                filter: filter
             });
 
             fetch(layerConfig.url, {
@@ -396,17 +419,9 @@ export default class Viewer extends Component {
     /**
      * Toggles the state of the menu between open and closed
      */
-    openMenu = (evt) => {
+    toggleMenu = (e) => {
         this.setState({
-            menuOpen: true,
-            anchorEl: evt.currentTarget
-        });
-        document.getElementById('map').focus();
-    }
-
-    closeMenu = () => {
-        this.setState({
-            menuOpen: false
+            menuOpen: !this.state.menuOpen
         });
     }
 
@@ -418,21 +433,19 @@ export default class Viewer extends Component {
      * The main render method that will render the component to the screen
      */
     render() {
-
         return (
             <div id="map" className="map" >
                 <SearchBar map={this.state.map} updateLegenda={this.updateLegenda} />
-                <IconButton className='menu-button' style={{backgroundColor:Meteor.settings.public.gemeenteConfig.colorGemeente}} onClick={this.openMenu} title='Menu' >
+                <button className='menu-button' title='Menu' style={menuButtonStyle} onClick={this.toggleMenu} >
                     <img src={Meteor.settings.public.gemeenteConfig.iconMenu} />
-                </IconButton>
+                </button>
                 <IconButton className='home-button' href='/' style={{backgroundColor:Meteor.settings.public.gemeenteConfig.colorGemeente}} title='Home' >
                     <img src={Meteor.settings.public.gemeenteConfig.iconHome} />
                 </IconButton>
                 <LayerMenu
                     map={this.state.map}
                     menuOpen={this.state.menuOpen}
-                    closeMenu={this.closeMenu}
-                    anchorEl={this.state.anchorEl} updateLegenda={this.updateLegenda}
+                    updateLegenda={this.updateLegenda}
                 />
                 <Legenda map={this.state.map} />
             </div>

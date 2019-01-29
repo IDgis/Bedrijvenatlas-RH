@@ -17,24 +17,15 @@ body {
     height: 100%;
 }
 
-.container-fluid {
-    padding-right: 0px;
-    padding-left: 0px;
-    margin-left: 0px;
-    margin-right: 0px;
-}
-
 .row {
     margin-right: 0px;
     margin-left: 0px;
 }
 
 .main-header {
-    position: fixed;
+    position: relative;
     height: 56px;
     width: 100%;
-    top: 0px;
-    z-index: 1;
 }
 
 .menu-bar {
@@ -83,24 +74,6 @@ body {
     right: 0px;
 }
 
-.main-layout {
-    position: absolute;
-    height: 100%;
-    width: 100%;
-    padding-top: 56px;
-    overflow: hidden;
-}
-
-.welcome-layout {
-    position: fixed;
-    background-image: url('/rijssenholten/images/GRH-VLETGAARSMATEN-BEDRIJVENTERREIN.jpg');
-    background-size: cover;
-    text-align: center;
-    top: 56px;
-    width: 100%;
-    height: 100%;
-}
-
 .a-link {
     text-decoration: none;
     color: #000;
@@ -139,14 +112,6 @@ body {
     color: #000;
 }
 
-.wizard-questions {
-    position: fixed;
-    color: #000;
-    text-align: left;
-    /*text-shadow: 2px 2px 6px white;*/
-    left: 36%;
-}
-
 .wizard-header {
     position: relative;
     margin-bottom: 5px;
@@ -160,9 +125,9 @@ body {
 }
 
 .wizard-button {
-    position: fixed;
-    right: 60px;
-    bottom: 30px;
+    float: right;
+    margin-bottom: 2em;
+    margin-right: 2em;
 }
 
 .map, .map div {
@@ -171,7 +136,6 @@ body {
 
 .searchbar {
     position: fixed;
-    background-color: rgb(115,0,73);
     height: 86px !important;
     z-index: 1;
     top: 66px;
@@ -200,43 +164,14 @@ div > div > div {
     color: white;
 }
 
-div[role="menu"]:hover {
+div[data-reactroot] > div > div > div[role="presentation"] > div[role="menu"]:hover {
     width: 900px !important;
 }
 
-div[role="presentation"] {
+div[data-reactroot] > div > div > div[role="presentation"] {
     background-color: #730049;
     opacity: 0.8;
     border-radius: 5px;
-}
-
-.list-item {
-    min-height: 0px !important;
-    height: 36px;
-
-    border: 10px none;
-    box-sizing: border-box;
-    display: block;
-    font-family: 'Roboto', sans-serif;
-    cursor: pointer;
-    text-decoration: none;
-    margin: 0px;
-    padding: 0px;
-    outline: medium none currentColor;
-    font-size: 16px;
-    font-weight: inherit;
-    position: relative;
-    z-index: 1;
-    line-height: 16px;
-    color: white !important;
-}
-
-.list-item > div > div > div {
-    color: white;
-}
-
-.kaart-laag {
-    padding: 10px 10px 10px 72px;
 }
 
 .menu-button {
@@ -267,7 +202,6 @@ div[role="presentation"] {
     top: 250px;
     z-index: 1;
     padding: 5px;
-    background-color: #730049;
     opacity: 0.8;
     height: auto !important;
     border-radius: 5px;
@@ -295,6 +229,11 @@ div[role="presentation"] {
 
 h3 {
     margin-bottom: 5px;
+}
+
+.legenda-explantion {
+    font-size: 0.9em;
+    font-style: italic;
 }
 
 .legenda-item {

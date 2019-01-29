@@ -6,113 +6,131 @@ import AutoComplete from 'material-ui/AutoComplete';
 
 export default class SearchBar extends Component {
 
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            searchText: '',
-            searchFields: [],
-            listStyleWidth: '400px'
-        };
-
-        this.fillSearchFields();
+    state = {
+        searchText: '',
+        searchFields: [],
+        listStyleWidth: '400px'
     }
 
-    fillSearchFields = () => {
+    async componentDidMount() {
         const kvkBedrijven = Meteor.settings.public.kvkBedrijven;
-        const url = `${kvkBedrijven.url}?service=WFS&version=1.1.0&request=GetFeature&outputFormat=application/json` +
-        `&resultType=results&typeName=${kvkBedrijven.namespace}:${kvkBedrijven.featureTypes[0]}`;
+        const detailHandel = Meteor.settings.public.detailHandel;
 
-        Meteor.call('getSearchFields', url, (err, result) => {
-            if(err) {
-                console.log(err);
-            }
-            if(result !== null && result !== undefined) {
-                this.state.searchFields = result;
-                this.state.searchFields = this.state.searchFields.sort();
-            }
+        let resultsKvk = [];
+        let resultsDetailHandel = [];
+
+        if (Object.keys(kvkBedrijven.namen).length > 0) {
+            const urlKvk = this.createGetFeatureUrl(kvkBedrijven);
+            resultsKvk = await this.getMeteorCallAsync('getSearchFields', urlKvk);
+        }
+
+        if (Object.keys(detailHandel.namen).length > 0) {
+            const urlDetailHandel = this.createGetFeatureUrl(detailHandel);
+            resultsDetailHandel = await this.getMeteorCallAsync('getSearchFields', urlDetailHandel);
+        }
+        
+        const searchFields = [...resultsKvk, ...resultsDetailHandel].sort();
+
+        this.setState({ searchFields });
+    }
+
+    createGetFeatureUrl = (featureObj) => (
+        `${featureObj.url}?service=WFS&version=1.1.0&request=GetFeature&outputFormat=application/json` +
+            `&resultType=results&typeName=${featureObj.namespace}:${featureObj.featureTypes[0]}`
+    )
+
+    getMeteorCallAsync = (methodName, args) => {
+        return new Promise((resolve, reject) => {
+            Meteor.call(methodName, args, (error, result) => {
+                if (error) {
+                    reject(error);
+                } else {
+                    resolve(result);
+                }
+            });
         });
     }
 
     handleUpdateInput = (searchText) => {
-        this.setState({searchText:searchText});
+        this.setState({ searchText });
     }
 
     selectFeature = (searchText) => {
-        this.setState({searchText:''});
+        this.setState({ searchText: '' });
 
         // Look for the searched feature in the correct layer
-        const map = this.props.map;
-        if(map !== null) {
-            const layers = map.getLayers();
-            layers.forEach(layer => {
-                if(layer.get('title') === Meteor.settings.public.kvkBedrijven.naam) {
-                    let newSearch = true;
-                    const source = layer.getSource();
-                    if(source.getState() === 'ready') {
-                        const features = source.getFeatures();
-                        for(i in features) {
+        const { map, updateLegenda } = this.props;
+        const { kvkBedrijven, detailHandel, gemeenteConfig } = Meteor.settings.public;
+        const layers = map.getLayers();
 
-                            // Find the feature with the correct name
-                            const search = features[i].get('BEDR_NAAM') + ' | ' + features[i].get('SBI_OMSCHR');
-                            if(search === searchText && newSearch) {
-                                newSearch = false;
+        layers.forEach(layer => {
+            if (layer.get('title') === kvkBedrijven.naam || layer.get('title') === detailHandel.naam) {
+                const source = layer.getSource();
+                if (source.getState() === 'ready' && source.getFeatures().length > 0) {
+                    const features = source.getFeatures();
 
-                                // Center around the coordinates of the found feature
-                                // Also zoom in to the feature and set the layer visible
-                                const coords = features[i].getGeometry().getCoordinates();
+                    for (i in features) {
+                        // Find the feature with the correct name
+                        const search = features[i].get('BEDR_NAAM') + ' | ' + features[i].get('SBI_OMSCHR');
+                        if (search === searchText) {
+                            // Center around the coordinates of the found feature
+                            // Also zoom in to the feature and set the layer visible
+                            const coords = features[i].getGeometry().getCoordinates();
+                            this.flyTo(coords[0], function(){});
+                            layer.setVisible(true);
 
-                                this.flyTo(coords[0], function(){});
-                                layer.setVisible(true);
-
-                                // Select the found feature
-                                const select = new ol.interaction.Select({
-                                    style: [
-                                        new ol.style.Style({
-                                            image: new ol.style.Icon({
-                                                src: Meteor.settings.public.gemeenteConfig.iconSelected,
-                                                imgSize: [ 48, 48 ], // for IE11
-                                                scale: 0.5
-                                            }),
-                                            zIndex: 1
+                            // Select the found feature
+                            const select = new ol.interaction.Select({
+                                style: [
+                                    new ol.style.Style({
+                                        image: new ol.style.Icon({
+                                            src: gemeenteConfig.iconSelected,
+                                            imgSize: [ 48, 48 ],
+                                            scale: 0.5
                                         }),
-                                        new ol.style.Style({
-                                            image: new ol.style.Icon({
-                                                src: Meteor.settings.public.gemeenteConfig.iconShadow,
-                                                imgSize: [ 48, 48 ], // for IE11
-                                                scale: 0.5
-                                            }),
-                                            zIndex: 0
-                                        })
-                                    ]
-                                });
-                                map.addInteraction(select);
-                                select.getFeatures().push(features[i]);
-                            }
+                                        zIndex: 1
+                                    }),
+                                    new ol.style.Style({
+                                        image: new ol.style.Icon({
+                                            src: gemeenteConfig.iconShadow,
+                                            imgSize: [ 48, 48 ],
+                                            scale: 0.5
+                                        }),
+                                        zIndex: 0
+                                    })
+                                ]
+                            });
+                            map.addInteraction(select);
+                            select.getFeatures().push(features[i]);
+
+                            break;
                         }
                     }
                 }
-            });
-        }
-        this.props.updateLegenda();
+            }
+        });
+
+        updateLegenda();
     }
 
     flyTo = (location, done) => {
-        let duration = 3000;
-        let view = this.props.map.getView();
-        let zoom = view.getZoom();
+        const duration = 3000;
+        const view = this.props.map.getView();
+        const zoom = view.getZoom();
         let parts = 2;
         let called = false;
+
         function callback(complete) {
             --parts;
-            if(called) {
+            if (called) {
                 return;
             }
-            if(parts === 0 || !complete) {
+            if (parts === 0 || !complete) {
                 called = true;
                 done(complete);
             }
         }
+
         view.animate({
             center: location,
             duration: duration
@@ -127,10 +145,10 @@ export default class SearchBar extends Component {
     }
 
     filterResults = (searchText, key) => {
-        let texts = searchText.split(' ');
+        const texts = searchText.split(' ');
         let inSearch = true;
-        
-        for(let i in texts) {
+
+        for (let i in texts) {
             inSearch = inSearch && ((key.toLowerCase()).indexOf(texts[i].toLowerCase()) !== -1);
         }
 
@@ -139,7 +157,7 @@ export default class SearchBar extends Component {
 
     render() {
         return(
-            <div className='searchbar' >
+            <div className='searchbar' style={{backgroundColor: Meteor.settings.public.gemeenteConfig.colorGemeente}}>
                 <AutoComplete 
                     className='auto-complete'
                     floatingLabelText="Zoek bedrijf"

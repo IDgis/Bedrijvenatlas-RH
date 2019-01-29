@@ -3,11 +3,8 @@ import { Meteor } from 'meteor/meteor';
 
 import Bedrijvenlaag from './Bedrijvenlaag';
 import Kaartlaag from './Kaartlaag';
-
-import ArrowDropRight from 'material-ui/svg-icons/navigation-arrow-drop-right';
-import Checkbox from 'material-ui/Checkbox';
-import {List} from 'material-ui/List';
-import MenuItem from 'material-ui/MenuItem';
+import ListItem from './ListItem';
+import ListItemMenu from './ListItemMenu';
 
 export default class OverigeLagen extends Component {
 
@@ -17,17 +14,11 @@ export default class OverigeLagen extends Component {
         this.state = {
             map: this.props.map,
             allKvkChecked: false,
-            allVastgoedChecked: false
+            allDetailHandelChecked: false,
+            allVastgoedChecked: false,
+            listItemMenu: null,
+            selectedItem: null
         }
-    }
-
-    componentWillReceiveProps(nextProps) {
-        this.setState({
-            map: nextProps.map,
-        });
-
-        this.setAllKvkChecked();
-        this.setAllVastgoedChecked();
     }
 
     /**
@@ -49,6 +40,26 @@ export default class OverigeLagen extends Component {
 
         this.setState({
             allKvkChecked: newVisible
+        });
+        this.props.updateLegenda();
+    }
+
+    selectAllDetailHandelLayers = (event, l) => {
+        let newVisible = !this.state.allDetailHandelChecked;
+        let detailHandel = Meteor.settings.public.detailHandel.naam;
+        let map = this.props.map;
+
+        if (map != null) {
+            let layers = map.getLayers();
+            layers.forEach(layer => {
+                if (layer.get('title') === detailHandel) {
+                    layer.setVisible(newVisible);
+                }
+            });
+        }
+
+        this.setState({
+            allDetailHandelChecked: newVisible
         });
         this.props.updateLegenda();
     }
@@ -100,6 +111,25 @@ export default class OverigeLagen extends Component {
         }
     }
 
+    setAllDetailHandelChecked = () => {
+        const detailHandel = Meteor.settings.public.detailHandel.naam;
+        const map = this.props.map;
+
+        if (map != null) {
+            let allVisible = true;
+            const layers = map.getLayers();
+            layers.forEach(layer => {
+                if (layer.get('title') === detailHandel) {
+                    allVisible = allVisible && layer.getVisible();
+                }
+            });
+
+            this.setState({
+                allDetailHandelChecked: allVisible
+            });
+        }
+    }
+
     /**
      * Checks whether all Vastgoed layers are checked or not and sets its internal state
      */
@@ -123,18 +153,19 @@ export default class OverigeLagen extends Component {
     }
 
     /**
-     * Get the visibility of all KVK layers
+     * Get the visibility of all KVK and Detailhandel layers
      */
-    getAllKvkChecked = () => {
-        const kvk = Meteor.settings.public.kvkBedrijven.naam;
+    getAllLayerGroupChecked = (layerGroupName) => {
         const map = this.props.map;
-        let visible = false
+        let visible = false;
 
-        if(map !== null) {
+        if (map !== null) {
             let layers = map.getLayers();
             layers.forEach(layer => {
-                if(layer.get('title') === kvk) {
-                    if(layer.getVisible()) visible = true;
+                if (layer.get('title') === layerGroupName) {
+                    if (layer.getVisible()) {
+                        visible = true;
+                    }
                 }
             });
             return visible;
@@ -163,11 +194,20 @@ export default class OverigeLagen extends Component {
         return anyVisible;
     }
 
-    getFundaMenuItems = () => (
-        Meteor.settings.public.fundaLayers.map((layer, index) => (
-            <Kaartlaag layer={layer} map={this.props.map} updateParent={this.setAllVastgoedChecked} updateLegenda={this.props.updateLegenda} key={layer.titel + index} />
-        ))
-    );
+    getFundaMenuItems = () => {
+        const { map } = this.props;
+        return Meteor.settings.public.fundaLayers.map((layer, index) => {
+            let newVisible;
+
+            map.getLayers().forEach(l => {
+                if (l.get('title') === layer.titel) {
+                    newVisible = l.getVisible();
+                }
+            });
+            
+            return <Kaartlaag layer={layer} map={this.props.map} updateParent={this.setAllVastgoedChecked} updateLegenda={this.props.updateLegenda} visible={newVisible} key={layer.titel + index} />
+        });
+    };
 
     getCustomLayers = () => (
         Meteor.settings.public.overlayLayers.map((layer, index) => (
@@ -175,34 +215,71 @@ export default class OverigeLagen extends Component {
         ))
     )
 
+    toggleSubmenu = (e, items) => {
+        const rect = e.currentTarget.getBoundingClientRect();
+
+        const selectedItem = rect.top;
+        const listItemMenu = <ListItemMenu items={items} top={rect.top} left={rect.right} />;
+
+        if (this.state.selectedItem === selectedItem) {
+            this.setState({
+                selectedItem: null,
+                listItemMenu: null
+            });
+        } else {
+            this.setState({
+                selectedItem: rect.top,
+                listItemMenu
+            });
+        }
+    }
+
     /**
      * The main render method that will render the component to the screen
      */
     render() {
         const allVastgoedChecked = this.getAllVastgoedChecked();
-        const allKvkChecked = this.getAllKvkChecked();
+        const allKvkChecked = this.getAllLayerGroupChecked(Meteor.settings.public.kvkBedrijven.naam);
+        const allDetailHandelChecked = this.getAllLayerGroupChecked(Meteor.settings.public.detailHandel.naam);
 
         const fundaMenuItems = this.getFundaMenuItems();
         const customLayers = this.getCustomLayers();
+        const { listItemMenu } = this.state;
 
         return (
-            <List className='list-menu' >
-                <MenuItem className='list-item' primaryText='Te Koop/Huur' 
-                    leftIcon={<Checkbox checked={allVastgoedChecked} onTouchTap={this.selectAllVastgoedLayers} iconStyle={{fill:'white'}} />}
-                    rightIcon={<ArrowDropRight style={{fill:'white'}} />}
-                    menuItems={fundaMenuItems}
+            <div className='list-menu' style={{padding:'8px 0px'}} >
+                <ListItem 
+                    primaryText='Te Koop/Huur'
+                    isChecked={allVastgoedChecked}
+                    selectAll={this.selectAllVastgoedLayers}
+                    items={fundaMenuItems}
+                    toggleSubmenu={this.toggleSubmenu}
                     />
-                <MenuItem className='list-item' primaryText={Meteor.settings.public.kvkBedrijven.naam}
-                    leftIcon={<Checkbox checked={allKvkChecked} onTouchTap={this.selectAllKvkLayers} iconStyle={{fill:'white'}} />}
-                    rightIcon={<ArrowDropRight style={{fill:'white'}} />}
-                    menuItems={<Bedrijvenlaag 
+                <ListItem 
+                    primaryText={Meteor.settings.public.kvkBedrijven.naam} 
+                    isChecked={allKvkChecked}
+                    selectAll={this.selectAllKvkLayers}
+                    items={Object.keys(Meteor.settings.public.kvkBedrijven.namen).length > 0 ? <Bedrijvenlaag 
                         layer={Meteor.settings.public.kvkBedrijven} 
                         map={this.props.map} 
                         updateParent={this.setAllKvkChecked} 
-                        updateLegenda={this.props.updateLegenda} />}
+                        updateLegenda={this.props.updateLegenda} /> : null}
+                    toggleSubmenu={this.toggleSubmenu}
+                    />
+                <ListItem 
+                    primaryText={Meteor.settings.public.detailHandel.naam}
+                    isChecked={allDetailHandelChecked}
+                    selectAll={this.selectAllDetailHandelLayers}
+                    items={Object.keys(Meteor.settings.public.detailHandel.namen).length > 0 ? <Bedrijvenlaag
+                        layer={Meteor.settings.public.detailHandel}
+                        map={this.props.map}
+                        updateParent={this.setAllDetailHandelChecked}
+                        updateLegenda={this.props.updateLegenda} /> : null}
+                    toggleSubmenu={this.toggleSubmenu}
                     />
                 { customLayers }
-            </List>
+                { listItemMenu }
+            </div>
         );
     }
 }
