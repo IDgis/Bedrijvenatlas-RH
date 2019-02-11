@@ -11,6 +11,8 @@ export BEDRIJVENTERREINEN_FEATURE_BOUNDS="https://rijssen-holten-pub.geopublishe
 
 export FUNDA_SCRAPER_VERSION=1.1.3
 
+export COMPOSE_TLS_VERSION=TLSv1_2
+
 docker-compose \
 	-p rh \
 	up -d
