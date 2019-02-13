@@ -1,293 +1,290 @@
 {
-    "public": {
+    "idgisConfig": {
+        "homePage": "https://www.idgis.nl/index.php/nl/bedrijvenatlas",
+        "logo": "/idgis/images/logo.jpg",
+        "altText": "idgis"
+    },
 
-        "idgisConfig": {
-            "homePage": "https://www.idgis.nl/index.php/nl/bedrijvenatlas",
-            "logo": "/idgis/images/logo.jpg",
-            "altText": "idgis"
-        },
+    "gemeenteConfig": {
+        "naam": "Berkelland",
+        "homePage": "https://www.gemeenteberkelland.nl/",
+        "contactPage": "https://www.gemeenteberkelland.nl/Ondernemers/Rij_2/Team_EZ/Economische_Zaken/Team_EZ",
+        "logo": "/berkelland/images/logo.png",
+        "altText": "Berkelland",
+        "colorGemeente": "#004D93",
+        "backgroundImage": "/berkelland/images/Luchtfoto Borculo Overberkel.jpg",
 
-        "gemeenteConfig": {
-            "naam": "Berkelland",
-            "homePage": "https://www.gemeenteberkelland.nl/",
-            "contactPage": "https://www.gemeenteberkelland.nl/Ondernemers/Rij_2/Team_EZ/Economische_Zaken/Team_EZ",
-            "logo": "/berkelland/images/logo.png",
-            "altText": "Berkelland",
-            "colorGemeente": "#004D93",
-            "backgroundImage": "/berkelland/images/Luchtfoto Borculo Overberkel.jpg",
+        "logoWizardKnop": "/berkelland/icons/KNOP_VESTIGEN_NIEUW_BEDRIJF.svg",
+        "logoViewerKnop": "/berkelland/icons/KNOP_NAAR_DE_KAART.svg",
+        "logoContactKnop": "/berkelland/icons/KNOP_CONTACT.svg",
+        "iconSelected": "/berkelland/icons/SELECTED.svg",
+        "iconShadow": "/icons/SCHADUW.svg",
 
-            "logoWizardKnop": "/berkelland/icons/KNOP_VESTIGEN_NIEUW_BEDRIJF.svg",
-            "logoViewerKnop": "/berkelland/icons/KNOP_NAAR_DE_KAART.svg",
-            "logoContactKnop": "/berkelland/icons/KNOP_CONTACT.svg",
-            "iconSelected": "/berkelland/icons/SELECTED.svg",
-            "iconShadow": "/icons/SCHADUW.svg",
+        "iconHome": "/icons/HOME.svg",
+        "iconMenu": "/icons/MENU.svg",
 
-            "iconHome": "/icons/HOME.svg",
-            "iconMenu": "/icons/MENU.svg",
+        "extent": [ 220754, 445975, 251434, 467576 ],
+        "center": [ 236094, 456775 ],
+        "zoom": 13,
+        "minZoom": 13,
 
-            "extent": [ 220754, 445975, 251434, 467576 ],
-            "center": [ 236094, 456775 ],
-            "zoom": 13,
-            "minZoom": 13,
-
-            "plaatsen": [
-                {
-                    "naam": "Beltrum",
-                    "value": "beltrum",
-                    "center": [ 235653, 453835 ],
-                    "zoom": 15.5
-                },
-                {
-                    "naam": "Borculo",
-                    "value": "borculo",
-                    "center": [ 233033, 459578 ],
-                    "zoom": 15
-                },
-                {
-                    "naam": "Eibergen",
-                    "value": "eibergen",
-                    "center": [ 241457, 457568 ],
-                    "zoom": 15
-                },
-                {
-                    "naam": "Neede",
-                    "value": "neede",
-                    "center": [ 239004, 461467 ],
-                    "zoom": 15
-                },
-                {
-                    "naam": "Ruurlo",
-                    "value": "ruurlo",
-                    "center": [ 228158, 455892 ],
-                    "zoom": 15
-                },
-                {
-                    "naam": "Geen voorkeur",
-                    "value": "beide",
-                    "center": [ 236094, 456775 ],
-                    "zoom": 13
-                }
-            ]
-        },
-
-        "kvkBedrijven": {
-            "naam": "Bedrijven",
-            "omschrijving": "Bedrijven uit het KVK bestand",
-            "url": "https://berkelland-pub.geopublisher.nl/geoserver/Bedrijvenatlas/wfs",
-            "namespace": "Bedrijvenatlas",
-            "featurePrefix": "KVK_Hoofdactiviteiten_service",
-            "featureTypes": ["KVK_Hoofdactiviteiten"],
-            "filterColumn": "SBI_RUBR_C",
-
-            "namen": {
-                "C": "Industrie",
-                "E": "Distributie water/afval",
-                "F": "Bouwnijverheid",
-                "H": "Vervoer/Opslag",
-                "I": "Logies/Maaltijd/Drank",
-                "J": "Informatica/Communicatie",
-                "K": "Financieel",
-                "L": "Onroerend goed",
-                "M": "Advisering",
-                "N": "Verhuur/Overige dienstverlening",
-                "P": "Onderwijs",
-                "Q": "Gezondheidszorg",
-                "S": "Overige dienstverlening"
-            },
-
-            "icons": {
-                "C": "/icons/SBI_RUBRIEK_CODE_C_INDUSTRIE.svg",
-                "E": "/icons/SBI_RUBRIEK_CODE_E_DISTRIBUTIE_WATER_AFVAL.svg",
-                "F": "/icons/SBI_RUBRIEK_CODE_F_BOUWNIJVERHEID.svg",
-                "H": "/icons/SBI_RUBRIEK_CODE_H_VERVOER_OPSLAG.svg",
-                "I": "/icons/SBI_RUBRIEK_CODE_I_LOGIES_MAALTIJD_DRANK.svg",
-                "J": "/icons/SBI_RUBRIEK_CODE_J_INFO_COMMUNICATIE.svg",
-                "K": "/icons/SBI_RUBRIEK_CODE_K_FINANCIEEL.svg",
-                "L": "/icons/SBI_RUBRIEK_CODE_L_ONROEREND_GOED.svg",
-                "M": "/icons/SBI_RUBRIEK_CODE_M_ADVISERING.svg",
-                "N": "/icons/SBI_RUBRIEK_CODE_N_VERHUR_OVR_DIENSTV.svg",
-                "P": "/icons/SBI_RUBRIEK_CODE_P_ONDERWIJS.svg",
-                "Q": "/icons/SBI_RUBRIEK_CODE_Q_GEZONDHEIDSZORG.svg",
-                "S": "/icons/SBI_RUBRIEK_CODE_S_OVERIGE_DIENSTVERL.svg"
-            },
-            "iconShadow": "/icons/SCHADUW.svg"
-        },
-
-        "detailHandel": {
-            "naam": "Detailhandel",
-            "omschrijving": "Detailhandel bedrijven uit het KVK bestand",
-            "url": "https://berkelland-pub.geopublisher.nl/geoserver/Bedrijvenatlas/wfs",
-            "namespace": "Bedrijvenatlas",
-            "featurePrefix": "Detailhandel_service",
-            "featureTypes": ["Detailhandel"],
-            "filterColumn": "SBI_SUBRBR",
-
-            "namen": {
-                "45": "Handel in reparatie auto's/aanhangers",
-                "46": "Groothandel en handelsbemiddeling",
-                "47.1": "Supermarkten/warenhuizen",
-                "47.2": "Winkels in voedings/genotsmiddelen",
-                "47.3": "Benzinestations",
-                "47.4": "Winkels in consumentenelektronica",
-                "47.5": "Winkels in huishoudelijke artikelen",
-                "47.6": "Winkels in lectuur/sport/kampeer/recreatie",
-                "47.7": "Winkels in overige artikelen",
-                "47.8": "Markthandel",
-                "47.9": "Detailhandel niet via winkel/markt"
-            },
-
-            "icons": {
-                "45": "/icons/SBI_RUBRIEK_CODE_45_HANDEL_AUTO.svg",
-                "46": "/icons/SBI_RUBRIEK_CODE_46_GROOTHANDEL.svg",
-                "47.1": "/icons/SBI_RUBRIEK_CODE_47_1_SUPERMARKT_WARENHUIS.svg",
-                "47.2": "/icons/SBI_RUBRIEK_CODE_47_2_WINKEL_VOEDING.svg",
-                "47.3": "/icons/SBI_RUBRIEK_CODE_47_3_BENZINESTATION.svg",
-                "47.4": "/icons/SBI_RUBRIEK_CODE_47_4_WINKEL_ELEKTRONICA.svg",
-                "47.5": "/icons/SBI_RUBRIEK_CODE_47_5_WINKEL_HUISHOUDELIJK.svg",
-                "47.6": "/icons/SBI_RUBRIEK_CODE_47_6_WINKEL_RECREATIE.svg",
-                "47.7": "/icons/SBI_RUBRIEK_CODE_47_7_WINKEL_OVERIG.svg",
-                "47.8": "/icons/SBI_RUBRIEK_CODE_47_8_MARKTHANDEL.svg",
-                "47.9": "/icons/SBI_RUBRIEK_CODE_47_9_DETAILHANDEL_NIET_WINKEL.svg"
-            },
-            "iconShadow": "/icons/SCHADUW.svg"
-        },
-
-        "baseLayers": [
+        "plaatsen": [
             {
-                "service": "tms",
-                "titel": "BRT",
-                "url": "https://geodata.nationaalgeoregister.nl/tms/1.0.0/brtachtergrondkaart/{z}/{x}/{-y}.png",
-                "resolutions": [ 3440.64, 1720.32, 860.16, 430.08, 215.04, 107.52, 53.76, 26.88, 13.44, 6.72, 3.36, 1.68, 0.84, 0.42, 0.21, 0.105, 0.0525 ],
-                "omschrijving": "BRT Achtergrond",
-                "visible": true
+                "naam": "Beltrum",
+                "value": "beltrum",
+                "center": [ 235653, 453835 ],
+                "zoom": 15.5
             },
             {
-                "service": "wmts",
-                "titel": "BGT",
-                "url": "https://geodata.nationaalgeoregister.nl/tiles/service/wmts",
-                "layer": "bgtachtergrond",
-                "matrixSet": "EPSG:28992:16",
-                "format": "image/png8",
-                "style": "default",
-                "origin": [ -285401.92,903401.92 ],
-                "resolutions": [ 3440.64, 1720.32, 860.16, 430.08, 215.04, 107.52, 53.76, 26.88, 13.44, 6.72, 3.36, 1.68, 0.84, 0.42, 0.21, 0.105, 0.0525 ],
-                "omschrijving": "BGT Achtergrond",
-                "visible": false
+                "naam": "Borculo",
+                "value": "borculo",
+                "center": [ 233033, 459578 ],
+                "zoom": 15
+            },
+            {
+                "naam": "Eibergen",
+                "value": "eibergen",
+                "center": [ 241457, 457568 ],
+                "zoom": 15
+            },
+            {
+                "naam": "Neede",
+                "value": "neede",
+                "center": [ 239004, 461467 ],
+                "zoom": 15
+            },
+            {
+                "naam": "Ruurlo",
+                "value": "ruurlo",
+                "center": [ 228158, 455892 ],
+                "zoom": 15
+            },
+            {
+                "naam": "Geen voorkeur",
+                "value": "beide",
+                "center": [ 236094, 456775 ],
+                "zoom": 13
             }
-        ],
+        ]
+    },
 
-        "overlayLayers": [
-            {
-                "service": "wmts",
-                "titel": "Luchtfoto",
-                "url": "https://geodata.nationaalgeoregister.nl/luchtfoto/rgb/wmts",
-                "layer": "Actueel_ortho25",
-                "matrixSet": "EPSG:28992",
-                "format": "image/jpeg",
-                "style": "default",
-                "origin": [ -285401.92,903401.92 ],
-                "resolutions": [ 3440.64, 1720.32, 860.16, 430.08, 215.04, 107.52, 53.76, 26.88, 13.44, 6.72, 3.36, 1.68, 0.84, 0.42, 0.21 ],
-                "omschrijving": "Luchtfoto Actueel PDOK",
-                "visible": false
-            },
-            {
-                "service": "wms",
-                "titel": "Kadastrale percelen",
-                "url": "https://geodata.nationaalgeoregister.nl/kadastralekaartv3/ows?SERVICE=WMS&",
-                "format": "image/png",
-                "layers": "kadastralekaart",
-                "tiling": true,
-                "visible": false
-            },
-            {
-                "service": "wms",
-                "titel": "Milieucategorieën",
-                "url": "https://berkelland-pub.geopublisher.nl/geoserver/Bedrijvenatlas/ows?SERVICE=WMS&",
-                "format": "image/png",
-                "layers": "Milieucategorieen",
-                "tiling": true,
-                "omschrijving": "Raadpleeg voor de zekerheid altijd het bestemmingsplan. Er kunnen namelijk uitzonderingen voorkomen",
-                "visible": false
-            },
-            {
-                "service": "wms",
-                "titel": "Bedrijventerreinen",
-                "url": "http://geoserver.prvgld.nl/geoserver/IBIS/wfs?SERVICE=WMS&",
-                "format": "image/png",
-                "layers": "bedrijventerrein",
-                "tiling": false,
-                "omschrijving": "IBIS Bedrijventerreinen",
-                "visible": false
-            },
-            {
-                "service": "wms",
-                "titel": "Bedrijvenkavels",
-                "type": "nieuwbouw",
-                "url": "http://geoserver.prvgld.nl/geoserver/IBIS/wfs?SERVICE=WMS&",
-                "format": "image/png",
-                "layers": "bedrijvenkavels",
-                "tiling": false,
-                "omschrijving": "IBIS Bedrijvenkavels",
-                "visible": false
-            }
-        ],
+    "kvkBedrijven": {
+        "naam": "Bedrijven",
+        "omschrijving": "Bedrijven uit het KVK bestand",
+        "url": "https://berkelland-pub.geopublisher.nl/geoserver/Bedrijvenatlas/wfs",
+        "namespace": "Bedrijvenatlas",
+        "featurePrefix": "KVK_Hoofdactiviteiten_service",
+        "featureTypes": ["KVK_Hoofdactiviteiten"],
+        "filterColumn": "SBI_RUBR_C",
 
-        "fundaLayers": [
-            {
-                "service": "geojson",
-                "titel": "Bedrijfspanden te Koop",
-                "type": "koop",
-                "omschrijving": "Bedrijfspanden te koop volgens Funda",
-                "url": "/data/vastgoedTeKoop.json",
-                "icon": "/icons/TE_KOOP_BEDRIJF.svg",
-                "shadow": "/icons/SCHADUW.svg",
-                "visible": false
-            },
-            {
-                "service": "geojson",
-                "titel": "Bedrijfspanden te Huur",
-                "type": "huur",
-                "omschrijving": "Bedrijfspanden te huur volgens Funda",
-                "url": "/data/vastgoedTeHuur.json",
-                "icon": "/icons/TE_HUUR_BEDRIJF.svg",
-                "shadow": "/icons/SCHADUW.svg",
-                "visible": false
-            },
-            {
-                "service": "geojson",
-                "titel": "Winkelpanden te Koop",
-                "type": "koop",
-                "omschrijving": "Detailhandelpanden te koop volgens Funda",
-                "url": "/data/detailhandelTeKoop.json",
-                "icon": "/icons/TE_KOOP_DETAILHANDEL.svg",
-                "shadow": "/icons/SCHADUW.svg",
-                "visible": false
-            },
-            {
-                "service": "geojson",
-                "titel": "Winkelpanden te Huur",
-                "type": "huur",
-                "omschrijving": "Detailhandelpanden te huur volgens Funda",
-                "url": "/data/detailhandelTeHuur.json",
-                "icon": "/icons/TE_HUUR_DETAILHANDEL.svg",
-                "shadow": "/icons/SCHADUW.svg",
-                "visible": false
-            }
-        ],
-
-        "aliassen": {
-            "ADR_ID_BAG": "Identificatie BAG",
-            "ADR_LABEL": "Locatieadres",
-            "BEDR_NAAM": "Bedrijfsnaam",
-            "SBI_OMSCHR": "Activiteiten (SBI)",
-            "SBI_RUBR_C": "Activiteiten rubriek (SBI)",
-            "SBI_SUBRBR": "Activiteiten subrubriek (SBI)"
+        "namen": {
+            "C": "Industrie",
+            "E": "Distributie water/afval",
+            "F": "Bouwnijverheid",
+            "H": "Vervoer/Opslag",
+            "I": "Logies/Maaltijd/Drank",
+            "J": "Informatica/Communicatie",
+            "K": "Financieel",
+            "L": "Onroerend goed",
+            "M": "Advisering",
+            "N": "Verhuur/Overige dienstverlening",
+            "P": "Onderwijs",
+            "Q": "Gezondheidszorg",
+            "S": "Overige dienstverlening"
         },
 
-        "searchConfig": {
-            "bedrijfsNaam": "BEDR_NAAM",
-            "sbiOmschrijving": "SBI_OMSCHR",
-            "milieuCategorie": "NAAM"
+        "icons": {
+            "C": "/icons/SBI_RUBRIEK_CODE_C_INDUSTRIE.svg",
+            "E": "/icons/SBI_RUBRIEK_CODE_E_DISTRIBUTIE_WATER_AFVAL.svg",
+            "F": "/icons/SBI_RUBRIEK_CODE_F_BOUWNIJVERHEID.svg",
+            "H": "/icons/SBI_RUBRIEK_CODE_H_VERVOER_OPSLAG.svg",
+            "I": "/icons/SBI_RUBRIEK_CODE_I_LOGIES_MAALTIJD_DRANK.svg",
+            "J": "/icons/SBI_RUBRIEK_CODE_J_INFO_COMMUNICATIE.svg",
+            "K": "/icons/SBI_RUBRIEK_CODE_K_FINANCIEEL.svg",
+            "L": "/icons/SBI_RUBRIEK_CODE_L_ONROEREND_GOED.svg",
+            "M": "/icons/SBI_RUBRIEK_CODE_M_ADVISERING.svg",
+            "N": "/icons/SBI_RUBRIEK_CODE_N_VERHUR_OVR_DIENSTV.svg",
+            "P": "/icons/SBI_RUBRIEK_CODE_P_ONDERWIJS.svg",
+            "Q": "/icons/SBI_RUBRIEK_CODE_Q_GEZONDHEIDSZORG.svg",
+            "S": "/icons/SBI_RUBRIEK_CODE_S_OVERIGE_DIENSTVERL.svg"
+        },
+        "iconShadow": "/icons/SCHADUW.svg"
+    },
+
+    "detailHandel": {
+        "naam": "Detailhandel",
+        "omschrijving": "Detailhandel bedrijven uit het KVK bestand",
+        "url": "https://berkelland-pub.geopublisher.nl/geoserver/Bedrijvenatlas/wfs",
+        "namespace": "Bedrijvenatlas",
+        "featurePrefix": "Detailhandel_service",
+        "featureTypes": ["Detailhandel"],
+        "filterColumn": "SBI_SUBRBR",
+
+        "namen": {
+            "45": "Handel in reparatie auto's/aanhangers",
+            "46": "Groothandel en handelsbemiddeling",
+            "47.1": "Supermarkten/warenhuizen",
+            "47.2": "Winkels in voedings/genotsmiddelen",
+            "47.3": "Benzinestations",
+            "47.4": "Winkels in consumentenelektronica",
+            "47.5": "Winkels in huishoudelijke artikelen",
+            "47.6": "Winkels in lectuur/sport/kampeer/recreatie",
+            "47.7": "Winkels in overige artikelen",
+            "47.8": "Markthandel",
+            "47.9": "Detailhandel niet via winkel/markt"
+        },
+
+        "icons": {
+            "45": "/icons/SBI_RUBRIEK_CODE_45_HANDEL_AUTO.svg",
+            "46": "/icons/SBI_RUBRIEK_CODE_46_GROOTHANDEL.svg",
+            "47.1": "/icons/SBI_RUBRIEK_CODE_47_1_SUPERMARKT_WARENHUIS.svg",
+            "47.2": "/icons/SBI_RUBRIEK_CODE_47_2_WINKEL_VOEDING.svg",
+            "47.3": "/icons/SBI_RUBRIEK_CODE_47_3_BENZINESTATION.svg",
+            "47.4": "/icons/SBI_RUBRIEK_CODE_47_4_WINKEL_ELEKTRONICA.svg",
+            "47.5": "/icons/SBI_RUBRIEK_CODE_47_5_WINKEL_HUISHOUDELIJK.svg",
+            "47.6": "/icons/SBI_RUBRIEK_CODE_47_6_WINKEL_RECREATIE.svg",
+            "47.7": "/icons/SBI_RUBRIEK_CODE_47_7_WINKEL_OVERIG.svg",
+            "47.8": "/icons/SBI_RUBRIEK_CODE_47_8_MARKTHANDEL.svg",
+            "47.9": "/icons/SBI_RUBRIEK_CODE_47_9_DETAILHANDEL_NIET_WINKEL.svg"
+        },
+        "iconShadow": "/icons/SCHADUW.svg"
+    },
+
+    "baseLayers": [
+        {
+            "service": "tms",
+            "titel": "BRT",
+            "url": "https://geodata.nationaalgeoregister.nl/tms/1.0.0/brtachtergrondkaart/{z}/{x}/{-y}.png",
+            "resolutions": [ 3440.64, 1720.32, 860.16, 430.08, 215.04, 107.52, 53.76, 26.88, 13.44, 6.72, 3.36, 1.68, 0.84, 0.42, 0.21, 0.105, 0.0525 ],
+            "omschrijving": "BRT Achtergrond",
+            "visible": true
+        },
+        {
+            "service": "wmts",
+            "titel": "BGT",
+            "url": "https://geodata.nationaalgeoregister.nl/tiles/service/wmts",
+            "layer": "bgtachtergrond",
+            "matrixSet": "EPSG:28992:16",
+            "format": "image/png8",
+            "style": "default",
+            "origin": [ -285401.92,903401.92 ],
+            "resolutions": [ 3440.64, 1720.32, 860.16, 430.08, 215.04, 107.52, 53.76, 26.88, 13.44, 6.72, 3.36, 1.68, 0.84, 0.42, 0.21, 0.105, 0.0525 ],
+            "omschrijving": "BGT Achtergrond",
+            "visible": false
         }
+    ],
+
+    "overlayLayers": [
+        {
+            "service": "wmts",
+            "titel": "Luchtfoto",
+            "url": "https://geodata.nationaalgeoregister.nl/luchtfoto/rgb/wmts",
+            "layer": "Actueel_ortho25",
+            "matrixSet": "EPSG:28992",
+            "format": "image/jpeg",
+            "style": "default",
+            "origin": [ -285401.92,903401.92 ],
+            "resolutions": [ 3440.64, 1720.32, 860.16, 430.08, 215.04, 107.52, 53.76, 26.88, 13.44, 6.72, 3.36, 1.68, 0.84, 0.42, 0.21 ],
+            "omschrijving": "Luchtfoto Actueel PDOK",
+            "visible": false
+        },
+        {
+            "service": "wms",
+            "titel": "Kadastrale percelen",
+            "url": "https://geodata.nationaalgeoregister.nl/kadastralekaartv3/ows?SERVICE=WMS&",
+            "format": "image/png",
+            "layers": "kadastralekaart",
+            "tiling": true,
+            "visible": false
+        },
+        {
+            "service": "wms",
+            "titel": "Milieucategorieën",
+            "url": "https://berkelland-pub.geopublisher.nl/geoserver/Bedrijvenatlas/ows?SERVICE=WMS&",
+            "format": "image/png",
+            "layers": "Milieucategorieen",
+            "tiling": true,
+            "omschrijving": "Raadpleeg voor de zekerheid altijd het bestemmingsplan. Er kunnen namelijk uitzonderingen voorkomen",
+            "visible": false
+        },
+        {
+            "service": "wms",
+            "titel": "Bedrijventerreinen",
+            "url": "http://geoserver.prvgld.nl/geoserver/IBIS/wfs?SERVICE=WMS&",
+            "format": "image/png",
+            "layers": "bedrijventerrein",
+            "tiling": false,
+            "omschrijving": "IBIS Bedrijventerreinen",
+            "visible": false
+        },
+        {
+            "service": "wms",
+            "titel": "Bedrijvenkavels",
+            "type": "nieuwbouw",
+            "url": "http://geoserver.prvgld.nl/geoserver/IBIS/wfs?SERVICE=WMS&",
+            "format": "image/png",
+            "layers": "bedrijvenkavels",
+            "tiling": false,
+            "omschrijving": "IBIS Bedrijvenkavels",
+            "visible": false
+        }
+    ],
+
+    "fundaLayers": [
+        {
+            "service": "geojson",
+            "titel": "Bedrijfspanden te Koop",
+            "type": "koop",
+            "omschrijving": "Bedrijfspanden te koop volgens Funda",
+            "url": "/data/vastgoedTeKoop.json",
+            "icon": "/icons/TE_KOOP_BEDRIJF.svg",
+            "shadow": "/icons/SCHADUW.svg",
+            "visible": false
+        },
+        {
+            "service": "geojson",
+            "titel": "Bedrijfspanden te Huur",
+            "type": "huur",
+            "omschrijving": "Bedrijfspanden te huur volgens Funda",
+            "url": "/data/vastgoedTeHuur.json",
+            "icon": "/icons/TE_HUUR_BEDRIJF.svg",
+            "shadow": "/icons/SCHADUW.svg",
+            "visible": false
+        },
+        {
+            "service": "geojson",
+            "titel": "Winkelpanden te Koop",
+            "type": "koop",
+            "omschrijving": "Detailhandelpanden te koop volgens Funda",
+            "url": "/data/detailhandelTeKoop.json",
+            "icon": "/icons/TE_KOOP_DETAILHANDEL.svg",
+            "shadow": "/icons/SCHADUW.svg",
+            "visible": false
+        },
+        {
+            "service": "geojson",
+            "titel": "Winkelpanden te Huur",
+            "type": "huur",
+            "omschrijving": "Detailhandelpanden te huur volgens Funda",
+            "url": "/data/detailhandelTeHuur.json",
+            "icon": "/icons/TE_HUUR_DETAILHANDEL.svg",
+            "shadow": "/icons/SCHADUW.svg",
+            "visible": false
+        }
+    ],
+
+    "aliassen": {
+        "ADR_ID_BAG": "Identificatie BAG",
+        "ADR_LABEL": "Locatieadres",
+        "BEDR_NAAM": "Bedrijfsnaam",
+        "SBI_OMSCHR": "Activiteiten (SBI)",
+        "SBI_RUBR_C": "Activiteiten rubriek (SBI)",
+        "SBI_SUBRBR": "Activiteiten subrubriek (SBI)"
+    },
+
+    "searchConfig": {
+        "bedrijfsNaam": "BEDR_NAAM",
+        "sbiOmschrijving": "SBI_OMSCHR",
+        "milieuCategorie": "NAAM"
     }
 }
