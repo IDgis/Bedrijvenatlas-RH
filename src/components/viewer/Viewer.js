@@ -78,6 +78,7 @@ class Viewer extends React.Component {
         this.addKvkLayers(settings.kvkBedrijven, map);
         this.addKvkLayers(settings.detailHandel, map);
         mapToParent(map);
+        setTimeout(() => map.updateSize(), 500);
     }
 
     /**
