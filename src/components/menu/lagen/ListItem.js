@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 
 const listItemStyle = {
     border: '10px none',
@@ -24,7 +24,7 @@ const listItemStyle = {
     position: 'relative'
 };
 
-export default class ListItem extends Component {
+class ListItem extends React.Component {
 
     constructor(props) {
         super(props);
@@ -71,3 +71,5 @@ export default class ListItem extends Component {
         ) : null;
     }
 }
+
+export default ListItem;
