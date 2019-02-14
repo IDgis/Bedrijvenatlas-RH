@@ -1,7 +1,6 @@
 import React from 'react';
-import { Meteor } from 'meteor/meteor';
 
-export default ListItemMenu = ({left, top, items}) => {
+const ListItemMenu = ({left, top, items, settings}) => {
     const menuStyle = {
         color: 'rgba(0,0,0,0.87)',
         backgroundColor: 'rgb(255,255,255)',
@@ -24,7 +23,7 @@ export default ListItemMenu = ({left, top, items}) => {
 
     const menuPresentationStyle = {
         zIndex: '1000',
-        backgroundColor: Meteor.settings.public.gemeenteConfig.colorGemeente,
+        backgroundColor: settings.gemeenteConfig.colorGemeente,
         opacity: '1',
         borderRadius: '5px'
     };
@@ -43,3 +42,5 @@ export default ListItemMenu = ({left, top, items}) => {
         </div>
     );
 }
+
+export default ListItemMenu;
