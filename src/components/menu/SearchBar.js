@@ -1,32 +1,33 @@
-import React, { Component } from 'react';
+import React from 'react';
+
 import * as ol from 'openlayers';
-
 import AutoComplete from 'material-ui/AutoComplete';
+import axios from 'axios';
 
-
-export default class SearchBar extends Component {
+class SearchBar extends React.Component {
 
     state = {
         searchText: '',
         searchFields: [],
         listStyleWidth: '400px'
-    }
+    };
 
     async componentDidMount() {
-        const kvkBedrijven = Meteor.settings.public.kvkBedrijven;
-        const detailHandel = Meteor.settings.public.detailHandel;
+        const {settings} = this.props;
+        const kvkBedrijven = settings.kvkBedrijven;
+        const detailHandel = settings.detailHandel;
 
         let resultsKvk = [];
         let resultsDetailHandel = [];
 
         if (Object.keys(kvkBedrijven.namen).length > 0) {
             const urlKvk = this.createGetFeatureUrl(kvkBedrijven);
-            resultsKvk = await this.getMeteorCallAsync('getSearchFields', urlKvk);
+            resultsKvk = await this.getSearchFields(urlKvk);
         }
 
         if (Object.keys(detailHandel.namen).length > 0) {
             const urlDetailHandel = this.createGetFeatureUrl(detailHandel);
-            resultsDetailHandel = await this.getMeteorCallAsync('getSearchFields', urlDetailHandel);
+            resultsDetailHandel = await this.getSearchFields(urlDetailHandel);
         }
         
         const searchFields = [...resultsKvk, ...resultsDetailHandel].sort();
@@ -39,15 +40,19 @@ export default class SearchBar extends Component {
             `&resultType=results&typeName=${featureObj.namespace}:${featureObj.featureTypes[0]}`
     )
 
-    getMeteorCallAsync = (methodName, args) => {
-        return new Promise((resolve, reject) => {
-            Meteor.call(methodName, args, (error, result) => {
-                if (error) {
-                    reject(error);
-                } else {
-                    resolve(result);
-                }
-            });
+    getSearchFields = (url) => {
+        const { settings } = this.props;
+        return axios.get(url).then(response => {
+            const searchFields = [];
+            const data = response.data;
+            const features = data['features'];
+            for (let feature in features) {
+                const naam = features[feature]['properties'][settings.searchConfig.bedrijfsNaam];
+                const oms = features[feature]['properties'][settings.searchConfig.sbiOmschrijving];
+                searchFields.push(naam + ' | ' + oms);
+            }
+
+            return searchFields;
         });
     }
 
@@ -59,8 +64,8 @@ export default class SearchBar extends Component {
         this.setState({ searchText: '' });
 
         // Look for the searched feature in the correct layer
-        const { map, updateLegenda } = this.props;
-        const { kvkBedrijven, detailHandel, gemeenteConfig } = Meteor.settings.public;
+        const { map, updateLegenda, settings } = this.props;
+        const { kvkBedrijven, detailHandel, gemeenteConfig } = settings;
         const layers = map.getLayers();
 
         layers.forEach(layer => {
@@ -69,7 +74,7 @@ export default class SearchBar extends Component {
                 if (source.getState() === 'ready' && source.getFeatures().length > 0) {
                     const features = source.getFeatures();
 
-                    for (i in features) {
+                    for (let i in features) {
                         // Find the feature with the correct name
                         const search = features[i].get('BEDR_NAAM') + ' | ' + features[i].get('SBI_OMSCHR');
                         if (search === searchText) {
@@ -114,8 +119,9 @@ export default class SearchBar extends Component {
     }
 
     flyTo = (location, done) => {
+        const {map} = this.props;
         const duration = 3000;
-        const view = this.props.map.getView();
+        const view = map.getView();
         const zoom = view.getZoom();
         let parts = 2;
         let called = false;
@@ -156,22 +162,26 @@ export default class SearchBar extends Component {
     }
 
     render() {
+        const {settings} = this.props;
+        const {searchFields, searchText, listStyleWidth} = this.state;
         return(
-            <div className='searchbar' style={{backgroundColor: Meteor.settings.public.gemeenteConfig.colorGemeente}}>
+            <div className='searchbar' style={{backgroundColor: settings.gemeenteConfig.colorGemeente}}>
                 <AutoComplete 
                     className='auto-complete'
                     floatingLabelText="Zoek bedrijf"
-                    dataSource={this.state.searchFields}
+                    dataSource={searchFields}
                     filter={this.filterResults}
                     anchorOrigin={{horizontal: 'left', vertical: 'bottom'}}
                     targetOrigin={{horizontal: 'left', vertical: 'top'}}
                     maxSearchResults={10}
-                    searchText={this.state.searchText}
+                    searchText={searchText}
                     onUpdateInput={this.handleUpdateInput}
                     onNewRequest={this.selectFeature}
-                    listStyle={{backgroundColor:Meteor.settings.public.gemeenteConfig.colorGemeente, opacity:0.8, borderRadius:'5px', width:this.state.listStyleWidth}}
+                    listStyle={{backgroundColor:settings.gemeenteConfig.colorGemeente, opacity:0.8, borderRadius:'5px', width:listStyleWidth}}
                 />
             </div>
         );
     }
 }
+
+export default SearchBar;

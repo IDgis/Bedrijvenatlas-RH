@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import injectTapEventPlugin from 'react-tap-event-plugin';
 
 import Index from './components/index/Index';
 import MapLayout from './components/index/MapLayout';
@@ -12,6 +13,7 @@ import WizardMenu from './components/index/WizardMenu';
 const Main = () => {
     const settings = JSON.parse(process.env.REACT_APP_SETTINGS);
     require('./' + settings.gemeenteConfig.cssFile);
+    injectTapEventPlugin();
 
     const style = {
         position: 'relative',

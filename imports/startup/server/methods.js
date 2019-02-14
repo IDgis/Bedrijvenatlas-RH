@@ -28,19 +28,4 @@ Meteor.methods({
 
         return null;
     },
-
-    getSearchFields: function(url) {
-        let searchFields = [];
-        let res = HTTP.get(url);
-        let content = res.content;
-        let json = JSON.parse(content);
-        let features = json['features'];
-        for(let feature in features) {
-            let naam = features[feature]['properties'][Meteor.settings.public.searchConfig.bedrijfsNaam];
-            let oms = features[feature]['properties'][Meteor.settings.public.searchConfig.sbiOmschrijving];
-            searchFields.push(naam + ' | ' + oms);
-        }
-        
-        return searchFields;
-    },
 });
