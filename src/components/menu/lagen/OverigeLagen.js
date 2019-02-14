@@ -1,18 +1,17 @@
-import React, { Component } from 'react';
-import { Meteor } from 'meteor/meteor';
+import React from 'react';
 
-import Bedrijvenlaag from './Bedrijvenlaag';
+import BedrijvenLaag from './BedrijvenLaag';
 import Kaartlaag from './Kaartlaag';
 import ListItem from './ListItem';
 import ListItemMenu from './ListItemMenu';
 
-export default class OverigeLagen extends Component {
+class OverigeLagen extends React.Component {
 
     constructor(props) {
         super(props);
 
         this.state = {
-            map: this.props.map,
+            map: props.map,
             allKvkChecked: false,
             allDetailHandelChecked: false,
             allVastgoedChecked: false,
@@ -25,9 +24,9 @@ export default class OverigeLagen extends Component {
      * Turns all KVK layers on and off at once
      */
     selectAllKvkLayers = () => {
+        const { map, settings, updateLegenda } = this.props;
         let newVisible = !this.state.allKvkChecked;
-        let kvk = Meteor.settings.public.kvkBedrijven.naam;
-        let map = this.props.map;
+        let kvk = settings.kvkBedrijven.naam;
 
         if(map != null) {
             let layers = map.getLayers();
@@ -41,13 +40,13 @@ export default class OverigeLagen extends Component {
         this.setState({
             allKvkChecked: newVisible
         });
-        this.props.updateLegenda();
+        updateLegenda();
     }
 
     selectAllDetailHandelLayers = (event, l) => {
+        const { map, settings, updateLegenda } = this.props;
         let newVisible = !this.state.allDetailHandelChecked;
-        let detailHandel = Meteor.settings.public.detailHandel.naam;
-        let map = this.props.map;
+        let detailHandel = settings.detailHandel.naam;
 
         if (map != null) {
             let layers = map.getLayers();
@@ -61,18 +60,19 @@ export default class OverigeLagen extends Component {
         this.setState({
             allDetailHandelChecked: newVisible
         });
-        this.props.updateLegenda();
+        updateLegenda();
     }
 
     /**
      * Turns all Vastgoed layers on and off at once
      */
     selectAllVastgoedLayers = (event, l) => {
+        const { map, settings, updateLegenda } = this.props;
         const newVisible = !this.state.allVastgoedChecked;
-        const fundaLayers = Meteor.settings.public.fundaLayers;
+        const fundaLayers = settings.fundaLayers;
 
-        if (this.props.map) {
-            const layers = this.props.map.getLayers();
+        if (map) {
+            const layers = map.getLayers();
             fundaLayers.forEach(fundaLayer => {
                 layers.forEach(layer => {
                     if (layer.get('title') === fundaLayer.titel) {
@@ -86,15 +86,15 @@ export default class OverigeLagen extends Component {
             allVastgoedChecked: newVisible
         });
         
-        this.props.updateLegenda();
+        updateLegenda();
     }
 
     /**
      * Checks whether all KVK layers are checked or not and sets its internal state
      */
     setAllKvkChecked = () => {
-        const kvk = Meteor.settings.public.kvkBedrijven.naam;
-        const map = this.props.map;
+        const { map, settings } = this.props;
+        const kvk = settings.kvkBedrijven.naam;
 
         if(map != null) {
             let allVisible = true;
@@ -112,8 +112,8 @@ export default class OverigeLagen extends Component {
     }
 
     setAllDetailHandelChecked = () => {
-        const detailHandel = Meteor.settings.public.detailHandel.naam;
-        const map = this.props.map;
+        const { map, settings } = this.props;
+        const detailHandel = settings.detailHandel.naam;
 
         if (map != null) {
             let allVisible = true;
@@ -134,11 +134,12 @@ export default class OverigeLagen extends Component {
      * Checks whether all Vastgoed layers are checked or not and sets its internal state
      */
     setAllVastgoedChecked = () => {
-        const fundaLayers = Meteor.settings.public.fundaLayers;
+        const { map, settings } = this.props;
+        const fundaLayers = settings.fundaLayers;
 
-        if (this.props.map) {
+        if (map) {
             let allVisible = true;
-            const layers = this.props.map.getLayers();
+            const layers = map.getLayers();
             fundaLayers.forEach(fundaLayer => {
                 layers.forEach(layer => {
                     if (layer.get('title') === fundaLayer.titel) {
@@ -156,7 +157,7 @@ export default class OverigeLagen extends Component {
      * Get the visibility of all KVK and Detailhandel layers
      */
     getAllLayerGroupChecked = (layerGroupName) => {
-        const map = this.props.map;
+        const { map } = this.props;
         let visible = false;
 
         if (map !== null) {
@@ -177,11 +178,12 @@ export default class OverigeLagen extends Component {
      * Get the visibility of all Vastgoed layers
      */
     getAllVastgoedChecked = () => {
-        const fundaLayers = Meteor.settings.public.fundaLayers;
+        const { settings, map } = this.props;
+        const fundaLayers = settings.fundaLayers;
         let anyVisible = false;
 
-        if (this.props.map) {
-            const layers = this.props.map.getLayers();
+        if (map) {
+            const layers = map.getLayers();
             fundaLayers.forEach(fundaLayer => {
                 layers.forEach(layer => {
                     if (layer.get('title') === fundaLayer.titel && layer.getVisible()) {
@@ -195,8 +197,8 @@ export default class OverigeLagen extends Component {
     }
 
     getFundaMenuItems = () => {
-        const { map } = this.props;
-        return Meteor.settings.public.fundaLayers.map((layer, index) => {
+        const { map, updateLegenda, settings } = this.props;
+        return settings.fundaLayers.map((layer, index) => {
             let newVisible;
 
             map.getLayers().forEach(l => {
@@ -205,21 +207,22 @@ export default class OverigeLagen extends Component {
                 }
             });
             
-            return <Kaartlaag layer={layer} map={this.props.map} updateParent={this.setAllVastgoedChecked} updateLegenda={this.props.updateLegenda} visible={newVisible} key={layer.titel + index} />
+            return <Kaartlaag layer={layer} map={map} updateParent={this.setAllVastgoedChecked} updateLegenda={updateLegenda} visible={newVisible} key={layer.titel + index} />
         });
     };
 
-    getCustomLayers = () => (
-        Meteor.settings.public.overlayLayers.map((layer, index) => (
-            <Kaartlaag layer={layer} map={this.props.map} updateLegenda={this.props.updateLegenda} key={layer.titel + index} />
+    getCustomLayers = (settings, map, updateLegenda) => (
+        settings.overlayLayers.map((layer, index) => (
+            <Kaartlaag layer={layer} map={map} updateLegenda={updateLegenda} key={layer.titel + index} />
         ))
     )
 
     toggleSubmenu = (e, items) => {
         const rect = e.currentTarget.getBoundingClientRect();
+        const { settings } = this.props;
 
         const selectedItem = rect.top;
-        const listItemMenu = <ListItemMenu items={items} top={rect.top} left={rect.right} />;
+        const listItemMenu = <ListItemMenu settings={settings} items={items} top={rect.top} left={rect.right} />;
 
         if (this.state.selectedItem === selectedItem) {
             this.setState({
@@ -238,12 +241,13 @@ export default class OverigeLagen extends Component {
      * The main render method that will render the component to the screen
      */
     render() {
+        const { map, settings, updateLegenda } = this.props;
         const allVastgoedChecked = this.getAllVastgoedChecked();
-        const allKvkChecked = this.getAllLayerGroupChecked(Meteor.settings.public.kvkBedrijven.naam);
-        const allDetailHandelChecked = this.getAllLayerGroupChecked(Meteor.settings.public.detailHandel.naam);
+        const allKvkChecked = this.getAllLayerGroupChecked(settings.kvkBedrijven.naam);
+        const allDetailHandelChecked = this.getAllLayerGroupChecked(settings.detailHandel.naam);
 
         const fundaMenuItems = this.getFundaMenuItems();
-        const customLayers = this.getCustomLayers();
+        const customLayers = this.getCustomLayers(settings, map, updateLegenda);
         const { listItemMenu } = this.state;
 
         return (
@@ -256,25 +260,25 @@ export default class OverigeLagen extends Component {
                     toggleSubmenu={this.toggleSubmenu}
                     />
                 <ListItem 
-                    primaryText={Meteor.settings.public.kvkBedrijven.naam} 
+                    primaryText={settings.kvkBedrijven.naam} 
                     isChecked={allKvkChecked}
                     selectAll={this.selectAllKvkLayers}
-                    items={Object.keys(Meteor.settings.public.kvkBedrijven.namen).length > 0 ? <Bedrijvenlaag 
-                        layer={Meteor.settings.public.kvkBedrijven} 
-                        map={this.props.map} 
+                    items={Object.keys(settings.kvkBedrijven.namen).length > 0 ? <BedrijvenLaag 
+                        layer={settings.kvkBedrijven} 
+                        map={map} 
                         updateParent={this.setAllKvkChecked} 
-                        updateLegenda={this.props.updateLegenda} /> : null}
+                        updateLegenda={updateLegenda} /> : null}
                     toggleSubmenu={this.toggleSubmenu}
                     />
                 <ListItem 
-                    primaryText={Meteor.settings.public.detailHandel.naam}
+                    primaryText={settings.detailHandel.naam}
                     isChecked={allDetailHandelChecked}
                     selectAll={this.selectAllDetailHandelLayers}
-                    items={Object.keys(Meteor.settings.public.detailHandel.namen).length > 0 ? <Bedrijvenlaag
-                        layer={Meteor.settings.public.detailHandel}
-                        map={this.props.map}
+                    items={Object.keys(settings.detailHandel.namen).length > 0 ? <BedrijvenLaag
+                        layer={settings.detailHandel}
+                        map={map}
                         updateParent={this.setAllDetailHandelChecked}
-                        updateLegenda={this.props.updateLegenda} /> : null}
+                        updateLegenda={updateLegenda} /> : null}
                     toggleSubmenu={this.toggleSubmenu}
                     />
                 { customLayers }
@@ -283,3 +287,5 @@ export default class OverigeLagen extends Component {
         );
     }
 }
+
+export default OverigeLagen;
