@@ -1,37 +1,16 @@
-import React, { Component } from 'react';
+import React from 'react';
+
 import * as ol from 'openlayers';
 import proj4 from 'proj4';
-import 'whatwg-fetch';
+// import 'whatwg-fetch';
 
 import IconButton from 'material-ui/IconButton';
 
-import LayerMenu from './components/LayerMenu.jsx';
-import Legenda from './components/Legenda.jsx';
-import SearchBar from './components/MenuItems/SearchBar.jsx';
+import LayerMenu from '../menu/LayerMenu';
+import Legenda from '../menu/Legenda';
+import SearchBar from '../menu/SearchBar';
 
-
-const menuButtonStyle = {
-    backgroundColor: Meteor.settings.public.gemeenteConfig.colorGemeente,
-    border: '10px none',
-    boxSizing: 'border-box',
-    display: 'inline-block',
-    fontFamily: 'Roboto, sans-serif',
-    cursor: 'pointer',
-    textDecoration: 'none',
-    margin: '0px',
-    padding: '12px',
-    outline: 'currentcolor none medium',
-    fontSize: '0px',
-    fontWeight: 'inherit',
-    position: 'relative',
-    zIndex: '1',
-    overflow: 'visible',
-    transition: 'all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms',
-    width: '48px',
-    height: '48px'
-}
-
-export default class Viewer extends Component {
+class Viewer extends React.Component {
 
     constructor(props) {
         super(props);
@@ -49,15 +28,16 @@ export default class Viewer extends Component {
      * Sets up the initial OpenLayers map and layers
      */
     componentDidMount() {
-        this.state.map = new ol.Map({
+        const {settings, mapToParent} = this.props;
+        const map = new ol.Map({
             target: 'map',
-            layers: this.getMapLayers(),
+            layers: this.getMapLayers(settings),
             view: new ol.View({
-                center: Meteor.settings.public.gemeenteConfig.center,
+                center: settings.gemeenteConfig.center,
                 projection: 'EPSG:28992',
-                zoom: Meteor.settings.public.gemeenteConfig.zoom,
-                extent: Meteor.settings.public.gemeenteConfig.extent,
-                minZoom: Meteor.settings.public.gemeenteConfig.minZoom,
+                zoom: settings.gemeenteConfig.zoom,
+                extent: settings.gemeenteConfig.extent,
+                minZoom: settings.gemeenteConfig.minZoom,
                 maxZoom: 21
             }),
             controls: [
@@ -73,7 +53,7 @@ export default class Viewer extends Component {
                     style: [
                         new ol.style.Style({
                             image: new ol.style.Icon({
-                                src: Meteor.settings.public.gemeenteConfig.iconSelected,
+                                src: settings.gemeenteConfig.iconSelected,
                                 imgSize: [ 48, 48 ], // for IE11
                                 scale: 0.5
                             }),
@@ -81,7 +61,7 @@ export default class Viewer extends Component {
                         }),
                         new ol.style.Style({
                             image: new ol.style.Icon({
-                                src: Meteor.settings.public.gemeenteConfig.iconShadow,
+                                src: settings.gemeenteConfig.iconShadow,
                                 imgSize: [ 48, 48 ], // for IE11
                                 scale: 0.5
                             }),
@@ -92,22 +72,23 @@ export default class Viewer extends Component {
             ])
         });
 
-        this.setMapSettings();
-        this.setBackgroundLayer();
-        this.addKvkLayers(Meteor.settings.public.kvkBedrijven);
-        this.addKvkLayers(Meteor.settings.public.detailHandel);
-        this.props.mapToParent(this.state.map);
+        this.setState({map});
+        this.setMapSettings(settings, map);
+        this.setBackgroundLayer(map);
+        this.addKvkLayers(settings.kvkBedrijven, map);
+        this.addKvkLayers(settings.detailHandel, map);
+        mapToParent(map);
     }
 
     /**
      * Returns all Layers to add to the Map
      */
-    getMapLayers = () => {
+    getMapLayers = (settings) => {
         const allLayers = [];
 
-        const baseLayers = Meteor.settings.public.baseLayers;
-        const overlayLayers = Meteor.settings.public.overlayLayers;
-        const fundaLayers = Meteor.settings.public.fundaLayers;
+        const baseLayers = settings.baseLayers;
+        const overlayLayers = settings.overlayLayers;
+        const fundaLayers = settings.fundaLayers;
 
         this.addLayers(baseLayers, allLayers);
         this.addLayers(overlayLayers, allLayers);
@@ -282,18 +263,16 @@ export default class Viewer extends Component {
     /**
      * Sets the initial view based on the answers in the wizard screen
      */
-    setMapSettings() {
-        const laagNaam = Meteor.settings.public.laagNaam;
-        const map = this.state.map;
+    setMapSettings(settings, map) {
         const layers = map.getLayers();
-        const fundaLayers = Meteor.settings.public.fundaLayers;
-        const overlayLayers = Meteor.settings.public.overlayLayers;
+        const fundaLayers = settings.fundaLayers;
+        const overlayLayers = settings.overlayLayers;
 
-        const voorkeur = Session.get('pand');
-        const huurKoop = Session.get('huur-koop');
+        const voorkeur = sessionStorage.getItem('pand');
+        const huurKoop = sessionStorage.getItem('huur-koop');
 
-        const selectedPlaats = Meteor.settings.public.gemeenteConfig.plaatsen.filter(plaats => 
-            plaats.value === Session.get('plaats')
+        const selectedPlaats = settings.gemeenteConfig.plaatsen.filter(plaats => 
+            plaats.value === sessionStorage.getItem('plaats')
         )[0];
 
         // Zoom to the right place
@@ -348,8 +327,7 @@ export default class Viewer extends Component {
         this.updateLegenda();
     }
 
-    setBackgroundLayer() {
-        const map = this.state.map;
+    setBackgroundLayer(map) {
         const maxZoom = 16;
         const layers = map.getLayers();
         layers.forEach(layer => {
@@ -367,7 +345,7 @@ export default class Viewer extends Component {
     /**
      * Add all kvk layers by SBI code
      */
-    addKvkLayers = (layerConfig) => {
+    addKvkLayers = (layerConfig, map) => {
         Object.keys(layerConfig.icons).forEach(category => {
             const filter = ol.format.filter.equalTo(layerConfig.filterColumn, category);
             const featureRequest = new ol.format.WFS().writeGetFeature({
@@ -411,7 +389,7 @@ export default class Viewer extends Component {
                     visible: false
                 });
                 source.addFeatures(features);
-                this.state.map.addLayer(layer);
+                map.addLayer(layer);
             });
         });
     }
@@ -433,22 +411,48 @@ export default class Viewer extends Component {
      * The main render method that will render the component to the screen
      */
     render() {
+        const {settings} = this.props;
+        const {map, menuOpen} = this.state;
+
+        const menuButtonStyle = {
+            backgroundColor: settings.gemeenteConfig.colorGemeente,
+            border: '10px none',
+            boxSizing: 'border-box',
+            display: 'inline-block',
+            fontFamily: 'Roboto, sans-serif',
+            cursor: 'pointer',
+            textDecoration: 'none',
+            margin: '0px',
+            padding: '12px',
+            outline: 'currentcolor none medium',
+            fontSize: '0px',
+            fontWeight: 'inherit',
+            position: 'relative',
+            zIndex: '1',
+            overflow: 'visible',
+            transition: 'all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms',
+            width: '48px',
+            height: '48px'
+        };
+
         return (
             <div id="map" className="map" >
-                <SearchBar map={this.state.map} updateLegenda={this.updateLegenda} />
+                <SearchBar settings={settings} map={map} updateLegenda={this.updateLegenda} />
                 <button className='menu-button' title='Menu' style={menuButtonStyle} onClick={this.toggleMenu} >
-                    <img src={Meteor.settings.public.gemeenteConfig.iconMenu} />
+                    <img src={settings.gemeenteConfig.iconMenu} alt="" />
                 </button>
-                <IconButton className='home-button' href='/' style={{backgroundColor:Meteor.settings.public.gemeenteConfig.colorGemeente}} title='Home' >
-                    <img src={Meteor.settings.public.gemeenteConfig.iconHome} />
+                <IconButton className='home-button' href='/' style={{backgroundColor:settings.gemeenteConfig.colorGemeente}} title='Home' >
+                    <img src={settings.gemeenteConfig.iconHome} alt="" />
                 </IconButton>
-                <LayerMenu
-                    map={this.state.map}
-                    menuOpen={this.state.menuOpen}
+                {menuOpen && <LayerMenu
+                    map={map}
                     updateLegenda={this.updateLegenda}
-                />
-                <Legenda map={this.state.map} />
+                    settings={settings}
+                />}
+                <Legenda settings={settings} map={map} />
             </div>
         );
     }
 }
+
+export default Viewer;
