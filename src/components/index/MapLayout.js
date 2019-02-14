@@ -1,30 +1,21 @@
-import React, { Component } from 'react';
+import React from 'react';
 import * as ol from 'openlayers';
 import proj4 from 'proj4';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
-import MenuBar from './MenuBar';
-import FeatureInfoPopup from '../pages/viewer/components/popups/FeatureInfoPopup';
-import FeaturePopup from '../pages/viewer/components/popups/FeaturePopup';
-import Streetview from '../pages/viewer/Streetview';
-import Viewer from '../pages/viewer/Viewer';
+import FeatureInfoPopup from '../popup/FeatureInfoPopup';
+import FeaturePopup from '../popup/FeaturePopup';
+import StreetView from '../streetview/StreetView';
+import Viewer from '../viewer/Viewer';
 
-
-const pageStyle = {
-    position: 'relative',
-    width: '100%',
-    height: '100%',
-    display: 'inline-block'
-};
-
-const mapLayoutStyle = {
+const style = {
     position: 'absolute',
     bottom: '0px',
     top: '56px',
     width: '100%'
 };
 
-export default class MapLayout extends Component {
+class MapLayout extends React.Component {
 
     constructor(props) {
         super(props);
@@ -69,6 +60,7 @@ export default class MapLayout extends Component {
      * Listen for click events on the map and creates a popup for the selected features.
      */
     handleMapClick = (map) => {
+        const { settings } = this.props;
         map.on('click', e => {
             this.location = [e.coordinate[0], e.coordinate[1]];
 
@@ -81,14 +73,15 @@ export default class MapLayout extends Component {
                 const title = layer.get('title');
                 const layerNames = [];
 
-                Meteor.settings.public.fundaLayers.forEach(fundaLayer => layerNames.push(fundaLayer.titel));
-                layerNames.push(Meteor.settings.public.kvkBedrijven.naam);
-                layerNames.push(Meteor.settings.public.detailHandel.naam);
+                settings.fundaLayers.forEach(fundaLayer => layerNames.push(fundaLayer.titel));
+                layerNames.push(settings.kvkBedrijven.naam);
+                layerNames.push(settings.detailHandel.naam);
 
                 layerNames.forEach(name => {
                     if (title === name) {
                         popup = <FeaturePopup 
                                     map={map}
+                                    settings={settings}
                                     feature={feature}
                                     layer={layer}
                                     coords={this.location}
@@ -107,14 +100,15 @@ export default class MapLayout extends Component {
     }
 
     getFeatureInfoPopup = (map) => {
+        const { settings } = this.props;
         let popup = <div></div>;
 
         map.getLayers().forEach(layer => {
             if (layer.getVisible()) {
                 const title = layer.get('title');
-                Meteor.settings.public.overlayLayers.forEach(overlayLayer => {
+                settings.overlayLayers.forEach(overlayLayer => {
                     if (title === overlayLayer.titel && overlayLayer.service === 'wms' && overlayLayer.showFeatureInfo) {
-                        popup = <FeatureInfoPopup coords={this.location} map={map} layer={layer} layerConfig={overlayLayer} onRequestClose={this.closePopup} />;
+                        popup = <FeatureInfoPopup settings={settings} coords={this.location} map={map} layer={layer} layerConfig={overlayLayer} onRequestClose={this.closePopup} />;
                     }
                 });
             }
@@ -141,8 +135,8 @@ export default class MapLayout extends Component {
         let coord = ol.proj.transform([this.location[0],this.location[1]],'EPSG:28992','EPSG:4326');
 
         this.setState({
-            streetView: <Streetview coords={coord} close={this.closeStreetView} />
-        })
+            streetView: <StreetView coords={coord} close={this.closeStreetView} />
+        });
     }
 
     /**
@@ -169,20 +163,18 @@ export default class MapLayout extends Component {
     render() {
         proj4.defs('EPSG:28992', '+proj=sterea +lat_0=52.15616055555555 +lon_0=5.38763888888889 +k=0.9999079 +x_0=155000 +y_0=463000 +ellps=bessel +towgs84=565.417,50.3319,465.552,-0.398957,0.343988,-1.8774,4.0725 +units=m +no_defs');
         ol.proj.setProj4(proj4);
+        const {settings} = this.props;
 
         return (
             <MuiThemeProvider>
-                <div style={pageStyle}>
-                    <header className='main-header'>
-                        <MenuBar />
-                    </header>
-                    <main style={mapLayoutStyle}>
-                        <Viewer mapToParent={this.setMap} featurePopup={this.setKvkPopup} />
+                    <main style={style}>
+                        {<Viewer settings={settings} mapToParent={this.setMap} featurePopup={this.setKvkPopup} />}
                         {this.state.featurePopup}
                         {this.state.streetView}
                     </main>
-                </div>
             </MuiThemeProvider>
         );
     }
 }
+
+export default MapLayout;
