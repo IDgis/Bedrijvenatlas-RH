@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 
 const listItemStyle = {
     border: '10px none',
@@ -8,7 +8,6 @@ const listItemStyle = {
     cursor: 'pointer',
     textDecoration: 'none',
     margin: '0px',
-    padding: '0px',
     outline: 'currentcolor none medium',
     fontSize: '16px',
     fontWeight: 'inherit',
@@ -20,11 +19,10 @@ const listItemStyle = {
     whiteSpace: 'nowrap',
     background: 'rgba(0,0,0,0) none repeat scroll 0% 0%',
     marginLeft: '0px',
-    padding: '0px 72px',
-    position: 'relative'
+    padding: '0px 72px'
 };
 
-export default class Bedrijvenlaag extends Component {
+class BedrijvenLaag extends React.Component {
 
     constructor(props) {
         super(props);
@@ -35,6 +33,9 @@ export default class Bedrijvenlaag extends Component {
 
         this.setDefaultVisibility();
         this.updateVisibility();
+    }
+
+    componentDidMount() {
     }
 
     componentWillReceiveProps(nextProps) {
@@ -71,7 +72,7 @@ export default class Bedrijvenlaag extends Component {
      * Show the icons of the selected branche on the map
      */
     selectBranche = (event, cat) => {
-        const { map, layer } = this.props;
+        const { map, layer, updateParent, updateLegenda } = this.props;
 
         if (map !== null) {
             map.getLayers().forEach(l => {
@@ -89,12 +90,12 @@ export default class Bedrijvenlaag extends Component {
                     }
                 }
 
-                if (this.props.updateParent !== undefined) {
-                    this.props.updateParent();
+                if (updateParent !== undefined) {
+                    updateParent();
                 }
             });
             
-            this.props.updateLegenda();
+            updateLegenda();
         }
     }
 
@@ -148,3 +149,5 @@ export default class Bedrijvenlaag extends Component {
         );
     }
 }
+
+export default BedrijvenLaag;
