@@ -22,16 +22,16 @@ class FeaturePopup extends React.Component {
         this.getMilieucategorie();
     }
 
-    getPopupFields () {
-        const { settings, feature } = this.props;
-        const properties = feature.getProperties();
+    getPopupFields = () => {
+        const { settings } = this.props;
+        const properties = this.props.feature.getProperties();
         const keys = Object.keys(properties);
         const aliasKeys = Object.keys(settings.aliassen);
         const fields = [];
         let count = 0;
 
         keys.forEach((key, index) => {
-            const alias = this.getAlias(key, aliasKeys, settings);
+            const alias = this.getAlias(key, aliasKeys);
             if (typeof properties[key] !== 'object') {
                 if (typeof properties[key] === 'string' && properties[key].indexOf('http') !== -1) {
                     fields.push(
@@ -59,7 +59,8 @@ class FeaturePopup extends React.Component {
         this.setState({fields});
     }
 
-    getAlias = (key, aliasKeys, settings) => {
+    getAlias = (key, aliasKeys) => {
+        const { settings } = this.props;
         let alias = key;
         [...aliasKeys].forEach(aliasKey => {
             if (aliasKey === key) {
@@ -70,8 +71,8 @@ class FeaturePopup extends React.Component {
         return alias;
     }
 
-    async getMilieucategorie() {
-        const { settings, map, coords } = this.props;
+    getMilieucategorie = () => {
+        const { settings } = this.props;
         const categorieConfig = settings.overlayLayers.filter(layer => layer.titel.toLowerCase().indexOf('milieu') !== -1)[0];
         const wmsSource = new ol.source.TileWMS({
             url: categorieConfig.url,
@@ -82,46 +83,21 @@ class FeaturePopup extends React.Component {
             }
         });
 
-        const resolution = map.getView().getResolution();
-        const featureInfoUrl = wmsSource.getGetFeatureInfoUrl(coords, resolution, 'EPSG:28992', {'INFO_FORMAT':'application/json'});
-        const categorieInfo = await this.getCategorieInfo(featureInfoUrl);
-
-        if (categorieInfo) {
-            this.setState({milieuCategorie:
-                <tr key={'property_milieucat'}>
-                    <td style={{width:'100px'}}><b>Categorie:</b></td>
-                    <td style={{width:'350px'}}>{categorieInfo}</td>
-                </tr>
-            });
-        } else {
-            this.setState({milieuCategorie: null});
-        }
-    }
-
-    getCategorieInfo = (url) => {
-        const { settings } = this.props;
-        return axios.get(url).then(response => {
+        const resolution = this.props.map.getView().getResolution();
+        const featureInfoUrl = wmsSource.getGetFeatureInfoUrl(this.props.coords, resolution, 'EPSG:28992', {'INFO_FORMAT':'application/json'});
+        axios.get(featureInfoUrl).then(response => {
             const data = response.data;
             const feature = data['features'][0];
             if (feature !== undefined) {
-                return feature['properties'][settings.searchConfig.milieuCategorie];
-            } else {
-                return null;
+                const categorie = feature['properties'][settings.searchConfig.milieuCategorie];
+                this.setState({
+                    milieuCategorie: <tr key={'property_milieucat'}>
+                            <td style={{width:'100px'}}><b>Categorie:</b></td>
+                            <td style={{width:'350px'}}>{categorie}</td>
+                        </tr>
+                });
             }
         });
-
-        /*
-        let res = HTTP.get(url);
-        
-        let content = res.content;
-        let json = JSON.parse(content);
-        let feature = json['features'][0];
-        if(feature !== undefined) {
-            let categorie = feature['properties'][Meteor.settings.public.searchConfig.milieuCategorie];
-            return categorie;
-        }
-        return null;
-        */
     }
 
     getBestemmingsplanButton = (index) => {
@@ -161,23 +137,22 @@ class FeaturePopup extends React.Component {
     }
 
     render() {
-        let { fields, milieuCategorie } = this.state;
-        const { settings, onRequestClose, layer } = this.props;
-
+        const { settings } = this.props;
         const width = 500;
         const left = this.getHorizontalPosition(width);
+        let fields = this.state.fields;
 
-        if (milieuCategorie) {
+        if (this.state.milieuCategorie) {
             fields = [];
-            fields.push(milieuCategorie);
-            fields = fields.concat(fields);
+            fields.push(this.state.milieuCategorie);
+            fields = fields.concat(this.state.fields);
         }
 
         return (
             <Paper style={{position:'absolute', width:width, top:'60px', left:left, borderRadius:5, zIndex:10, backgroundColor:settings.gemeenteConfig.colorGemeente, opacity:0.8, color:'white'}} zDepth={5} >
-                <RaisedButton className='popup-close-button' label='X' onTouchTap={onRequestClose} />
+                <RaisedButton className='popup-close-button' label='X' onTouchTap={this.props.onRequestClose} />
                 <div style={{position:'relative', left:'20px'}}><br />
-                    <h3><u>{layer.get('title')}</u></h3>
+                    <h3><u>{this.props.layer.get('title')}</u></h3>
                     <table><tbody>{fields}</tbody></table>
                     <br />
                 </div>
