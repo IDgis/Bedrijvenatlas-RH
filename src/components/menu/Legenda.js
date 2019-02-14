@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-export default class Legenda extends Component {
+class Legenda extends React.Component {
 
     constructor(props) {
         super(props);
@@ -15,11 +15,12 @@ export default class Legenda extends Component {
     componentWillReceiveProps(props) {
         const legendaItems = [];
         const layers = props.map.getLayers();
+        const {settings} = props;
 
-        this.getFundaLegenda(layers, legendaItems);
-        this.getKvkBedrijvenLegenda(layers, legendaItems);
-        this.getDetailhandelLegenda(layers, legendaItems);
-        this.getOverlayLayersLegenda(layers, legendaItems);
+        this.getFundaLegenda(layers, legendaItems, settings);
+        this.getKvkBedrijvenLegenda(layers, legendaItems, settings);
+        this.getDetailhandelLegenda(layers, legendaItems, settings);
+        this.getOverlayLayersLegenda(layers, legendaItems, settings);
 
         this.setState({legendaItems});
     }
@@ -89,15 +90,15 @@ export default class Legenda extends Component {
         });
     }
 
-    getFundaLegenda = (layers, legendaItems) => {
+    getFundaLegenda = (layers, legendaItems, settings) => {
         const fundaItems = [];
 
         layers.forEach((layer, index) => {
-            Meteor.settings.public.fundaLayers.forEach(layerConfig => {
+            settings.fundaLayers.forEach(layerConfig => {
                 if (layer.get('title') === layerConfig.titel && layer.getVisible()) {
                     fundaItems.push(
                         <div key={`legenda_funda_${index}`}>
-                            <img className='legenda-icon' src={layerConfig.icon} /> {layerConfig.titel}
+                            <img className='legenda-icon' src={layerConfig.icon} alt="" /> {layerConfig.titel}
                         </div>
                     );
                 }
@@ -115,8 +116,8 @@ export default class Legenda extends Component {
         }
     }
 
-    getKvkBedrijvenLegenda = (layers, legendaItems) => {
-        const kvkBedrijven = Meteor.settings.public.kvkBedrijven;
+    getKvkBedrijvenLegenda = (layers, legendaItems, settings) => {
+        const kvkBedrijven = settings.kvkBedrijven;
         const kvkItems = [];
 
         layers.forEach((layer, index) => {
@@ -130,7 +131,7 @@ export default class Legenda extends Component {
 
                     kvkItems.push(
                         <div key={`legenda_kvk_${index}`}>
-                            <img className='legenda-icon' src={categoryIcon} /> {categoryName}
+                            <img className='legenda-icon' src={categoryIcon} alt="" /> {categoryName}
                         </div>
                     );
                 }
@@ -148,8 +149,8 @@ export default class Legenda extends Component {
         }
     }
 
-    getDetailhandelLegenda = (layers, legendaItems) => {
-        const detailHandel = Meteor.settings.public.detailHandel;
+    getDetailhandelLegenda = (layers, legendaItems, settings) => {
+        const detailHandel = settings.detailHandel;
         const detailHandelItems = [];
 
         layers.forEach((layer, i) => {
@@ -163,7 +164,7 @@ export default class Legenda extends Component {
 
                     detailHandelItems.push(
                         <div key={`legenda_detail_${i}`}>
-                            <img className='legenda-icon' src={categoryIcon} /> { categoryName }
+                            <img className='legenda-icon' src={categoryIcon} img="" alt="" /> { categoryName }
                         </div>
                     );
                 }
@@ -181,9 +182,9 @@ export default class Legenda extends Component {
         }
     }
 
-    getOverlayLayersLegenda = (layers, legendaItems) => {
+    getOverlayLayersLegenda = (layers, legendaItems, settings) => {
         layers.forEach((layer, index) => {
-            Meteor.settings.public.overlayLayers.forEach(layerConfig => {
+            settings.overlayLayers.forEach(layerConfig => {
                 if (layer.get('title') === layerConfig.titel && layer.getVisible() && layerConfig.service === 'wms') {
                     const url = `${layerConfig.url}&request=GetLegendGraphic&layer=${layerConfig.layers}&format=image/png&width=20&height=20&transparent=true&legend_options=fontColor:0xFFFFFF;fontName:Roboto`;
 
@@ -191,7 +192,7 @@ export default class Legenda extends Component {
                         <div key={`legenda_${index}`}>
                             <h3>{layer.get('title')}</h3>
                             { layerConfig.omschrijving ? <p className='legenda-explantion'>{layerConfig.omschrijving}</p> : null }
-                            <img src={url} />
+                            <img src={url} alt="" />
                         </div>
                     );
                 }
@@ -200,12 +201,15 @@ export default class Legenda extends Component {
     }
 
     render() {
-        if (this.state.legendaItems.length > 0) {
+        const {legendaItems} = this.state;
+        const {settings} = this.props;
+
+        if (legendaItems.length > 0) {
             return(
-                <div id='legenda' className='legenda' style={{backgroundColor:Meteor.settings.public.gemeenteConfig.colorGemeente}}>
+                <div id='legenda' className='legenda' style={{backgroundColor:settings.gemeenteConfig.colorGemeente}}>
                     <h2 id='legendaheader' className='legenda-title'>Legenda</h2><hr />
                     <div className='legenda-list'>
-                        {this.state.legendaItems}
+                        {legendaItems}
                     </div>
                 </div>
             );
@@ -216,3 +220,5 @@ export default class Legenda extends Component {
         }
     }
 }
+
+export default Legenda;
