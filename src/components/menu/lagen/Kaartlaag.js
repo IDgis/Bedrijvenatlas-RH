@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 
 const listItemStyle = {
     border: '10px none',
@@ -24,7 +24,7 @@ const listItemStyle = {
     position: 'relative'
 };
 
-export default class Kaartlaag extends Component {
+class Kaartlaag extends React.Component {
 
     constructor(props) {
         super(props);
@@ -52,27 +52,27 @@ export default class Kaartlaag extends Component {
     }
 
     toggleLayer = () => {
-        let map = this.props.map;
+        let { map, layer, updateParent, updateLegenda } = this.props;
         let layers = map.getLayers();
         let allSameNameVisible = true;
-        layers.forEach(layer => {
-            if(layer.get('title') === this.props.layer.titel) {
-                allSameNameVisible = allSameNameVisible && layer.getVisible();
+        layers.forEach(l => {
+            if(l.get('title') === layer.titel) {
+                allSameNameVisible = allSameNameVisible && l.getVisible();
             }
         });
-        layers.forEach(layer => {
-            if(layer.get('title') === this.props.layer.titel) {
+        layers.forEach(l => {
+            if(l.get('title') === layer.titel) {
                 let newVisible = !allSameNameVisible;
                 this.setState({
                     visible: newVisible
                 });
-                layer.setVisible(newVisible);
+                l.setVisible(newVisible);
             }
-            if(this.props.updateParent !== undefined) {
-                this.props.updateParent();
+            if(updateParent !== undefined) {
+                updateParent();
             }
         });
-        this.props.updateLegenda();
+        updateLegenda();
     }
 
     render() {
@@ -102,3 +102,5 @@ export default class Kaartlaag extends Component {
         );
     }
 }
+
+export default Kaartlaag;
