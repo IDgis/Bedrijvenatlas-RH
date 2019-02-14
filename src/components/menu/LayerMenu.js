@@ -1,7 +1,6 @@
 import React from 'react';
 
-import OverigeLagen from './MenuItems/OverigeLagen';
-import { Meteor } from 'meteor/meteor';
+import OverigeLagen from './lagen/OverigeLagen';
 
 const menuStyle = {
     color: 'rgba(0,0,0,0.87)',
@@ -22,29 +21,27 @@ const menuStyle = {
     left: '10px'
 };
 
-const menuPresentationStyle = {
-    zIndex: '1000',
-    backgroundColor: Meteor.settings.public.gemeenteConfig.colorGemeente,
-    opacity: '0.8',
-    borderRadius: '5px'
-};
-
 const innerMenuStyle = {
     padding: '8px 0px'
 };
 
-export default LayerMenu = ({map, updateLegenda, menuOpen}) => {
-    if (menuOpen) {
-        return (
-            <div style={menuStyle} >
-                <div role='presentation' style={menuPresentationStyle} >
-                    <div role='menu' style={innerMenuStyle} >
-                        <OverigeLagen map={map} updateLegenda={updateLegenda} />
-                    </div>
+const LayerMenu = ({map, updateLegenda, settings}) => {
+    const menuPresentationStyle = {
+        zIndex: '1000',
+        backgroundColor: settings.gemeenteConfig.colorGemeente,
+        opacity: '0.8',
+        borderRadius: '5px'
+    };
+
+    return (
+        <div style={menuStyle} >
+            <div role='presentation' style={menuPresentationStyle} >
+                <div role='menu' style={innerMenuStyle} >
+                    <OverigeLagen settings={settings} map={map} updateLegenda={updateLegenda} />
                 </div>
             </div>
-        );
-    } else {
-        return null;
-    }
+        </div>
+    );
 }
+
+export default LayerMenu;
