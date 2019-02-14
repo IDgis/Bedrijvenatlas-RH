@@ -19,7 +19,7 @@ const textStyle = {
 
 const ContactLink = ({settings}) => (
     <div className="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-        <a href={ settings.gemeenteConfig.contactPage } target="_blank" style={linkStyle}>
+        <a href={ settings.gemeenteConfig.contactPage } target="_blank" style={linkStyle} rel="noopener noreferrer">
             <img style={iconStyle} src={ settings.gemeenteConfig.logoContactKnop } alt="" />
             <div style={textStyle}>
                 <h2>Meer informatie</h2>
