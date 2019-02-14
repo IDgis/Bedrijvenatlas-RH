@@ -8,7 +8,6 @@ const listItemStyle = {
     cursor: 'pointer',
     textDecoration: 'none',
     margin: '0px',
-    padding: '0px',
     outline: 'currentcolor none medium',
     fontSize: '16px',
     fontWeight: 'inherit',
@@ -20,8 +19,7 @@ const listItemStyle = {
     whiteSpace: 'nowrap',
     background: 'rgba(0,0,0,0) none repeat scroll 0% 0%',
     marginLeft: '0px',
-    padding: '0px 72px',
-    position: 'relative'
+    padding: '0px 72px'
 };
 
 class ListItem extends React.Component {

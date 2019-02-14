@@ -62,6 +62,7 @@ class MapLayout extends React.Component {
     handleMapClick = (map) => {
         const { settings } = this.props;
         map.on('click', e => {
+            console.log('click');
             this.location = [e.coordinate[0], e.coordinate[1]];
 
             // For GetFeatureInfo request
@@ -69,7 +70,9 @@ class MapLayout extends React.Component {
 
             // Check if the user clicked on a feature (from WFS / GeoJSON)
             // For GetFeature request
+            console.log(e.pixel);
             map.forEachFeatureAtPixel(e.pixel, (feature, layer) => {
+                console.log('forEachFeatureAtPixel');
                 const title = layer.get('title');
                 const layerNames = [];
 

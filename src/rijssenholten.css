@@ -9,11 +9,11 @@ body {
     font-family: "RobotoDraft", "Roboto", "Helvetica Neue", Helvetica, Arial, sans-serif !important;
 }
 
-#react-root {
+#root {
     height: 100%;
 }
 
-#react-root > div {
+#root > div {
     height: 100%;
 }
 
@@ -169,7 +169,7 @@ div[data-reactroot] > div > div > div[role="presentation"] > div[role="menu"]:ho
 }
 
 div[data-reactroot] > div > div > div[role="presentation"] {
-    background-color: #004D93;
+    background-color: #730049;
     opacity: 0.8;
     border-radius: 5px;
 }

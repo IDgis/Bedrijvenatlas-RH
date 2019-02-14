@@ -12,7 +12,6 @@ import WizardMenu from './components/index/WizardMenu';
 
 const Main = () => {
     const settings = JSON.parse(process.env.REACT_APP_SETTINGS);
-    require('./' + settings.gemeenteConfig.cssFile);
     injectTapEventPlugin();
 
     const style = {
@@ -37,6 +36,17 @@ const Main = () => {
         </MuiThemeProvider>
     );
 };
+
+(function() {
+    const settings = JSON.parse(process.env.REACT_APP_SETTINGS);
+    require('./' + settings.gemeenteConfig.cssFile);
+    document.title = settings.gemeenteConfig.title;
+    const link = document.querySelector("link[rel*='icon']") || document.createElement('link');
+    link.type = 'image/x-icon';
+    link.rel = 'shortcut icon';
+    link.href = '/' + settings.gemeenteConfig.favicon;
+    document.getElementsByTagName('head')[0].appendChild(link);
+})();
 
 ReactDOM.render(
     <BrowserRouter>

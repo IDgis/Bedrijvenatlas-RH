@@ -30,12 +30,11 @@ class BedrijvenLaag extends React.Component {
         this.state = {
             menuOpen: false
         }
-
-        this.setDefaultVisibility();
-        this.updateVisibility();
     }
 
     componentDidMount() {
+        this.setDefaultVisibility();
+        this.updateVisibility();
     }
 
     componentWillReceiveProps(nextProps) {
@@ -48,7 +47,9 @@ class BedrijvenLaag extends React.Component {
 
     setDefaultVisibility = () => {
         Object.keys(this.props.layer.icons).forEach(category => {
-            this.state[category] = false;
+            this.setState({
+                [category]: false
+            });
         });
     }
 
@@ -61,7 +62,9 @@ class BedrijvenLaag extends React.Component {
                     if (source.getState() === 'ready' && source.getFeatures().length > 0) {
                         const features = source.getFeatures();
                         const category = features[0].get(layer.filterColumn);
-                        this.state[category] = l.getVisible();
+                        this.setState({
+                            [category]: l.getVisible()
+                        });
                     }
                 }
             });
@@ -84,7 +87,7 @@ class BedrijvenLaag extends React.Component {
                         if (category === cat) {
                             l.setVisible(!l.getVisible());
                             this.setState({
-                                ['category']: l.getVisible()
+                                [category]: l.getVisible()
                             });
                         }
                     }
@@ -138,7 +141,7 @@ class BedrijvenLaag extends React.Component {
                         </div>
                         <div>
                             {
-                                <img size="40" color="#757575" src={layer.icons[category]} style={{color:'rgb(117, 117, 117)',backgroundColor:'rgb(188, 188, 188)',display:'block',alignItems:'center',justifyContent:'center',fontSize:'20px',borderRadius:'50%',height:'24px',width:'24px',position:'absolute',top:'0px',margin:'12px',right:'4px'}} />
+                                <img size="40" color="#757575" src={layer.icons[category]} alt="" style={{color:'rgb(117, 117, 117)',backgroundColor:'rgb(188, 188, 188)',display:'block',alignItems:'center',justifyContent:'center',fontSize:'20px',borderRadius:'50%',height:'24px',width:'24px',position:'absolute',top:'0px',margin:'12px',right:'4px'}} />
                             }
                             { layer.namen[category] }
                         </div>

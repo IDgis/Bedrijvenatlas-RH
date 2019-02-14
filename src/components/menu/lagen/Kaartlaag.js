@@ -8,7 +8,6 @@ const listItemStyle = {
     cursor: 'pointer',
     textDecoration: 'none',
     margin: '0px',
-    padding: '0px',
     outline: 'currentcolor none medium',
     fontSize: '16px',
     fontWeight: 'inherit',
@@ -20,8 +19,7 @@ const listItemStyle = {
     whiteSpace: 'nowrap',
     background: 'rgba(0,0,0,0) none repeat scroll 0% 0%',
     marginLeft: '0px',
-    padding: '0px 72px',
-    position: 'relative'
+    padding: '0px 72px'
 };
 
 class Kaartlaag extends React.Component {
@@ -94,7 +92,7 @@ class Kaartlaag extends React.Component {
                 </div>
                 <div>
                     {
-                        iconAvailable ? <img size="40" color="#757575" src={layer.icon} style={{color:'rgb(117, 117, 117)',backgroundColor:'rgb(188, 188, 188)',display:'block',alignItems:'center',justifyContent:'center',fontSize:'20px',borderRadius:'50%',height:'24px',width:'24px',position:'absolute',top:'0px',margin:'12px',right:'4px'}} /> : null
+                        iconAvailable ? <img size="40" color="#757575" src={layer.icon} alt="" style={{color:'rgb(117, 117, 117)',backgroundColor:'rgb(188, 188, 188)',display:'block',alignItems:'center',justifyContent:'center',fontSize:'20px',borderRadius:'50%',height:'24px',width:'24px',position:'absolute',top:'0px',margin:'12px',right:'4px'}} /> : null
                     }
                     { layer.titel }
                 </div>

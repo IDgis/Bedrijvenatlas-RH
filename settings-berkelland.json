@@ -7,6 +7,8 @@
 
     "gemeenteConfig": {
         "naam": "Berkelland",
+        "title": "Bedrijvenatlas Berkelland",
+        "favicon": "favicon-bkl.ico",
         "cssFile": "berkelland.css",
         "homePage": "https://www.gemeenteberkelland.nl/",
         "contactPage": "https://www.gemeenteberkelland.nl/Ondernemers/Rij_2/Team_EZ/Economische_Zaken/Team_EZ",

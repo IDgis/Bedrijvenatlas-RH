@@ -1,11 +1,12 @@
-import React, { Component } from 'react';
+import React from 'react';
 import * as ol from 'openlayers';
+import axios from 'axios';
 
 import Paper from 'material-ui/Paper';
 import RaisedButton from 'material-ui/RaisedButton';
 
 
-export default class FeaturePopup extends Component {
+class FeaturePopup extends React.Component {
 
     constructor(props) {
         super(props);
@@ -21,15 +22,16 @@ export default class FeaturePopup extends Component {
         this.getMilieucategorie();
     }
 
-    getPopupFields = () => {
-        const properties = this.props.feature.getProperties();
+    getPopupFields () {
+        const { settings, feature } = this.props;
+        const properties = feature.getProperties();
         const keys = Object.keys(properties);
-        const aliasKeys = Object.keys(Meteor.settings.public.aliassen);
+        const aliasKeys = Object.keys(settings.aliassen);
         const fields = [];
         let count = 0;
 
         keys.forEach((key, index) => {
-            const alias = this.getAlias(key, aliasKeys);
+            const alias = this.getAlias(key, aliasKeys, settings);
             if (typeof properties[key] !== 'object') {
                 if (typeof properties[key] === 'string' && properties[key].indexOf('http') !== -1) {
                     fields.push(
@@ -57,19 +59,20 @@ export default class FeaturePopup extends Component {
         this.setState({fields});
     }
 
-    getAlias = (key, aliasKeys) => {
+    getAlias = (key, aliasKeys, settings) => {
         let alias = key;
         [...aliasKeys].forEach(aliasKey => {
             if (aliasKey === key) {
-                alias = Meteor.settings.public.aliassen[key];
+                alias = settings.aliassen[key];
             }
         });
 
         return alias;
     }
 
-    getMilieucategorie = () => {
-        const categorieConfig = Meteor.settings.public.overlayLayers.filter(layer => layer.titel.toLowerCase().indexOf('milieu') !== -1)[0];
+    async getMilieucategorie() {
+        const { settings, map, coords } = this.props;
+        const categorieConfig = settings.overlayLayers.filter(layer => layer.titel.toLowerCase().indexOf('milieu') !== -1)[0];
         const wmsSource = new ol.source.TileWMS({
             url: categorieConfig.url,
             params: {
@@ -79,22 +82,46 @@ export default class FeaturePopup extends Component {
             }
         });
 
-        const resolution = this.props.map.getView().getResolution();
-        const featureInfoUrl = wmsSource.getGetFeatureInfoUrl(this.props.coords, resolution, 'EPSG:28992', {'INFO_FORMAT':'application/json'});
+        const resolution = map.getView().getResolution();
+        const featureInfoUrl = wmsSource.getGetFeatureInfoUrl(coords, resolution, 'EPSG:28992', {'INFO_FORMAT':'application/json'});
+        const categorieInfo = await this.getCategorieInfo(featureInfoUrl);
 
-        Meteor.call('getCategorieInfo', featureInfoUrl, (err, result) => {
-            if (err) {
-                console.log(err.reason);
-                this.setState({milieuCategorie: null});
-            } else if (result) {
-                this.setState({
-                    milieuCategorie: <tr key={'property_milieucat'}>
-                            <td style={{width:'100px'}}><b>Categorie:</b></td>
-                            <td style={{width:'350px'}}>{result}</td>
-                        </tr>
-                });
+        if (categorieInfo) {
+            this.setState({milieuCategorie:
+                <tr key={'property_milieucat'}>
+                    <td style={{width:'100px'}}><b>Categorie:</b></td>
+                    <td style={{width:'350px'}}>{categorieInfo}</td>
+                </tr>
+            });
+        } else {
+            this.setState({milieuCategorie: null});
+        }
+    }
+
+    getCategorieInfo = (url) => {
+        const { settings } = this.props;
+        return axios.get(url).then(response => {
+            const data = response.data;
+            const feature = data['features'][0];
+            if (feature !== undefined) {
+                return feature['properties'][settings.searchConfig.milieuCategorie];
+            } else {
+                return null;
             }
         });
+
+        /*
+        let res = HTTP.get(url);
+        
+        let content = res.content;
+        let json = JSON.parse(content);
+        let feature = json['features'][0];
+        if(feature !== undefined) {
+            let categorie = feature['properties'][Meteor.settings.public.searchConfig.milieuCategorie];
+            return categorie;
+        }
+        return null;
+        */
     }
 
     getBestemmingsplanButton = (index) => {
@@ -134,21 +161,23 @@ export default class FeaturePopup extends Component {
     }
 
     render() {
+        let { fields, milieuCategorie } = this.state;
+        const { settings, onRequestClose, layer } = this.props;
+
         const width = 500;
         const left = this.getHorizontalPosition(width);
-        let fields = this.state.fields;
 
-        if (this.state.milieuCategorie) {
+        if (milieuCategorie) {
             fields = [];
-            fields.push(this.state.milieuCategorie);
-            fields = fields.concat(this.state.fields);
+            fields.push(milieuCategorie);
+            fields = fields.concat(fields);
         }
 
         return (
-            <Paper style={{position:'absolute', width:width, top:'60px', left:left, borderRadius:5, zIndex:10, backgroundColor:Meteor.settings.public.gemeenteConfig.colorGemeente, opacity:0.8, color:'white'}} zDepth={5} >
-                <RaisedButton className='popup-close-button' label='X' onTouchTap={this.props.onRequestClose} />
+            <Paper style={{position:'absolute', width:width, top:'60px', left:left, borderRadius:5, zIndex:10, backgroundColor:settings.gemeenteConfig.colorGemeente, opacity:0.8, color:'white'}} zDepth={5} >
+                <RaisedButton className='popup-close-button' label='X' onTouchTap={onRequestClose} />
                 <div style={{position:'relative', left:'20px'}}><br />
-                    <h3><u>{this.props.layer.get('title')}</u></h3>
+                    <h3><u>{layer.get('title')}</u></h3>
                     <table><tbody>{fields}</tbody></table>
                     <br />
                 </div>
@@ -156,3 +185,5 @@ export default class FeaturePopup extends Component {
         );
     }
 }
+
+export default FeaturePopup;
