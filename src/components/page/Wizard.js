@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 import { RadioButton, RadioButtonGroup } from 'material-ui/RadioButton';
 import RaisedButton from 'material-ui/RaisedButton';
@@ -65,15 +66,16 @@ class Wizard extends React.Component {
                         </RadioButtonGroup>
                     </div>
                 </div>
-                <RaisedButton 
-                    className='wizard-button'
-                    href="/viewer" 
-                    label="Zoek op de kaart" 
-                    labelPosition="before"
-                    primary={true} 
-                    buttonStyle={{backgroundColor:settings.gemeenteConfig.colorGemeente}}
-                    icon={ <img style={{height:'100%'}} src="/images/navigate_next_w.png" alt="" /> }
-                />
+                <Link to="/viewer">
+                    <RaisedButton 
+                        className='wizard-button'
+                        label="Zoek op de kaart" 
+                        labelPosition="before"
+                        primary={true} 
+                        buttonStyle={{backgroundColor:settings.gemeenteConfig.colorGemeente}}
+                        icon={ <img style={{height:'100%'}} src="/images/navigate_next_w.png" alt="" /> }
+                    />
+                </Link>
             </div>
         );
     }

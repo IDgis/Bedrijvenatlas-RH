@@ -1,8 +1,8 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 import * as ol from 'openlayers';
 import proj4 from 'proj4';
-// import 'whatwg-fetch';
 
 import IconButton from 'material-ui/IconButton';
 
@@ -442,9 +442,11 @@ class Viewer extends React.Component {
                 <button className='menu-button' title='Menu' style={menuButtonStyle} onClick={this.toggleMenu} >
                     <img src={settings.gemeenteConfig.iconMenu} alt="" />
                 </button>
-                <IconButton className='home-button' href='/' style={{backgroundColor:settings.gemeenteConfig.colorGemeente}} title='Home' >
-                    <img src={settings.gemeenteConfig.iconHome} alt="" />
-                </IconButton>
+                <Link to='/'>
+                    <IconButton className='home-button' style={{backgroundColor:settings.gemeenteConfig.colorGemeente}} title='Home' >
+                        <img src={settings.gemeenteConfig.iconHome} alt="" />
+                    </IconButton>
+                </Link>
                 {menuOpen && <LayerMenu
                     map={map}
                     updateLegenda={this.updateLegenda}

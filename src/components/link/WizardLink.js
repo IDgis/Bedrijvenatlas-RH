@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const WizardLink = ({settings}) => {
     const linkStyle = {
@@ -20,12 +21,12 @@ const WizardLink = ({settings}) => {
 
     return (
         <div className="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-            <a href="/wizard" style={linkStyle}>
+            <Link to="/wizard" style={linkStyle}>
             <img style={iconStyle} src={ settings.gemeenteConfig.logoWizardKnop } alt="" />
                 <div style={textStyle}>
                     <h2>Ik wil een bedrijf (her)vestigen</h2>
                 </div>
-            </a>
+            </Link>
         </div>
     );
 }

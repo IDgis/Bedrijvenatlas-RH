@@ -12,7 +12,6 @@ import WizardMenu from './components/index/WizardMenu';
 
 const Main = () => {
     const settings = JSON.parse(process.env.REACT_APP_SETTINGS);
-    injectTapEventPlugin();
 
     const style = {
         position: 'relative',
@@ -46,6 +45,7 @@ const Main = () => {
     link.rel = 'shortcut icon';
     link.href = '/' + settings.gemeenteConfig.favicon;
     document.getElementsByTagName('head')[0].appendChild(link);
+    injectTapEventPlugin();
 })();
 
 ReactDOM.render(

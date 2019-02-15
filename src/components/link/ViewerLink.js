@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const linkStyle = {
     textDecoration: 'none',
@@ -19,12 +20,12 @@ const textStyle = {
 
 const ViewerLink = ({settings}) => (
     <div className="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-        <a href="/viewer" style={linkStyle}>
+        <Link to="/viewer" style={linkStyle}>
             <img style={iconStyle} src={ settings.gemeenteConfig.logoViewerKnop } alt="" />
             <div style={textStyle}>
                 <h2>Zoeken op de kaart</h2>
             </div>
-        </a>
+        </Link>
     </div>
 );
 
