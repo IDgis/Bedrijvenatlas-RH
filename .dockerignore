@@ -1,4 +1,12 @@
-.meteor/local/
-imports/funda
-.build/
-node_modules/
+node_modules
+.git
+.gitignore
+LICENSE
+README.md
+
+# IntelliJ
+*.iml
+.idea
+
+# Eclipse
+.project
