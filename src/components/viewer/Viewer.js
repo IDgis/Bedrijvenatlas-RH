@@ -28,60 +28,68 @@ class Viewer extends React.Component {
      * Sets up the initial OpenLayers map and layers
      */
     componentDidMount() {
+        if (document.readyState === 'complete') {
+            this.createMap();
+        }
+
         document.onreadystatechange = () => {
             if (document.readyState === 'complete') {
-                const {settings, mapToParent} = this.props;
-                const map = new ol.Map({
-                    target: 'map',
-                    layers: this.getMapLayers(settings),
-                    view: new ol.View({
-                        center: settings.gemeenteConfig.center,
-                        projection: 'EPSG:28992',
-                        zoom: settings.gemeenteConfig.zoom,
-                        extent: settings.gemeenteConfig.extent,
-                        minZoom: settings.gemeenteConfig.minZoom,
-                        maxZoom: 21
-                    }),
-                    controls: [
-                        //new ol.control.ScaleLine(),
-                        new ol.control.Zoom(),
-                        new ol.control.Attribution({
-                            target: 'map',
-                            className: 'attribution'
-                        })
-                    ],
-                    interactions: new ol.interaction.defaults().extend([
-                        new ol.interaction.Select({
-                            style: [
-                                new ol.style.Style({
-                                    image: new ol.style.Icon({
-                                        src: settings.gemeenteConfig.iconSelected,
-                                        imgSize: [ 48, 48 ], // for IE11
-                                        scale: 0.5
-                                    }),
-                                    zIndex: 1
-                                }),
-                                new ol.style.Style({
-                                    image: new ol.style.Icon({
-                                        src: settings.gemeenteConfig.iconShadow,
-                                        imgSize: [ 48, 48 ], // for IE11
-                                        scale: 0.5
-                                    }),
-                                    zIndex: 0
-                                })
-                            ]
-                        })
-                    ])
-                });
-
-                this.setState({map});
-                this.setMapSettings(settings, map);
-                this.setBackgroundLayer(map);
-                this.addKvkLayers(settings.kvkBedrijven, map);
-                this.addKvkLayers(settings.detailHandel, map);
-                mapToParent(map);
+                this.createMap();
             }
         }
+    }
+
+    createMap = () => {
+        const {settings, mapToParent} = this.props;
+        const map = new ol.Map({
+            target: 'map',
+            layers: this.getMapLayers(settings),
+            view: new ol.View({
+                center: settings.gemeenteConfig.center,
+                projection: 'EPSG:28992',
+                zoom: settings.gemeenteConfig.zoom,
+                extent: settings.gemeenteConfig.extent,
+                minZoom: settings.gemeenteConfig.minZoom,
+                maxZoom: 21
+            }),
+            controls: [
+                //new ol.control.ScaleLine(),
+                new ol.control.Zoom(),
+                new ol.control.Attribution({
+                    target: 'map',
+                    className: 'attribution'
+                })
+            ],
+            interactions: new ol.interaction.defaults().extend([
+                new ol.interaction.Select({
+                    style: [
+                        new ol.style.Style({
+                            image: new ol.style.Icon({
+                                src: settings.gemeenteConfig.iconSelected,
+                                imgSize: [ 48, 48 ], // for IE11
+                                scale: 0.5
+                            }),
+                            zIndex: 1
+                        }),
+                        new ol.style.Style({
+                            image: new ol.style.Icon({
+                                src: settings.gemeenteConfig.iconShadow,
+                                imgSize: [ 48, 48 ], // for IE11
+                                scale: 0.5
+                            }),
+                            zIndex: 0
+                        })
+                    ]
+                })
+            ])
+        });
+
+        this.setState({map});
+        this.setMapSettings(settings, map);
+        this.setBackgroundLayer(map);
+        this.addKvkLayers(settings.kvkBedrijven, map);
+        this.addKvkLayers(settings.detailHandel, map);
+        mapToParent(map);
     }
 
     /**
