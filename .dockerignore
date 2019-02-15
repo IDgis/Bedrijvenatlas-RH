@@ -3,6 +3,7 @@ node_modules
 .gitignore
 LICENSE
 README.md
+build
 
 # IntelliJ
 *.iml
