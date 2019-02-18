@@ -4,6 +4,11 @@ import { Link } from 'react-router-dom';
 import { RadioButton, RadioButtonGroup } from 'material-ui/RadioButton';
 import RaisedButton from 'material-ui/RaisedButton';
 
+const style = {
+    marginLeft: '0px',
+    marginRight: '0px'
+}
+
 class Wizard extends React.Component {
 
     setPandValue = (e, value) => {
@@ -27,7 +32,7 @@ class Wizard extends React.Component {
 
         return (
             <div>
-                <div className='row'>
+                <div className='row' style={style}>
                     <div className='col-xs-12 col-sm-12 col-md-12 col-lg-12' style={{textAlign:'left',padding:'1em 20%'}}>
                         <h2 className='wizard-header'>Naar wat voor pand bent u op zoek?</h2>
                         <RadioButtonGroup name="pand" defaultSelected="beide" onChange={this.setPandValue}>
@@ -37,7 +42,7 @@ class Wizard extends React.Component {
                         </RadioButtonGroup>
                     </div>
                 </div>
-                <div className='row'>
+                <div className='row' style={style}>
                     <div className='col-xs-12 col-sm-12 col-md-12 col-lg-12' style={{textAlign:'left',padding:'1em 20%'}}>
                         <h2 className='wizard-header'>Wilt u kopen of huren?</h2>
                         <RadioButtonGroup name="huur-koop" defaultSelected="beide" onChange={this.setHuurKoopValue}>
@@ -47,7 +52,7 @@ class Wizard extends React.Component {
                         </RadioButtonGroup>
                     </div>
                 </div>
-                <div className='row'>
+                <div className='row' style={style}>
                     <div className='col-xs-12 col-sm-12 col-md-12 col-lg-12' style={{textAlign:'left',padding:'1em 20%'}}>
                         <h2 className='wizard-header'>In welke plaats zoekt u de mogelijkheden?</h2>
                         <RadioButtonGroup name="plaats" defaultSelected="beide" onChange={this.setPlaatsValue}>

@@ -12,7 +12,7 @@ const Welcome = ({settings}) => {
     return (
         <div>
             <h1>Vind hier de ideale locatie voor uw bedrijf!</h1>
-            <div className="row" style={{marginTop:'2em'}}>
+            <div className="row" style={{marginTop:'2em',marginRight:'0px',marginLeft:'0px'}}>
                 <WizardLink settings={settings} />
                 <ViewerLink settings={settings} />
                 <ContactLink settings={settings} />
