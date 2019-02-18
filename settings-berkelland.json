@@ -81,6 +81,8 @@
         "filterColumn": "SBI_RUBR_C",
 
         "namen": {
+            "9": "Meerdere bedrijfsactiviteiten",
+            "A": "Landbouw/Veeteelt",
             "C": "Industrie",
             "E": "Distributie water/afval",
             "F": "Bouwnijverheid",
@@ -91,12 +93,16 @@
             "L": "Onroerend goed",
             "M": "Advisering",
             "N": "Verhuur/Overige dienstverlening",
+            "O": "Overheid",
             "P": "Onderwijs",
             "Q": "Gezondheidszorg",
+            "R": "Amusement/Recreatie",
             "S": "Overige dienstverlening"
         },
 
         "icons": {
+            "9": "/icons/SBI_RUBRIEK_CODE_9_MEERDERE_ACTIVITEITEN.svg",
+            "A": "/icons/SBI_RUBRIEK_CODE_A_LANDBOUW_VEETEELT.svg",
             "C": "/icons/SBI_RUBRIEK_CODE_C_INDUSTRIE.svg",
             "E": "/icons/SBI_RUBRIEK_CODE_E_DISTRIBUTIE_WATER_AFVAL.svg",
             "F": "/icons/SBI_RUBRIEK_CODE_F_BOUWNIJVERHEID.svg",
@@ -107,8 +113,10 @@
             "L": "/icons/SBI_RUBRIEK_CODE_L_ONROEREND_GOED.svg",
             "M": "/icons/SBI_RUBRIEK_CODE_M_ADVISERING.svg",
             "N": "/icons/SBI_RUBRIEK_CODE_N_VERHUR_OVR_DIENSTV.svg",
+            "O": "/icons/SBI_RUBRIEK_CODE_O_OVERHEID.svg",
             "P": "/icons/SBI_RUBRIEK_CODE_P_ONDERWIJS.svg",
             "Q": "/icons/SBI_RUBRIEK_CODE_Q_GEZONDHEIDSZORG.svg",
+            "R": "/icons/SBI_RUBRIEK_CODE_R_AMUSEMENT_RECREATIE.svg",
             "S": "/icons/SBI_RUBRIEK_CODE_S_OVERIGE_DIENSTVERL.svg"
         },
         "iconShadow": "/icons/SCHADUW.svg"
