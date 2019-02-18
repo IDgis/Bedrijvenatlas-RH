@@ -37,14 +37,30 @@ const Main = () => {
 };
 
 (function() {
+    // Load the settings
     const settings = JSON.parse(process.env.REACT_APP_SETTINGS);
-    require('./' + settings.gemeenteConfig.cssFile);
+
+    // Remove minified css
+    const stylesheet = document.querySelector("link[href^='/static/css/']");
+    stylesheet && document.getElementsByTagName('head')[0].removeChild(stylesheet);
+
+    // Load custom css file
+    const customStylesheet = document.createElement('link');
+    customStylesheet.type = 'text/css';
+    customStylesheet.rel = 'stylesheet';
+    customStylesheet.href = './style/' + settings.gemeenteConfig.cssFile;
+    document.getElementsByTagName('link')[0].appendChild(customStylesheet);
+
+    // Change the title
     document.title = settings.gemeenteConfig.title;
+
+    // Load custom favicon
     const link = document.querySelector("link[rel*='icon']") || document.createElement('link');
     link.type = 'image/x-icon';
     link.rel = 'shortcut icon';
     link.href = '/' + settings.gemeenteConfig.favicon;
     document.getElementsByTagName('head')[0].appendChild(link);
+
     injectTapEventPlugin();
 })();
 
