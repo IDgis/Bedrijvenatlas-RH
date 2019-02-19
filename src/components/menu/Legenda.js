@@ -186,7 +186,7 @@ class Legenda extends React.Component {
         layers.forEach((layer, index) => {
             settings.overlayLayers.forEach(layerConfig => {
                 if (layer.get('title') === layerConfig.titel && layer.getVisible() && layerConfig.service === 'wms') {
-                    const url = `${layerConfig.url}&request=GetLegendGraphic&layer=${layerConfig.layers}&format=image/png&width=20&height=20&transparent=true&legend_options=fontColor:0xFFFFFF;fontName:Roboto`;
+                    const url = `${layerConfig.url}&request=GetLegendGraphic&layer=${layerConfig.layers}&format=image/png&width=20&height=20&transparent=false&legend_options=fontColor:0x000;fontName:Roboto`;
 
                     legendaItems.push(
                         <div key={`legenda_${index}`}>
