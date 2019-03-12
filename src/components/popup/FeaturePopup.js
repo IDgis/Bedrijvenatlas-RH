@@ -1,5 +1,5 @@
 import React from 'react';
-import * as ol from 'openlayers';
+import TileWMS from 'ol/source/TileWMS';
 import axios from 'axios';
 
 import Paper from 'material-ui/Paper';
@@ -74,7 +74,7 @@ class FeaturePopup extends React.Component {
     getMilieucategorie = () => {
         const { settings } = this.props;
         const categorieConfig = settings.overlayLayers.filter(layer => layer.titel.toLowerCase().indexOf('milieu') !== -1)[0];
-        const wmsSource = new ol.source.TileWMS({
+        const wmsSource = new TileWMS({
             url: categorieConfig.url,
             params: {
                 'FORMAT': categorieConfig.format,

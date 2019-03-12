@@ -1,7 +1,29 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import * as ol from 'openlayers';
+import Map from 'ol/Map';
+import View from 'ol/View';
+import Attribution from 'ol/control/Attribution';
+import Zoom from 'ol/control/Zoom';
+import { equalTo } from 'ol/format/filter';
+import GeoJSON from 'ol/format/GeoJSON';
+import WFS from 'ol/format/WFS';
+import { defaults as interactionDefaults } from 'ol/interaction';
+import Select from 'ol/interaction/Select';
+import Image from 'ol/layer/Image';
+import Tile from 'ol/layer/Tile';
+import lVector from 'ol/layer/Vector';
+import { register } from 'ol/proj/proj4';
+import Projection from 'ol/proj/Projection';
+import ImageWMS from 'ol/source/ImageWMS';
+import TileImage from 'ol/source/TileImage';
+import TileWMS from 'ol/source/TileWMS';
+import sVector from 'ol/source/Vector';
+import sWMTS from 'ol/source/WMTS';
+import Icon from 'ol/style/Icon';
+import Style from 'ol/style/Style';
+import TileGrid from 'ol/tilegrid/TileGrid';
+import tWMTS from 'ol/tilegrid/WMTS';
 import proj4 from 'proj4';
 
 import IconButton from 'material-ui/IconButton';
@@ -21,7 +43,7 @@ class Viewer extends React.Component {
         };
 
         proj4.defs('EPSG:28992', '+proj=sterea +lat_0=52.15616055555555 +lon_0=5.38763888888889 +k=0.9999079 +x_0=155000 +y_0=463000 +ellps=bessel +towgs84=565.417,50.3319,465.552,-0.398957,0.343988,-1.8774,4.0725 +units=m +no_defs');
-        ol.proj.setProj4(proj4);
+        register(proj4);
     }
 
     /**
@@ -41,10 +63,10 @@ class Viewer extends React.Component {
 
     createMap = () => {
         const {settings, mapToParent} = this.props;
-        const map = new ol.Map({
+        const map = new Map({
             target: 'map',
             layers: this.getMapLayers(settings),
-            view: new ol.View({
+            view: new View({
                 center: settings.gemeenteConfig.center,
                 projection: 'EPSG:28992',
                 zoom: settings.gemeenteConfig.zoom,
@@ -53,26 +75,26 @@ class Viewer extends React.Component {
                 maxZoom: 21
             }),
             controls: [
-                //new ol.control.ScaleLine(),
-                new ol.control.Zoom(),
-                new ol.control.Attribution({
+                //new ScaleLine(),
+                new Zoom(),
+                new Attribution({
                     target: 'map',
                     className: 'attribution'
                 })
             ],
-            interactions: new ol.interaction.defaults().extend([
-                new ol.interaction.Select({
+            interactions: new interactionDefaults().extend([
+                new Select({
                     style: [
-                        new ol.style.Style({
-                            image: new ol.style.Icon({
+                        new Style({
+                            image: new Icon({
                                 src: settings.gemeenteConfig.iconSelected,
                                 imgSize: [ 48, 48 ], // for IE11
                                 scale: 0.5
                             }),
                             zIndex: 1
                         }),
-                        new ol.style.Style({
-                            image: new ol.style.Icon({
+                        new Style({
+                            image: new Icon({
                                 src: settings.gemeenteConfig.iconShadow,
                                 imgSize: [ 48, 48 ], // for IE11
                                 scale: 0.5
@@ -117,7 +139,7 @@ class Viewer extends React.Component {
      */
     addLayers = (layers, allLayers) => {
         const extent = [-285401.92,22598.08,595401.92,903401.92];
-        const projection = new ol.proj.Projection({code: 'EPSG:28992', units: 'm', extent: extent});
+        const projection = new Projection({code: 'EPSG:28992', units: 'm', extent: extent});
 
         layers.forEach(layer => {
             const service = layer.service;
@@ -142,14 +164,14 @@ class Viewer extends React.Component {
      * @param {Object} projection The projection object of the given layer
      */
     getTmsLayer = (tmsLayer, extent, projection) => (
-        new ol.layer.Tile({
+        new Tile({
             title: tmsLayer.titel,
             preload: 1,
-            source: new ol.source.TileImage({
+            source: new TileImage({
                 crossOrigin: null,
                 extent: extent,
                 projection: projection,
-                tileGrid: new ol.tilegrid.TileGrid({
+                tileGrid: new TileGrid({
                     extent: extent,
                     resolutions: tmsLayer.resolutions
                 }),
@@ -172,9 +194,9 @@ class Viewer extends React.Component {
             matrixIds[i] = ((wmtsLayer.matrixSetPrefix || '') + i.toString());
         }
 
-        return new ol.layer.Tile({
+        return new Tile({
             title: wmtsLayer.titel,
-            source: new ol.source.WMTS({
+            source: new sWMTS({
                 attributions: this.getAttributions(wmtsLayer.attributions),
                 url: wmtsLayer.url,
                 layer: wmtsLayer.layer,
@@ -182,7 +204,7 @@ class Viewer extends React.Component {
                 format: wmtsLayer.format,
                 projection: projection,
                 style: wmtsLayer.style,
-                tileGrid: new ol.tilegrid.WMTS({
+                tileGrid: new tWMTS({
                     origin: wmtsLayer.origin,
                     resolutions: wmtsLayer.resolutions,
                     matrixIds: matrixIds
@@ -199,9 +221,9 @@ class Viewer extends React.Component {
      */
     getWmsLayer = (wmsLayer) => (
         wmsLayer.tiling ?
-        new ol.layer.Tile({
+        new Tile({
             title: wmsLayer.titel,
-            source: new ol.source.TileWMS({
+            source: new TileWMS({
                 url: wmsLayer.url,
                 params: {
                     'FORMAT': wmsLayer.format,
@@ -211,9 +233,9 @@ class Viewer extends React.Component {
             }),
             visible: wmsLayer.visible
         }) :
-        new ol.layer.Image({
+        new Image({
             title: wmsLayer.titel,
-            source: new ol.source.ImageWMS({
+            source: new ImageWMS({
                 url: wmsLayer.url,
                 params: {
                     'FORMAT': wmsLayer.format,
@@ -231,23 +253,23 @@ class Viewer extends React.Component {
      * @param {Object} geoJsonLayer The GeoJson Layer object to convert to an OpenLayers Object
      */
     getGeoJsonLayer = (geoJsonLayer) => (
-        new ol.layer.Vector({
+        new lVector({
             title: geoJsonLayer.titel,
-            source: new ol.source.Vector({
+            source: new sVector({
                 url: geoJsonLayer.url,
-                format: new ol.format.GeoJSON()
+                format: new GeoJSON()
             }),
             style: [
-                new ol.style.Style({
-                    image: new ol.style.Icon({
+                new Style({
+                    image: new Icon({
                         src: geoJsonLayer.icon,
                         imgSize: [ 48, 48 ], // for IE11
                         scale: 0.5
                     }),
                     zIndex: 1
                 }),
-                new ol.style.Style({
-                    image: new ol.style.Icon({
+                new Style({
+                    image: new Icon({
                         src: geoJsonLayer.shadow,
                         imgSize: [ 48, 48 ], // for IE11
                         scale: 0.5,
@@ -263,7 +285,7 @@ class Viewer extends React.Component {
     getAttributions = (attributions) => {
         if (attributions) {
             return attributions.map(attr => (
-                new ol.Attribution({
+                new Attribution({
                     html: `<a href=${attr.url}>${attr.text}</a>`
                 })
             ));
@@ -289,7 +311,7 @@ class Viewer extends React.Component {
 
         // Zoom to the right place
         if (selectedPlaats) {
-            map.setView(new ol.View({
+            map.setView(new View({
                 center: selectedPlaats.center,
                 projection: 'EPSG:28992',
                 zoom: selectedPlaats.zoom
@@ -359,8 +381,8 @@ class Viewer extends React.Component {
      */
     addKvkLayers = (layerConfig, map) => {
         Object.keys(layerConfig.icons).forEach(category => {
-            const filter = ol.format.filter.equalTo(layerConfig.filterColumn, category);
-            const featureRequest = new ol.format.WFS().writeGetFeature({
+            const filter = equalTo(layerConfig.filterColumn, category);
+            const featureRequest = new WFS().writeGetFeature({
                 srsName: 'EPSG:28992',
                 outputFormat: 'application/json',
                 featurePrefix: layerConfig.featurePrefix,
@@ -374,22 +396,22 @@ class Viewer extends React.Component {
             }).then(response => {
                 return response.json();
             }).then(json => {
-                const features = new ol.format.GeoJSON().readFeatures(json);
-                const source = new ol.source.Vector();
-                const layer = new ol.layer.Vector({
+                const features = new GeoJSON().readFeatures(json);
+                const source = new sVector();
+                const layer = new lVector({
                     title: layerConfig.naam,
                     source: source,
                     style: [
-                        new ol.style.Style({
-                            image: new ol.style.Icon({
+                        new Style({
+                            image: new Icon({
                                 src: layerConfig.icons[category],
                                 imgSize: [48,48], // for IE11
                                 scale: 0.5
                             }),
                             zIndex: 1
                         }),
-                        new ol.style.Style({
-                            image: new ol.style.Icon({
+                        new Style({
+                            image: new Icon({
                                 src: layerConfig.iconShadow,
                                 imgSize: [ 48, 48 ], // for IE11
                                 scale: 0.5,
