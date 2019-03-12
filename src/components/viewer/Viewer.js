@@ -396,34 +396,36 @@ class Viewer extends React.Component {
             }).then(response => {
                 return response.json();
             }).then(json => {
-                const features = new GeoJSON().readFeatures(json);
-                const source = new sVector();
-                const layer = new lVector({
-                    title: layerConfig.naam,
-                    source: source,
-                    style: [
-                        new Style({
-                            image: new Icon({
-                                src: layerConfig.icons[category],
-                                imgSize: [48,48], // for IE11
-                                scale: 0.5
+                if (json.totalFeatures > 0) {
+                    const features = new GeoJSON().readFeatures(json);
+                    const source = new sVector();
+                    const layer = new lVector({
+                        title: layerConfig.naam,
+                        source: source,
+                        style: [
+                            new Style({
+                                image: new Icon({
+                                    src: layerConfig.icons[category],
+                                    imgSize: [48,48], // for IE11
+                                    scale: 0.5
+                                }),
+                                zIndex: 1
                             }),
-                            zIndex: 1
-                        }),
-                        new Style({
-                            image: new Icon({
-                                src: layerConfig.iconShadow,
-                                imgSize: [ 48, 48 ], // for IE11
-                                scale: 0.5,
-                                opacity: 0.7
-                            }),
-                            zIndex: 0
-                        })
-                    ],
-                    visible: false
-                });
-                source.addFeatures(features);
-                map.addLayer(layer);
+                            new Style({
+                                image: new Icon({
+                                    src: layerConfig.iconShadow,
+                                    imgSize: [ 48, 48 ], // for IE11
+                                    scale: 0.5,
+                                    opacity: 0.7
+                                }),
+                                zIndex: 0
+                            })
+                        ],
+                        visible: false
+                    });
+                    source.addFeatures(features);
+                    map.addLayer(layer);
+                }
             });
         });
     }

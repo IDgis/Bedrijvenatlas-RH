@@ -122,12 +122,27 @@ class BedrijvenLaag extends React.Component {
     }
 
     render() {
-        const { layer } = this.props;
+        const { map, layer } = this.props;
+
+        const icons = Object.keys(layer.icons).filter((category) => {
+            let layerPresent = false;
+            map.getLayers().forEach(l => {
+                if (l.get('title') === layer.naam) {
+                    const source = l.getSource();
+                    if (source.getState() === 'ready' && source.getFeatures().length > 0) {
+                        const c = source.getFeatures()[0].get(layer.filterColumn);
+                        layerPresent = layerPresent || (c === category);
+                    }
+                }
+            });
+
+            return layerPresent;
+        });
 
         return (
             <div>
             {
-                Object.keys(layer.icons).map((category, i) => (
+                icons.map((category, i) => (
                     <div className='list-item' style={listItemStyle} key={category + i} >
                         <div style={{cursor:'pointer',position:'absolute',overflow:'visible',display:'block',height:'24px',width:'24px',top:'0px',margin:'5px 12px',left:'4px'}} onClick={(e) => this.selectBranche(e, category)}>
                             <div style={{display:'flex',width:'100%',height:'100%'}}>
