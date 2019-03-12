@@ -125,15 +125,17 @@ class Legenda extends React.Component {
                 const source = layer.getSource();
                 if (source.getState() === 'ready') {
                     const features = source.getFeatures();
-                    const category = features[0].get('SBI_RUBR_C');
-                    const categoryIcon = kvkBedrijven.icons[category];
-                    const categoryName = kvkBedrijven.namen[category];
+                    if (features.length > 0) {
+                        const category = features[0].get(kvkBedrijven.filterColumn);
+                        const categoryIcon = kvkBedrijven.icons[category];
+                        const categoryName = kvkBedrijven.namen[category];
 
-                    kvkItems.push(
-                        <div key={`legenda_kvk_${index}`}>
-                            <img className='legenda-icon' src={categoryIcon} alt="" /> {categoryName}
-                        </div>
-                    );
+                        kvkItems.push(
+                            <div key={`legenda_kvk_${index}`}>
+                                <img className='legenda-icon' src={categoryIcon} alt="" /> {categoryName}
+                            </div>
+                        );
+                    }
                 }
             }
         });
