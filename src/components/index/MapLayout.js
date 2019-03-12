@@ -1,8 +1,10 @@
 import React from 'react';
 import { register } from 'ol/proj/proj4';
 import { transform } from 'ol/proj';
+import TileWMS from 'ol/source/TileWMS';
 import proj4 from 'proj4';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import axios from 'axios';
 
 import FeatureInfoPopup from '../popup/FeatureInfoPopup';
 import FeaturePopup from '../popup/FeaturePopup';
@@ -62,7 +64,7 @@ class MapLayout extends React.Component {
      */
     handleMapClick = (map) => {
         const { settings } = this.props;
-        map.on('click', e => {
+        map.on('click', async (e) => {
             this.location = [e.coordinate[0], e.coordinate[1]];
 
             // For GetFeatureInfo request
@@ -70,13 +72,11 @@ class MapLayout extends React.Component {
 
             // Check if the user clicked on a feature (from WFS / GeoJSON)
             // For GetFeature request
-            map.forEachFeatureAtPixel(e.pixel, (feature, layer) => {
+            await map.forEachFeatureAtPixel(e.pixel, async (feature, layer) => {
                 const title = layer.get('title');
-                const layerNames = [];
-
-                settings.fundaLayers.forEach(fundaLayer => layerNames.push(fundaLayer.titel));
-                layerNames.push(settings.kvkBedrijven.naam);
-                layerNames.push(settings.detailHandel.naam);
+                const fundaLayerNames = settings.fundaLayers.map(fundaLayer => fundaLayer.titel);
+                const layerNames = [...fundaLayerNames, settings.kvkBedrijven.naam, settings.detailHandel.naam];
+                const milieuCategorie = await this.getMilieucategorie(map, settings, this.location);
 
                 layerNames.forEach(name => {
                     if (title === name) {
@@ -86,6 +86,7 @@ class MapLayout extends React.Component {
                                     feature={feature}
                                     layer={layer}
                                     coords={this.location}
+                                    milieuCategorie={milieuCategorie}
                                     screenCoords={e.pixel}
                                     openStreetView={this.openStreetView}
                                     onRequestClose={this.closePopup}
@@ -98,6 +99,29 @@ class MapLayout extends React.Component {
                 featurePopup: popup
             });
         });
+    }
+
+    getMilieucategorie = async (map, settings, coords) => {
+        const categorieConfig = settings.overlayLayers.filter(layer => layer.titel.toLowerCase().indexOf('milieu') !== -1)[0];
+        const wmsSource = new TileWMS({
+            url: categorieConfig.url,
+            params: {
+                'FORMAT': categorieConfig.format,
+                'LAYERS': categorieConfig.layers,
+                'CRS': 'EPSG:28992'
+            }
+        });
+
+        const resolution = map.getView().getResolution();
+        const featureInfoUrl = wmsSource.getGetFeatureInfoUrl(coords, resolution, 'EPSG:28992', {'INFO_FORMAT':'application/json'});
+        const response = await axios.get(featureInfoUrl);
+        const feature = response.data.features[0];
+
+        if (feature !== undefined) {
+            return feature.properties[settings.searchConfig.milieuCategorie];
+        } else {
+            return null;
+        }
     }
 
     getFeatureInfoPopup = (map) => {
