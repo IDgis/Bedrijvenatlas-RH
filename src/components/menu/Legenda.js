@@ -166,7 +166,7 @@ class Legenda extends React.Component {
 
                     detailHandelItems.push(
                         <div key={`legenda_detail_${i}`}>
-                            <img className='legenda-icon' src={categoryIcon} img="" alt="" /> { categoryName }
+                            <img className='legenda-icon' src={categoryIcon} alt="" /> { categoryName }
                         </div>
                     );
                 }
