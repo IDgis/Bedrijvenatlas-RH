@@ -1,5 +1,5 @@
 import React from 'react';
-import * as ol from 'openlayers';
+import TileWMS from 'ol/source/TileWMS';
 import axios from 'axios';
 
 import Paper from 'material-ui/Paper';
@@ -18,7 +18,7 @@ class FeatureInfoPopup extends React.Component {
     async componentDidMount() {
         const { map, layerConfig, coords } = this.props;
         const resolution = map.getView().getResolution();
-        const wmsSource = new ol.source.TileWMS({
+        const wmsSource = new TileWMS({
             url: layerConfig.url,
             params: {
                 'FORMAT': layerConfig.format,

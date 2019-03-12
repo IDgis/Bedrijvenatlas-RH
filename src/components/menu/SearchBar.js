@@ -1,6 +1,8 @@
 import React from 'react';
 
-import * as ol from 'openlayers';
+import Select from 'ol/interaction/Select';
+import Icon from 'ol/style/Icon';
+import Style from 'ol/style/Style';
 import AutoComplete from 'material-ui/AutoComplete';
 import axios from 'axios';
 
@@ -85,18 +87,18 @@ class SearchBar extends React.Component {
                             layer.setVisible(true);
 
                             // Select the found feature
-                            const select = new ol.interaction.Select({
+                            const select = new Select({
                                 style: [
-                                    new ol.style.Style({
-                                        image: new ol.style.Icon({
+                                    new Style({
+                                        image: new Icon({
                                             src: gemeenteConfig.iconSelected,
                                             imgSize: [ 48, 48 ],
                                             scale: 0.5
                                         }),
                                         zIndex: 1
                                     }),
-                                    new ol.style.Style({
-                                        image: new ol.style.Icon({
+                                    new Style({
+                                        image: new Icon({
                                             src: gemeenteConfig.iconShadow,
                                             imgSize: [ 48, 48 ],
                                             scale: 0.5
