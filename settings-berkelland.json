@@ -221,7 +221,7 @@
         {
             "service": "wms",
             "titel": "Bedrijventerreinen",
-            "url": "http://geoserver.prvgld.nl/geoserver/IBIS/wfs?SERVICE=WMS&",
+            "url": "https://bedrijventerreinen.gelderland.nl/geoserver/IBIS/wms?SERVICE=WMS&",
             "format": "image/png",
             "layers": "bedrijventerrein",
             "tiling": false,
@@ -232,7 +232,7 @@
             "service": "wms",
             "titel": "Bedrijvenkavels",
             "type": "nieuwbouw",
-            "url": "http://geoserver.prvgld.nl/geoserver/IBIS/wfs?SERVICE=WMS&",
+            "url": "https://bedrijventerreinen.gelderland.nl/geoserver/IBIS/wms?SERVICE=WMS&",
             "format": "image/png",
             "layers": "bedrijvenkavels",
             "tiling": false,
