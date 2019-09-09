@@ -56,8 +56,13 @@ class FeaturePopup extends React.Component {
         const x = coords[0];
         const y = coords[1];
 
-        const ruimtelijkeplannenUrl = `https://www.ruimtelijkeplannen.nl/viewer#!/marker/${x}/${y}/` +
-            `cs/${x}/${y}/1720.32`;
+        const bbx1 = Number.parseFloat(x) - 250;
+        const bbx2 = Number.parseFloat(x) + 250;
+        const bby1 = Number.parseFloat(y) - 425;
+        const bby2 = Number.parseFloat(y) + 425;
+
+        const ruimtelijkeplannenUrl = `https://www.ruimtelijkeplannen.nl/viewer/viewer?` +
+            `bbx1=${bbx1}&bby1=${bby1}&bbx2=${bbx2}&bby2=${bby2}`;
 
         return (
             <tr key={'field_bestemmingsplanbutton'}>
