@@ -12,7 +12,7 @@
     "react-dom": "^15.6.2",
     "react-mounter": "^1.2.0",
     "react-router-dom": "^4.3.1",
-    "react-scripts": "^3.2.0",
+    "react-scripts": "^3.3.0",
     "react-streetview": "^1.1.0",
     "react-tap-event-plugin": "^2.0.1"
   },
