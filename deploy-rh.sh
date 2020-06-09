@@ -2,8 +2,8 @@
 
 echo deploying bedrijvenatlas Rijssen-Holten...
 
-export BA_VERSION=1.3.5
-export FUNDA_SCRAPER_VERSION=1.4.1
+export BA_VERSION=1.3.6
+export FUNDA_SCRAPER_VERSION=1.4.2
 
 export REACT_APP_SETTINGS="$(cat ./settings-rh.json)"
 export GEMEENTE=gemeente-rijssen-holten
