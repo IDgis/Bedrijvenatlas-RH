@@ -2,8 +2,8 @@
 
 echo deploying Bedrijvenatlas ...
 
-export BA_VERSION=1.3.6
-export FUNDA_SCRAPER_VERSION=1.4.2
+export BA_VERSION=1.3.7
+export FUNDA_SCRAPER_VERSION=1.4.4
 
 export REACT_APP_SETTINGS="$(cat ./settings-berkelland.json)"
 export GEMEENTE=gemeente-berkelland
