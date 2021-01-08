@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import injectTapEventPlugin from 'react-tap-event-plugin';
 
 import Index from './components/index/Index';
 import MapLayout from './components/index/MapLayout';
@@ -60,8 +59,6 @@ const Main = () => {
     link.rel = 'shortcut icon';
     link.href = '/' + settings.gemeenteConfig.favicon;
     document.getElementsByTagName('head')[0].appendChild(link);
-
-    injectTapEventPlugin();
 })();
 
 ReactDOM.render(
