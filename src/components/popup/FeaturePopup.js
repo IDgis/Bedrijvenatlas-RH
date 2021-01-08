@@ -117,7 +117,7 @@ class FeaturePopup extends React.Component {
 
         return (
             <Paper style={{position:'absolute', width:width, top:'60px', left:left, borderRadius:5, zIndex:10, backgroundColor:settings.gemeenteConfig.colorGemeente, opacity:0.8, color:'white'}} zDepth={5} >
-                <RaisedButton className='popup-close-button' label='X' onTouchTap={this.props.onRequestClose} />
+                <RaisedButton className='popup-close-button' label='X' onClick={this.props.onRequestClose} />
                 <div style={{position:'relative', left:'20px'}}><br />
                     <h3><u>{this.props.layer.get('title')}</u></h3>
                     <table><tbody>{popupFields}</tbody></table>
