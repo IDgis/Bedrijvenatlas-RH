@@ -1,7 +1,8 @@
 import React from 'react';
 
 import ReactStreetView from 'react-streetview';
-import RaisedButton from 'material-ui/RaisedButton';
+
+import CustomButton from '../menu/CustomButton';
 
 const StreetView = ({coords, close}) => {
     const lng = coords[0];
@@ -19,7 +20,9 @@ const StreetView = ({coords, close}) => {
                 apiKey='AIzaSyDSK_RTj2gR5YKl_TxgQidR9NkuHCpHi0I'
                 streetViewPanoramaOptions={streetViewPanoramaOptions}
             />
-            <RaisedButton label='Sluiten' style={{position: 'absolute', bottom: 0, left: 0, zIndex:3}} onClick={close} />
+            <CustomButton style={{position:'absolute', bottom: 0, left:0, zIndex: 3}} onClick={close}>
+                Sluiten
+            </CustomButton>
         </div>
     );
 }

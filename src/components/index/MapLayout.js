@@ -3,8 +3,9 @@ import { register } from 'ol/proj/proj4';
 import { transform } from 'ol/proj';
 import TileWMS from 'ol/source/TileWMS';
 import proj4 from 'proj4';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import axios from 'axios';
+
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 
 import FeatureInfoPopup from '../popup/FeatureInfoPopup';
 import FeaturePopup from '../popup/FeaturePopup';
@@ -17,6 +18,49 @@ const style = {
     top: '56px',
     width: '100%'
 };
+
+const theme = createMuiTheme({
+    overrides: {
+        MuiOutlinedInput: {
+            notchedOutline: {
+                borderColor: 'rgb(224, 224, 224)'
+            }
+        },
+        MuiAutocomplete: {
+            root: {
+                height: '65px !important',
+                marginTop: '12px',
+                paddingRight: '10px'
+            }
+        },
+        MuiFormLabel: {
+            root: {
+                '&$focused': {
+                    color: 'rgba(255, 255, 255, 0.8)'
+                }
+            }
+        },
+        MuiInputLabel: {
+            root: {
+                color: 'rgba(255, 255, 255, 0.8)',
+                fontWeight: '700',
+                fontSize: '14px',
+                lineHeight: '22px'
+            }
+        },
+        MuiInputBase: {
+            root: {
+                color: 'rgba(255, 255, 255, 0.8)',
+                fontSize: '14px'
+            }
+        },
+        MuiSvgIcon: {
+            root: {
+                color: 'rgba(255, 255, 255, 0.8)'
+            }
+        }
+    }
+});
 
 class MapLayout extends React.Component {
 
@@ -191,12 +235,12 @@ class MapLayout extends React.Component {
         const {settings} = this.props;
 
         return (
-            <MuiThemeProvider>
-                    <main style={style}>
-                        {<Viewer settings={settings} mapToParent={this.setMap} featurePopup={this.setKvkPopup} />}
-                        {this.state.featurePopup}
-                        {this.state.streetView}
-                    </main>
+            <MuiThemeProvider theme={theme}>
+                <main style={style}>
+                    {<Viewer settings={settings} mapToParent={this.setMap} featurePopup={this.setKvkPopup} />}
+                    {this.state.featurePopup}
+                    {this.state.streetView}
+                </main>
             </MuiThemeProvider>
         );
     }
