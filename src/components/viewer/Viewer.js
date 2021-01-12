@@ -26,7 +26,8 @@ import TileGrid from 'ol/tilegrid/TileGrid';
 import tWMTS from 'ol/tilegrid/WMTS';
 import proj4 from 'proj4';
 
-import IconButton from 'material-ui/IconButton';
+import IconButton from '@material-ui/core/IconButton';
+import HomeIcon from '@material-ui/icons/Home';
 
 import LayerMenu from '../menu/LayerMenu';
 import Legenda from '../menu/Legenda';
@@ -478,8 +479,8 @@ class Viewer extends React.Component {
                     <img src={settings.gemeenteConfig.iconMenu} alt="" />
                 </button>
                 <Link to='/'>
-                    <IconButton className='home-button' style={{backgroundColor:settings.gemeenteConfig.colorGemeente}} title='Home' >
-                        <img src={settings.gemeenteConfig.iconHome} alt="" />
+                    <IconButton className="home-button" style={{backgroundColor:settings.gemeenteConfig.colorGemeente, borderRadius:'5px'}} title="Home">
+                        <HomeIcon style={{color:'white', width:'24px', height:'24px'}} />
                     </IconButton>
                 </Link>
                 {menuOpen && <LayerMenu

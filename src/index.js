@@ -2,8 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import injectTapEventPlugin from 'react-tap-event-plugin';
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 
 import Index from './components/index/Index';
 import MapLayout from './components/index/MapLayout';
@@ -13,6 +12,34 @@ import WizardMenu from './components/index/WizardMenu';
 const Main = () => {
     const settings = JSON.parse(process.env.REACT_APP_SETTINGS);
 
+    const theme = createMuiTheme({
+        overrides: {
+            MuiSvgIcon: {
+                root: {
+                    fontSize: '24px'
+                }
+            },
+            MuiTypography: {
+                body1: {
+                    fontSize: 'inherit',
+                    fontWeight: 'inherit',
+                    color: '#111'
+                }
+            },
+            MuiFormControlLabel: {
+                root: {
+                    marginBottom: '0'
+                }
+            },
+            MuiRadio: {
+                root: {
+                    color: settings.gemeenteConfig.colorGemeente,
+                    marginRight: '16px'
+                }
+            }
+        }
+    });
+
     const style = {
         position: 'relative',
         width: '100%',
@@ -21,17 +48,17 @@ const Main = () => {
     };
 
     return (
-        <MuiThemeProvider>
-            <div style={style}>
-                <header className="main-header">
-                    <MenuBar settings={settings} />
-                </header>
-                <Switch>
-                    <Route path="/" exact component={() => <Index settings={settings} />} />
-                    <Route path="/wizard" exact component={() => <WizardMenu settings={settings} />} />
-                    <Route path="/viewer" exact component={() => <MapLayout settings={settings} />} />
-                </Switch>
-            </div>
+        <MuiThemeProvider theme={theme}>
+                <div style={style}>
+                    <header className="main-header">
+                        <MenuBar settings={settings} />
+                    </header>
+                    <Switch>
+                        <Route path="/" exact component={() => <Index settings={settings} />} />
+                        <Route path="/wizard" exact component={() => <WizardMenu settings={settings} />} />
+                        <Route path="/viewer" exact component={() => <MapLayout settings={settings} />} />
+                    </Switch>
+                </div>
         </MuiThemeProvider>
     );
 };
@@ -60,8 +87,6 @@ const Main = () => {
     link.rel = 'shortcut icon';
     link.href = '/' + settings.gemeenteConfig.favicon;
     document.getElementsByTagName('head')[0].appendChild(link);
-
-    injectTapEventPlugin();
 })();
 
 ReactDOM.render(

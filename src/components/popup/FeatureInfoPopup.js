@@ -2,8 +2,9 @@ import React from 'react';
 import TileWMS from 'ol/source/TileWMS';
 import axios from 'axios';
 
-import Paper from 'material-ui/Paper';
-import RaisedButton from 'material-ui/RaisedButton';
+import Paper from '@material-ui/core/Paper';
+
+import CustomButton from '../menu/CustomButton';
 
 class FeatureInfoPopup extends React.Component {
 
@@ -63,7 +64,9 @@ class FeatureInfoPopup extends React.Component {
                 fields.push(
                     <tr key={`field_${index}`}>
                         <td colSpan={2} style={{width:'450px', paddingBottom:'5px', paddingTop:'5px'}}>
-                            <RaisedButton href={properties[key]} target='_blank' label={`Meer informatie (${alias})`} />
+                            <CustomButton href={properties[key]} target="_blank">
+                                Meer informatie ({alias})
+                            </CustomButton>
                         </td>
                     </tr>
                 );
@@ -100,7 +103,9 @@ class FeatureInfoPopup extends React.Component {
         if (popup) {
             return (
                 <Paper className='valid' style={{position:'absolute', width:width, top:'60px', left:left, borderRadius:5, zIndex:10, backgroundColor:settings.gemeenteConfig.colorGemeente, opacity:0.8, color:'white'}} zDepth={5} >
-                    <RaisedButton className='popup-close-button' label='X' onTouchTap={onRequestClose} />
+                    <CustomButton className="popup-close-button" onClick={onRequestClose}>
+                        X
+                    </CustomButton>
                     <div style={{position:'relative', left:'20px'}}><br />
                         <h3><u>{layerConfig.titel}</u></h3>
                         <table><tbody>{popup}</tbody></table> <br />
@@ -110,8 +115,10 @@ class FeatureInfoPopup extends React.Component {
             );
         } else {
             return(
-                <Paper className='valid' style={{position:'absolute', width:width, top:'60px', left:left, borderRadius:5, zIndex:10, backgroundColor:settings.gemeenteConfig.colorGemeente, opacity:0.8, color:'white'}} zDepth={5} >
-                    <RaisedButton className='popup-close-button' label='X' onTouchTap={onRequestClose} />
+                <Paper className='valid' style={{position:'absolute', width:width, top:'60px', left:left, borderRadius:5, zIndex:10, backgroundColor:settings.gemeenteConfig.colorGemeente, opacity:0.8, color:'white'}} >
+                    <CustomButton className="popup-close-button" onClick={onRequestClose}>
+                        X
+                    </CustomButton>
                     <div style={{position:'relative', left:'20px'}}><br />
                         <h3><u>{layerConfig.titel}</u></h3>
                         <table><tbody><tr><td>Klik in een laag voor meer info...</td></tr></tbody></table> <br />

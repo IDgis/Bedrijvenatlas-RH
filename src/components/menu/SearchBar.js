@@ -1,89 +1,82 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 
 import Select from 'ol/interaction/Select';
 import Icon from 'ol/style/Icon';
 import Style from 'ol/style/Style';
-import AutoComplete from 'material-ui/AutoComplete';
-import axios from 'axios';
 
-class SearchBar extends React.Component {
+import Autocomplete from '@material-ui/lab/Autocomplete';
+import TextField from '@material-ui/core/TextField';
 
-    state = {
-        searchText: '',
-        searchFields: [],
-        listStyleWidth: '400px'
-    };
+const SearchBar = ({ settings, map, updateLegenda }) => {
 
-    async componentDidMount() {
-        const {settings} = this.props;
-        const kvkBedrijven = settings.kvkBedrijven;
-        const detailHandel = settings.detailHandel;
+    const [options, setOptions] = useState([]);
 
-        let resultsKvk = [];
-        let resultsDetailHandel = [];
+    useEffect(() => {
+        const createGetFeatureUrl = (featureObj) => (
+            `${featureObj.url}?service=WFS&version=1.1.0&request=GetFeature&outputFormat=application/json` +
+            `&resultType=results&typeName=${featureObj.namespace}:${featureObj.featureTypes[0]}`
+        );
+
+        const initializetOptions = async (url, cancelTokenSource) => {
+            const response = await axios.get(url, {
+                cancelToken: cancelTokenSource.token
+            });
+
+            const searchFieds = [];
+            const data = response.data;
+            const features = data["features"];
+            for (const feature in features) {
+                const naam = features[feature]["properties"][settings.searchConfig.bedrijfsNaam];
+                const oms = features[feature]["properties"][settings.searchConfig.sbiOmschrijving];
+                searchFieds.push(naam + " | " + oms);
+            }
+
+            // Add new options
+            setOptions(oldOptions => [...oldOptions, ...searchFieds].sort());
+        };
+
+        const cancelTokenSource = axios.CancelToken.source();
+        const { kvkBedrijven, detailHandel } = settings;
+
+        // Clear all previous options
+        setOptions([]);
 
         if (Object.keys(kvkBedrijven.namen).length > 0) {
-            const urlKvk = this.createGetFeatureUrl(kvkBedrijven);
-            resultsKvk = await this.getSearchFields(urlKvk);
+            const urlKvk = createGetFeatureUrl(kvkBedrijven);
+            initializetOptions(urlKvk, cancelTokenSource);
         }
 
         if (Object.keys(detailHandel.namen).length > 0) {
-            const urlDetailHandel = this.createGetFeatureUrl(detailHandel);
-            resultsDetailHandel = await this.getSearchFields(urlDetailHandel);
+            const urlDetailHandel = createGetFeatureUrl(detailHandel);
+            initializetOptions(urlDetailHandel, cancelTokenSource);
         }
-        
-        const searchFields = [...resultsKvk, ...resultsDetailHandel].sort();
 
-        this.setState({ searchFields });
-    }
+        return () => {
+            cancelTokenSource.cancel();
+        };
+    }, [settings]);
 
-    createGetFeatureUrl = (featureObj) => (
-        `${featureObj.url}?service=WFS&version=1.1.0&request=GetFeature&outputFormat=application/json` +
-            `&resultType=results&typeName=${featureObj.namespace}:${featureObj.featureTypes[0]}`
-    )
 
-    getSearchFields = (url) => {
-        const { settings } = this.props;
-        return axios.get(url).then(response => {
-            const searchFields = [];
-            const data = response.data;
-            const features = data['features'];
-            for (let feature in features) {
-                const naam = features[feature]['properties'][settings.searchConfig.bedrijfsNaam];
-                const oms = features[feature]['properties'][settings.searchConfig.sbiOmschrijving];
-                searchFields.push(naam + ' | ' + oms);
-            }
-
-            return searchFields;
-        });
-    }
-
-    handleUpdateInput = (searchText) => {
-        this.setState({ searchText });
-    }
-
-    selectFeature = (searchText) => {
-        this.setState({ searchText: '' });
-
+    const onChange = (e) => {
         // Look for the searched feature in the correct layer
-        const { map, updateLegenda, settings } = this.props;
         const { kvkBedrijven, detailHandel, gemeenteConfig } = settings;
         const layers = map.getLayers();
+        const searchText = e.target.textContent;
 
         layers.forEach(layer => {
-            if (layer.get('title') === kvkBedrijven.naam || layer.get('title') === detailHandel.naam) {
+            if (layer.get("title") === kvkBedrijven.naam || layer.get("title") === detailHandel.naam) {
                 const source = layer.getSource();
-                if (source.getState() === 'ready' && source.getFeatures().length > 0) {
+                if (source.getState() === "ready" && source.getFeatures().length > 0) {
                     const features = source.getFeatures();
 
-                    for (let i in features) {
-                        // Find the feature with the correct name
-                        const search = features[i].get('BEDR_NAAM') + ' | ' + features[i].get('SBI_OMSCHR');
+                    for (const feature of features) {
+                        const search = feature.get("BEDR_NAAM") + " | " + feature.get("SBI_OMSCHR");
                         if (search === searchText) {
                             // Center around the coordinates of the found feature
                             // Also zoom in to the feature and set the layer visible
-                            const coords = features[i].getGeometry().getCoordinates();
-                            this.flyTo(coords[0], function(){});
+                            const coords = feature.getGeometry().getCoordinates();
+                            flyTo(coords[0], function() {});
                             layer.setVisible(true);
 
                             // Select the found feature
@@ -108,7 +101,7 @@ class SearchBar extends React.Component {
                                 ]
                             });
                             map.addInteraction(select);
-                            select.getFeatures().push(features[i]);
+                            select.getFeatures().push(feature);
 
                             break;
                         }
@@ -118,17 +111,16 @@ class SearchBar extends React.Component {
         });
 
         updateLegenda();
-    }
+    };
 
-    flyTo = (location, done) => {
-        const {map} = this.props;
+    const flyTo = (location, done) => {
         const duration = 3000;
         const view = map.getView();
         const zoom = view.getZoom();
         let parts = 2;
         let called = false;
 
-        function callback(complete) {
+        const callback = (complete) => {
             --parts;
             if (called) {
                 return;
@@ -137,7 +129,7 @@ class SearchBar extends React.Component {
                 called = true;
                 done(complete);
             }
-        }
+        };
 
         view.animate({
             center: location,
@@ -150,40 +142,20 @@ class SearchBar extends React.Component {
             zoom: 17.5,
             duration: duration / 2
         }, callback);
-    }
+    };
 
-    filterResults = (searchText, key) => {
-        const texts = searchText.split(' ');
-        let inSearch = true;
-
-        for (let i in texts) {
-            inSearch = inSearch && ((key.toLowerCase()).indexOf(texts[i].toLowerCase()) !== -1);
-        }
-
-        return inSearch;
-    }
-
-    render() {
-        const {settings} = this.props;
-        const {searchFields, searchText, listStyleWidth} = this.state;
-        return(
-            <div className='searchbar' style={{backgroundColor: settings.gemeenteConfig.colorGemeente}}>
-                <AutoComplete 
-                    className='auto-complete'
-                    floatingLabelText="Zoek bedrijf"
-                    dataSource={searchFields}
-                    filter={this.filterResults}
-                    anchorOrigin={{horizontal: 'left', vertical: 'bottom'}}
-                    targetOrigin={{horizontal: 'left', vertical: 'top'}}
-                    maxSearchResults={10}
-                    searchText={searchText}
-                    onUpdateInput={this.handleUpdateInput}
-                    onNewRequest={this.selectFeature}
-                    listStyle={{backgroundColor:settings.gemeenteConfig.colorGemeente, opacity:0.8, borderRadius:'5px', width:listStyleWidth}}
-                />
-            </div>
-        );
-    }
-}
+    return (
+        <div className='searchbar' style={{backgroundColor: settings.gemeenteConfig.colorGemeente}}>
+            <Autocomplete
+                className="auto-complete"
+                clearOnEscape={true}
+                handleHomeEndKeys={true}
+                onChange={onChange}
+                options={options}
+                renderInput={ (params) => <TextField { ...params } label="Zoek bedrijf" variant="outlined" /> }
+            />
+        </div>
+    );
+};
 
 export default SearchBar;

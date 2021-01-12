@@ -1,8 +1,8 @@
 import React from 'react';
 
-import Paper from 'material-ui/Paper';
-import RaisedButton from 'material-ui/RaisedButton';
+import Paper from '@material-ui/core/Paper';
 
+import CustomButton from '../menu/CustomButton';
 
 class FeaturePopup extends React.Component {
 
@@ -18,7 +18,9 @@ class FeaturePopup extends React.Component {
                 return (
                     <tr key={`field_${index}`}>
                         <td colSpan={2} style={{width:'450px',paddingBottom:'5px',paddingTop:'5px'}}>
-                            <RaisedButton href={properties[key]} target='_blank' label={`Meer informatie (${alias})`} />
+                            <CustomButton href={properties[key]} target="_blank">
+                                Meer informatie {alias}
+                            </CustomButton>
                         </td>
                     </tr>
                 );
@@ -67,7 +69,9 @@ class FeaturePopup extends React.Component {
         return (
             <tr key={'field_bestemmingsplanbutton'}>
                 <td colSpan={2} style={{width:'450px',paddingBottom:'5px',paddingTop:'5px'}}>
-                    <RaisedButton href={ruimtelijkeplannenUrl} target='_blank' label='Bestemmingsplan' />
+                    <CustomButton href={ruimtelijkeplannenUrl} target="_blank">
+                        Bestemmingsplan
+                    </CustomButton>
                 </td>
             </tr>
         );
@@ -76,7 +80,9 @@ class FeaturePopup extends React.Component {
     getStreetviewButton = () => (
         <tr key={'field_streetview'}>
             <td colSpan={2} style={{width:'450px',paddingBottom:'5px',paddingTop:'5px'}}>
-                <RaisedButton label='Streetview' onClick={this.props.openStreetView} />
+                <CustomButton onClick={this.props.openStreetView}>
+                    Streetview
+                </CustomButton>
             </td>
         </tr>
     );
@@ -116,8 +122,10 @@ class FeaturePopup extends React.Component {
         const popupFields = [this.getMilieuCategorie(), ...this.getPopupFields()];
 
         return (
-            <Paper style={{position:'absolute', width:width, top:'60px', left:left, borderRadius:5, zIndex:10, backgroundColor:settings.gemeenteConfig.colorGemeente, opacity:0.8, color:'white'}} zDepth={5} >
-                <RaisedButton className='popup-close-button' label='X' onTouchTap={this.props.onRequestClose} />
+            <Paper style={{position:'absolute', width:width, top:'60px', left:left, borderRadius:5, zIndex:10, backgroundColor:settings.gemeenteConfig.colorGemeente, opacity:0.8, color:'white'}} >
+                <CustomButton className="popup-close-button" onClick={this.props.onRequestClose}>
+                    X
+                </CustomButton>
                 <div style={{position:'relative', left:'20px'}}><br />
                     <h3><u>{this.props.layer.get('title')}</u></h3>
                     <table><tbody>{popupFields}</tbody></table>

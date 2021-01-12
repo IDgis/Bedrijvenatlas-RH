@@ -1,226 +1,287 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
-class Legenda extends React.Component {
+const Legenda = ({ settings, map }) => {
 
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            legendaItems: []
-        }
-
-        this.addLegendaListener();
-    }
-
-    componentWillReceiveProps(props) {
-        const legendaItems = [];
-        const layers = props.map.getLayers();
-        const {settings} = props;
-
-        this.getFundaLegenda(layers, legendaItems, settings);
-        this.getKvkBedrijvenLegenda(layers, legendaItems, settings);
-        this.getDetailhandelLegenda(layers, legendaItems, settings);
-        this.getOverlayLayersLegenda(layers, legendaItems, settings);
-
-        this.setState({legendaItems});
-    }
+    const [legendaItems, setLegendaItems] = useState([]);
+    const [visibleLayers, setVisibleLayers] = useState([]);
 
     /**
      * Adds a listener for the Legenda component
      */
-    addLegendaListener = () => {
+    useEffect(() => {
         let draggingComponent = null;
         let offsetX;
         let offsetY;
 
-        // Handle mouse events
-
-        document.addEventListener('mousedown', e => {
+        // Mouse events
+        const mouseDownEvent = (e) => {
             const name = e.target.className;
-            if (name && typeof name === 'string' && name.indexOf('legenda') !== -1) {
-                const legenda = document.getElementById('legenda');
+            if (name && typeof name === "string" && name.indexOf("legenda") !== -1) {
+                const legenda = document.getElementById("legenda");
                 draggingComponent = e.target;
                 const evt = e || window.event;
 
                 offsetX = legenda.offsetLeft + legenda.offsetWidth - evt.clientX;
                 offsetY = evt.clientY - legenda.offsetTop;
             }
-        });
+        };
 
-        document.addEventListener('mouseup', e => {
+        const mouseUpEvent = (e) => {
             draggingComponent = null;
-        });
+        };
 
-        document.addEventListener('mousemove', e => {
+        const mouseMoveEvent = (e) => {
             if (draggingComponent) {
                 const evt = e || window.event;
-                const legenda = document.getElementById('legenda');
+                const legenda = document.getElementById("legenda");
 
-                legenda.style.right = (window.innerWidth - evt.clientX - offsetX) + 'px';
-                legenda.style.top = (evt.clientY - offsetY) + 'px';
+                legenda.style.right = (window.innerWidth - evt.clientX - offsetX) + "px";
+                legenda.style.top = (evt.clientY - offsetY) + "px";
             }
-        });
+        };
 
-        // Handle touch events
+        // Touch events
 
-        document.addEventListener('touchstart', e => {
+        const touchStartEvent = (e) => {
             const name = e.target.className;
-            if (name && name.indexOf('legenda') !== -1) {
-                const legenda = document.getElementById('legenda');
+            if (name && name.indexOf("legenda") !== -1) {
+                const legenda = document.getElementById("legenda");
                 draggingComponent = e.touches[0];
                 const evt = e.touches[0];
 
                 offsetX = legenda.offsetLeft + legenda.offsetWidth - evt.clientX;
                 offsetY = evt.clientY - legenda.offsetTop;
             }
-        });
+        };
 
-        document.addEventListener('touchend', e => {
+        const touchEndEvent = (e) => {
             draggingComponent = null;
-        });
+        };
 
-        document.addEventListener('touchmove', e => {
-            if (draggingComponent) {
-                const evt = e.touches[0];
-                const legenda = document.getElementById('legenda');
-                
-                legenda.style.right = (window.innerWidth - evt.clientX - offsetX) + 'px';
-                legenda.style.top = (evt.clientY - offsetY) + 'px';
-            }
-        });
-    }
+        const touchMoveEvent = (e) => {
+            const evt = e.touches[0];
+            const legenda = document.getElementById("legenda");
 
-    getFundaLegenda = (layers, legendaItems, settings) => {
-        const fundaItems = [];
+            legenda.style.right = (window.innerWidth - evt.clientX - offsetX) + "px";
+            legenda.style.top = (evt.clientY - offsetY) + "px";
+        };
 
-        layers.forEach((layer, index) => {
-            settings.fundaLayers.forEach(layerConfig => {
-                if (layer.get('title') === layerConfig.titel && layer.getVisible()) {
-                    fundaItems.push(
-                        <div key={`legenda_funda_${index}`}>
-                            <img className='legenda-icon' src={layerConfig.icon} alt="" /> {layerConfig.titel}
-                        </div>
-                    );
-                }
-            });
-        });
+        document.addEventListener("mousedown", mouseDownEvent);
+        document.addEventListener("mouseup", mouseUpEvent);
+        document.addEventListener("mousemove", mouseMoveEvent);
+        document.addEventListener("touchstart", touchStartEvent);
+        document.addEventListener("touchend", touchEndEvent);
+        document.addEventListener("touchmove", touchMoveEvent);
 
-        if (fundaItems.length > 0) {
-            legendaItems.push(
-                <div key="legenda_funda">
-                    <h3>Te Koop/Huur</h3>
-                     <p className='legenda-explantion'>Bedrijfs- en winkelpanden die volgens Funda te koop of te huur staan</p>
-                    {fundaItems}
-                </div>
-            );
-        }
-    }
+        return () => {
+            // Clean up events
+            document.removeEventListener("mousedown", mouseDownEvent);
+            document.removeEventListener("mouseup", mouseUpEvent);
+            document.removeEventListener("mousemove", mouseMoveEvent);
+            document.removeEventListener("touchstart", touchStartEvent);
+            document.removeEventListener("touchend", touchEndEvent);
+            document.removeEventListener("touchmove", touchMoveEvent);
+        };
+    }, []);
 
-    getKvkBedrijvenLegenda = (layers, legendaItems, settings) => {
-        const kvkBedrijven = settings.kvkBedrijven;
-        const kvkItems = [];
-
-        layers.forEach((layer, index) => {
-            if (layer.get('title') === kvkBedrijven.naam && layer.getVisible()) {
+    useEffect(() => {
+        map?.getLayers().forEach(layer => {
+            const { kvkBedrijven, detailHandel } = settings;
+            const title = layer.get("title");
+            const isVisible = visibleLayers.filter(l => l === title).length > 0;
+    
+            if (title === kvkBedrijven.naam) {
                 const source = layer.getSource();
-                if (source.getState() === 'ready') {
+                if (source.getState() === "ready") {
                     const features = source.getFeatures();
                     if (features.length > 0) {
                         const category = features[0].get(kvkBedrijven.filterColumn);
-                        const categoryIcon = kvkBedrijven.icons[category];
                         const categoryName = kvkBedrijven.namen[category];
+                        const isKvkVisible = visibleLayers.filter(l => l === categoryName).length > 0;
 
-                        kvkItems.push(
-                            <div key={`legenda_kvk_${index}`}>
-                                <img className='legenda-icon' src={categoryIcon} alt="" /> {categoryName}
+                        if (layer.getVisible()) {
+                            if (!isKvkVisible) {
+                                setVisibleLayers(oldVisibleLayers => [...oldVisibleLayers, categoryName]);
+                            }
+                        } else if (isKvkVisible) {
+                            setVisibleLayers(oldVisibleLayers => [...oldVisibleLayers.filter(l => l !== categoryName)]);
+                        }
+                    }
+                }
+            } else if (title === detailHandel.naam) {
+                const source = layer.getSource();
+                if (source.getState() === "ready") {
+                    const features = source.getFeatures();
+                    if (features.length > 0) {
+                        const category = features[0].get(detailHandel.filterColumn);
+                        const categoryName = detailHandel.namen[category];
+                        const isDetailHandelVisible = visibleLayers.filter(l => l === categoryName).length > 0;
+
+                        if (layer.getVisible()) {
+                            if (!isDetailHandelVisible) {
+                                setVisibleLayers(oldVisibleLayers => [...oldVisibleLayers, categoryName]);
+                            }
+                        } else if (isDetailHandelVisible) {
+                            setVisibleLayers(oldVisibleLayers => [...oldVisibleLayers.filter(l => l !== categoryName)]);
+                        }
+                    }
+                }
+            } else if (layer.getVisible()) {
+                if (!isVisible) {
+                    setVisibleLayers(oldVisibleLayers => [...oldVisibleLayers, title]);
+                }
+            } else if (isVisible) {
+                setVisibleLayers(oldVisibleLayers => [...oldVisibleLayers.filter(l => l !== title)]);
+            }
+        });
+    });
+
+    useEffect(() => {
+        const getFundaLegenda = () => {
+            const fundaLegendaItems = [];
+            const fundaItems = [];
+
+            map?.getLayers().forEach(layer => {
+                settings.fundaLayers.forEach(layerConfig => {
+                    if (layer.get("title") === layerConfig.titel && layer.getVisible()) {
+                        fundaItems.push(
+                            <div key={`legenda_funda_${layerConfig.titel}`}>
+                                <img className="legenda-icon" src={ layerConfig.icon } alt="" /> { layerConfig.titel }
+                            </div>
+                        );
+                    }
+                });
+            });
+
+            if (fundaItems.length > 0) {
+                fundaLegendaItems.push(
+                    <div key="legenda_funda">
+                        <h3>Te Koop/Huur</h3>
+                        <p className="legenda-explanation">Bedrijfs- en winkelpanden die volgens Funda te koop of the huur staan</p>
+                        { fundaItems }
+                    </div>
+                );
+            }
+            return fundaLegendaItems;
+        };
+
+        const getKvkBedrijvenLegenda = () => {
+            const kvkBedrijven = settings.kvkBedrijven;
+            const kvkItems = [];
+            const kvkLegendaItems = [];
+
+            map?.getLayers().forEach(layer => {
+                if (layer.get("title") === kvkBedrijven.naam && layer.getVisible()) {
+                    const source = layer.getSource();
+                    if (source.getState() === "ready") {
+                        const features = source.getFeatures();
+                        if (features.length > 0) {
+                            const category = features[0].get(kvkBedrijven.filterColumn);
+                            const categoryIcon = kvkBedrijven.icons[category];
+                            const categoryName = kvkBedrijven.namen[category];
+
+                            kvkItems.push(
+                                <div key={`legenda_kvk_${categoryName}`}>
+                                    <img className="legenda-icon" src={ categoryIcon } alt="" /> { categoryName }
+                                </div>
+                            );
+                        }
+                    }
+                }
+            });
+
+            if (kvkItems.length > 0) {
+                kvkLegendaItems.push(
+                    <div key="legenda_kvk">
+                        <h3>{ kvkBedrijven.naam }</h3>
+                        { kvkBedrijven.omschrijving ? <p className='legenda-explanation'>{kvkBedrijven.omschrijving}</p> : null }
+                        { kvkItems }
+                    </div>
+                );
+            }
+
+            return kvkLegendaItems;
+        };
+
+        const getDetailhandelLegenda = () => {
+            const detailHandel = settings.detailHandel;
+            const detailHandelItems = [];
+            const detailHandelLegendaItems = [];
+
+            map?.getLayers().forEach(layer => {
+                if (layer.get("title") === detailHandel.naam && layer.getVisible()) {
+                    const source = layer.getSource();
+                    if (source.getState() === "ready" && source.getFeatures().length > 0) {
+                        const category = source.getFeatures()[0].get(detailHandel.filterColumn);
+                        const categoryIcon = detailHandel.icons[category];
+                        const categoryName = detailHandel.namen[category];
+
+                        detailHandelItems.push(
+                            <div key={`legenda_detail_${categoryName}`}>
+                                <img className="legenda-icon" src={ categoryIcon } alt="" /> { categoryName }
                             </div>
                         );
                     }
                 }
-            }
-        });
-
-        if (kvkItems.length > 0) {
-            legendaItems.push(
-                <div key="legenda_kvk">
-                    <h3>{kvkBedrijven.naam}</h3>
-                    { kvkBedrijven.omschrijving ? <p className='legenda-explantion'>{kvkBedrijven.omschrijving}</p> : null }
-                    {kvkItems}
-                </div>
-            );
-        }
-    }
-
-    getDetailhandelLegenda = (layers, legendaItems, settings) => {
-        const detailHandel = settings.detailHandel;
-        const detailHandelItems = [];
-
-        layers.forEach((layer, i) => {
-            if (layer.get('title') === detailHandel.naam && layer.getVisible()) {
-                const source = layer.getSource();
-                if (source.getState() === 'ready' && source.getFeatures().length > 0) {
-                    const features = source.getFeatures();
-                    const category = features[0].get(detailHandel.filterColumn);
-                    const categoryIcon = detailHandel.icons[category];
-                    const categoryName = detailHandel.namen[category];
-
-                    detailHandelItems.push(
-                        <div key={`legenda_detail_${i}`}>
-                            <img className='legenda-icon' src={categoryIcon} alt="" /> { categoryName }
-                        </div>
-                    );
-                }
-            }
-        });
-
-        if (detailHandelItems.length > 0) {
-            legendaItems.push(
-                <div key="legenda_detail">
-                    <h3>{ detailHandel.naam }</h3>
-                    { detailHandel.omschrijving ? <p className='legenda-explantion'>{ detailHandel.omschrijving }</p> : null }
-                    { detailHandelItems }
-                </div>
-            );
-        }
-    }
-
-    getOverlayLayersLegenda = (layers, legendaItems, settings) => {
-        layers.forEach((layer, index) => {
-            settings.overlayLayers.forEach(layerConfig => {
-                if (layer.get('title') === layerConfig.titel && layer.getVisible() && layerConfig.service === 'wms') {
-                    const url = `${layerConfig.url}&request=GetLegendGraphic&layer=${layerConfig.layers}&format=image/png&width=20&height=20&transparent=false&legend_options=fontColor:0x000;fontName:Roboto`;
-
-                    legendaItems.push(
-                        <div key={`legenda_${index}`}>
-                            <h3>{layer.get('title')}</h3>
-                            { layerConfig.omschrijving ? <p className='legenda-explantion'>{layerConfig.omschrijving}</p> : null }
-                            <img src={url} alt="" />
-                        </div>
-                    );
-                }
             });
-        });
-    }
 
-    render() {
-        const {legendaItems} = this.state;
-        const {settings} = this.props;
-
-        if (legendaItems.length > 0) {
-            return(
-                <div id='legenda' className='legenda' style={{backgroundColor:settings.gemeenteConfig.colorGemeente}}>
-                    <h2 id='legendaheader' className='legenda-title'>Legenda</h2><hr />
-                    <div className='legenda-list'>
-                        {legendaItems}
+            if (detailHandelItems.length > 0) {
+                detailHandelLegendaItems.push(
+                    <div key="legenda_detail">
+                        <h3>{ detailHandel.naam }</h3>
+                        { detailHandel.omschrijving ? <p className='legenda-explanation'>{ detailHandel.omschrijving }</p> : null }
+                        { detailHandelItems }
                     </div>
+                );
+            }
+
+            return detailHandelLegendaItems;
+        };
+
+        const getOverlayLayersLegenda = () => {
+            const overlayLayersLegendaItems = [];
+
+            map?.getLayers().forEach(layer => {
+                settings.overlayLayers.forEach(layerConfig => {
+                    if (layer.get("title") === layerConfig.titel && layer.getVisible() && layerConfig.service === "wms") {
+                        const url = `${layerConfig.url}&request=GetLegendGraphic&layer=${layerConfig.layers}&format=image/png&width=20&height=20&transparent=false&legend_options=fontColor:0x000;fontName:Roboto`;
+
+                        overlayLayersLegendaItems.push(
+                            <div key={`legenda_overlay_${layerConfig.titel}`}>
+                                <h3>{ layer.get("title") }</h3>
+                                { layerConfig.omschrijving ? <p className='legenda-explantion'>{layerConfig.omschrijving}</p> : null }
+                                <img src={url} alt="" />
+                            </div>
+                        );
+                    }
+                });
+            });
+
+            return overlayLayersLegendaItems;
+        };
+
+        const fundaItems = getFundaLegenda();
+        const kvkItems = getKvkBedrijvenLegenda();
+        const detailHandelItems = getDetailhandelLegenda();
+        const overlayLayersItems = getOverlayLayersLegenda();
+        
+        setLegendaItems([...fundaItems, ...kvkItems, ...detailHandelItems, ...overlayLayersItems]);
+    }, [map, settings, visibleLayers]);
+
+    if (legendaItems.length > 0) {
+        return (
+            <div id='legenda' className='legenda' style={{backgroundColor:settings.gemeenteConfig.colorGemeente}}>
+                <h2 id='legendaheader' className='legenda-title'>Legenda</h2><hr />
+                <div className='legenda-list'>
+                    { legendaItems }
                 </div>
-            );
-        } else {
-            return(
-                <div style={{display:'none'}} ></div>
-            );
-        }
+            </div>
+        );
+    } else {
+        return (
+            <div style={{display:'none'}}></div>
+        );
     }
-}
+};
 
 export default Legenda;
