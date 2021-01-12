@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 const listItemStyle = {
     border: '10px none',
@@ -22,94 +22,61 @@ const listItemStyle = {
     padding: '0px 72px'
 };
 
-class BedrijvenLaag extends React.Component {
+const BedrijvenLaag = ({ map, layer, updateParent, updateLegenda }) => {
 
-    constructor(props) {
-        super(props);
+    const [visibility, setVisibility] = useState({});
 
-        this.state = {
-            menuOpen: false
-        }
-    }
-
-    componentDidMount() {
-        this.setDefaultVisibility();
-        this.updateVisibility();
-    }
-
-    componentWillReceiveProps(nextProps) {
-        this.setState({
-            map: nextProps.map
+    // Initialize the default visibility to false
+    useEffect(() => {
+        Object.keys(layer.icons).forEach(category => {
+            setVisibility(v => ({...v, [category]: false}));
         });
-        
-        this.updateVisibility();
-    }
+    }, [layer.icons]);
 
-    setDefaultVisibility = () => {
-        Object.keys(this.props.layer.icons).forEach(category => {
-            this.setState({
-                [category]: false
-            });
-        });
-    }
-
-    updateVisibility = () => {
-        const { map, layer } = this.props;
-        if (map !== null) {
-            map.getLayers().forEach(l => {
-                if (l.get('title') === layer.naam) {
-                    const source = l.getSource();
-                    if (source.getState() === 'ready' && source.getFeatures().length > 0) {
-                        const features = source.getFeatures();
-                        const category = features[0].get(layer.filterColumn);
-                        this.setState({
-                            [category]: l.getVisible()
-                        });
-                    }
+    useEffect(() => {
+        map?.getLayers().forEach(l => {
+            if (l.get("title") === layer.naam) {
+                const source = l.getSource();
+                if (source.getState() === "ready" && source.getFeatures().length > 0) {
+                    const features = source.getFeatures();
+                    const category = features[0].get(layer.filterColumn);
+                    setVisibility(v => ({...v, [category]: l.getVisible()}));
                 }
-            });
-        }
-    }
+            }
+        });
+    }, [map, layer.filterColumn, layer.naam]);
 
     /**
      * Show the icons of the selected branche on the map
      */
-    selectBranche = (event, cat) => {
-        const { map, layer, updateParent, updateLegenda } = this.props;
-
-        if (map !== null) {
-            map.getLayers().forEach(l => {
-                if (l.get('title') === layer.naam) {
-                    const source = l.getSource();
-                    if (source.getState() === 'ready' && source.getFeatures().length > 0) {
-                        const features = source.getFeatures();
-                        const category = features[0].get(layer.filterColumn);
-                        if (category === cat) {
-                            l.setVisible(!l.getVisible());
-                            this.setState({
-                                [category]: l.getVisible()
-                            });
-                        }
+    const selectBranche = (event, cat) => {
+        map?.getLayers().forEach(l => {
+            if (l.get("title") === layer.naam) {
+                const source = l.getSource();
+                if (source.getState() === "ready" && source.getFeatures().length > 0) {
+                    const features = source.getFeatures();
+                    const category = features[0].get(layer.filterColumn);
+                    if (category === cat) {
+                        l.setVisible(!l.getVisible());
+                        setVisibility({...visibility, [category]: l.getVisible()});
                     }
                 }
+            }
 
-                if (updateParent !== undefined) {
-                    updateParent();
-                }
-            });
-            
-            updateLegenda();
-        }
-    }
+            if (updateParent !== undefined) {
+                updateParent();
+            }
+        });
 
-    getOpacity = (category) => {
+        updateLegenda();
+    };
+
+    const getOpacity = (category) => {
         let isVisible;
-        const { map, layer } = this.props;
-
-        map.getLayers().forEach(l => {
-            if (l.get('title') === layer.naam) {
+        map?.getLayers().forEach(l => {
+            if (l.get("title") === layer.naam) {
                 const source = l.getSource();
-                if (source.getState() === 'ready' && source.getFeatures().length > 0) {
+                if (source.getState() === "ready" && source.getFeatures().length > 0) {
                     const c = source.getFeatures()[0].get(layer.filterColumn);
                     if (c === category) {
                         isVisible = l.getVisible();
@@ -118,54 +85,48 @@ class BedrijvenLaag extends React.Component {
             }
         });
 
-        return isVisible ? '1' : '0';
-    }
+        return isVisible ? "1" : "0";
+    };
 
-    render() {
-        const { map, layer } = this.props;
-
-        const icons = Object.keys(layer.icons).filter((category) => {
-            let layerPresent = false;
-            map.getLayers().forEach(l => {
-                if (l.get('title') === layer.naam) {
-                    const source = l.getSource();
-                    if (source.getState() === 'ready' && source.getFeatures().length > 0) {
-                        const c = source.getFeatures()[0].get(layer.filterColumn);
-                        layerPresent = layerPresent || (c === category);
-                    }
+    const icons = Object.keys(layer.icons).filter((category) => {
+        let layerPresent = false;
+        map?.getLayers().forEach(l => {
+            if (l.get("title") === layer.naam) {
+                const source = l.getSource();
+                if (source.getState() === "ready" && source.getFeatures().length > 0) {
+                    const c = source.getFeatures()[0].get(layer.filterColumn);
+                    layerPresent = layerPresent || (c === category);
                 }
-            });
-
-            return layerPresent;
+            }
         });
 
-        return (
-            <div>
-            {
-                icons.map((category, i) => (
-                    <div className='list-item' style={listItemStyle} key={category + i} >
-                        <div style={{cursor:'pointer',position:'absolute',overflow:'visible',display:'block',height:'24px',width:'24px',top:'0px',margin:'5px 12px',left:'4px'}} onClick={(e) => this.selectBranche(e, category)}>
-                            <div style={{display:'flex',width:'100%',height:'100%'}}>
-                                <div style={{transition:'all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms',float:'left',position:'relative',display:'block',flexShrink:'0',width:'24px',marginRight:'16px',marginLeft:'0px',height:'24px',fill:'white'}}>
-                                    <div>
-                                        <svg viewBox="0 0 24 24" style={{display:'inline-block',color:'rgba(0, 0, 0, 0.87)',fill:'white',height:'24px',width:'24px',transition:'opacity 1000ms cubic-bezier(0.23, 1, 0.32, 1) 200ms',position:'absolute',opacity:'1'}}><path d="M19 5v14H5V5h14m0-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"></path></svg>
-                                        <svg viewBox="0 0 24 24" style={{display:'inline-block',color:'rgba(0, 0, 0, 0.87)',fill:'white',height:'24px',width:'24px',transition:'opacity 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms, transform 0ms cubic-bezier(0.23, 1, 0.32, 1) 450ms',position:'absolute',opacity:this.getOpacity(category)}}><path d="M19 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.11 0 2-.9 2-2V5c0-1.1-.89-2-2-2zm-9 14l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"></path></svg>
-                                    </div>
+        return layerPresent;
+    });
+
+    return (
+        <div>
+        {
+            icons.map((category, i) => (
+                <div className='list-item' style={listItemStyle} key={category + i} >
+                    <div style={{cursor:'pointer',position:'absolute',overflow:'visible',display:'block',height:'24px',width:'24px',top:'0px',margin:'5px 12px',left:'4px'}} onClick={(e) => selectBranche(e, category)}>
+                        <div style={{display:'flex',width:'100%',height:'100%'}}>
+                            <div style={{transition:'all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms',float:'left',position:'relative',display:'block',flexShrink:'0',width:'24px',marginRight:'16px',marginLeft:'0px',height:'24px',fill:'white'}}>
+                                <div>
+                                    <svg viewBox="0 0 24 24" style={{display:'inline-block',color:'rgba(0, 0, 0, 0.87)',fill:'white',height:'24px',width:'24px',transition:'opacity 1000ms cubic-bezier(0.23, 1, 0.32, 1) 200ms',position:'absolute',opacity:'1'}}><path d="M19 5v14H5V5h14m0-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"></path></svg>
+                                    <svg viewBox="0 0 24 24" style={{display:'inline-block',color:'rgba(0, 0, 0, 0.87)',fill:'white',height:'24px',width:'24px',transition:'opacity 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms, transform 0ms cubic-bezier(0.23, 1, 0.32, 1) 450ms',position:'absolute',opacity:getOpacity(category)}}><path d="M19 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.11 0 2-.9 2-2V5c0-1.1-.89-2-2-2zm-9 14l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"></path></svg>
                                 </div>
                             </div>
                         </div>
-                        <div>
-                            {
-                                <img size="40" color="#757575" src={layer.icons[category]} alt="" style={{color:'rgb(117, 117, 117)',backgroundColor:'rgb(188, 188, 188)',display:'block',alignItems:'center',justifyContent:'center',fontSize:'20px',borderRadius:'50%',height:'24px',width:'24px',position:'absolute',top:'0px',margin:'12px',right:'4px'}} />
-                            }
-                            { layer.namen[category] }
-                        </div>
                     </div>
-                ))
-            }
-            </div>
-        );
-    }
-}
+                    <div>
+                        <img size="40" color="#757575" src={layer.icons[category]} alt="" style={{color:'rgb(117, 117, 117)',backgroundColor:'rgb(188, 188, 188)',display:'block',alignItems:'center',justifyContent:'center',fontSize:'20px',borderRadius:'50%',height:'24px',width:'24px',position:'absolute',top:'0px',margin:'12px',right:'4px'}} />
+                        { layer.namen[category] }
+                    </div>
+                </div>
+            ))
+        }
+        </div>
+    );
+};
 
 export default BedrijvenLaag;

@@ -3,7 +3,10 @@ node_modules/
 .project
 .classpath
 build
+.eslintcache
 
 # IntelliJ
 .idea/
 *.iml
+*.ipr
+*.iws

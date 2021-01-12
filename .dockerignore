@@ -4,6 +4,11 @@ node_modules
 LICENSE
 README.md
 build
+start-*.sh
+deploy-*.sh
+settings-*.json
+docker-compose.yml
+Dockerfile
 
 # IntelliJ
 *.iml

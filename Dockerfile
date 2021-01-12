@@ -1,6 +1,9 @@
 FROM node:10.15.0
 
+LABEL maintainer="IDgis bv <info@idgis.nl>"
+
 # Create app directory
+WORKDIR /usr/src/app
 RUN mkdir -p /opt/src/app \
     && mkdir -p /usr/src/app/build/data
 
