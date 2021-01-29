@@ -143,9 +143,14 @@
 
     "baseLayers": [
         {
-            "service": "tms",
+            "service": "wmts",
             "titel": "BRT",
-            "url": "https://geodata.nationaalgeoregister.nl/tms/1.0.0/brtachtergrondkaart/{z}/{x}/{-y}.png",
+            "url": "https://geodata.nationaalgeoregister.nl/tiles/service/wmts",
+            "layer": "brtachtergrondkaart",
+            "matrixSet": "EPSG:28992",
+            "format": "image/png8",
+            "style": "default",
+            "origin": [ -285401.92,903401.92 ],
             "resolutions": [ 3440.64, 1720.32, 860.16, 430.08, 215.04, 107.52, 53.76, 26.88, 13.44, 6.72, 3.36, 1.68, 0.84, 0.42, 0.21, 0.105, 0.0525 ],
             "omschrijving": "BRT Achtergrond",
             "visible": true
