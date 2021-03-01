@@ -187,7 +187,7 @@
         {
             "service": "wms",
             "titel": "Kadastrale percelen",
-            "url": "https://geodata.nationaalgeoregister.nl/kadastralekaartv3/ows?SERVICE=WMS&",
+            "url": "https://geodata.nationaalgeoregister.nl/kadastralekaart/wms/v4_0?service=WMS&",
             "format": "image/png",
             "layers": "kadastralekaart",
             "tiling": true,
