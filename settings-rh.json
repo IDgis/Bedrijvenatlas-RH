@@ -120,8 +120,8 @@
         {
             "service": "wmts",
             "titel": "BRT",
-            "url": "https://geodata.nationaalgeoregister.nl/tiles/service/wmts",
-            "layer": "brtachtergrondkaart",
+            "url": "https://service.pdok.nl/brt/achtergrondkaart/wmts/v2_0",
+            "layer": "grijs",
             "matrixSet": "EPSG:28992",
             "format": "image/png8",
             "style": "default",
