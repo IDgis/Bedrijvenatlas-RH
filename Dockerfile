@@ -7,13 +7,16 @@ WORKDIR /usr/src/app
 RUN mkdir -p /opt/src/app \
     && mkdir -p /usr/src/app/build/data
 
-# Copy source code to image
-COPY . /opt/src/app
+# Copy package JSON to image
+COPY package*.json /opt/src/app/
 
 # Install and configure 'serve' and install dependencies
 RUN cd /opt/src/app \
     && npm install -g serve \
     && npm install
+
+# Copy source code to image
+COPY . /opt/src/app
 
 # Give user permission to run script
 RUN chmod u+x /opt/src/app/run.sh
