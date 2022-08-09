@@ -25,7 +25,7 @@ RUN chmod u+x /opt/src/app/run.sh
 VOLUME ["/usr/src/app/build/data"]
 
 # Expose port for service
-EXPOSE 5000
+EXPOSE 3000
 
 # Build app and start server from script
 CMD ["/opt/src/app/run.sh"]
