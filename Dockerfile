@@ -12,7 +12,7 @@ COPY package*.json /opt/src/app/
 
 # Install and configure 'serve' and install dependencies
 RUN cd /opt/src/app \
-    && npm install -g serve \
+    && npm install -g serve@13.0.2 \
     && npm install
 
 # Copy source code to image
@@ -20,6 +20,7 @@ COPY . /opt/src/app
 
 # Give user permission to run script
 RUN chmod u+x /opt/src/app/run.sh
+RUN chmod u+x /opt/src/app/copy-json-data.sh
 
 # Configure volumes for data persistence
 VOLUME ["/usr/src/app/build/data"]
