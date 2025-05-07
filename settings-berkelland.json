@@ -11,7 +11,7 @@
         "favicon": "favicon-bkl.ico",
         "cssFile": "berkelland.css",
         "homePage": "https://www.gemeenteberkelland.nl/",
-        "contactPage": "https://www.gemeenteberkelland.nl/Ondernemers/Rij_2/Team_EZ/Economische_Zaken/Team_EZ",
+        "contactPage": "https://www.gemeenteberkelland.nl/team-economische-zaken/",
         "logo": "/berkelland/images/logo.png",
         "altText": "Berkelland",
         "colorGemeente": "#004D93",
@@ -174,7 +174,7 @@
         {
             "service": "wmts",
             "titel": "Luchtfoto",
-            "url": "https://geodata.nationaalgeoregister.nl/luchtfoto/rgb/wmts",
+            "url": "https://service.pdok.nl/hwh/luchtfotorgb/wmts/v1_0",
             "layer": "Actueel_ortho25",
             "matrixSet": "EPSG:28992",
             "format": "image/jpeg",
@@ -187,7 +187,7 @@
         {
             "service": "wms",
             "titel": "Kadastrale percelen",
-            "url": "https://geodata.nationaalgeoregister.nl/kadastralekaart/wms/v4_0?service=WMS&",
+            "url": "https://service.pdok.nl/kadaster/kadastralekaart/wms/v5_0?service=WMS&",
             "format": "image/png",
             "layers": "kadastralekaart",
             "tiling": true,
@@ -206,9 +206,9 @@
         {
             "service": "wms",
             "titel": "Bedrijventerreinen",
-            "url": "https://bedrijventerreinen.gelderland.nl/geoserver/IBIS/wms?SERVICE=WMS&",
+            "url": "https://bedrijventerreinen.gelderland.nl/geoserver/IBIS_Publiek/wms?SERVICE=WMS&",
             "format": "image/png",
-            "layers": "bedrijventerrein",
+            "layers": "v_publieke_terreinen",
             "tiling": false,
             "omschrijving": "IBIS Bedrijventerreinen",
             "visible": false
@@ -217,9 +217,9 @@
             "service": "wms",
             "titel": "Bedrijvenkavels",
             "type": "nieuwbouw",
-            "url": "https://bedrijventerreinen.gelderland.nl/geoserver/IBIS/wms?SERVICE=WMS&",
+            "url": "https://bedrijventerreinen.gelderland.nl/geoserver/IBIS_Publiek/wms?SERVICE=WMS&",
             "format": "image/png",
-            "layers": "bedrijvenkavels",
+            "layers": "v_publieke_kavels",
             "tiling": false,
             "omschrijving": "IBIS Bedrijvenkavels",
             "visible": false
