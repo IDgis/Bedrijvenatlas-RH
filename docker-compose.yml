@@ -1,5 +1,3 @@
-version: '2'
-
 volumes:
   vastgoedfiles:
 
@@ -8,7 +6,7 @@ services:
     restart: always
     image: idgis/bedrijvenatlas:${BA_VERSION}
     ports:
-      - "80:5000"
+      - "80:3000"
     environment:
       - REACT_APP_SETTINGS=${REACT_APP_SETTINGS}
     volumes:

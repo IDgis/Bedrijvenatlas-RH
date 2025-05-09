@@ -3,7 +3,7 @@
 echo deploying bedrijvenatlas Rijssen-Holten...
 
 export BA_VERSION=1.4.1
-export FUNDA_SCRAPER_VERSION=1.4.5
+export FUNDA_SCRAPER_VERSION=1.4.7
 
 export REACT_APP_SETTINGS="$(cat ./settings-rh.json)"
 export GEMEENTE=gemeente-rijssen-holten
@@ -11,6 +11,4 @@ export BEDRIJVENTERREINEN_FEATURE_BOUNDS="https://rijssen-holten-pub.geopublishe
 
 export COMPOSE_TLS_VERSION=TLSv1_2
 
-docker-compose \
-	-p rh \
-	up -d
+docker compose -p dev up -d
