@@ -9,7 +9,6 @@ import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 
 import FeatureInfoPopup from '../popup/FeatureInfoPopup';
 import FeaturePopup from '../popup/FeaturePopup';
-import StreetView from '../streetview/StreetView';
 import Viewer from '../viewer/Viewer';
 
 const style = {
@@ -69,8 +68,7 @@ class MapLayout extends React.Component {
 
         this.state = {
             menuOpen: false,
-            featurePopup: <div></div>,
-            streetView: <div></div>
+            featurePopup: <div></div>
         };
 
         this.location = [0,0];
@@ -124,7 +122,7 @@ class MapLayout extends React.Component {
 
                 layerNames.forEach(name => {
                     if (title === name) {
-                        popup = <FeaturePopup 
+                        popup = <FeaturePopup
                                     map={map}
                                     settings={settings}
                                     feature={feature}
@@ -196,25 +194,16 @@ class MapLayout extends React.Component {
     }
 
     /**
-     * Opens streetview in the bottom right of the screen
+     * Opens Google Maps Street View in a new tab for the selected location.
      */
     openStreetView = (event) => {
         proj4.defs('EPSG:28992', '+proj=sterea +lat_0=52.15616055555555 +lon_0=5.38763888888889 +k=0.9999079 +x_0=155000 +y_0=463000 +ellps=bessel +towgs84=565.417,50.3319,465.552,-0.398957,0.343988,-1.8774,4.0725 +units=m +no_defs');
         register(proj4);
-        let coord = transform([this.location[0],this.location[1]],'EPSG:28992','EPSG:4326');
 
-        this.setState({
-            streetView: <StreetView coords={coord} close={this.closeStreetView} />
-        });
-    }
+        const coords = transform([this.location[0], this.location[1]], 'EPSG:28992', 'EPSG:4326');
+        const googleMapsUrl = `https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=${coords[1]},${coords[0]}`;
 
-    /**
-     * Closes the streetview component
-     */
-    closeStreetView = (event) => {
-        this.setState({
-            streetView: <div></div>
-        });
+        window.open(googleMapsUrl, '_blank', 'noopener,noreferrer');
     }
 
     /**
@@ -239,7 +228,6 @@ class MapLayout extends React.Component {
                 <main style={style}>
                     {<Viewer settings={settings} mapToParent={this.setMap} featurePopup={this.setKvkPopup} />}
                     {this.state.featurePopup}
-                    {this.state.streetView}
                 </main>
             </MuiThemeProvider>
         );
