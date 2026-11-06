@@ -2,7 +2,7 @@
 
 echo deploying bedrijvenatlas Rijssen-Holten...
 
-export BA_VERSION=1.4.1
+export BA_VERSION=1.4.4
 export FUNDA_SCRAPER_VERSION=1.4.7
 
 export REACT_APP_SETTINGS="$(cat ./settings-rh.json)"
